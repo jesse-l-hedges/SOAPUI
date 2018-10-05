@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="7a09cec4-95ba-4712-b136-6ab6fcc7d451" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="List" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="22bc11ef-0938-47d3-a421-28ac3c3705cffileName">List</con:setting>
+    <con:setting id="7a09cec4-95ba-4712-b136-6ab6fcc7d451fileName">List</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="List Cleanup" id="bc8c7b51-a8c6-4638-85c7-a9e1d281eebc">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>52bcaedf-2302-4560-9c76-bad14df8a8e4</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>categoryId</con:name>
+          <con:value>387643</con:value>
+        </con:property>
+        <con:property>
+          <con:name>count</con:name>
+          <con:value>1</con:value>
+        </con:property>
+        <con:property>
+          <con:name>listId</con:name>
+          <con:value>207282</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>categoryId</con:entry>
+        <con:entry>count</con:entry>
+        <con:entry>listId</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="calltestcase" name="Auth" id="9b45bb3a-adc7-47d0-82b1-426e8ad6b0a1" disabled="true">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>a6ie650yW4FiyMdkgANvVdj5</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>10782007</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>10739553</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create List Name" id="934af0d7-b7fc-4bcf-86a7-bb90d1f3521f">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+'JLH-List' + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create List" id="36ddc312-f573-42e5-8f1d-841ecdb5470d">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create List" id="3c0f76e2-1b91-40f2-8559-987b691beb90" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#Project#user}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#Project#pass}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="List">\r
+            <ListName>${Create List Name#result}</ListName>\r
+            <CustomerKey>${Create List Name#result}</CustomerKey>\r
+            <Type>Public</Type>\r
+         </Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="987132cf-b316-4064-b9dd-85310dba1958"/>
+        <con:assertion type="SOAP Fault Assertion" id="21525080-f1d3-4aa1-8fb8-dc8144c7d445"/>
+        <con:assertion type="XPath Match" id="6fd0dc33-f6e1-4963-81b7-ff4473d74f66" name="StatusCode">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="7d64fbee-d6b9-47cb-866b-4000ec07864c" name="StatusMessage">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Created List.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer ListId" id="82a23ca8-e999-464c-955f-7d829bfaa013">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="false">
+        <con:name>listId</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create List</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>listId</con:targetType>
+        <con:targetStep>#TestSuite#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create Email Address" id="e2a6c9e3-8121-42bb-9ce3-dad8ae90ab43">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')+('0'..'9')).join(), 9 ) + '@bh.exacttarget.com'</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create Subscriber Key" id="48fc8e71-efd9-4e09-a376-557260bf4e21">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( ('0'..'9').join(), 9 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create Random First Name" id="40ce9883-5f5f-4e0b-bd23-e64a6f302219">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')).join(), 9 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create Random Last Name" id="de6d2aa8-9767-4d5b-9da6-e765ead0d791">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')).join(), 12 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Add Subscribers" id="70282ef7-0f71-403e-b337-a30e81bee100">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Add Subscribers" id="c26c302e-d249-449f-9557-26a652329a61" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#Project#user}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#Project#pass}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Objects xsi:type="Subscriber">\r
+            <ObjectID xsi:nil="true"/>\r
+            <EmailAddress>${Create Email Address#result}</EmailAddress>\r
+            <SubscriberKey>${Create Subscriber Key#result}</SubscriberKey>\r
+            <Lists>\r
+               <ID>${#TestSuite#listId}</ID>\r
+               <ObjectID xsi:nil="true"/>\r
+            </Lists>\r
+            <Attributes>\r
+               <Name>First Name</Name>\r
+               <Value>${Create Random First Name#result}</Value>\r
+            </Attributes>\r
+            <Attributes>\r
+               <Name>Last Name</Name>\r
+               <Value>${Create Random Last Name#result}</Value>\r
+            </Attributes>\r
+         </Objects>\r
+         <Options/>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="6886b994-1f78-4335-8d01-687c2ab86a7b"/>
+        <con:assertion type="SOAP Fault Assertion" id="2e76bb98-8d7b-472f-98c8-415e01a6894a"/>
+        <con:assertion type="XPath Match" id="8022ef75-ea70-463d-8ec7-c120e9c02249" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Created Subscriber.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Add 100 Rows" id="d97484e6-7b6d-459d-b6ff-9468f7fd16f3">
+    <con:settings/>
+    <con:config>
+      <script>import groovy.json.*
+
+for( i in 1..99)
+{
+	testRunner.runTestStepByName("Create Subscriber Key")
+	testRunner.runTestStepByName("Create Email Address")
+	testRunner.runTestStepByName("Create Random First Name")
+	testRunner.runTestStepByName("Create Random Last Name")
+	testRunner.runTestStepByName("Add Subscribers")
+}</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Retrieve List Subscribers" id="992871c2-a629-4cab-a82d-043b33a21a54">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve List Subscribers" id="122db011-ea0d-46c2-a4c7-ef8393a194ee" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#Project#user}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#Project#pass}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <RetrieveRequest>\r
+            <ObjectType>ListSubscriber</ObjectType>\r
+            <Properties>SubscriberKey</Properties>\r
+            <Filter xsi:type="SimpleFilterPart">\r
+               <Property>ListID</Property>\r
+               <SimpleOperator>equals</SimpleOperator>\r
+               <Value>${#TestSuite#listId}</Value>\r
+            </Filter>\r
+         </RetrieveRequest>\r
+      </RetrieveRequestMsg>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="98bfd04d-92ad-4b45-8625-ca3f5756a7bb"/>
+        <con:assertion type="SOAP Fault Assertion" id="b02f01ba-9c58-4336-90c1-8280419f200f"/>
+        <con:assertion type="XPath Match" id="3cf1967c-d16a-4e56-9f72-f4852922bcb8" name="OverallStatus=MoreDataAvailable" disabled="true">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:RetrieveResponseMsg[1]/ns1:OverallStatus[1]</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="8614df5b-0024-42f6-990c-a5eb517c54b8" name="Number Of Rows" disabled="true">
+          <con:configuration>
+            <scriptText>import groovy.util.XmlSlurper
+
+def response = new XmlSlurper().parseText(context.expand( '${Retrieve List Subscribers#Response#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:RetrieveResponseMsg[1]}' ))
+def numberOfSubs = response.Results.findAll { it.'@xsi:type'.text() == 'ListSubscriber' }.size()
+assert 100 == numberOfSubs</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Retrieve List Subscribers with BatchSize" id="5e961b1b-e201-4f28-a567-137074352126">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve List Subscribers with BatchSize" id="122db011-ea0d-46c2-a4c7-ef8393a194ee" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#Project#user}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#Project#pass}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <RetrieveRequest>\r
+            <ObjectType>ListSubscriber</ObjectType>\r
+            <Properties>SubscriberKey</Properties>\r
+            <Filter xsi:type="SimpleFilterPart">\r
+               <Property>ListID</Property>\r
+               <SimpleOperator>equals</SimpleOperator>\r
+               <Value>${#TestSuite#listId}</Value>\r
+            </Filter>\r
+            <Options>\r
+               <BatchSize>3</BatchSize>\r
+            </Options>\r
+         </RetrieveRequest>\r
+      </RetrieveRequestMsg>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="98bfd04d-92ad-4b45-8625-ca3f5756a7bb"/>
+        <con:assertion type="SOAP Fault Assertion" id="b02f01ba-9c58-4336-90c1-8280419f200f"/>
+        <con:assertion type="XPath Match" id="f1cffda4-21db-4a31-88c2-3b1e98ae3429" name="MoreDataAvailable" disabled="true">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:RetrieveResponseMsg[1]/ns1:OverallStatus[1]</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="4e4425d2-6385-487f-ac68-690adb0962c0" name="Number of Subs" disabled="true">
+          <con:configuration>
+            <scriptText>import groovy.util.XmlSlurper
+
+def response = new XmlSlurper().parseText(context.expand( '${Retrieve List Subscribers with BatchSize#Response#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:RetrieveResponseMsg[1]}' ))
+def numberOfSubs = response.Results.findAll { it.'@xsi:type'.text() == 'ListSubscriber' }.size()
+assert 100 == numberOfSubs</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>386d52bc-b76a-42f8-8717-7b843803e875</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>2c3d5616-8a58-42e3-9448-fffefd642925</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>46b6057c-defc-4466-bcb4-9fc7c57d9fce</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>9d8a4a13-6672-4dda-9f77-38e1c4ab5b3d</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>2a324af3-4369-4221-a810-2694984501b6</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

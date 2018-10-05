@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="sitemap.xml" path="/sitemap.xml" id="6e239441-72fc-4825-a081-d70e64af1042" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="6e239441-72fc-4825-a081-d70e64af1042fileName">sitemap.xml</con:setting>
+  </con:settings>
+  <con:parameters>
+    <con:parameter>
+      <con:name>Authorization</con:name>
+      <con:value/>
+      <con:style>HEADER</con:style>
+      <con:default/>
+      <con:description xsi:nil="true"/>
+    </con:parameter>
+  </con:parameters>
+  <con:method name="Method 1" id="faf1e6da-dbd1-47be-94ca-48a591b757f2" method="GET">
+    <con:settings/>
+    <con:parameters/>
+    <con:representation type="RESPONSE">
+      <con:mediaType>text/xml; charset=utf-8</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xmlns:ns="http://www.sitemaps.org/schemas/sitemap/0.9">ns:urlset</con:element>
+    </con:representation>
+    <con:request name="Request 1" id="804f3a2f-a520-4c07-89b2-c2c4bc6577fd" mediaType="application/json">
+      <con:settings>
+        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+      </con:settings>
+      <con:request/>
+      <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/sitemap.xml</con:originalUri>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters/>
+      <con:parameterOrder>
+        <con:entry>Authorization</con:entry>
+      </con:parameterOrder>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+</con:resource>

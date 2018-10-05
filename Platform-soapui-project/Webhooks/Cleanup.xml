@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="fb212ada-a22a-4a70-8a71-595253613526" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Cleanup" searchProperties="true" disabled="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="fb212ada-a22a-4a70-8a71-595253613526fileName">Cleanup</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="f4a75ee8-d9a4-4512-872a-84340b46242b">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>axXSsw7vexAVbKCVWEwiXT3i</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>10782007</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>10739553</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getWebhooksCollection" id="6c91d86c-865a-440d-b3ca-a4c6c4a0f3e5">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/accounts/current/webhooks" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getWebhooksCollection" id="6f8cd777-2fa2-43db-8275-2c304df62610" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/accounts/current/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="05f4afe9-4141-42a3-9c76-6fdd44be1db5" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="764aa6e7-f3fe-4b8f-aee5-4eb4741b96b5" name="Contains Path">
+          <con:configuration>
+            <token>/v1/accounts/current/webhooks</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="$page" value="${#TestCase#Page}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$page</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer Webhook Count" id="3a95a6e8-861a-4a03-a890-1eaac5f71fbe">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>count</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>getWebhooksCollection</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/accounts/current/webhooks';
+//ns1:Response[1]/ns1:count[1]</con:sourcePath>
+        <con:targetType>webhookCount</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer WebhookId" id="23c44594-9e15-48e2-8a23-b42c39f3849c">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>webhookId</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>getWebhooksCollection</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/accounts/current/webhooks';
+//ns1:Response[1]/ns1:items[1]/ns1:e[1]/ns1:id[1]</con:sourcePath>
+        <con:targetType>webhookId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="deleteWebhook" id="d5314b94-8810-45f0-a37e-0a3167cf5a04" disabled="true">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/webhooks/${ID}" methodName="deleteWebhook" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="deleteWebhook" id="1dbeb3ca-bfeb-4e4c-a61b-ccaa702d4432" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="485d1091-35dd-4653-872c-723c174abf6c" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="ID" value="${#TestCase#WebhookID}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>ID</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Delete All Webhooks" id="300b99ce-c6cd-4326-a836-27895a7c2f3e">
+    <con:settings/>
+    <con:config>
+      <script>def webhookCount = context.expand( '${#TestCase#webhookCount}' ) as int
+if (webhookCount > 1)
+	for (i in 1..webhookCount){
+		testRunner.runTestStepByName("getWebhooksCollection");
+		testRunner.runTestStepByName("Transfer WebhookId");
+		testRunner.runTestStepByName("deleteWebhook")
+	}
+else
+	log.info "No webhooks to delete!"</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getWebhooksCollection - Verify All Deleted" id="7d434d78-9e94-42ed-802e-22d9f09eba9e">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/accounts/current/webhooks" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getWebhooksCollection - Verify All Deleted" id="6f8cd777-2fa2-43db-8275-2c304df62610" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/accounts/current/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="70161bbd-745a-40f7-97ac-7062cd24fae3" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="d20fda05-af7c-4ce4-8d2c-f60a4b9177e3" name="Count = 0">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/accounts/current/webhooks';
+//ns1:Response[1]/ns1:count[1]</path>
+            <content>0</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="$page" value="${#TestCase#Page}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$page</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>webhookCount</con:name>
+      <con:value>0</con:value>
+    </con:property>
+    <con:property>
+      <con:name>webhookId</con:name>
+      <con:value xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+</con:testCase>

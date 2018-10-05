@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="b68b77a1-3db9-43d6-a45d-56d96cccd398" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="notifications" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="b68b77a1-3db9-43d6-a45d-56d96cccd398fileName">notifications</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="e5ebae38-92e2-424c-ae8f-afc9420ab040">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>av1aoQBEavHHPD6pWGf2X4OW</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="calltestcase" name="getapplicationIdy" id="5a12eca1-2ec2-4883-ac25-741d8c4b9709" disabled="true">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:properties/>
+      <con:returnProperties/>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="calltestcase" name="getapplicationId" id="7da01947-7003-4e44-9722-9f3f4ebcea9e">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>0c12c957-a5b4-4929-9201-23ce1ef60eeb</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>applicationId</con:name>
+          <con:value>e3640f97-1328-48ed-b3d5-03ca7c0d2e12</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>applicationId</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getNotificationsAlt1 - Request 1" id="a1a83595-fb3c-4386-9cb8-03bc3e2b1cdf">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/notifications" methodName="getNotificationsAlt1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getNotificationsAlt1 - Request 1" id="ef7d8d28-01e9-4b93-b2f8-cb80d4f571f0" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/notifications</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="0c928071-dbbe-495b-ab09-f2af09d0b9bb" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value=""/>
+          <con:entry key="applicationId" value="${getapplicationId#applicationId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>applicationId</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getNotifications - Request 1" id="1ac980cb-4aa0-4b00-8216-afa7c182866e">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/notifications/appid:{applicationid}" methodName="getNotifications" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getNotifications - Request 1" id="3450a9cb-a2d1-44f3-bb0a-fb9afc6a5e70" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/notifications/appid:e3640f97-1328-48ed-b3d5-03ca7c0d2e12</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="9866d904-d6eb-4ae2-b78a-403bada63f45" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value=""/>
+          <con:entry key="applicationid" value="${getapplicationId#applicationId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>applicationid</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

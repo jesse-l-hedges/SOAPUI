@@ -1,0 +1,898 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="hub" path="/hub" id="945ffadd-c1e3-44c3-8bf8-fa192f6b6a8f" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="945ffadd-c1e3-44c3-8bf8-fa192f6b6a8ffileName">hub</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:resource name="v1" path="v1" id="82305b99-a5d7-406a-99f0-a9f3ce5d5712">
+    <con:settings/>
+    <con:parameters/>
+    <con:resource name="rest" path="rest" id="4d872362-cbd7-4410-b601-f827d240e50c">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="hub/Discovery" id="ec5a0773-3974-436c-a21b-c6e0fffc3529" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="473c1784-3bd6-47c8-8c4c-f3d26a294ad9" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="dataevents" path="dataevents" id="32418e4b-b4c5-4bd6-a680-72d35be97d33">
+      <con:settings/>
+      <con:parameters/>
+      <con:resource name="key:{key}" path="key:{key}" id="de3cd9c8-1b91-4593-9922-cc4398b18af0">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>key</con:name>
+            <con:value>key</con:value>
+            <con:style>TEMPLATE</con:style>
+            <con:default>key</con:default>
+          </con:parameter>
+        </con:parameters>
+        <con:resource name="rows" path="rows" id="ed1cfc39-df07-4206-ab3a-1929307799aa">
+          <con:settings/>
+          <con:parameters/>
+          <con:resource name="{primaryKeys}" path="{primaryKeys}" id="45e39e2f-33cd-40cc-a17d-b54b973d229c">
+            <con:settings/>
+            <con:parameters>
+              <con:parameter>
+                <con:name>primaryKeys</con:name>
+                <con:value>primaryKeys</con:value>
+                <con:style>TEMPLATE</con:style>
+                <con:default>primaryKeys</con:default>
+              </con:parameter>
+              <con:parameter>
+                <con:name>Authorization</con:name>
+                <con:value/>
+                <con:style>HEADER</con:style>
+                <con:default/>
+                <con:description xsi:nil="true"/>
+              </con:parameter>
+              <con:parameter>
+                <con:name>Host</con:name>
+                <con:value/>
+                <con:style>HEADER</con:style>
+                <con:default/>
+                <con:description xsi:nil="true"/>
+              </con:parameter>
+              <con:parameter>
+                <con:name>method</con:name>
+                <con:value/>
+                <con:style>QUERY</con:style>
+                <con:default/>
+                <con:description xsi:nil="true"/>
+              </con:parameter>
+            </con:parameters>
+            <con:resource name="column" path="column" id="93f8065d-5291-4204-af0c-4b7622a21f3a">
+              <con:settings/>
+              <con:parameters/>
+              <con:resource name="{column}" path="{column}" id="67075012-743e-4f2f-b695-53d4ef4dd192">
+                <con:settings/>
+                <con:parameters>
+                  <con:parameter>
+                    <con:name>column</con:name>
+                    <con:value>column</con:value>
+                    <con:style>TEMPLATE</con:style>
+                    <con:default>column</con:default>
+                  </con:parameter>
+                </con:parameters>
+                <con:resource name="increment" path="increment" id="972f9f46-4706-4b0a-ae06-064d2fec8463">
+                  <con:settings/>
+                  <con:parameters/>
+                  <con:method name="Increment Column Value By DE External Key" id="8a0394d5-92c5-4916-bada-5f7fb7df9da4" method="PUT">
+                    <con:settings/>
+                    <con:parameters/>
+                    <con:request name="Increment Column Value By DE External Key" id="06f89d2b-348e-415e-8abd-8f90c7137828" mediaType="application/json" postQueryString="false">
+                      <con:settings>
+                        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                      </con:settings>
+                      <con:request/>
+                      <con:credentials>
+                        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+                        <con:authType>No Authorization</con:authType>
+                      </con:credentials>
+                      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                      <con:parameters>
+                        <entry key="method" value="" xmlns="http://eviware.com/soapui/config"/>
+                      </con:parameters>
+                      <con:parameterOrder>
+                        <con:entry>key</con:entry>
+                        <con:entry>primaryKeys</con:entry>
+                        <con:entry>Authorization</con:entry>
+                        <con:entry>Host</con:entry>
+                        <con:entry>column</con:entry>
+                        <con:entry>method</con:entry>
+                      </con:parameterOrder>
+                      <con:environmentSpec>
+                        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                          <con:authProfile>Inherit From Parent</con:authProfile>
+                        </con:entry>
+                      </con:environmentSpec>
+                    </con:request>
+                  </con:method>
+                </con:resource>
+              </con:resource>
+            </con:resource>
+            <con:method name="Put (Upsert) DE Row By Key" id="4823202f-f8ae-46b9-8828-0591627203d6" method="PUT">
+              <con:settings/>
+              <con:parameters/>
+              <con:request name="Put (Upsert) DE Row By Key" id="253f556c-a4dc-4aae-b767-1a143c93c466" mediaType="application/json" postQueryString="false">
+                <con:settings>
+                  <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                </con:settings>
+                <con:request/>
+                <con:credentials>
+                  <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+                  <con:authType>No Authorization</con:authType>
+                </con:credentials>
+                <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                <con:parameters/>
+                <con:parameterOrder>
+                  <con:entry>key</con:entry>
+                  <con:entry>primaryKeys</con:entry>
+                  <con:entry>Authorization</con:entry>
+                  <con:entry>Host</con:entry>
+                  <con:entry>method</con:entry>
+                </con:parameterOrder>
+                <con:environmentSpec>
+                  <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                    <con:authProfile>Inherit From Parent</con:authProfile>
+                  </con:entry>
+                </con:environmentSpec>
+              </con:request>
+            </con:method>
+          </con:resource>
+        </con:resource>
+        <con:resource name="rowset" path="rowset" id="b3465553-908b-4957-99ce-5fdc42acd665">
+          <con:settings/>
+          <con:parameters>
+            <con:parameter>
+              <con:name>Authorization</con:name>
+              <con:value/>
+              <con:style>HEADER</con:style>
+              <con:default/>
+              <con:description xsi:nil="true"/>
+            </con:parameter>
+            <con:parameter>
+              <con:name>Host</con:name>
+              <con:value/>
+              <con:style>HEADER</con:style>
+              <con:default/>
+              <con:description xsi:nil="true"/>
+            </con:parameter>
+            <con:parameter>
+              <con:name>method</con:name>
+              <con:value/>
+              <con:style>QUERY</con:style>
+              <con:default/>
+              <con:description xsi:nil="true"/>
+            </con:parameter>
+          </con:parameters>
+          <con:resource name="delete" path="delete" id="6b5f4538-5693-49eb-aa57-72d94e6f155c">
+            <con:settings/>
+            <con:parameters/>
+            <con:method name="Delete Batch of DE Rows by Key" id="34bd9477-697e-4966-9162-d274f96356bf" method="POST">
+              <con:settings/>
+              <con:parameters/>
+              <con:request name="Delete Batch of DE Rows by Key" id="a0e461b6-3df9-4942-849c-6156b2e5dcd7" mediaType="application/json" postQueryString="false">
+                <con:settings>
+                  <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                </con:settings>
+                <con:request/>
+                <con:credentials>
+                  <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+                  <con:authType>No Authorization</con:authType>
+                </con:credentials>
+                <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                <con:parameters>
+                  <entry key="method" value="" xmlns="http://eviware.com/soapui/config"/>
+                </con:parameters>
+                <con:parameterOrder>
+                  <con:entry>key</con:entry>
+                  <con:entry>Authorization</con:entry>
+                  <con:entry>Host</con:entry>
+                  <con:entry>method</con:entry>
+                </con:parameterOrder>
+                <con:environmentSpec>
+                  <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                    <con:authProfile>Inherit From Parent</con:authProfile>
+                  </con:entry>
+                </con:environmentSpec>
+              </con:request>
+            </con:method>
+          </con:resource>
+          <con:method name="Upsert Batch of DE Rows by Key" id="482fe5db-6cdb-4b6f-b882-3960f0c478b9" method="POST">
+            <con:settings/>
+            <con:parameters/>
+            <con:request name="Upsert Batch of DE Rows by Key" id="440f8a33-8b69-4b46-a077-a22ae2764aa5" mediaType="application/json" postQueryString="false">
+              <con:settings>
+                <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+              </con:settings>
+              <con:request/>
+              <con:credentials>
+                <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+                <con:authType>No Authorization</con:authType>
+              </con:credentials>
+              <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+              <con:parameters/>
+              <con:parameterOrder>
+                <con:entry>key</con:entry>
+                <con:entry>Authorization</con:entry>
+                <con:entry>Host</con:entry>
+                <con:entry>method</con:entry>
+              </con:parameterOrder>
+              <con:environmentSpec>
+                <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                  <con:authProfile>Inherit From Parent</con:authProfile>
+                </con:entry>
+              </con:environmentSpec>
+            </con:request>
+          </con:method>
+        </con:resource>
+      </con:resource>
+      <con:resource name="{guid}" path="{guid}" id="76114ddb-03c0-4268-98db-5301b22b2e9e">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>guid</con:name>
+            <con:value>guid</con:value>
+            <con:style>TEMPLATE</con:style>
+            <con:default>guid</con:default>
+          </con:parameter>
+        </con:parameters>
+        <con:resource name="rows" path="rows" id="f3cee94b-5ee1-429b-ad03-c18e1ab138ee">
+          <con:settings/>
+          <con:parameters/>
+          <con:resource name="{primaryKeys}" path="{primaryKeys}" id="3e5b7cc9-3693-48b2-a7d1-dab5616c0915">
+            <con:settings/>
+            <con:parameters>
+              <con:parameter>
+                <con:name>primaryKeys</con:name>
+                <con:value>primaryKeys</con:value>
+                <con:style>TEMPLATE</con:style>
+                <con:default>primaryKeys</con:default>
+              </con:parameter>
+              <con:parameter>
+                <con:name>Authorization</con:name>
+                <con:value/>
+                <con:style>HEADER</con:style>
+                <con:default/>
+                <con:description xsi:nil="true"/>
+              </con:parameter>
+              <con:parameter>
+                <con:name>Host</con:name>
+                <con:value/>
+                <con:style>HEADER</con:style>
+                <con:default/>
+                <con:description xsi:nil="true"/>
+              </con:parameter>
+              <con:parameter>
+                <con:name>method</con:name>
+                <con:value/>
+                <con:style>QUERY</con:style>
+                <con:default/>
+                <con:description xsi:nil="true"/>
+              </con:parameter>
+            </con:parameters>
+            <con:resource name="column" path="column" id="2b8bb8a9-a911-4bb1-ac54-e6aa44e33a59">
+              <con:settings/>
+              <con:parameters/>
+              <con:resource name="{column}" path="{column}" id="5e1e9999-05e3-4468-926c-ecd35bb50660">
+                <con:settings/>
+                <con:parameters>
+                  <con:parameter>
+                    <con:name>column</con:name>
+                    <con:value>column</con:value>
+                    <con:style>TEMPLATE</con:style>
+                    <con:default>column</con:default>
+                  </con:parameter>
+                </con:parameters>
+                <con:resource name="increment" path="increment" id="c23eb7e6-dbab-4d9c-8079-486de659a4e0">
+                  <con:settings/>
+                  <con:parameters/>
+                  <con:method name="Increment DE Column Value by DE ID" id="87171b14-8cb2-430d-9293-458f66447b4a" method="PUT">
+                    <con:settings/>
+                    <con:parameters/>
+                    <con:request name="Increment DE Column Value by DE ID" id="6a139af5-1a29-4d94-be2e-6d9cbd80f324" mediaType="application/json" postQueryString="false">
+                      <con:settings>
+                        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                      </con:settings>
+                      <con:request/>
+                      <con:credentials>
+                        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+                        <con:authType>No Authorization</con:authType>
+                      </con:credentials>
+                      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                      <con:parameters>
+                        <entry key="method" value="" xmlns="http://eviware.com/soapui/config"/>
+                      </con:parameters>
+                      <con:parameterOrder>
+                        <con:entry>guid</con:entry>
+                        <con:entry>primaryKeys</con:entry>
+                        <con:entry>Authorization</con:entry>
+                        <con:entry>Host</con:entry>
+                        <con:entry>column</con:entry>
+                        <con:entry>method</con:entry>
+                      </con:parameterOrder>
+                      <con:environmentSpec>
+                        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                          <con:authProfile>Inherit From Parent</con:authProfile>
+                        </con:entry>
+                      </con:environmentSpec>
+                    </con:request>
+                  </con:method>
+                </con:resource>
+              </con:resource>
+            </con:resource>
+            <con:method name="Put (Upsert) DE Row by ID" id="c788be8b-dff4-4d33-8461-4f344f51b63a" method="PUT">
+              <con:settings/>
+              <con:parameters/>
+              <con:request name="Put (Upsert) DE Row by ID" id="2e1aeae2-c8fa-422e-860e-1dc57ebe3303" mediaType="application/json" postQueryString="false">
+                <con:settings>
+                  <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                </con:settings>
+                <con:request/>
+                <con:credentials>
+                  <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+                  <con:authType>No Authorization</con:authType>
+                </con:credentials>
+                <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                <con:parameters/>
+                <con:parameterOrder>
+                  <con:entry>guid</con:entry>
+                  <con:entry>primaryKeys</con:entry>
+                  <con:entry>Authorization</con:entry>
+                  <con:entry>Host</con:entry>
+                  <con:entry>method</con:entry>
+                </con:parameterOrder>
+                <con:environmentSpec>
+                  <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                    <con:authProfile>Inherit From Parent</con:authProfile>
+                  </con:entry>
+                </con:environmentSpec>
+              </con:request>
+            </con:method>
+          </con:resource>
+        </con:resource>
+        <con:resource name="rowset" path="rowset" id="769394d8-a1ef-40e9-bda5-6361fc4eb36d">
+          <con:settings/>
+          <con:parameters>
+            <con:parameter>
+              <con:name>Authorization</con:name>
+              <con:value/>
+              <con:style>HEADER</con:style>
+              <con:default/>
+              <con:description xsi:nil="true"/>
+            </con:parameter>
+            <con:parameter>
+              <con:name>Host</con:name>
+              <con:value/>
+              <con:style>HEADER</con:style>
+              <con:default/>
+              <con:description xsi:nil="true"/>
+            </con:parameter>
+            <con:parameter>
+              <con:name>method</con:name>
+              <con:value/>
+              <con:style>QUERY</con:style>
+              <con:default/>
+              <con:description xsi:nil="true"/>
+            </con:parameter>
+          </con:parameters>
+          <con:resource name="delete" path="delete" id="eb192193-45b5-4a5c-885d-428ca6dce8ec">
+            <con:settings/>
+            <con:parameters/>
+            <con:method name="Delete Batch of DE Rows by DE ID" id="aadce422-1eaa-49f8-975d-1ace0238bf05" method="POST">
+              <con:settings/>
+              <con:parameters/>
+              <con:request name="Delete Batch of DE Rows by DE ID" id="67c51bbf-0f75-41a6-bcdd-59b9c5a28fff" mediaType="application/json" postQueryString="false">
+                <con:settings>
+                  <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                </con:settings>
+                <con:request/>
+                <con:credentials>
+                  <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+                  <con:authType>No Authorization</con:authType>
+                </con:credentials>
+                <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                <con:parameters>
+                  <entry key="method" value="" xmlns="http://eviware.com/soapui/config"/>
+                </con:parameters>
+                <con:parameterOrder>
+                  <con:entry>guid</con:entry>
+                  <con:entry>Authorization</con:entry>
+                  <con:entry>Host</con:entry>
+                  <con:entry>method</con:entry>
+                </con:parameterOrder>
+                <con:environmentSpec>
+                  <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                    <con:authProfile>Inherit From Parent</con:authProfile>
+                  </con:entry>
+                </con:environmentSpec>
+              </con:request>
+            </con:method>
+          </con:resource>
+          <con:method name="Upsert Batch of DE Rows by DE ID" id="1a48abf1-cfd1-4e7e-b98e-987e32da3419" method="POST">
+            <con:settings/>
+            <con:parameters/>
+            <con:request name="Upsert Batch of DE Rows by DE ID" id="2f20a9ed-7bb0-4ecb-942e-90307f81f2a6" mediaType="application/json" postQueryString="false">
+              <con:settings>
+                <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+              </con:settings>
+              <con:request/>
+              <con:credentials>
+                <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+                <con:authType>No Authorization</con:authType>
+              </con:credentials>
+              <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+              <con:parameters/>
+              <con:parameterOrder>
+                <con:entry>guid</con:entry>
+                <con:entry>Authorization</con:entry>
+                <con:entry>Host</con:entry>
+                <con:entry>method</con:entry>
+              </con:parameterOrder>
+              <con:environmentSpec>
+                <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                  <con:authProfile>Inherit From Parent</con:authProfile>
+                </con:entry>
+              </con:environmentSpec>
+            </con:request>
+          </con:method>
+        </con:resource>
+      </con:resource>
+    </con:resource>
+    <con:resource name="dataeventsasync" path="dataeventsasync" id="0646ba16-3ec2-4f8b-82e5-e844cd3ee60d">
+      <con:settings/>
+      <con:parameters/>
+      <con:resource name="key:{key}" path="key:{key}" id="01c5c317-592b-4b6e-93ec-e62113ee01b8">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>key</con:name>
+            <con:value>key</con:value>
+            <con:style>TEMPLATE</con:style>
+            <con:default>key</con:default>
+          </con:parameter>
+        </con:parameters>
+        <con:resource name="rows" path="rows" id="47533f05-257d-4272-8304-9e0d3ad55565">
+          <con:settings/>
+          <con:parameters/>
+          <con:resource name="{primaryKeys}" path="{primaryKeys}" id="7f4ad5a0-99d0-4d15-a141-2f68b7d6833d">
+            <con:settings/>
+            <con:parameters>
+              <con:parameter>
+                <con:name>primaryKeys</con:name>
+                <con:value>primaryKeys</con:value>
+                <con:style>TEMPLATE</con:style>
+                <con:default>primaryKeys</con:default>
+              </con:parameter>
+              <con:parameter>
+                <con:name>Authorization</con:name>
+                <con:value/>
+                <con:style>HEADER</con:style>
+                <con:default/>
+                <con:description xsi:nil="true"/>
+              </con:parameter>
+              <con:parameter>
+                <con:name>Host</con:name>
+                <con:value/>
+                <con:style>HEADER</con:style>
+                <con:default/>
+                <con:description xsi:nil="true"/>
+              </con:parameter>
+              <con:parameter>
+                <con:name>method</con:name>
+                <con:value/>
+                <con:style>QUERY</con:style>
+                <con:default/>
+                <con:description xsi:nil="true"/>
+              </con:parameter>
+            </con:parameters>
+            <con:resource name="column" path="column" id="06a2a993-4ec0-40a6-9baa-5da08186d3af">
+              <con:settings/>
+              <con:parameters/>
+              <con:resource name="{column}" path="{column}" id="1c799bfa-ebe2-4eb0-a236-9ab43843f3c4">
+                <con:settings/>
+                <con:parameters>
+                  <con:parameter>
+                    <con:name>column</con:name>
+                    <con:value>column</con:value>
+                    <con:style>TEMPLATE</con:style>
+                    <con:default>column</con:default>
+                  </con:parameter>
+                </con:parameters>
+                <con:resource name="increment" path="increment" id="8e6d2098-efca-4781-a866-66cfe37cbe85">
+                  <con:settings/>
+                  <con:parameters/>
+                  <con:method name="Async Increment DE Column Value by DE Key" id="17f78f3a-55c6-4972-991b-7714c7b01cd0" method="PUT">
+                    <con:settings/>
+                    <con:parameters/>
+                    <con:request name="Async Increment DE Column Value by DE Key" id="5df61c98-a503-4110-8c35-46b2739cda8c" mediaType="application/json" postQueryString="false">
+                      <con:settings>
+                        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                      </con:settings>
+                      <con:request/>
+                      <con:credentials>
+                        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+                        <con:authType>No Authorization</con:authType>
+                      </con:credentials>
+                      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                      <con:parameters>
+                        <entry key="method" value="" xmlns="http://eviware.com/soapui/config"/>
+                      </con:parameters>
+                      <con:parameterOrder>
+                        <con:entry>key</con:entry>
+                        <con:entry>primaryKeys</con:entry>
+                        <con:entry>Authorization</con:entry>
+                        <con:entry>Host</con:entry>
+                        <con:entry>column</con:entry>
+                        <con:entry>method</con:entry>
+                      </con:parameterOrder>
+                      <con:environmentSpec>
+                        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                          <con:authProfile>Inherit From Parent</con:authProfile>
+                        </con:entry>
+                      </con:environmentSpec>
+                    </con:request>
+                  </con:method>
+                </con:resource>
+              </con:resource>
+            </con:resource>
+            <con:method name="Async Upsert DE Row by DE Key" id="f0a7d6de-92fd-4c02-82ed-3fabc5a73bc0" method="PUT">
+              <con:settings/>
+              <con:parameters/>
+              <con:request name="Async Upsert DE Row by DE Key" id="9b9f2ff5-85b6-40c6-b641-379800c224b7" mediaType="application/json" postQueryString="false">
+                <con:settings>
+                  <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                </con:settings>
+                <con:request/>
+                <con:credentials>
+                  <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+                  <con:authType>No Authorization</con:authType>
+                </con:credentials>
+                <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                <con:parameters/>
+                <con:parameterOrder>
+                  <con:entry>key</con:entry>
+                  <con:entry>primaryKeys</con:entry>
+                  <con:entry>Authorization</con:entry>
+                  <con:entry>Host</con:entry>
+                  <con:entry>method</con:entry>
+                </con:parameterOrder>
+                <con:environmentSpec>
+                  <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                    <con:authProfile>Inherit From Parent</con:authProfile>
+                  </con:entry>
+                </con:environmentSpec>
+              </con:request>
+            </con:method>
+          </con:resource>
+        </con:resource>
+        <con:resource name="rowset" path="rowset" id="171f5193-2774-49ed-91af-d607493e647a">
+          <con:settings/>
+          <con:parameters>
+            <con:parameter>
+              <con:name>Authorization</con:name>
+              <con:value/>
+              <con:style>HEADER</con:style>
+              <con:default/>
+              <con:description xsi:nil="true"/>
+            </con:parameter>
+            <con:parameter>
+              <con:name>Host</con:name>
+              <con:value/>
+              <con:style>HEADER</con:style>
+              <con:default/>
+              <con:description xsi:nil="true"/>
+            </con:parameter>
+            <con:parameter>
+              <con:name>method</con:name>
+              <con:value/>
+              <con:style>QUERY</con:style>
+              <con:default/>
+              <con:description xsi:nil="true"/>
+            </con:parameter>
+          </con:parameters>
+          <con:resource name="delete" path="delete" id="32ae7be8-9f4b-46ca-8f89-36b08f5ea288">
+            <con:settings/>
+            <con:parameters/>
+            <con:method name="Async Delete Batch of DE Rows by DE Key" id="f9c5b6a4-9f27-4282-9f0a-32de680d1822" method="POST">
+              <con:settings/>
+              <con:parameters/>
+              <con:request name="Async Delete Batch of DE Rows by DE Key" id="0cd0a566-21a9-4acf-8cc8-2d0cd313fe9b" mediaType="application/json" postQueryString="false">
+                <con:settings>
+                  <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                </con:settings>
+                <con:request/>
+                <con:credentials>
+                  <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+                  <con:authType>No Authorization</con:authType>
+                </con:credentials>
+                <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                <con:parameters>
+                  <entry key="method" value="" xmlns="http://eviware.com/soapui/config"/>
+                </con:parameters>
+                <con:parameterOrder>
+                  <con:entry>key</con:entry>
+                  <con:entry>Authorization</con:entry>
+                  <con:entry>Host</con:entry>
+                  <con:entry>method</con:entry>
+                </con:parameterOrder>
+                <con:environmentSpec>
+                  <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                    <con:authProfile>Inherit From Parent</con:authProfile>
+                  </con:entry>
+                </con:environmentSpec>
+              </con:request>
+            </con:method>
+          </con:resource>
+          <con:method name="Async Upsert Batch of DE Rows by DE Key" id="2d9ef4ce-8510-4e04-9eda-ebe88e407888" method="POST">
+            <con:settings/>
+            <con:parameters/>
+            <con:request name="Async Upsert Batch of DE Rows by DE Key" id="2596db53-7a68-4a12-b64c-4a3cb8fc89d1" mediaType="application/json" postQueryString="false">
+              <con:settings>
+                <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+              </con:settings>
+              <con:request/>
+              <con:originalUri>https://www.exacttargetapis.com/hub/v1/dataeventsasync/key:key/rowset</con:originalUri>
+              <con:credentials>
+                <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+                <con:authType>No Authorization</con:authType>
+              </con:credentials>
+              <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+              <con:parameters/>
+              <con:parameterOrder>
+                <con:entry>key</con:entry>
+                <con:entry>Authorization</con:entry>
+                <con:entry>Host</con:entry>
+                <con:entry>method</con:entry>
+              </con:parameterOrder>
+              <con:environmentSpec>
+                <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                  <con:authProfile>Inherit From Parent</con:authProfile>
+                </con:entry>
+              </con:environmentSpec>
+            </con:request>
+          </con:method>
+        </con:resource>
+      </con:resource>
+      <con:resource name="{guid}" path="{guid}" id="5deceb10-0f69-4f0e-bf9e-f3feb761cfe9">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>guid</con:name>
+            <con:value>guid</con:value>
+            <con:style>TEMPLATE</con:style>
+            <con:default>guid</con:default>
+          </con:parameter>
+        </con:parameters>
+        <con:resource name="rows" path="rows" id="8544ff29-89ba-4413-8a25-e0f8da893b76">
+          <con:settings/>
+          <con:parameters/>
+          <con:resource name="{primaryKeys}" path="{primaryKeys}" id="91c835dc-9776-433d-871d-35f0df13b4ea">
+            <con:settings/>
+            <con:parameters>
+              <con:parameter>
+                <con:name>primaryKeys</con:name>
+                <con:value>primaryKeys</con:value>
+                <con:style>TEMPLATE</con:style>
+                <con:default>primaryKeys</con:default>
+              </con:parameter>
+              <con:parameter>
+                <con:name>Authorization</con:name>
+                <con:value/>
+                <con:style>HEADER</con:style>
+                <con:default/>
+                <con:description xsi:nil="true"/>
+              </con:parameter>
+              <con:parameter>
+                <con:name>Host</con:name>
+                <con:value/>
+                <con:style>HEADER</con:style>
+                <con:default/>
+                <con:description xsi:nil="true"/>
+              </con:parameter>
+              <con:parameter>
+                <con:name>method</con:name>
+                <con:value/>
+                <con:style>QUERY</con:style>
+                <con:default/>
+                <con:description xsi:nil="true"/>
+              </con:parameter>
+            </con:parameters>
+            <con:resource name="column" path="column" id="da25b23a-c092-44fa-bc3e-7e6223b84522">
+              <con:settings/>
+              <con:parameters/>
+              <con:resource name="{column}" path="{column}" id="84229f5c-52bb-4aa3-bf2a-32df8a87b61b">
+                <con:settings/>
+                <con:parameters>
+                  <con:parameter>
+                    <con:name>column</con:name>
+                    <con:value>column</con:value>
+                    <con:style>TEMPLATE</con:style>
+                    <con:default>column</con:default>
+                  </con:parameter>
+                </con:parameters>
+                <con:resource name="increment" path="increment" id="1a2a09c3-ead8-4ccf-a154-c5b6c038ef2a">
+                  <con:settings/>
+                  <con:parameters/>
+                  <con:method name="Async Increment DE Column Value by DE ID" id="8e9c6adf-4002-4775-bd31-f2ab4bc955ea" method="PUT">
+                    <con:settings/>
+                    <con:parameters/>
+                    <con:request name="Async Increment DE Column Value by DE ID" id="603420bd-0ce7-403e-b6d5-2fd8284ab8f4" mediaType="application/json" postQueryString="false">
+                      <con:settings>
+                        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                      </con:settings>
+                      <con:request/>
+                      <con:credentials>
+                        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+                        <con:authType>No Authorization</con:authType>
+                      </con:credentials>
+                      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                      <con:parameters>
+                        <entry key="method" value="" xmlns="http://eviware.com/soapui/config"/>
+                      </con:parameters>
+                      <con:parameterOrder>
+                        <con:entry>guid</con:entry>
+                        <con:entry>primaryKeys</con:entry>
+                        <con:entry>Authorization</con:entry>
+                        <con:entry>Host</con:entry>
+                        <con:entry>column</con:entry>
+                        <con:entry>method</con:entry>
+                      </con:parameterOrder>
+                      <con:environmentSpec>
+                        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                          <con:authProfile>Inherit From Parent</con:authProfile>
+                        </con:entry>
+                      </con:environmentSpec>
+                    </con:request>
+                  </con:method>
+                </con:resource>
+              </con:resource>
+            </con:resource>
+            <con:method name="Async Upsert DE Row by DE ID" id="7bcbab0c-e4df-45bd-ae96-4b9460053628" method="PUT">
+              <con:settings/>
+              <con:parameters/>
+              <con:request name="Async Upsert DE Row by DE ID" id="658552bd-6e10-4bce-a93b-2d6fd78c304c" mediaType="application/json" postQueryString="false">
+                <con:settings>
+                  <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                </con:settings>
+                <con:request/>
+                <con:credentials>
+                  <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+                  <con:authType>No Authorization</con:authType>
+                </con:credentials>
+                <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                <con:parameters/>
+                <con:parameterOrder>
+                  <con:entry>guid</con:entry>
+                  <con:entry>primaryKeys</con:entry>
+                  <con:entry>Authorization</con:entry>
+                  <con:entry>Host</con:entry>
+                  <con:entry>method</con:entry>
+                </con:parameterOrder>
+                <con:environmentSpec>
+                  <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                    <con:authProfile>Inherit From Parent</con:authProfile>
+                  </con:entry>
+                </con:environmentSpec>
+              </con:request>
+            </con:method>
+          </con:resource>
+        </con:resource>
+        <con:resource name="rowset" path="rowset" id="da363ab6-3743-4e82-ab5e-69750efb6d70">
+          <con:settings/>
+          <con:parameters>
+            <con:parameter>
+              <con:name>Authorization</con:name>
+              <con:value/>
+              <con:style>HEADER</con:style>
+              <con:default/>
+              <con:description xsi:nil="true"/>
+            </con:parameter>
+            <con:parameter>
+              <con:name>Host</con:name>
+              <con:value/>
+              <con:style>HEADER</con:style>
+              <con:default/>
+              <con:description xsi:nil="true"/>
+            </con:parameter>
+            <con:parameter>
+              <con:name>method</con:name>
+              <con:value/>
+              <con:style>QUERY</con:style>
+              <con:default/>
+              <con:description xsi:nil="true"/>
+            </con:parameter>
+          </con:parameters>
+          <con:resource name="delete" path="delete" id="2dab5ebf-cba6-4214-9b6e-ba54d799bf13">
+            <con:settings/>
+            <con:parameters/>
+            <con:method name="Async Delete Batch of DE Rows by DE ID" id="d04c0193-c4fc-4250-9366-1124778565f3" method="POST">
+              <con:settings/>
+              <con:parameters/>
+              <con:request name="Async Delete Batch of DE Rows by DE ID" id="77b1051c-6bdc-4276-b597-2048549e721c" mediaType="application/json" postQueryString="false">
+                <con:settings>
+                  <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                </con:settings>
+                <con:request/>
+                <con:credentials>
+                  <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+                  <con:authType>No Authorization</con:authType>
+                </con:credentials>
+                <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                <con:parameters>
+                  <entry key="method" value="" xmlns="http://eviware.com/soapui/config"/>
+                </con:parameters>
+                <con:parameterOrder>
+                  <con:entry>guid</con:entry>
+                  <con:entry>Authorization</con:entry>
+                  <con:entry>Host</con:entry>
+                  <con:entry>method</con:entry>
+                </con:parameterOrder>
+                <con:environmentSpec>
+                  <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                    <con:authProfile>Inherit From Parent</con:authProfile>
+                  </con:entry>
+                </con:environmentSpec>
+              </con:request>
+            </con:method>
+          </con:resource>
+          <con:method name="Async Upsert Batch of DE Rows by DE ID" id="f5830aaf-97f3-45a3-ae88-0123ead11577" method="POST">
+            <con:settings/>
+            <con:parameters/>
+            <con:request name="Async Upsert Batch of DE Rows by DE ID" id="002c2c72-37f8-4376-9f3a-5f3eda6064c5" mediaType="application/json" postQueryString="false">
+              <con:settings>
+                <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+              </con:settings>
+              <con:request/>
+              <con:credentials>
+                <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+                <con:authType>No Authorization</con:authType>
+              </con:credentials>
+              <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+              <con:parameters/>
+              <con:parameterOrder>
+                <con:entry>guid</con:entry>
+                <con:entry>Authorization</con:entry>
+                <con:entry>Host</con:entry>
+                <con:entry>method</con:entry>
+              </con:parameterOrder>
+              <con:environmentSpec>
+                <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                  <con:authProfile>Inherit From Parent</con:authProfile>
+                </con:entry>
+              </con:environmentSpec>
+            </con:request>
+          </con:method>
+        </con:resource>
+      </con:resource>
+    </con:resource>
+  </con:resource>
+</con:resource>

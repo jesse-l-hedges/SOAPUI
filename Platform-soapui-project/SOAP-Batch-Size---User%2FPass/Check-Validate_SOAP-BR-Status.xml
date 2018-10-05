@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="29d0b806-f5f1-4187-b683-936384538da2" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Check Validate_SOAP BR Status" searchProperties="true" disabled="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="29d0b806-f5f1-4187-b683-936384538da2fileName">Check-Validate_SOAP-BR-Status</con:setting>
+  </con:settings>
+  <con:testStep type="request" name="Retrieve Validate_SOAP BR Value on Account" id="15b84991-e8c0-46a2-bbb0-42a464f441bf">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve Validate_SOAP BR Value on Account" id="d9412851-a03e-493f-b996-c89f86b4d693" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#TestSuite#testSuiteUserId}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#TestSuite#testSuitePassword}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+  </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <RetrieveRequest>
+            <ObjectType>Account</ObjectType>
+            <BusinessRules>
+            <Name>AB_TESTING_ACCESS</Name>
+            </BusinessRules>
+            <Filter xsi:type="SimpleFilterPart">
+               <Property>AccountID</Property>
+               <SimpleOperator>equals</SimpleOperator>
+               <Value>${#TestSuite#testSuiteMID}</Value>
+            </Filter>
+         </RetrieveRequest>
+      </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="47853253-cfed-4fd7-b9cc-fbf80534a1a8" disabled="true"/>
+        <con:assertion type="XPath Match" id="9ca11bb7-46a9-41a3-9a37-4f103fd4d9c2" name="Check for existence of [ObjectID]" disabled="true">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+exists( //ns1:RetrieveResponseMsg/ns1:Results/ns1:ObjectID)</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="58e56bd3-6fa8-4070-bca9-7a344bc00a9a" name="OverallStatus" disabled="true">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:RetrieveResponseMsg[1]/ns1:OverallStatus[1]</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="3bb947ea-fe20-4970-82de-e0bebd353372" name="Script Assertion" disabled="true">
+          <con:configuration>
+            <scriptText>import groovy.util.XmlSlurper
+
+def response = new XmlSlurper().parseText(context.expand( '${Retrieve Data from a Data Extension Without Batch#Response#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:RetrieveResponseMsg[1]}' ))
+def numberOfSubs = response.Results.findAll { it.'@xsi:type'.text() == 'DataExtensionObject' }.size()
+assert 100 == numberOfSubs</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

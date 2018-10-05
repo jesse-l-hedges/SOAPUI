@@ -1,0 +1,4285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="platform-internal" path="/platform-internal/v1" id="a3137151-1ed8-40f1-ac07-3baf66b95925" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="a3137151-1ed8-40f1-ac07-3baf66b95925fileName">platform-internal</con:setting>
+  </con:settings>
+  <con:parameters>
+    <con:parameter>
+      <con:name>Authorization</con:name>
+      <con:value/>
+      <con:style>HEADER</con:style>
+      <con:default/>
+    </con:parameter>
+  </con:parameters>
+  <con:resource name="accounts" path="accounts" id="248a9de4-b39e-4dbd-a6ff-c2596bd58ebe">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="@current" path="@current" id="75981b78-cad8-445d-ae81-e9f081a4167d">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value>Bearer</con:value>
+          <con:style>HEADER</con:style>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getCurrentAccount" id="447fb68d-1888-4d8c-9cc9-d039450d43d1" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="190b37eb-c025-49af-a96e-0126cc9c55ee" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="{id}" path="{id}" id="23f22826-be28-408d-abc4-2f8671f9fd35">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>id</con:name>
+          <con:value>id</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>id</con:default>
+        </con:parameter>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getAccountByMemberId" id="2653990b-8de6-4b60-82e2-e6c395c2e7f7" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="c770a198-2a17-49aa-b84a-2c7dc1e41b7e" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>id</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="{organizationid}" path="organization/{organizationid}" id="d2530ce3-9b00-424b-9dd2-7f8f30bca65e">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>organizationid</con:name>
+          <con:value>organizationid</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>organizationid</con:default>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getAccountsByOrganizationId" id="732fa6f2-66e0-4897-8c98-a2c0932eb514" method="GET">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>$page</con:name>
+            <con:value>1</con:value>
+            <con:style>QUERY</con:style>
+            <con:default>1</con:default>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+          <con:parameter>
+            <con:name>$pageSize</con:name>
+            <con:value>50</con:value>
+            <con:style>QUERY</con:style>
+            <con:default>50</con:default>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+        </con:parameters>
+        <con:request name="Request 1" id="1777577d-f571-4406-9d63-476d50d62f4b" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+            <con:entry>organizationid</con:entry>
+            <con:entry>$page</con:entry>
+            <con:entry>$pageSize</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="{parentOfMid}" path="parentsOf/{parentOfMid}" id="97c42cac-6769-4ba7-9d80-42e6bf946130">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>parentOfMid</con:name>
+          <con:value>parentOfMid</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>parentOfMid</con:default>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$page</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$pagesize</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getParentAccountsOfMid" id="fc6a0f5d-84d8-4326-8ecd-3af3025ff660" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="640c46ed-4ad3-4233-8d69-4b47efb6e0d6" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <con:entry key="$pagesize" value="50"/>
+            <con:entry key="$page" value="1"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+            <con:entry>parentOfMid</con:entry>
+            <con:entry>$page</con:entry>
+            <con:entry>$pagesize</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="children" path="children" id="4198e6e7-d2b9-475b-bf8b-afdf95d9d449">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getAccountsChildren" id="f14a6d2d-6a8f-42a8-b872-63611e46d36e" method="GET">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>$page</con:name>
+            <con:value>1</con:value>
+            <con:style>QUERY</con:style>
+            <con:default>1</con:default>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+          <con:parameter>
+            <con:name>$pageSize</con:name>
+            <con:value>50</con:value>
+            <con:style>QUERY</con:style>
+            <con:default>50</con:default>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+          <con:parameter>
+            <con:name>searchString</con:name>
+            <con:value/>
+            <con:style>QUERY</con:style>
+            <con:default/>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+          <con:parameter>
+            <con:name>excludeAcctTypes</con:name>
+            <con:value/>
+            <con:style>QUERY</con:style>
+            <con:default/>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+          <con:parameter>
+            <con:name>excludeCurrentAccount</con:name>
+            <con:value>false</con:value>
+            <con:style>QUERY</con:style>
+            <con:default>false</con:default>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+          <con:parameter>
+            <con:name>includeParentDetails</con:name>
+            <con:value>false</con:value>
+            <con:style>QUERY</con:style>
+            <con:default>false</con:default>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+          <con:parameter>
+            <con:name>sortColumn</con:name>
+            <con:value/>
+            <con:style>QUERY</con:style>
+            <con:default/>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+        </con:parameters>
+        <con:request name="Request 1" id="440c40bb-4045-4309-a54e-3a3017a9c739" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+            <con:entry>$page</con:entry>
+            <con:entry>$pageSize</con:entry>
+            <con:entry>searchString</con:entry>
+            <con:entry>excludeAcctTypes</con:entry>
+            <con:entry>excludeCurrentAccount</con:entry>
+            <con:entry>includeParentDetails</con:entry>
+            <con:entry>sortColumn</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:method name="getAccountsAlt1" id="46152f0d-ab46-431a-8277-7563cda398ef" method="GET">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>$page</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$pageSize</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>searchString</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>excludeAcctTypes</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>excludeCurrentAccount</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>includeParentDetails</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>parentsOfMid</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>sortColumn</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:request name="Request 1" id="152de956-f9ca-4f67-9a3d-26155e3f35c7" mediaType="application/json">
+        <con:settings/>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>searchString</con:entry>
+          <con:entry>excludeAcctTypes</con:entry>
+          <con:entry>excludeCurrentAccount</con:entry>
+          <con:entry>includeParentDetails</con:entry>
+          <con:entry>parentsOfMid</con:entry>
+          <con:entry>sortColumn</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="users" path="users" id="d758699f-f219-4559-aaca-5508018e0b3f">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="current" path="current" id="543590c2-04b5-47ad-b7f8-8a7e3e8d90e3">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getDefaultUser" id="c746e6b1-59a8-40a0-ba07-ccb06bb603b4" method="GET">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>view</con:name>
+            <con:value/>
+            <con:style>QUERY</con:style>
+            <con:default/>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+        </con:parameters>
+        <con:request name="Request 1" id="6c33c2db-9b0a-4ed3-adfa-1ac0f52abd6b" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>view</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="lookup" path="lookup" id="aea26ec3-acf4-473b-a2f5-53fa47d6419f">
+      <con:settings/>
+      <con:parameters/>
+      <con:resource name="{name}" path="{name}" id="2a6cc554-64da-4688-ab10-a00bc9460342">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>name</con:name>
+            <con:value>name</con:value>
+            <con:style>TEMPLATE</con:style>
+            <con:default>name</con:default>
+          </con:parameter>
+          <con:parameter>
+            <con:name>Authorization</con:name>
+            <con:value/>
+            <con:style>HEADER</con:style>
+            <con:default/>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+          <con:parameter>
+            <con:name>id</con:name>
+            <con:value/>
+            <con:style>QUERY</con:style>
+            <con:default/>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+          <con:parameter>
+            <con:name>username</con:name>
+            <con:value/>
+            <con:style>QUERY</con:style>
+            <con:default/>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+        </con:parameters>
+        <con:method name="lookup" id="fabf5105-5a5c-4256-b134-ea65aa297392" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="Request 1" id="1feee5d2-97da-465b-9597-9c50d41b5979" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters/>
+            <con:parameterOrder>
+              <con:entry>name</con:entry>
+              <con:entry>id</con:entry>
+              <con:entry>username</con:entry>
+              <con:entry>Authorization</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+      <con:resource name="name:{name}" path="name:{name}" id="4514bb86-9082-4feb-8569-9e1faa039de8">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>name</con:name>
+            <con:value>name</con:value>
+            <con:style>TEMPLATE</con:style>
+            <con:default>name</con:default>
+          </con:parameter>
+          <con:parameter>
+            <con:name>Authorization</con:name>
+            <con:value/>
+            <con:style>HEADER</con:style>
+            <con:default/>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+        </con:parameters>
+        <con:method name="getUserByName" id="5e4dc8aa-3974-42d7-a3b5-64d2a31d4ad9" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="Request 1" id="d9fd9363-5981-4274-981e-23f518aa11b4" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters/>
+            <con:parameterOrder>
+              <con:entry>name</con:entry>
+              <con:entry>Authorization</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+      <con:resource name="id:{id}" path="id:{id}" id="aa87123b-a7ab-4e69-aaab-0a159fb1494e">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>id</con:name>
+            <con:value>id</con:value>
+            <con:style>TEMPLATE</con:style>
+            <con:default>id</con:default>
+          </con:parameter>
+          <con:parameter>
+            <con:name>Authorization</con:name>
+            <con:value/>
+            <con:style>HEADER</con:style>
+            <con:default/>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+        </con:parameters>
+        <con:method name="getUserById" id="f9b2098d-1ba3-4433-8888-f934ad6e9c45" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="Request 1" id="9d388f6a-6ddd-4c97-ae40-a5676109d5ab" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters/>
+            <con:parameterOrder>
+              <con:entry>id</con:entry>
+              <con:entry>Authorization</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+      <con:resource name="username:{username}" path="username:{username}" id="f3cdb1bc-ff61-4922-af6f-38dce0855b92">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>username</con:name>
+            <con:value>username</con:value>
+            <con:style>TEMPLATE</con:style>
+            <con:default>username</con:default>
+          </con:parameter>
+        </con:parameters>
+        <con:method name="getUserByUsername" id="357ea08c-e4f5-4bbb-aab7-2a0fffa2dde5" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="Request 1" id="b46c020d-b8e5-4f92-8d03-d0e26599d240" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters>
+              <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+            </con:parameters>
+            <con:parameterOrder>
+              <con:entry>username</con:entry>
+              <con:entry>Authorization</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+      <con:resource name="name:{name}{Host}" path="name:{name}{Host}" id="007636b8-1fa1-490e-b620-f9aa81e78756">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>name</con:name>
+            <con:value>name</con:value>
+            <con:style>TEMPLATE</con:style>
+            <con:default>name</con:default>
+          </con:parameter>
+        </con:parameters>
+        <con:method name="getUserByname" id="70138a5d-6134-44f9-8bed-9503e5b5b9f8" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="Request 1" id="8d41cc86-d83e-40a4-b04b-2d3342133646" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters>
+              <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+            </con:parameters>
+            <con:parameterOrder>
+              <con:entry>name</con:entry>
+              <con:entry>Authorization</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+    </con:resource>
+    <con:resource name="impersonate" path="impersonate" id="fadd2cb0-902c-4934-a728-337843599366">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>mid</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:resource name="{mid}" path="{mid}" id="90eaed82-d7d6-41f2-908f-c1175ce2cbae">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>mid</con:name>
+            <con:value>mid</con:value>
+            <con:style>TEMPLATE</con:style>
+            <con:default>mid</con:default>
+          </con:parameter>
+          <con:parameter>
+            <con:name>namepart</con:name>
+            <con:value/>
+            <con:style>QUERY</con:style>
+            <con:default/>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+          <con:parameter>
+            <con:name>admin</con:name>
+            <con:value/>
+            <con:style>QUERY</con:style>
+            <con:default/>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+          <con:parameter>
+            <con:name>mcadmin</con:name>
+            <con:value/>
+            <con:style>QUERY</con:style>
+            <con:default/>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+          <con:parameter>
+            <con:name>showall</con:name>
+            <con:value/>
+            <con:style>QUERY</con:style>
+            <con:default/>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+        </con:parameters>
+        <con:method name="getPossibleUsersToImpersonate" id="072e8980-3786-40c7-a5dd-07acaef236ff" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="Request 1" id="fd6dec7a-bd4c-4f5c-be74-fe0f48337d36" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters>
+              <con:entry key="mcadmin" value="false"/>
+              <con:entry key="admin" value="false"/>
+              <con:entry key="showall" value="false"/>
+            </con:parameters>
+            <con:parameterOrder>
+              <con:entry>mid</con:entry>
+              <con:entry>Authorization</con:entry>
+              <con:entry>namepart</con:entry>
+              <con:entry>admin</con:entry>
+              <con:entry>mcadmin</con:entry>
+              <con:entry>showall</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+    </con:resource>
+    <con:resource name="@default" path="@default" id="8e0d89e3-0583-49c7-bf19-acf30cd9c51f">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>view</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getDefaultUserAlt1" id="5ef9467a-9ea3-42b8-b398-ddcadf0d5bea" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="ad277ef5-e68e-4d10-903e-92962b8e4f84" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>view</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="permissions" path="@current/permissions" id="4f0f30c2-f7bc-45d9-982d-857dd14d792d">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>$page</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$pageSize</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$filter</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>mids</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>featureSet</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:resource name="{id}" path="{id}" id="f614706b-a9b6-4c4e-a878-6927e8c41c80">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>id</con:name>
+            <con:value>id</con:value>
+            <con:style>TEMPLATE</con:style>
+            <con:default>id</con:default>
+          </con:parameter>
+        </con:parameters>
+        <con:method name="getpermissionbypermissionid" id="da7b09c9-ac22-4a5f-a7b3-2a08a17ded66" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="Request 1" id="8b9b13fe-1dee-41a7-a4d2-0e9a5e62edc0" mediaType="application/json">
+            <con:settings/>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters>
+              <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+            </con:parameters>
+            <con:parameterOrder>
+              <con:entry>$page</con:entry>
+              <con:entry>$pageSize</con:entry>
+              <con:entry>$filter</con:entry>
+              <con:entry>mids</con:entry>
+              <con:entry>featureSet</con:entry>
+              <con:entry>id</con:entry>
+              <con:entry>Authorization</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+      <con:method name="getpermissionsbyfields" id="0d5841bc-f20b-464e-8811-b0bb117e50c6" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="2ff5ee21-4692-4ce9-9d3a-4de03129460d" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <con:entry key="Authorization" value=""/>
+            <con:entry key="$page" value="1"/>
+            <con:entry key="$pageSize" value="50"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>$page</con:entry>
+            <con:entry>$pageSize</con:entry>
+            <con:entry>$filter</con:entry>
+            <con:entry>mids</con:entry>
+            <con:entry>featureSet</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+  </con:resource>
+  <con:resource name="characterSets" path="characterSets" id="de156038-c56b-4955-815a-cd04fb3a332b">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:style>HEADER</con:style>
+      </con:parameter>
+      <con:parameter>
+        <con:name>$orderby</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="{id}" path="{id}" id="81146db3-e74e-48a4-b3d1-18114cb4393b">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>id</con:name>
+          <con:value>id</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>id</con:default>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getCharactersetById" id="125f1154-fb52-4848-b0ca-058a2464d8b7" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="a3f8eb4c-c650-4911-9c70-bf6ee7bccb4d" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+            <con:entry>id</con:entry>
+            <con:entry>$orderby</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:method name="getCharactersetCollection" id="8cbb665f-3a6e-40f1-b4f4-54bf6825bd79" method="GET">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>$page</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$pageSize</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:request name="Request 1" id="b95f9206-c5e7-4b46-b5f0-543df35dcbdd" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>$orderby</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="favorites" path="favorites" id="f6fdcce9-f4b4-46e9-863d-fce2f3c5e43b">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:style>HEADER</con:style>
+      </con:parameter>
+      <con:parameter>
+        <con:name>page</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>pageSize</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>orderBy</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>apiObjectTypeId</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="{id}" path="{id}" id="ec21b22c-b9bc-4a87-b5de-79375732fd97">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>id</con:name>
+          <con:value>id</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>id</con:default>
+        </con:parameter>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getFavorites" id="5d440997-dee5-4516-97e5-716ac5914c54" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="2340e1fe-b27b-4605-a5b7-eca465e1895d" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>id</con:entry>
+            <con:entry>Authorization</con:entry>
+            <con:entry>page</con:entry>
+            <con:entry>pageSize</con:entry>
+            <con:entry>orderBy</con:entry>
+            <con:entry>apiObjectTypeId</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+      <con:method name="deleteFavorites" id="3198fff2-155a-46c8-8d97-104dfcc52747" method="DELETE">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="1d21c1b7-0393-48f8-b24d-8843c136e31f" mediaType="application/json" postQueryString="false">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>id</con:entry>
+            <con:entry>Authorization</con:entry>
+            <con:entry>page</con:entry>
+            <con:entry>pageSize</con:entry>
+            <con:entry>orderBy</con:entry>
+            <con:entry>apiObjectTypeId</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:method name="postFavorite" id="188b2a29-e75f-48a6-99ca-52b59490ed07" method="POST">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="Request 1" id="4e96361a-bcd7-4e0f-afb6-e4857ade7ede" mediaType="application/json" postQueryString="false">
+        <con:settings/>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>page</con:entry>
+          <con:entry>pageSize</con:entry>
+          <con:entry>orderBy</con:entry>
+          <con:entry>apiObjectTypeId</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+    <con:method name="getFavoriteCollection" id="90567d18-fbd5-4c34-b756-aaacfd0c7426" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="Request 1" id="5976bb14-e3df-416c-bae9-67a87b9fb3c2" mediaType="application/json">
+        <con:settings/>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>page</con:entry>
+          <con:entry>pageSize</con:entry>
+          <con:entry>orderBy</con:entry>
+          <con:entry>apiObjectTypeId</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="userkeyvalue" path="userkeyvalue" id="904afc62-9d90-4be0-8ed2-74459c12236f">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="{keyname}" path="{keyname}" id="fd5468a5-c7e6-4597-8e9b-36a828330075">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter required="false" disableUrlEncoding="false">
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>keyname</con:name>
+          <con:value>keyname</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>keyname</con:default>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getuserkeyvaluebykeyname" id="227d9ec4-6878-4c44-b6a7-fa5ed8c1444c" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="863bdd19-b434-4c55-84bf-015eeaa9e7e4" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>keyname</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+      <con:method name="putuserkeyvalue" id="aa0c7afa-7622-4e27-a1d9-8d53ffbfc381" method="PUT">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="f8eaa048-7a89-4dcb-873e-e89ea2e2a362" mediaType="application/json" postQueryString="false">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>keyname</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+      <con:method name="patchuserkeyvalue" id="1771234c-eb79-4f21-86cd-ab8098af5cab" method="PATCH">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="79897b3e-d5b0-4354-bf41-844555f15c1c" mediaType="application/json" postQueryString="false">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>keyname</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+      <con:method name="deleteuserkeyvalue" id="888f34af-fb84-41a8-858a-a523892fd1b7" method="DELETE">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="31019692-330f-400e-9bbe-09ce0fe5f403" mediaType="application/json" postQueryString="false">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>keyname</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="@me" path="@me" id="d80d0395-e6dd-473a-81e1-35895c1c6557">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getUserKeyValueCollectionMe" id="51f1d785-8ffa-4932-83de-f746a5c4f7f4" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="aa82b1d6-83ff-466b-bd33-55d4e5c7ca8d" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="{key}" path="{key}" id="b8cb744b-8434-4d35-ad13-51b5486319e2">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter required="false" disableUrlEncoding="false">
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>key</con:name>
+          <con:value>key</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>key</con:default>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getUserKeyValueKEY" id="b0f00006-f923-4a0f-a918-004b407267f9" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="f9363dc2-d4d6-40de-a8bc-b7c201c89a80" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+            <con:entry>key</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="{keyname}" path="{keyname}" id="4d890c9c-1c89-4def-99e6-071daae8d8f2">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>keyname</con:name>
+          <con:value>keyname</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>keyname</con:default>
+        </con:parameter>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="deleteUserKeyValue" id="82764889-b043-45f3-b904-6a994da7d5a8" method="DELETE">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="f50e9481-43cc-47ef-808c-3d0661a4f969" mediaType="application/json" postQueryString="false">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+            <con:entry>keyname</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+      <con:method name="putUserKeyValue" id="82764889-b043-45f3-b904-6a994da7d5a8" method="PUT">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="f50e9481-43cc-47ef-808c-3d0661a4f969" mediaType="application/json" postQueryString="false">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+            <con:entry>keyname</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+      <con:method name="patchUserKeyValue" id="82764889-b043-45f3-b904-6a994da7d5a8" method="PATCH">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="f50e9481-43cc-47ef-808c-3d0661a4f969" mediaType="application/json" postQueryString="false">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+            <con:entry>keyname</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:method name="getuserkeyvalueCollection" id="57984060-538f-43b5-9d75-1a0c83ed33a2" method="GET">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>$page</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$pageSize</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:request name="Request 1" id="c8e15167-a52a-4da9-a942-2d417d5b14cb" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+    <con:method name="postuserkeyvalue" id="546ed3ee-9f5b-414f-93a3-05faf5e5ed17" method="POST">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="Request 1" id="b9b806ed-297b-4f80-a32d-d624643859f6" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="appgroupsections" path="appgroupsections" id="2a890ef0-aa3d-4c5b-a7dc-64192827cc34">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>$page</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>$pageSize</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+      </con:parameter>
+    </con:parameters>
+    <con:method name="getappgroupsections" id="0006db70-1655-4b6f-b23d-937c2f4649b7" method="GET">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:request name="Request 1" id="4facb24d-bddf-4a50-848c-ccfa99a9e501" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="appgroups" path="appgroups" id="b7bc7529-fe28-46a7-be0a-dc219d0ca8de">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>$page</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>$pageSize</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+      </con:parameter>
+    </con:parameters>
+    <con:method name="getappgroups" id="adb1a41d-e5c4-44a3-bf66-dfdc5d543c3a" method="GET">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:request name="Request 1" id="909d6333-d501-41e0-980e-a63e4aa4d2be" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="organization" path="organization" id="f6d51988-0b9c-4be8-b89d-d3839f95bc33">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="{organizationid}" path="{organizationid}" id="edf87507-c65f-4a81-ac0c-2f04fd91f1e7">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter required="false" disableUrlEncoding="false">
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>organizationid</con:name>
+          <con:value>organizationid</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>organizationid</con:default>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$page</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$pageSize</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="Method 1" id="d94b0022-adc2-49e0-803b-5447353dde04" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="fd994bbd-3cc4-4ac1-841b-ee712f1b0538" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>organizationid</con:entry>
+            <con:entry>$page</con:entry>
+            <con:entry>$pageSize</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+  </con:resource>
+  <con:resource name="accounts" path="accounts" id="f671d571-4e6c-48af-aec3-35319b4e7e1d">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="organization" path="organization" id="6e23656d-8ae9-4ef5-8f62-9de5a77def74">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="Method 1" id="cfe34b94-8e15-49c6-9b20-67633dcda1f9" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="26719bd5-f45e-4735-a710-5470eff24d54" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+  </con:resource>
+  <con:resource name="CrossDomainOrigins" path="CrossDomainOrigins" id="7585fe8b-00d3-4613-bcc5-af295bb88227">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:method name="getCrossDomainOrigins" id="f8104173-9b10-4cab-a628-59be5e7896cc" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="Request 1" id="d35346da-77f0-467f-b3bf-1e453b8c4859" mediaType="application/json">
+        <con:settings/>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="organizations" path="organizations" id="698cabd9-a290-4791-817a-cc56987068bb">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter required="false" disableUrlEncoding="false">
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>$page</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>$pageSize</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:method name="getOrganizations" id="dac04330-b774-4a51-9c45-d0f912c0f6d5" method="GET">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:request name="Request 1" id="f6c4b1a7-0246-4ab6-aa46-a5f65764ff06" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="rest" path="rest" id="50465a8e-cba6-4fa9-809c-09a90b0fd466">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="experimental" path="experimental" id="8ba1103e-fc92-4e78-a0a9-043adbde7454">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="platform-internal/DiscoveryExperimental" id="ba29fc02-11cd-45f5-8d91-0e64f967d88d" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="7238c82a-58e5-44bc-b1d7-251eea3e6151" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:method name="platform-internal/Discovery" id="d4afb2ea-bcfb-4e4b-83bc-71c76e25dc68" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="GetDiscovery" id="975705c9-8b19-4655-ad53-1351fd6c3e7e" mediaType="application/json">
+        <con:settings/>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="categories" path="categories" id="213b8984-34dd-41ed-8460-936a5de47d95">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter required="false" disableUrlEncoding="false">
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>Host</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>$page</con:name>
+        <con:value>1</con:value>
+        <con:style>QUERY</con:style>
+        <con:default>1</con:default>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>$pagesize</con:name>
+        <con:value>50</con:value>
+        <con:style>QUERY</con:style>
+        <con:default>50</con:default>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>$orderby</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>$filter</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>categoryType</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="categories/{id}" path="{id}" id="a04a9337-a5d4-41cc-8ccd-27117e3140d3">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter required="false" disableUrlEncoding="false">
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>id</con:name>
+          <con:value>id</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>id</con:default>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="deleteCategory" id="3b4bb7c6-c3f9-49d2-acab-bdd310008059" method="DELETE">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="59258ae1-c6a5-43dd-8c1f-9843a1d5bf4a" mediaType="application/json" postQueryString="false">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <con:entry key="Authorization" value=""/>
+            <con:entry key="categoryType" value=""/>
+            <con:entry key="$pagesize" value=""/>
+            <con:entry key="$page" value=""/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Host</con:entry>
+            <con:entry>id</con:entry>
+            <con:entry>$page</con:entry>
+            <con:entry>$pagesize</con:entry>
+            <con:entry>$orderby</con:entry>
+            <con:entry>$filter</con:entry>
+            <con:entry>Authorization</con:entry>
+            <con:entry>categoryType</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+      <con:method name="updateCategory" id="299bfd36-8f04-4652-922d-bc68d63eec99" method="PATCH">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="f7486cbe-554b-4e22-b120-89338554ffbc" mediaType="application/json" postQueryString="false">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <con:entry key="$pagesize" value=""/>
+            <con:entry key="$page" value=""/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+            <con:entry>Host</con:entry>
+            <con:entry>$page</con:entry>
+            <con:entry>$pagesize</con:entry>
+            <con:entry>$orderby</con:entry>
+            <con:entry>$filter</con:entry>
+            <con:entry>categoryType</con:entry>
+            <con:entry>id</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+      <con:method name="getCategory" id="72a840ba-baa6-44ef-8898-40ddd2156f7e" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="ea9b6042-de15-4833-9f2f-8688c0dac1a8" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="$page" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+            <con:entry>Host</con:entry>
+            <con:entry>$page</con:entry>
+            <con:entry>$pagesize</con:entry>
+            <con:entry>$orderby</con:entry>
+            <con:entry>$filter</con:entry>
+            <con:entry>categoryType</con:entry>
+            <con:entry>id</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="children" path="{id}/children" id="c6a1d9b4-0525-4a67-a0bd-4368706c9796">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter required="false" disableUrlEncoding="false">
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>id</con:name>
+          <con:value>id</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>id</con:default>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getCategoryChildren" id="06f15bdd-9bc5-432d-8638-93cdf53ca9cd" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="e2e57522-0484-41ed-a5ce-b9141b4130ed" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <con:entry key="Authorization" value=""/>
+            <con:entry key="categoryType" value=""/>
+            <con:entry key="$pagesize" value="50"/>
+            <con:entry key="$page" value="1"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Host</con:entry>
+            <con:entry>id</con:entry>
+            <con:entry>$page</con:entry>
+            <con:entry>$pagesize</con:entry>
+            <con:entry>$orderby</con:entry>
+            <con:entry>$filter</con:entry>
+            <con:entry>Authorization</con:entry>
+            <con:entry>categoryType</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="fullPath" path="{id}/fullPath" id="feaa5a8f-4d1a-4e2c-a804-9a05ac0e2860">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter required="false" disableUrlEncoding="false">
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>id</con:name>
+          <con:value>id</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>id</con:default>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getCategoryFullPath" id="8a001fae-e6cd-4482-9e83-87ffa244cb88" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="d2e54003-1249-4f06-8c09-da9afebde025" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <con:entry key="Authorization" value=""/>
+            <con:entry key="categoryType" value=""/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Host</con:entry>
+            <con:entry>$page</con:entry>
+            <con:entry>$pagesize</con:entry>
+            <con:entry>$orderby</con:entry>
+            <con:entry>$filter</con:entry>
+            <con:entry>id</con:entry>
+            <con:entry>Authorization</con:entry>
+            <con:entry>categoryType</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:method name="getCategoryCollection" id="6cfb0345-a1ce-42fb-bb7c-e6b4a6ed17e9" method="GET">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>$search</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>includeFullPath</con:name>
+          <con:value>false</con:value>
+          <con:style>QUERY</con:style>
+          <con:default>false</con:default>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:request name="Request 1" id="e453960c-ad11-42e9-942c-865be37dff7f" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pagesize</con:entry>
+          <con:entry>$orderby</con:entry>
+          <con:entry>$search</con:entry>
+          <con:entry>includeFullPath</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>categoryType</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+    <con:method name="postCategory" id="6cfb0345-a1ce-42fb-bb7c-e6b4a6ed17e9" method="POST">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="Request 1" id="e453960c-ad11-42e9-942c-865be37dff7f" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value=""/>
+          <con:entry key="categoryType" value=""/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pagesize</con:entry>
+          <con:entry>$orderby</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>Authorization</con:entry>
+          <con:entry>categoryType</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="calendar/events" path="calendar/events" id="8fe07039-6afb-412e-8096-1d7dafa2db44">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter required="false" disableUrlEncoding="false">
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>$filter</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>showexternalreference</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>mids</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>Host</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>$page</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>$pageSize</con:name>
+        <con:style>QUERY</con:style>
+      </con:parameter>
+      <con:parameter>
+        <con:name>starttime</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>endtime</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="calendar/events/{id}" path="{id}" id="fb0cb849-ecf5-4829-8b1f-debcf9a65c25">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>id</con:name>
+          <con:value>id</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>id</con:default>
+        </con:parameter>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="patchCalendarEvents" id="b7a101d9-3f28-4477-8b25-ca3d81f07bdd" method="PATCH">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="072e0858-5a23-4e93-a6a8-e872efff9c00" mediaType="application/json" postQueryString="false">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>$filter</con:entry>
+            <con:entry>showexternalreference</con:entry>
+            <con:entry>mids</con:entry>
+            <con:entry>Host</con:entry>
+            <con:entry>$page</con:entry>
+            <con:entry>$pageSize</con:entry>
+            <con:entry>starttime</con:entry>
+            <con:entry>endtime</con:entry>
+            <con:entry>id</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+      <con:method name="deleteCalendarEvents" id="f327f35f-973a-4a76-8850-6b52cbc32a10" method="DELETE">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="964e136f-ca92-4907-b6bf-b94ece9ec205" mediaType="application/json" postQueryString="false">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>$filter</con:entry>
+            <con:entry>showexternalreference</con:entry>
+            <con:entry>mids</con:entry>
+            <con:entry>Host</con:entry>
+            <con:entry>$page</con:entry>
+            <con:entry>$pageSize</con:entry>
+            <con:entry>starttime</con:entry>
+            <con:entry>endtime</con:entry>
+            <con:entry>id</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:method name="getCalendarEvents" id="5cf0587f-5aba-4a2c-b7e5-00dd8f37f605" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="Request 1" id="43e9ccac-2c86-4f4f-a766-24937532a609" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="showexternalreference" value="false"/>
+          <con:entry key="Authorization" value=""/>
+          <con:entry key="$page" value="1"/>
+          <con:entry key="$pageSize" value="50"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>$filter</con:entry>
+          <con:entry>showexternalreference</con:entry>
+          <con:entry>mids</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>starttime</con:entry>
+          <con:entry>endtime</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+    <con:method name="postCalendarEvents" id="1c8c41d2-ed04-49dc-bb33-02ea041da30d" method="POST">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="Request 1" id="f4d1e981-ccdd-44ed-845f-acc9717fd2f8" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>$filter</con:entry>
+          <con:entry>showexternalreference</con:entry>
+          <con:entry>mids</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>starttime</con:entry>
+          <con:entry>endtime</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="calendar-events" path="calendar-events" id="0671919f-ea77-406c-81c3-42f01dd4ec89">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter required="false" disableUrlEncoding="false">
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>host</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="calendar-events/{id}" path="{id}" id="e6db5b1f-b90d-4eee-b53b-65384fe59a9f">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>id</con:name>
+          <con:value>id</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>id</con:default>
+        </con:parameter>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="patchCalendarEventsAlt1" id="d64873a8-9246-49eb-91ce-61bc5f04655b" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="74e66e72-b440-493a-b5d3-59d6577bc33e" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>host</con:entry>
+            <con:entry>id</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+      <con:method name="deleteCalendarEventsAlt1" id="d64873a8-9246-49eb-91ce-61bc5f04655b" method="DELETE">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="74e66e72-b440-493a-b5d3-59d6577bc33e" mediaType="application/json" postQueryString="false">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>host</con:entry>
+            <con:entry>id</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:method name="getCalendarEventsAlt1" id="b7a1f540-65ea-4dd7-aa95-a287a57a9196" method="GET">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>$page</con:name>
+          <con:value>1</con:value>
+          <con:style>QUERY</con:style>
+          <con:default>1</con:default>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$pagesize</con:name>
+          <con:value>50</con:value>
+          <con:style>QUERY</con:style>
+          <con:default>50</con:default>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>starttime</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>endtime</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$filter</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>showexternalreference</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>mids</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:request name="Request 1" id="d396f76b-7a97-498f-8c84-2f68e95b021b" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>$page</con:entry>
+          <con:entry>$pagesize</con:entry>
+          <con:entry>starttime</con:entry>
+          <con:entry>endtime</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>showexternalreference</con:entry>
+          <con:entry>mids</con:entry>
+          <con:entry>host</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+    <con:method name="postCalendarEventsAlt1" id="64f3b0fc-48c8-4461-b231-975acb5d41c8" method="POST">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="Request 1" id="12b43e09-36b2-4245-87e3-314f0d1e7dea" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>host</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="calendareventtypes" path="mids" id="5c32839c-2ef5-4dee-b573-e6a5d37fa78c">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="{mids}/calendareventtypes" path="{mids}/calendareventtypes" id="3aee9b58-8063-4ea3-99ec-76cb4d1eba95">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter required="false" disableUrlEncoding="false">
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>mids</con:name>
+          <con:value>mids</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>mids</con:default>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$page</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$pageSize</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>Host</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getEventTypes" id="ce1acb15-28f2-4d80-b503-bfc806b68f55" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="78fefa7f-2490-4f9b-9416-1ecb16a640a3" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <con:entry key="Authorization" value=""/>
+            <con:entry key="$page" value="1"/>
+            <con:entry key="$pageSize" value="50"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>mids</con:entry>
+            <con:entry>$page</con:entry>
+            <con:entry>$pageSize</con:entry>
+            <con:entry>Host</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="calendareventtypes" path="all/calendareventtypes" id="cd07c179-3c0b-4923-96ed-eba17fb00b93">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>$page</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$pageSize</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>Host</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getEventTypesForAllMids" id="7e4531db-31a3-43fb-9f0e-1e7a48d7219e" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="b399f2b4-381f-4032-966f-935b31ded3f7" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <con:entry key="Authorization" value=""/>
+            <con:entry key="$page" value="1"/>
+            <con:entry key="$pageSize" value="50"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>$page</con:entry>
+            <con:entry>$pageSize</con:entry>
+            <con:entry>Host</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="current/calendareventtypes" path="current/calendareventtypes" id="cd07c179-3c0b-4923-96ed-eba17fb00b93">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>$page</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$pageSize</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>Host</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="GetEventTypesForCurrentMid" id="7e4531db-31a3-43fb-9f0e-1e7a48d7219e" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="b399f2b4-381f-4032-966f-935b31ded3f7" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <con:entry key="Authorization" value=""/>
+            <con:entry key="$page" value="1"/>
+            <con:entry key="$pageSize" value="50"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>$page</con:entry>
+            <con:entry>$pageSize</con:entry>
+            <con:entry>Host</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+  </con:resource>
+  <con:resource name="calendar-eventtypes" path="calendar-eventtypes" id="aa438e3a-19bd-4b00-a7c5-7094401844bd">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>mids</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>$page</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>$pageSize</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>Host</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+      </con:parameter>
+    </con:parameters>
+    <con:method name="getCalendarEventTypes" id="a778c591-ff32-4079-8e90-dd5a21f6825f" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="Request 1" id="d6a4d983-aa79-4b79-b32d-5b6fda0b8a6f" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>mids</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="businessrules/@me" path="businessrules/@me" id="dddb9ccd-e925-4e89-b770-dc931394367d">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter required="false" disableUrlEncoding="false">
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>Host</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:method name="getBusinessRuleCollection" id="a79400a1-0caa-4b13-8ec4-2863eed1a7da" method="GET">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>$pageSize</con:name>
+          <con:value>50</con:value>
+          <con:style>QUERY</con:style>
+          <con:default>50</con:default>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$page</con:name>
+          <con:value>1</con:value>
+          <con:style>QUERY</con:style>
+          <con:default>1</con:default>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:request name="Request 1" id="2219972a-80b9-4f8d-80a4-e5c8c4fee248" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="applications" path="applications" id="c6a74399-6cc5-4e84-930b-9e096bdd9246">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="key:{key}" path="{applicationId}/resourceSets/key:{key}" id="6c85e263-fba7-4c12-94c9-e2b25b70dfa0">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>applicationId</con:name>
+          <con:value>applicationId</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>applicationId</con:default>
+        </con:parameter>
+        <con:parameter>
+          <con:name>key</con:name>
+          <con:value>key</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>key</con:default>
+        </con:parameter>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getGlobalizationResourceSet" id="21f39c76-a322-4c3f-98cd-06619ccbfc2f" method="GET">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>culture</con:name>
+            <con:value/>
+            <con:style>QUERY</con:style>
+            <con:default/>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+        </con:parameters>
+        <con:request name="Request 1" id="daeaf554-1f84-47bd-8008-52db680f2572" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>applicationId</con:entry>
+            <con:entry>key</con:entry>
+            <con:entry>culture</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="@me" path="@me" id="efa6dff5-970e-47d4-93e1-697d837be71f">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter required="false" disableUrlEncoding="false">
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$page</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$pageSize</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>view</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>onlymobileapps</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>Host</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getapplicaitoninstancesbyfields" id="f51cc6d3-3a74-458f-8c4a-f04cfb69b727" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="1bc00c1b-f2ab-4b96-800a-22bf78db7c19" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <con:entry key="Authorization" value=""/>
+            <con:entry key="onlymobileapps" value="false"/>
+            <con:entry key="$page" value="1"/>
+            <con:entry key="$pageSize" value="50"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>$page</con:entry>
+            <con:entry>$pageSize</con:entry>
+            <con:entry>view</con:entry>
+            <con:entry>onlymobileapps</con:entry>
+            <con:entry>Host</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="serviceUser" path="{appId}/serviceUser" id="cf5754ba-7e32-4c18-96bb-ef7bc42bf39d">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter required="false" disableUrlEncoding="false">
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>appId</con:name>
+          <con:value>appId</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>appId</con:default>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="GetServiceUserByApplicationId" id="344d15ae-0bd8-46e2-86b3-49a994f54061" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="1bb63b54-5345-485f-a18b-7c13978f4e56" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>appId</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+  </con:resource>
+  <con:resource name="memberkeystore" path="eid/{eid}/mid/{mid}/memberkeystore" id="8c5d59d6-9f78-40d9-8ba6-4abb82cb0363">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>eid</con:name>
+        <con:value>eid</con:value>
+        <con:style>TEMPLATE</con:style>
+        <con:default>eid</con:default>
+      </con:parameter>
+      <con:parameter>
+        <con:name>mid</con:name>
+        <con:value>mid</con:value>
+        <con:style>TEMPLATE</con:style>
+        <con:default>mid</con:default>
+      </con:parameter>
+      <con:parameter>
+        <con:name>Host</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="{keyname}" path="{keyname}" id="349d6319-b51c-4918-91f4-7eae7b535628">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter required="false" disableUrlEncoding="false">
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>keyname</con:name>
+          <con:value>keyname</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>keyname</con:default>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getMemberKeyStoreByKey" id="5c7e4071-dc47-4970-86a2-88d987bde5a2" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="9b873f91-5b41-4854-83bb-b401920d55d0" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>eid</con:entry>
+            <con:entry>mid</con:entry>
+            <con:entry>Host</con:entry>
+            <con:entry>keyname</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+      <con:method name="patchMemberKeyStore" id="5c7e4071-dc47-4970-86a2-88d987bde5a2" method="PATCH">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="9b873f91-5b41-4854-83bb-b401920d55d0" mediaType="application/json" postQueryString="false">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>eid</con:entry>
+            <con:entry>mid</con:entry>
+            <con:entry>Host</con:entry>
+            <con:entry>keyname</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+      <con:method name="putMemberKeyStore" id="5c7e4071-dc47-4970-86a2-88d987bde5a2" method="PUT">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="9b873f91-5b41-4854-83bb-b401920d55d0" mediaType="application/json" postQueryString="false">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>eid</con:entry>
+            <con:entry>mid</con:entry>
+            <con:entry>Host</con:entry>
+            <con:entry>keyname</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+      <con:method name="deleteMemberKeyStore" id="5c7e4071-dc47-4970-86a2-88d987bde5a2" method="DELETE">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="9b873f91-5b41-4854-83bb-b401920d55d0" mediaType="application/json" postQueryString="false">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>eid</con:entry>
+            <con:entry>mid</con:entry>
+            <con:entry>Host</con:entry>
+            <con:entry>keyname</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:method name="getMemberKeyStoreCollection" id="a09c5af2-266e-4844-b865-394b47e30d7d" method="GET">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>$page</con:name>
+          <con:value>1</con:value>
+          <con:style>QUERY</con:style>
+          <con:default>1</con:default>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$pagesize</con:name>
+          <con:value>50</con:value>
+          <con:style>QUERY</con:style>
+          <con:default>50</con:default>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:request name="Request 1" id="a962b6ba-5acf-46c7-aa51-ba361ced3f8c" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>eid</con:entry>
+          <con:entry>mid</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pagesize</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+    <con:method name="postMemberKeyStore" id="a09c5af2-266e-4844-b865-394b47e30d7d" method="POST">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="Request 1" id="a962b6ba-5acf-46c7-aa51-ba361ced3f8c" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>eid</con:entry>
+          <con:entry>mid</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="userkeystore" path="userkeystore" id="50bac4e2-101c-4853-ae69-55aa5b220435">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="@me" path="@me" id="d0777504-207a-41fd-a49f-cb3f0a61c9dc">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+        </con:parameter>
+      </con:parameters>
+      <con:resource name="{key}" path="{key}" id="6b6a3d62-3408-45a3-9e32-5dfd2e0a8290">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter required="false" disableUrlEncoding="false">
+            <con:name>Authorization</con:name>
+            <con:value/>
+            <con:style>HEADER</con:style>
+            <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+            <con:default/>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+          <con:parameter>
+            <con:name>key</con:name>
+            <con:value>key</con:value>
+            <con:style>TEMPLATE</con:style>
+            <con:default>key</con:default>
+          </con:parameter>
+        </con:parameters>
+        <con:method name="getUserKeyStoreCollectionForMeByKey" id="32ce03ac-4313-4f19-84b7-b62cb297e5c7" method="GET">
+          <con:settings/>
+          <con:parameters>
+            <con:parameter>
+              <con:name>Authorization</con:name>
+              <con:value/>
+              <con:style>HEADER</con:style>
+              <con:default/>
+            </con:parameter>
+          </con:parameters>
+          <con:request name="Request 1" id="abb159da-8f4e-44db-a617-594b08f2973d" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer $accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters>
+              <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+            </con:parameters>
+            <con:parameterOrder>
+              <con:entry>key</con:entry>
+              <con:entry>Authorization</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+      <con:method name="getUserKeyStoreCollectionForMe" id="e7ddee36-9fb1-4d9f-88bd-2da28e8f0bee" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="8b21f74b-c16f-4937-9a6a-d84e834e13dc" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="{key}" path="{key}" id="7f09b4a6-c400-452e-87f1-e2eda12dd60a">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter required="false" disableUrlEncoding="false">
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>key</con:name>
+          <con:value>key</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>key</con:default>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getUserKeyStoreCollectionByKey" id="5a5f87c4-6832-406e-bb63-7a53c08df551" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="f73e676d-c27f-40b0-b6e8-5f899adc056d" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>key</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="{keyname" path="{Keyname}" id="a6147b4e-7cfc-40a6-b09f-aa9d3ad4d263">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter required="false" disableUrlEncoding="false">
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>Keyname</con:name>
+          <con:value/>
+          <con:style>TEMPLATE</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="patchUserKeyStore" id="45ac7439-456f-4f4b-bc59-4cd6cdb4fef1" method="PATCH">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="d29554a4-da78-4a50-87dc-00e230f9c914" mediaType="application/json" postQueryString="false">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Keyname</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+      <con:method name="putUserKeyStore" id="45ac7439-456f-4f4b-bc59-4cd6cdb4fef1" method="PUT">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="d29554a4-da78-4a50-87dc-00e230f9c914" mediaType="application/json" postQueryString="false">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Keyname</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+      <con:method name="deleteUserKeyStore" id="45ac7439-456f-4f4b-bc59-4cd6cdb4fef1" method="DELETE">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="d29554a4-da78-4a50-87dc-00e230f9c914" mediaType="application/json" postQueryString="false">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Keyname</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:method name="getUserKeyStoreCollection" id="040c6e92-5f76-4ef6-a60d-56118907e94f" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="Request 1" id="85a6d386-776a-4e07-ba47-27ab348d4e82" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+    <con:method name="postUserKeyStore" id="040c6e92-5f76-4ef6-a60d-56118907e94f" method="POST">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="Request 1" id="85a6d386-776a-4e07-ba47-27ab348d4e82" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="calendarprojectedevents" path="mids" id="450000b0-583c-421d-9079-045704d369a4">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="all/calendarprojectedevents" path="all/calendarprojectedevents" id="43e92ade-8e7d-45b0-b58a-033f83928b0a">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter required="false" disableUrlEncoding="false">
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$page</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$pageSize</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>starttime</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>endtime</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getCalendarProjectedEventsAll" id="bf1dc799-8f98-4e88-81b3-5f342454699f" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="a7daa982-bcbb-4762-9f28-bcaf11bfac6f" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <con:entry key="Authorization" value=""/>
+            <con:entry key="$page" value="1"/>
+            <con:entry key="$pageSize" value="50"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>$page</con:entry>
+            <con:entry>$pageSize</con:entry>
+            <con:entry>starttime</con:entry>
+            <con:entry>endtime</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="calendarprojectedevents" path="{mids}/calendarprojectedevents" id="48056767-619c-40df-951a-47fad1f9b02e">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter required="false" disableUrlEncoding="false">
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>mids</con:name>
+          <con:value>mids</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>mids</con:default>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$page</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$pageSize</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>starttime</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>endtime</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getCalendarProjectedEventsMids" id="bbb6938b-843b-4cea-8488-54906619a0c8" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="fb3f4354-cb20-46cf-b656-c3a09a36616a" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>mids</con:entry>
+            <con:entry>$page</con:entry>
+            <con:entry>$pageSize</con:entry>
+            <con:entry>starttime</con:entry>
+            <con:entry>endtime</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="calendarprojectedevents" path="current/calendarprojectedevents" id="b4bcd56c-c18d-445a-8f12-2853b19298b3">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter required="false" disableUrlEncoding="false">
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$page</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$pageSize</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>starttime</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>endtime</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getCalendarProjectedEventsCurrent" id="e1ecf3b6-f72d-4768-9e23-dce19786216f" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="d800c28e-88da-480c-8376-af09da5f953a" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <con:entry key="Authorization" value=""/>
+            <con:entry key="$page" value="1"/>
+            <con:entry key="$pageSize" value="50"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>$page</con:entry>
+            <con:entry>$pageSize</con:entry>
+            <con:entry>starttime</con:entry>
+            <con:entry>endtime</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+  </con:resource>
+  <con:resource name="calendar-projectedevents" path="calendar-projectedevents" id="b313a44f-3051-49d2-9bcf-4e0382fc7914">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>$page</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>$pageSize</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>starttime</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>endtime</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>mids</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+      </con:parameter>
+    </con:parameters>
+    <con:method name="getCalendarProjectedEvents" id="89753a91-7b8e-43c6-9880-06547133bfef" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="Request 1" id="c6282fef-0563-4af2-b666-3ca124d8f288" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value=""/>
+          <con:entry key="$page" value="1"/>
+          <con:entry key="$pageSize" value="50"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>starttime</con:entry>
+          <con:entry>endtime</con:entry>
+          <con:entry>mids</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="configsettings" path="configsettings" id="4c5d35c1-bf02-4f28-94ac-44dca5d4ef39">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>$page</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>$pageSize</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>$filter</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+      </con:parameter>
+    </con:parameters>
+    <con:method name="getconfiguration" id="3bbdb752-f782-4b53-a597-c06c401b8b28" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="Request 1" id="693f6245-88c5-41fd-a3eb-066fbc6b6dc4" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value=""/>
+          <con:entry key="$page" value="1"/>
+          <con:entry key="$pageSize" value="50"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="notifications" path="notifications" id="480c9ba3-619c-484f-a04f-d814c8c60d8d">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter required="false" disableUrlEncoding="false">
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:type xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</con:type>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>applicationId</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="appid:{applicationid}" path="appid:{applicationid}" id="efb7f14c-41ba-4268-82fa-ccbcb96e37cb">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>applicationid</con:name>
+          <con:value>applicationid</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>applicationid</con:default>
+        </con:parameter>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="getNotifications" id="4db15013-7e26-453a-8d9b-5cf78255cac3" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="3450a9cb-a2d1-44f3-bb0a-fb9afc6a5e70" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>applicationid</con:entry>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:method name="getNotificationsAlt1" id="b9d34ab5-fc77-47e6-8e38-b548eaee8d57" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="Request 1" id="ef7d8d28-01e9-4b93-b2f8-cb80d4f571f0" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>applicationId</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+</con:resource>

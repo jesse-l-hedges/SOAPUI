@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="infographics" path="/infographics" id="572e5082-d456-4271-989e-595c4cf2dd10" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="572e5082-d456-4271-989e-595c4cf2dd10fileName">infographics</con:setting>
+  </con:settings>
+  <con:parameters>
+    <con:parameter>
+      <con:name>Authorization</con:name>
+      <con:style>HEADER</con:style>
+    </con:parameter>
+  </con:parameters>
+  <con:resource name="for-marketers-by-marketers" path="for-marketers-by-marketers/" id="8fc7bb60-8997-4b84-a37a-74b50b47d0f6">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>$</con:name>
+        <con:style>QUERY</con:style>
+      </con:parameter>
+    </con:parameters>
+    <con:method name="Method 1" id="38756504-96dc-433b-ad63-28d6acae1d66" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="getMarketingInfographic" id="50ebfe0e-27ed-481b-b0d2-652c6083fb64" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="apps-make-it-easy" path="apps-make-it-easy/" id="59259939-58c5-4bfa-99e3-a19e282f9427">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>$/</con:name>
+        <con:style>QUERY</con:style>
+      </con:parameter>
+    </con:parameters>
+    <con:method name="Method 1" id="af2410e9-4f58-4ff3-9b36-b1057d04280b" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:representation type="RESPONSE">
+        <con:mediaType>text/html; charset=utf-8</con:mediaType>
+        <con:status>200</con:status>
+        <con:params/>
+        <con:element>html</con:element>
+      </con:representation>
+      <con:request name="getAppInfographic" id="dccab638-93f1-4530-9986-77b1b78310a0" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/infographics/apps-make-it-easy/</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="enterprise-flexibility-and-control" path="enterprise-flexibility-and-control/" id="5e9d162e-1f19-44b3-a437-0de8acbb9eef">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>$/</con:name>
+        <con:style>QUERY</con:style>
+      </con:parameter>
+    </con:parameters>
+    <con:method name="Method 1" id="b6c351d8-139d-4efa-8316-378dd63e4695" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:representation type="RESPONSE">
+        <con:mediaType>text/html; charset=utf-8</con:mediaType>
+        <con:status>200</con:status>
+        <con:params/>
+        <con:element>html</con:element>
+      </con:representation>
+      <con:request name="getEnterpriseInfographic" id="4ff803eb-02ad-423a-9d88-05668bda7790" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/infographics/enterprise-flexibility-and-control/</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="partner-program" path="partner-program/" id="b7d8a0dc-1def-4551-9fa0-c04d0a2842bb">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>$/</con:name>
+        <con:style>QUERY</con:style>
+      </con:parameter>
+    </con:parameters>
+    <con:method name="Method 1" id="c0dfaa67-bba7-4a0b-a57c-79871b4fc9bd" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:representation type="RESPONSE">
+        <con:mediaType>text/html; charset=utf-8</con:mediaType>
+        <con:status>200</con:status>
+        <con:params/>
+        <con:element>html</con:element>
+      </con:representation>
+      <con:request name="Request 1" id="2fced3ea-ed11-4674-9f86-acffdb150b30" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/infographics/partner-program/</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+</con:resource>

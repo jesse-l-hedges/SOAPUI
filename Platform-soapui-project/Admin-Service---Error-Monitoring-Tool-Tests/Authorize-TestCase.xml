@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="307531dc-8939-4533-822d-b61090a76c02" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Authorize TestCase" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:description>TestCase generated for REST Resource [Authorize] located at [/adfs/oauth2/authorize]</con:description>
+  <con:settings>
+    <con:setting id="5a489669-d868-427f-99f0-818acb9e8a81fileName">Authorize-TestCase</con:setting>
+    <con:setting id="307531dc-8939-4533-822d-b61090a76c02fileName">Authorize-TestCase</con:setting>
+  </con:settings>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:testStep type="restrequest" name="Authorize - POST" id="22ef92e2-e3cd-4ddf-821e-582a2537f3ed">
+    <con:settings/>
+    <con:config service="https://auth.qa.local" resourcePath="/adfs/oauth2/authorize" methodName="Authorize POST" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Authorize - POST" id="f7af7796-f217-41c1-8fe8-fd326e62a18a" mediaType="application/x-www-form-urlencoded" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>https://auth.qa.local</con:endpoint>
+        <con:request>UserName=${#Project#AdminSvcUserName}&amp;Password=${#Project#AdminSvcPassword}&amp;AuthMethod=FormsAuthentication</con:request>
+        <con:originalUri>https://auth.qa.local/adfs/oauth2/authorize</con:originalUri>
+        <con:assertion type="XPath Match" id="62427648-dc35-4141-82a0-eb12445b4d7f" name="Check for existence of [body]">
+          <con:configuration>
+            <path>exists( //html/body)</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Cookie" value=""/>
+          <con:entry key="code" value=""/>
+          <con:entry key="resource" value="${#Project#adminsvcendpoint}"/>
+          <con:entry key="response_type" value="code"/>
+          <con:entry key="redirect_uri" value="${#Project#adfsAuthRedirectUrl}"/>
+          <con:entry key="client_id" value="93EDD0CE-39AD-435B-9279-9FB41E8CE33D"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>response_type</con:entry>
+          <con:entry>client_id</con:entry>
+          <con:entry>resource</con:entry>
+          <con:entry>redirect_uri</con:entry>
+          <con:entry>Cookie</con:entry>
+          <con:entry>code</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="code" id="51fe619d-0487-4ce9-b2f5-21a67bb1dd4f">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>code</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Authorize - POST</con:sourceStep>
+        <con:sourcePath>substring( html[1]/body[1] , 31)</con:sourcePath>
+        <con:targetType>code</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Fetch Token" id="b245f12b-31e4-4eec-aadc-d754f166f5e8">
+    <con:settings/>
+    <con:config service="https://auth.qa.local" resourcePath="/adfs/oauth2/token" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Fetch Token" id="7887cce9-041c-46d9-8fc4-fb2aa69c7522" mediaType="application/x-www-form-urlencoded" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>https://auth.qa.local</con:endpoint>
+        <con:request>grant_type=authorization_code&amp;client_id=93EDD0CE-39AD-435B-9279-9FB41E8CE33D&amp;code=${#TestCase#code}&amp;redirect_uri=https://admin-qa1s1.qe.marketingcloudapps.com/auth/oauth2</con:request>
+        <con:originalUri>https://auth.qa.local/adfs/oauth2/token</con:originalUri>
+        <con:assertion type="JsonPath Existence Match" id="dd324c69-ac67-487f-b83a-35c7540dc2f3" name="Check for existence of [access_token]">
+          <con:configuration>
+            <path>$.access_token</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="bf81b4aa-a56c-4320-8536-5aa154363192" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="code" value="${#TestCase#code}"/>
+          <con:entry key="Content-Type" value="application/x-www-form-urlencoded"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Content-Type</con:entry>
+          <con:entry>code</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer access_token" id="7565903f-2a2a-4607-9fb6-1c2e843a7e09">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" entitize="false">
+        <con:name>access_token</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Fetch Token</con:sourceStep>
+        <con:sourcePath>$.access_token</con:sourcePath>
+        <con:targetType>access_token</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:type>JSONPATH</con:type>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script to create Priority Name" id="f4917e76-3850-46dc-aeaf-7c91e703d8ab">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"Priority" + generator( (('A'..'Z')+('0'..'9')).join(), 9 ) + "_QETesting"</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Add Priority" id="135d5c85-16a3-41e2-9691-d16b98487e9a">
+    <con:settings/>
+    <con:config service="http://adminsvc-s1.qa1.qa.local" resourcePath="/adminservice/v1/ErrorLookup/priority" methodName="Add" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Add Priority" id="4729bb95-ee2d-425a-b31c-4eee4cc083c8" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://adminsvc-s1.qa1.qa.local</con:endpoint>
+        <con:request>{      
+      "errorPriority": "${Groovy Script to create Priority Name#result}"     
+}</con:request>
+        <con:originalUri>http://adminsvc-s1.qa1.qa.local/adminservice/v1/ErrorLookup/priority</con:originalUri>
+        <con:assertion type="JsonPath Existence Match" id="62c1754b-4bfa-4304-b5ba-9c0f11aef219" name="Check for existence of [priorityId]">
+          <con:configuration>
+            <path>$.priorityId</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="2738bd3d-8fd9-4058-ad95-a2f4017ddac7" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${#TestCase#access_token}"/>
+          <con:entry key="Content-Type" value="application/json"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Get Priority" id="dfcb1723-8c07-46d6-a422-28a5e52b771d">
+    <con:settings/>
+    <con:config service="http://adminsvc-s1.qa1.qa.local" resourcePath="/adminservice/v1/ErrorLookup/priority" methodName="Get" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Get Priority" id="4729bb95-ee2d-425a-b31c-4eee4cc083c8" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://adminsvc-s1.qa1.qa.local</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://adminsvc-s1.qa1.qa.local/adminservice/v1/ErrorLookup/priority</con:originalUri>
+        <con:assertion type="JsonPath Existence Match" id="7dd163d5-ec56-4eee-8e5b-70f72dc539c8" name="Check for existence of [0]">
+          <con:configuration>
+            <path>$[0]</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="60cf0bdb-fab6-42ca-8025-9bb96ac8d7cd" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${#TestCase#access_token}"/>
+          <con:entry key="Content-Type" value="application/json"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script to Transfer PriorityId" id="a1a0ad41-b6e8-4fda-bbde-80988219aa0d">
+    <con:settings/>
+    <con:config>
+      <script>import groovy.json.JsonSlurper
+
+def response = context.expand( '${Get Priority#Response}' )
+
+log.info(response)
+def list = new JsonSlurper().parseText( response )
+def result = context.expand( '${Groovy Script to create Priority Name#result}' )
+
+log.info(result)
+for (rec in list) { 
+
+	if ( (rec.errorPriority == result) ) { 
+		return rec.priorityId
+		break
+	}
+}</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer PriorityId" id="f1ca0de8-376b-43f4-a1c4-3184c504e8c3">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>PriorityId</con:name>
+        <con:sourceType>result</con:sourceType>
+        <con:sourceStep>Groovy Script to Transfer PriorityId</con:sourceStep>
+        <con:sourcePath/>
+        <con:targetType>priorityId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:targetTransferType>JSONPATH</con:targetTransferType>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script to create Rule Name" id="a68a2769-7a52-49ee-bf39-bead590756d5">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"Rule" + generator( (('A'..'Z')+('0'..'9')).join(), 9 ) + "_QETesting"</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="AddRule" id="39a6d2f3-483b-4914-b4b3-87368c8518f1">
+    <con:settings/>
+    <con:config service="http://adminsvc-s1.qa1.qa.local" resourcePath="/adminservice/v1/ErrorLookup/rule" methodName="Add" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="AddRule" id="d21e858d-100b-410a-b591-714fd36db53e" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://adminsvc-s1.qa1.qa.local</con:endpoint>
+        <con:request>{
+"ExceptionPattern": "${Groovy Script to create Rule Name#result}",
+"ExceptionType": "Type",
+"ExceptionMethod": "method",
+"ErrorCode": "*",
+"ErrorCategory": "Cat",
+"PriorityId":"${#TestCase#priorityId}",
+"Notes": "test",
+"CreatedBy": "someuser@qa.local",
+"ModifiedBy": "someuser@qa.local"
+}</con:request>
+        <con:originalUri>http://adminsvc-s1.qa1.qa.local/adminservice/v1/ErrorLookup/rule</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="377b8024-e212-431f-90ba-5b24e1b48f76" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Existence Match" id="a29d4e62-0069-4bb6-bf0f-48e4b634ff16" name="Check for existence of [ruleID]">
+          <con:configuration>
+            <path>$.ruleID</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${#TestCase#access_token}"/>
+          <con:entry key="Content-Type" value="application/json"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Content-Type</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="PropertyTransfer 1" id="95444951-3e5f-4a6c-96b3-4a9cf8325320">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>ruleID</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>AddRule</con:sourceStep>
+        <con:sourcePath>$.ruleID</con:sourcePath>
+        <con:targetType>ruleID</con:targetType>
+        <con:targetStep>RuleId</con:targetStep>
+        <con:targetPath/>
+        <con:type>JSONPATH</con:type>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script to create Updated Rule Name" id="8184ce2b-667d-4830-9826-1ac72b62a2d1">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"UpdatedRule" + generator( (('A'..'Z')+('0'..'9')).join(), 9 ) + "_QETesting"</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="properties" name="RuleId" id="bf48565c-7094-4849-803c-770d24263667">
+    <con:settings/>
+    <con:config xsi:type="con:PropertiesStep" saveFirst="true" discardValuesOnSave="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:properties>
+        <con:property>
+          <con:name>ruleID</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+      </con:properties>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="UpdateRule" id="2679af7e-c666-4d32-858e-9292cd149753">
+    <con:settings/>
+    <con:config service="http://adminsvc-s1.qa1.qa.local" resourcePath="/adminservice/v1/ErrorLookup/rule/{RuleID}" methodName="UpdateRule" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="UpdateRule" id="418d2b38-5066-488e-9045-e7fc8f4eea89" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://adminsvc-s1.qa1.qa.local</con:endpoint>
+        <con:request>{
+"ExceptionPattern": "${Groovy Script to create Updated Rule Name#result}",
+"ExceptionType": "Type",
+"ExceptionMethod": "method",
+"ErrorCode": "*",
+"ErrorCategory": "Cat",
+"PriorityId": "${#TestCase#priorityId}",
+"Notes": "test",
+"CreatedBy": "someuser@qa.local",
+"ModifiedBy": "someuser@qa.local"
+}</con:request>
+        <con:originalUri>http://adminsvc-s1.qa1.qa.local/adminservice/v1/ErrorLookup/rule</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="291190aa-b905-4f38-8e34-3f48575ed6a3" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Existence Match" id="1c3d6ada-2051-40fe-b809-ff398d27d55b" name="Check for existence of [ruleID]">
+          <con:configuration>
+            <path>$.ruleID</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${#TestCase#access_token}"/>
+          <con:entry key="RuleID" value="${RuleId#ruleID}"/>
+          <con:entry key="Content-Type" value="application/json"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Content-Type</con:entry>
+          <con:entry>RuleID</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="DeleteRule" id="1ced4ffb-2b8c-46fc-9636-e164a37b8430">
+    <con:settings/>
+    <con:config service="http://adminsvc-s1.qa1.qa.local" resourcePath="/adminservice/v1/ErrorLookup/rule/{RuleID}" methodName="DeleteRule" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="DeleteRule" id="41484b40-0ad0-4e4a-b749-0b5e9155da52" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://adminsvc-s1.qa1.qa.local</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://adminsvc-s1.qa1.qa.local/adminservice/v1/ErrorLookup/rule</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="52378bfb-2fd0-4517-8402-f3bf56936dad" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${#TestCase#access_token}"/>
+          <con:entry key="RuleID" value="${RuleId#ruleID}"/>
+          <con:entry key="Content-Type" value="application/json"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Content-Type</con:entry>
+          <con:entry>RuleID</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="DeletePriority" id="ff39756c-882c-4d84-aaac-58cc90ff4f32">
+    <con:settings/>
+    <con:config service="http://adminsvc-s1.qa1.qa.local" resourcePath="/adminservice/v1/ErrorLookup/priority/{PriorityId}" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="DeletePriority" id="046b5ed0-a5b0-4752-bd5c-b67ae7d8e52f" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://adminsvc-s1.qa1.qa.local</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://adminsvc-s1.qa1.qa.local/adminservice/v1/ErrorLookup/priority</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="583fbf2a-a0c2-49ba-a553-2bbf83d81dda" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${#TestCase#access_token}"/>
+          <con:entry key="PriorityId" value="${#TestCase#priorityId}"/>
+          <con:entry key="Content-Type" value="application/json"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Content-Type</con:entry>
+          <con:entry>PriorityId</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:loadTest id="518d1598-c90c-4c9b-9889-d22107c9ba2c" name="LoadTest 1">
+    <con:settings>
+      <con:setting id="HttpSettings@close-connections">false</con:setting>
+    </con:settings>
+    <con:threadCount>5</con:threadCount>
+    <con:startDelay>0</con:startDelay>
+    <con:sampleInterval>250</con:sampleInterval>
+    <con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed>
+    <con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange>
+    <con:historyLimit>-1</con:historyLimit>
+    <con:testLimit>60</con:testLimit>
+    <con:limitType>TIME</con:limitType>
+    <con:loadStrategy>
+      <con:type>Simple</con:type>
+    </con:loadStrategy>
+    <con:assertion type="Step Status" name="Step Status"/>
+    <con:maxAssertionErrors>100</con:maxAssertionErrors>
+    <con:cancelExcessiveThreads>true</con:cancelExcessiveThreads>
+    <con:strategyInterval>500</con:strategyInterval>
+    <con:reportParameters/>
+  </con:loadTest>
+  <con:properties>
+    <con:property>
+      <con:name>code</con:name>
+      <con:value>quired
+         JavaScript is required. This web browser does not support JavaScript or JavaScript in this web browser is not enabled.
+         To find out if your web browser supports JavaScript or to enable JavaScript, see web browser help.
+      
+      document.getElementById("noScript").style.display = "none";
+      
+         
+            
+         
+         
+            
+               Auth.QA.Local
+               
+                  
+                     
+                        An error occurred
+                        An error occurred. Contact your administrator for more information.
+                        
+                           
+                        
+                        Error details
+                        
+                           Activity ID: 00000000-0000-0000-5c02-0080010000d1
+                           Relying party: Admin-QA1S1
+                           Error time: Mon, 10 Jul 2017 17:26:42 GMT
+                        
+                        &lt;![CDATA[//
+            function ERR() {
+            }
+            ERR.report = function (email) {
+                var errors = new Errors();
+
+                var body_message = '';
+                var activityID = document.getElementById('activityID').innerText;
+                var details = document.getElementById('errorDetails');
+                if (details &amp;&amp; details.childElementCount > 0)
+                {
+                    var children = details.childNodes;
+                    for (var i = 0; i
+                     
+                  
+               
+               
+            
+            
+               
+                  
+                     © 2013 Microsoft
+                  
+               
+            
+         
+      
+      &lt;![CDATA[//
+// Copyright (c) Microsoft Corporation.  All rights reserved.
+
+// This file contains several workarounds on inconsistent browser behaviors that administrators may customize.
+"use strict";
+
+// iPhone email friendly keyboard does not include "\" key, use regular keyboard instead.
+// Note change input type does not work on all versions of all browsers.
+if (navigator.userAgent.match(/iPhone/i) != null) {
+    var emails = document.querySelectorAll("input[type='email']");
+    if (emails) {
+        for (var i = 0; i</con:value>
+    </con:property>
+    <con:property>
+      <con:name>access_token</con:name>
+      <con:value>eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjBfTVRiQ0FQLW9xLVM4V0dVcHExMXQ0MGFVSSJ9.eyJhdWQiOiJodHRwczovL2FkbWluc3ZjLXMxLnFhMS5xYS5sb2NhbCIsImlzcyI6Imh0dHA6Ly9BdXRoLnFhLmxvY2FsL2FkZnMvc2VydmljZXMvdHJ1c3QiLCJpYXQiOjE0ODI0MzgwMzQsImV4cCI6MTQ4MjQ0MTYzNCwiaHR0cHM6Ly9hZG1pbnN2Yy1zMS5xYTEucWEubG9jYWwiOiJzc2luZ2xhQHNhbGVzZm9yY2UuY29tIiwic3ViIjoic3NpbmdsYUBxYS5sb2NhbCIsImF1dGhfdGltZSI6IjIwMTYtMTItMjJUMjA6MjA6MzQuNjg2WiIsImF1dGhtZXRob2QiOiJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YWM6Y2xhc3NlczpQYXNzd29yZFByb3RlY3RlZFRyYW5zcG9ydCIsInZlciI6IjEuMCIsImFwcGlkIjoiOTNFREQwQ0UtMzlBRC00MzVCLTkyNzktOUZCNDFFOENFMzNEIn0.XQ2TlfZvL8C-1-erCCcreqfhtqaLCH45JjY94xD_c3fdREI7Vl44U8JoCO0WB-B3TgB-aeffLh8gX5-hm9gYGNc6QcuMzLfoC7DPPl2Uum6XxHhDju8CG3aINNpg-y0NoGtK01Su7w9MuH2cU0gVyGjPILzMExusk5im9ACwThSD4UX75PJdOOdpREmT6sOMEM65QAWLl2fJXAtglqO-dD2rQ3HfJhk6d9zCqRBqLuYGF7xluI3pInGUFfpiSFX27eZc-WKBT0C5yypt_Rb8ofU-UAqddvWYqO6Tqt7NB2Io2touFUgH7tQZWYzB-jdRrq3puRUIyUtFWRcnuZch4g</con:value>
+    </con:property>
+    <con:property>
+      <con:name>priorityId</con:name>
+      <con:value>97</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>82dad168-be2b-4d9c-8272-366d2aed5fe7</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>93fa7d13-2494-4a64-88da-e35d8c90a87d</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>d2350654-6700-4953-ae71-d0e858028431</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

@@ -1,0 +1,2842 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="ad607a66-f1a7-4c71-a81e-da825aca45a5" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Smoke Test" searchProperties="true" disabled="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="ad607a66-f1a7-4c71-a81e-da825aca45a5fileName">Smoke-Test</con:setting>
+  </con:settings>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:testStep type="calltestcase" name="Auth" id="09fdf80f-c0bb-455c-8e5a-5ebdd4d49956">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>cHfglpYnjVsK9rrUYg2PsIO9</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>302586</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>280509</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create UserID" id="bcd6caf4-f997-4f26-8595-bba4d7a61b37">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"QETest_" + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Account" id="8c4e2ac2-a768-4b0a-9e9d-66f23a488886">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Account" id="d6f89e7b-d286-4b46-bc22-cc159c9ccf60">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="Account">\r
+            <PartnerKey xsi:nil="true"/>\r
+            <ModifiedDate xsi:nil="true"/>\r
+            <ObjectID xsi:nil="true"/>\r
+            <AccountType>ENTERPRISE_2</AccountType>\r
+            <Name>ET QA Enterprise 2.0</Name>\r
+            <Email>jhedges@salesforce.com</Email>\r
+            <FromName>Jesse Hedges</FromName>\r
+            <BusinessName>Platform Test Team</BusinessName>\r
+            <Address>20 N Meridian Street</Address>\r
+            <City>Indianapolis</City>\r
+            <State>IN</State>\r
+            <Zip>46204</Zip>\r
+            <IsActive>1</IsActive>\r
+            <DBID>${#Project#dbid}</DBID>\r
+            <CustomerID>8323</CustomerID>\r
+            <EditionID>10</EditionID>
+            <Children xsi:nil="true"/>\r
+            <Subscription>\r
+               <SubscriptionID xsi:nil="true"/>\r
+               <EmailsPurchased>0</EmailsPurchased>\r
+               <AccountsPurchased>0</AccountsPurchased>\r
+               <AdvAccountsPurchased>0</AdvAccountsPurchased>\r
+               <LPAccountsPurchased>0</LPAccountsPurchased>\r
+               <DOTOAccountsPurchased>0</DOTOAccountsPurchased>\r
+               <BUAccountsPurchased>10</BUAccountsPurchased>\r
+               <BeginDate>2011-01-01T21:35:58.259Z</BeginDate>\r
+               <EndDate>2020-12-31T23:59:59.999Z</EndDate>\r
+               <Notes xsi:nil="true"/>\r
+               <Period/>\r
+               <NotificationTitle xsi:nil="true"/>\r
+               <NotificationMessage xsi:nil="true"/>\r
+               <NotificationFlag xsi:nil="true"/>\r
+               <NotificationExpDate xsi:nil="true"/>\r
+               <ForAccounting xsi:nil="true"/>\r
+               <HasPurchasedEmails>true</HasPurchasedEmails>\r
+               <NumberofEmails>0</NumberofEmails>\r
+            </Subscription>\r
+            <PrivateLabels xsi:nil="true"/>\r
+         </Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="d5f04efa-1466-4143-b31c-5b19c094b72b"/>
+        <con:assertion type="SOAP Fault Assertion" id="56e0916d-8926-472c-9430-539008570732"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer EID" id="3dba7f95-c678-497c-a42f-0e18a4742696">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>EID</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Account</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>EID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update Account" id="04ec2486-032c-4719-a322-0266dcf78d6e" disabled="true">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update Account" id="3ee18505-9f2f-46d6-b2d1-12b5495dd1b2">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Objects xsi:type="Account">\r
+            <Client>\r
+               <ID>${#TestCase#EID}</ID>\r
+            </Client>\r
+            <AccountType>ENTERPRISE_2</AccountType>\r
+            <Name>ET QA Enterprise 2.0</Name>\r
+            <Email>jhedges@salesforce.com</Email>\r
+            <FromName>Jesse Hedges</FromName>\r
+            <BusinessName>Platform Test Team</BusinessName>\r
+            <Address>20 N Meridian Street</Address>\r
+            <City>Indianapolis</City>\r
+            <State>IN</State>\r
+            <Zip>46204</Zip>\r
+            <DBID>${#Project#dbid}</DBID>
+            <CustomerID>8323</CustomerID>
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>AB_TESTING_ACCESS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>2</Data>\r
+               <Quality/>\r
+               <Name>ASYNC_API</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>Content_Creation_V2</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>CONTENT_LOCKING</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>DATA_EXTRACT_ACTIVITY</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>DYNAMIC_CONTENT</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality>\\qa.local\qa1s1\ftp\10723284</Quality>\r
+               <Name>EnhancedFTP</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>FILE_TRANSFER_LOCATIONS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>FTP_IMPORT</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>FULL_HTML_PASTE</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>MULTI-PART_MIME</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>NEW_SUBSCRIBER_LISTING_PAGES</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>REPORT_ACTIVITY</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>2</Data>\r
+               <Quality/>\r
+               <Name>REPORTING_ACCESS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality>orange</Quality>\r
+               <Name>SLOT_SERVICE_IMPORT</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>SECURE_LINK_WRAPPING</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>SMS_SEND</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>SMS_MO_SHARED</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>TRACKING2</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>ACTIVITIES</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>ALL_SUBSCRIBERS_ACCESS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>API</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>BOUNCE_HOST</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>Conversion Tracking</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality>orange</Quality>\r
+               <Name>CUSTOM_OBJECTS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>DATA_EXTRACT</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>DOCUMENT_LIBRARY</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>DYNAMIC_CONTENT_MULTI_ATTRIBUTES</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>Filtering</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>FORWARD_TO_FRIEND</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>FROM_EMAIL_MANAGEMENT</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>GROUP_ACCESS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>INTERACTIONS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>INTERACTIONS_SENDS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>MEASURE</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>MESSAGE_FUNCTIONS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>MESSAGE_PRIORITY</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>MICROSITES</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality>25</Quality>\r
+               <Name>MULTI_FROM_CONNECT</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>40</Data>\r
+               <Quality>25</Quality>\r
+               <Name>MULTI_USER_CONNECT</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>PERSONALIZED_URLS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>CAMPAIGNS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>PROFILE_ACCESS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>QUERY_ACTIVITY</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>SEND_LOGGING</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>SEND_TIME_FILTERING</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>2</Data>\r
+               <Quality/>\r
+               <Name>SURVEYS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>SUBSCRIBER_KEY</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>TRIGGERED_SENDS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>TriggeredSend_To_DataExtension</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>WebServices</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>BCC_EMAIL</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>TEXT_ONLY_EMAIL</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>200</Data>\r
+               <Quality/>\r
+               <Name>Available Profile Attributes</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>SERVER_SIDE_JS_ACTIVITY</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>PORTFOLIO_ACCESS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>DATA_EXTENSION_RETENTION_POLICIES</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>INTERACTION_STUDIO</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>PROGRAMS_30</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality>trackchanges</Quality>\r
+               <Name>CONTACTS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>ROLE_BASED_ACCESS_CONTROL</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>0</Data>\r
+               <Quality/>\r
+               <Name>ID_VALIDATION</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>0</Data>\r
+               <Quality/>\r
+               <Name>ENHANCED_SECURITY_QUESTIONS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+         </Objects>\r
+      </UpdateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a932e333-08c7-4b57-b9f7-8ea75446588d"/>
+        <con:assertion type="SOAP Fault Assertion" id="d3f2b3bb-1a33-44ec-b3ee-88aff5aeff25"/>
+        <con:assertion type="XPath Match" id="e838c831-e808-43f7-ab7e-171ee466a9ad" name="Account Updated">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Account Updated / Created</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Account User" id="42229c9d-6164-4f46-a86d-3719188f5af2">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Account User" id="ffc704fb-90b4-49e7-829f-ff5136a4d578">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <ns1:Objects xsi:type="ns1:AccountUser" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+            <ns1:Client>\r
+               <ns1:ClientID>${#TestCase#EID}</ns1:ClientID>\r
+            </ns1:Client>\r
+            <ns1:PartnerKey xsi:nil="true"/>\r
+            <ns1:ModifiedDate xsi:nil="true"/>\r
+            <ns1:ObjectID xsi:nil="true"/>\r
+            <ns1:AccountUserID xsi:nil="true"/>\r
+            <ns1:UserID>x${#TestCase#EID}_admin</ns1:UserID>\r
+            <ns1:Password>emails11!</ns1:Password>\r
+            <ns1:Name>${#TestCase#EID} Admin</ns1:Name>\r
+            <ns1:Email>jhedges@salesforce.com</ns1:Email>\r
+            <ns1:MustChangePassword>false</ns1:MustChangePassword>\r
+            <ns1:ChallengePhrase>qa</ns1:ChallengePhrase>\r
+            <ns1:ChallengeAnswer>qa</ns1:ChallengeAnswer>\r
+            <ns1:Delete>0</ns1:Delete>\r
+            <ns1:IsAPIUser>true</ns1:IsAPIUser>\r
+            <ns1:NotificationEmailAddress>jhedges@salesforce.com</ns1:NotificationEmailAddress>\r
+            <ns1:DefaultBusinessUnit>${#TestCase#EID}</ns1:DefaultBusinessUnit>\r
+         </ns1:Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="de1679d0-8cd0-4325-831e-83ca939ad3f9"/>
+        <con:assertion type="SOAP Fault Assertion" id="36f9f35d-63ed-44d0-ad82-ba7e1b464cbc"/>
+        <con:assertion type="XPath Match" id="e726c9c2-e3f1-4953-8350-87edd0e7046b" name="Account User Created">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Account User Updated / Created</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer Username" id="92f3348a-caee-4f8b-8c91-61d05adb26c5">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>UserID</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Account User</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:Object[1]/ns1:AccountUserID[1]</con:sourcePath>
+        <con:targetType>UserID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>Username</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Account User</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:Object[1]/ns1:UserID[1]</con:sourcePath>
+        <con:targetType>Username</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update User With SYS_DEF_ADMIN Role" id="291db3db-7049-4181-8d59-299ab69f67e4">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update User With SYS_DEF_ADMIN Role" id="c5970459-1d9e-4b59-be7a-0d4beb08caed" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="AccountUser">\r
+            <Client>\r
+               <ID>${#TestCase#EID}</ID>\r
+            </Client>\r
+            <ID>${#TestCase#UserID}</ID>\r
+            <UserPermissions>\r
+               <ID>31</ID>\r
+            </UserPermissions>\r
+         </Objects>\r
+      </UpdateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="4a88e556-0ed6-4340-bf6d-af4ed80e3a5c"/>
+        <con:assertion type="SOAP Fault Assertion" id="1977c320-3e41-4b5c-9fdc-c4470607c8aa"/>
+        <con:assertion type="XPath Match" id="de468b9f-8bb1-472b-9013-94aa0d4f7206" name="Account User Updated">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Account User Updated / Created</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Attribute" id="3ce1e3da-9a42-469d-8ab7-637ab0ca9d54">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Configure</con:operation>
+      <con:request name="Create Attribute" id="7aa4f50c-8dbd-4948-9ae0-c8ce5113ab3c">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#TestCase#Username}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <ConfigureRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options></Options>\r
+         <Action>Create</Action>\r
+         <Configurations>\r
+            <Configuration xsi:type="PropertyDefinition">\r
+               <PartnerKey xsi:nil="true"></PartnerKey>\r
+               <ObjectID xsi:nil="true"></ObjectID>\r
+               <Name>New_Attribute_Name</Name>\r
+               <PropertyType>string</PropertyType>\r
+            </Configuration>\r
+         </Configurations>\r
+      </ConfigureRequestMsg>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="2ee8046f-d1f3-48d6-92cb-4aae8833c3d7"/>
+        <con:assertion type="SOAP Fault Assertion" id="537fcdfc-a980-48af-80ef-fc26c81d5395"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="942d69c2-2209-4ecd-9c76-690092ae5cae">
+            <con:username>x6410335_admin</con:username>
+          </con:entry>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create List" id="2ab6bde0-b44f-46e5-9f67-f82179e98a02">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create List" id="e188e827-fe6e-436d-ba98-b854ef62534c">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#TestCase#Username}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="List">\r
+            <ListName>Test_List_Public_1</ListName>\r
+            <Type>Public</Type>\r
+         </Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a6eeb3bb-b41c-4ce2-a19f-4e36767d98c6"/>
+        <con:assertion type="SOAP Fault Assertion" id="4e997ca0-d6c0-4e2b-a41e-b9e23a983a7c"/>
+        <con:assertion type="XPath Match" id="1b98f879-9eb4-457f-9e0b-e07eb22661c1" name="Created List">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Created List.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer ListID" id="0dab54e6-5d61-4881-afda-06b218326eaa">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>ListID</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create List</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>ListID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update List" id="57a95a59-05c2-415d-994a-c494968e2a6e">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update List" id="29bda8f5-b8ee-4d0f-9675-e7769e82f9c3">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#TestCase#Username}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <ns1:Objects xsi:type="ns1:List" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+            <ns1:ID>${#TestCase#ListID}</ns1:ID>\r
+            <ns1:Description>wakka wakka</ns1:Description>\r
+         </ns1:Objects>\r
+      </UpdateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="5df34bb5-c627-4dca-ac4c-7a224dedb6fd"/>
+        <con:assertion type="SOAP Fault Assertion" id="232c0ba8-ae83-4be9-9f8b-a3fb0440b099"/>
+        <con:assertion type="XPath Match" id="d781637f-f7e1-463a-a242-3b592409cc5b" name="Updated List">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Updated List.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="45c9d68e-e0ba-4cd4-82a6-b617f5af97f3" name="Description">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:Object[1]/ns1:Description[1]</path>
+            <content>wakka wakka</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Email" id="6af26b7a-8252-4ed7-aa83-f8dec19a2cf6">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Email" id="6ecbe626-9f6d-4a06-b3ee-e4e0ab25c746">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#TestCase#Username}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options/>
+         <Objects xsi:type="Email">
+            <ObjectID xsi:nil="true"/>
+            <Name>${Random Email Name#EmailName}</Name>
+            <Description>Description</Description>
+            <HTMLBody><![CDATA[this email is created for ESD regression
+
+<table cellpadding="2" cellspacing="0" width="600" ID="Table5" Border=0><tr><td><font face="verdana" size="1" color="#444444">This email was sent to:  %%emailaddr%% <br><br><b>Email Sent By:</b> %%Member_Busname%%<br>%%Member_Addr%% %%Member_City%%, %%Member_State%%, %%Member_PostalCode%%, %%Member_Country%%<br><br></font></td></tr></table>
+<br>
+<a href="%%profile_center_url%%" alias="Update Profile">Update Profile</a>]]]]>><![CDATA[</HTMLBody>
+            <Subject>Test Subject</Subject>
+            <EmailType>HTML</EmailType>
+            <IsHTMLPaste>true</IsHTMLPaste>
+         </Objects>
+      </CreateRequest>
+
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="ce9dd1a7-4431-4d92-ae93-4f14e23f4d4e"/>
+        <con:assertion type="SOAP Fault Assertion" id="6ae0c48d-cfbf-4c7c-8a1a-b7dbf2572bb7"/>
+        <con:assertion type="XPath Match" id="b5163c72-b7dc-4e94-b60c-6b4dc553c5c1" name="Created Email">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Created Email.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer EmailID" id="e2b98199-053d-44d9-bd3d-3093ca33a992">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>EmailID</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Email</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>EmailID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Subscriber" id="40e23844-9548-4aba-878e-9d2f868380f2">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Subscriber" id="63050b0c-6488-4b33-b400-8867cb9a8748">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#TestCase#Username}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="Subscriber">\r
+            <PartnerKey xsi:nil="true"/>\r
+            <ObjectID xsi:nil="true"/>\r
+            <EmailAddress>jhedges@salesforce.com</EmailAddress>\r
+            <SubscriberKey>jhedges@salesforce.com</SubscriberKey>\r
+            <EmailTypePreference>HTML</EmailTypePreference>\r
+            <Attributes>\r
+               <Name>First Name</Name>\r
+               <Value>J</Value>\r
+            </Attributes>\r
+            <Attributes>\r
+               <Name>Last Name</Name>\r
+               <Value>Hedges</Value>\r
+            </Attributes>\r
+            <List>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ID>${#TestCase#ListID}</ID>\r
+               <ObjectID xsi:nil="true"/>\r
+               <Status>Active</Status>\r
+            </List>\r
+            <Status>Active</Status>\r
+         </Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="be5d9230-c86f-4f4e-b206-0c7b973046cb"/>
+        <con:assertion type="SOAP Fault Assertion" id="da4275c2-fbe1-4533-aa69-7cae45dae264"/>
+        <con:assertion type="XPath Match" id="7ecd2346-f14a-42d8-9c38-ea991d7d9b20" name="Created Subscriber">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Created Subscriber.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer SubscriberID" id="0d461747-fded-4774-8771-3572cbec1133">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>SubscriberID</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Subscriber</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>SubscriberID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Portfolio" id="9941c49b-3c65-45d9-a81d-f64c6d81c1dc">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Portfolio" id="cb00d877-9959-48fe-820c-83072e415d5f">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#TestCase#Username}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <ns1:Objects xsi:type="ns1:Portfolio" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+            <ns1:ModifiedDate xsi:nil="true"/>\r
+            <ns1:ObjectID xsi:nil="true"/>\r
+            <ns1:CustomerKey/>\r
+            <ns1:Source>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:URN>File://ETFTP/Import/Football.jpg</ns1:URN>\r
+            </ns1:Source>\r
+            <ns1:FileName>PF-20080702090111892.jpg</ns1:FileName>\r
+         </ns1:Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="2b946335-c528-4586-9b16-a903d8b01ed8"/>
+        <con:assertion type="SOAP Fault Assertion" id="90f91dae-80e0-498c-ad86-d7d7780fbb1b"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Create DE Name" id="4d269719-8280-4926-b147-a1937cb6ea0d">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"QETest_" + generator( (('A'..'Z')+('0'..'9')).join(), 15 )</script>
+        </con:configuration>
+        <con:name>DEName</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Data Extension" id="2a682a6b-be21-420b-8e4c-06e8a123ca6b">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Data Extension" id="8c7ca404-4bb5-4feb-a836-aad576666dcc">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#TestCase#Username}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="DataExtension">\r
+            <PartnerKey xsi:nil="true"/>\r
+            <ObjectID xsi:nil="true"/>\r
+            <Name>${Create DE Name#DEName}</Name>\r
+            <CustomerKey>${Create DE Name#DEName}</CustomerKey>\r
+            <IsSendable>false</IsSendable>\r
+            <Fields>\r
+               <Field>\r
+                  <Name>Subscriber Key</Name>\r
+                  <FieldType>Text</FieldType>\r
+                  <MaxLength>25</MaxLength>\r
+                  <IsPrimaryKey>true</IsPrimaryKey>\r
+                  <IsRequired>true</IsRequired>\r
+               </Field>\r
+               <Field>\r
+                  <Name>EmailAddress</Name>\r
+                  <FieldType>EmailAddress</FieldType>\r
+                  <MaxLength>150</MaxLength>\r
+                  <IsRequired>true</IsRequired>\r
+               </Field>\r
+               <Field>\r
+                  <Name>First Name</Name>\r
+                  <FieldType>Text</FieldType>\r
+                  <MaxLength>50</MaxLength>\r
+                  <IsRequired>false</IsRequired>\r
+               </Field>\r
+               <Field>\r
+                  <Name>Last Name</Name>\r
+                  <FieldType>Text</FieldType>\r
+                  <MaxLength>50</MaxLength>\r
+                  <IsRequired>false</IsRequired>\r
+               </Field>\r
+               <Field>\r
+                  <Name>Birthdate</Name>\r
+                  <FieldType>Date</FieldType>\r
+                  <IsRequired>false</IsRequired>\r
+               </Field>\r
+               <Field>\r
+                  <Name>Age</Name>\r
+                  <FieldType>Number</FieldType>\r
+                  <IsRequired>false</IsRequired>\r
+               </Field>\r
+               <Field>\r
+                  <Name>HTML Email</Name>\r
+                  <FieldType>Boolean</FieldType>\r
+                  <IsRequired>false</IsRequired>\r
+               </Field>\r
+            </Fields>\r
+            <Properties>\r
+               <Property>\r
+                  <Name>EmailAddress</Name>\r
+                  <Value>johndoe@example.com</Value>\r
+               </Property>\r
+               <Property>\r
+                  <Name>First Name</Name>\r
+                  <Value>John</Value>\r
+               </Property>\r
+               <Property>\r
+                  <Name>Last Name</Name>\r
+                  <Value>Doe</Value>\r
+               </Property>\r
+               <Property>\r
+                  <Name>PrimaryKey</Name>\r
+                  <Value>PrimaryKey</Value>\r
+               </Property>\r
+            </Properties>\r
+            <CustomerKey>${#TestCase#objectName}</CustomerKey>\r
+         </Objects>\r
+         <Options/>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="0c743dc0-5fee-45b5-90ac-93e1a3c48d77"/>
+        <con:assertion type="SOAP Fault Assertion" id="02dc2176-6281-424d-a427-53d543d9ece3"/>
+        <con:assertion type="XPath Match" id="aae2a865-7bae-4793-90b3-765333a1f102" name="DE Created">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Data Extension created.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer CustomObjectID" id="7ec8b9e6-fc71-4132-a0f2-67fa3debe0a2">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>CustomObjectID</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Data Extension</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewObjectID[1]</con:sourcePath>
+        <con:targetType>CustomObjectID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Send Email" id="fbc2ef9a-56f9-4639-987d-034844c281dd">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Send Email" id="2adf773e-2324-4170-9c2a-735a12697a29">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#TestCase#Username}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="ns1:Send" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+            <Email>\r
+               <ID>${#TestCase#EmailID}</ID>\r
+            </Email>\r
+            <List>\r
+               <ID>${#TestCase#ListID}</ID>\r
+            </List>\r
+         </Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="aa7ee00e-f045-4b92-89a7-888a17a76a4e"/>
+        <con:assertion type="SOAP Fault Assertion" id="d71ababf-ac93-4ed5-a506-0eae23f8e8f3"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Describe TriggeredSend" id="047c96cc-beb1-4882-bce2-2dd98ea8a83f" disabled="true">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Describe</con:operation>
+      <con:request name="Describe TriggeredSend" id="d6677c9e-dbbe-45b8-9d20-91268b250982">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <DefinitionRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <DescribeRequests>\r
+            <ObjectDefinitionRequest>\r
+               <ObjectType>TriggeredSendDefinition</ObjectType>\r
+            </ObjectDefinitionRequest>\r
+         </DescribeRequests>\r
+      </DefinitionRequestMsg>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="09980121-efbd-4542-98ea-2db5fea823b2"/>
+        <con:assertion type="SOAP Fault Assertion" id="4b13c0c7-fb00-4a4d-88d7-86fd6837e91e"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create TSDef Name" id="19e38e5d-804a-4b9a-ba34-7ffaf65c9492">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"TSD_" + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Triggered Send Def" id="3ee5bd79-3614-435a-bbbc-67af63deb66f">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Triggered Send Def" id="55599fab-fb6f-4d54-b7ce-9a5494edf078">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#TestCase#Username}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="TriggeredSendDefinition">\r
+            <PartnerKey xsi:nil="true"/>\r
+            <ObjectID xsi:nil="true"/>\r
+            <CustomerKey>${Create TSDef Name#result}</CustomerKey>\r
+            <Name>${Create TSDef Name#result}</Name>\r
+            <SendClassification>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <CustomerKey>Default Commercial</CustomerKey>\r
+               <Owner/>\r
+               <ObjectID xsi:nil="true"/>\r
+            </SendClassification>\r
+            <Email>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <ID>${#TestCase#EmailID}</ID>\r
+            </Email>\r
+            <SendSourceDataExtension>\r
+               <CustomerKey>EmptyTriggeredSendDE</CustomerKey>\r
+            </SendSourceDataExtension>\r
+         </Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="bc7b866f-8ece-4814-88e1-b3a6a06f0045"/>
+        <con:assertion type="SOAP Fault Assertion" id="b38b0404-960d-4fd3-947b-3f3ad3415392"/>
+        <con:assertion type="XPath Match" id="de4ee7b2-e035-4738-8dd7-0c08f62a4ab6" name="StatusMessage">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="db4d6c9d-b05f-4cce-bd46-f88dc581284f" name="Triggered Send Created">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>TriggeredSendDefinition created</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Start Triggered Send" id="779a5a72-a060-4ca1-9bd5-8120632f1461">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Start Triggered Send" id="f4e995d8-4d6c-4011-893e-346c894ce29d">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#TestCase#Username}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="TriggeredSendDefinition">\r
+            <ObjectID xsi:nil="true"/>\r
+            <CustomerKey>${Create TSDef Name#result}</CustomerKey>\r
+            <TriggeredSendStatus>Active</TriggeredSendStatus>\r
+         </Objects>\r
+      </UpdateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="b2de2693-417e-491a-b57d-1da4344e488b"/>
+        <con:assertion type="SOAP Fault Assertion" id="7dcd755a-9769-4f2c-a129-bb694e015c96"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Send Triggered Email to Subscriber" id="7efcddcd-a371-46b5-9e73-e2060fabb86e">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Send Triggered Email to Subscriber" id="e9d23e31-a89d-4238-8880-bc052318b831">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#TestCase#Username}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="TriggeredSend">\r
+            <TriggeredSendDefinition>\r
+               <CustomerKey>${Create TSDef Name#result}</CustomerKey>\r
+            </TriggeredSendDefinition>\r
+            <Subscribers>\r
+               <Attributes>\r
+                  <Name>New Attribute Name</Name>\r
+                  <Value><![CDATA[<html><body><div align='center'><table border='1'cellspacing='0' cellpadding=0 width='95%' style='width:95.0%'><tr><td>Welcome, You are sending Email using TriggeredSend definition</td></tr></table></div><br>Testing API</body></html>]]]]>><![CDATA[</Value>\r
+               </Attributes>\r
+               <Attributes>\r
+                  <Name>first_name</Name>\r
+                  <Value>John</Value>\r
+               </Attributes>\r
+               <SubscriberKey>mc-fuelframeworkdev@salesforce.com</SubscriberKey>\r
+               <EmailAddress>mc-fuelframeworkdev@salesforce.com</EmailAddress>\r
+               <PartnerType/>\r
+               <Lists/>\r
+               <GlobalUnsubscribeCategory/>\r
+               <SubscriberTypeDefinition/>\r
+               <Addresses/>\r
+               <PrimarySMSAddress/>\r
+               <PrimaryEmailAddress/>\r
+               <Locale/>\r
+            </Subscribers>\r
+         </Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="825dfa30-4980-4eca-8008-7852277436de"/>
+        <con:assertion type="SOAP Fault Assertion" id="58a2c508-e85b-48cf-9a4b-e6ee5bcf8ba0"/>
+        <con:assertion type="XPath Match" id="45fef3bd-c89b-4480-861a-3311b5eeea53" name="Created TriggeredSend">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Created TriggeredSend</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Start Triggered Send - HTTPGet" id="f7acef0b-3c82-4610-abd0-2d21a44fc4f9" disabled="true">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Start Triggered Send - HTTPGet" id="31230541-784a-4119-9015-9a6ec75c3a7f">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#TestCase#Username}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="TriggeredSend">\r
+            <ObjectID xsi:nil="true"/>\r
+            <TriggeredSendDefinition>\r
+               <ObjectID xsi:nil="true"/>\r
+               <CustomerKey>${Create TSDef Name#result}</CustomerKey>\r
+            </TriggeredSendDefinition>\r
+            <Subscribers>\r
+               <ObjectID xsi:nil="true"/>\r
+               <Owner>\r
+                  <Client>\r
+                     <ID>${Auth#mid}</ID>\r
+                  </Client>\r
+               </Owner>\r
+               <EmailAddress>jhedges@salesforce.com</EmailAddress>\r
+               <SubscriberKey>jhedges@salesforce.com</SubscriberKey>\r
+            </Subscribers>\r
+         </Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="b87f6b3a-54dc-46b6-b2f6-6e3215fec599"/>
+        <con:assertion type="SOAP Fault Assertion" id="7b767f77-5a63-49ba-807e-f43125cba400"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Import Definition" id="a67c2662-a3cc-4909-b218-4b3732b9ce08">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Import Definition" id="69235cc3-02af-4c87-a943-64209095d0e1">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#TestCase#Username}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="ImportDefinition">\r
+            <Client/>\r
+            <PartnerKey xsi:nil="true"/>\r
+            <ModifiedDate xsi:nil="true"/>\r
+            <ObjectID xsi:nil="true"/>\r
+            <Name>SmokeTest_ImportDef</Name>\r
+            <AllowErrors>true</AllowErrors>\r
+            <DestinationObject xsi:type="DataExtension">\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID>${#TestCase#CustomObjectID}</ObjectID>\r
+            </DestinationObject>\r
+            <FieldMappingType>InferFromColumnHeadings</FieldMappingType>\r
+            <FileSpec>DEImport3Fields.csv</FileSpec>\r
+            <FileType>CSV</FileType>\r
+            <Notification>\r
+               <ResponseType>email</ResponseType>\r
+               <ResponseAddress>jhedges@salesforce.com</ResponseAddress>\r
+            </Notification>\r
+            <RetrieveFileTransferLocation>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <CustomerKey>ExactTarget Enhanced FTP</CustomerKey>\r
+            </RetrieveFileTransferLocation>\r
+            <UpdateType>AddAndUpdate</UpdateType>\r
+            <DeleteFile>false</DeleteFile>\r
+         </Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="e8098056-00a8-4108-967a-963d32c3db82"/>
+        <con:assertion type="SOAP Fault Assertion" id="88e0f761-c717-4f67-a836-474965fac55f"/>
+        <con:assertion type="XPath Match" id="c574af96-15cf-44a0-9b2f-603c846dd7b5" name="Import Def Created">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>ImportDefinition created.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="98603669-34e1-4c72-9c24-d6a3f87bc760" name="CustomObjectId">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:Object[1]/ns1:ObjectID[1]</path>
+            <content>ef583b4d-d833-e611-a43e-1cc1deeeba28</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Import Def 2" id="d2e954d4-5955-4bcc-8740-0d02416d33f8">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Import Def 2" id="e297a702-b445-40a6-9031-af2e8740145b">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <SOAP-ENV:Header>\r
+      <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken>\r
+            <wsse:Username>${#TestCase#Username}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </SOAP-ENV:Header>\r
+   <SOAP-ENV:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <ns1:Objects xsi:type="ns1:ImportDefinition" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+            <ns1:Client/>\r
+            <ns1:PartnerKey xsi:nil="true"/>\r
+            <ns1:ModifiedDate xsi:nil="true"/>\r
+            <ns1:ObjectID xsi:nil="true"/>\r
+            <ns1:Name>DE Import Def jlh20160615122756501</ns1:Name>\r
+            <ns1:AllowErrors>true</ns1:AllowErrors>\r
+            <ns1:DestinationObject xsi:type="ns1:DataExtension">\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID>${#TestCase#CustomObjectID}</ns1:ObjectID>\r
+            </ns1:DestinationObject>\r
+            <ns1:FieldMappingType>InferFromColumnHeadings</ns1:FieldMappingType>\r
+            <ns1:FileSpec>DEImport3Fields.csv</ns1:FileSpec>\r
+            <ns1:FileType>CSV</ns1:FileType>\r
+            <ns1:Notification>\r
+               <ns1:ResponseType>email</ns1:ResponseType>\r
+               <ns1:ResponseAddress>agowda@exacttarget.com</ns1:ResponseAddress>\r
+            </ns1:Notification>\r
+            <ns1:RetrieveFileTransferLocation>\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:CustomerKey>ExactTarget Enhanced FTP</ns1:CustomerKey>\r
+            </ns1:RetrieveFileTransferLocation>\r
+            <ns1:UpdateType>Overwrite</ns1:UpdateType>\r
+            <ns1:DeleteFile>false</ns1:DeleteFile>\r
+         </ns1:Objects>\r
+      </CreateRequest>\r
+   </SOAP-ENV:Body>\r
+</SOAP-ENV:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="45e2e439-3990-46e2-9727-a068dbb7ffc1"/>
+        <con:assertion type="SOAP Fault Assertion" id="3693c904-414b-4a41-a784-9cca6bb6828f"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Import Def 3" id="728ed12c-5403-405c-a177-50b2fb98c986">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Import Def 3" id="0f26fb74-8fcd-4bc4-919b-1fe941bccbc6">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken>
+            <wsse:Username>${#TestCase#Username}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="ns1:ImportDefinition" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+            <CustomerKey>Import_To_DE_Market2Lead_Key</CustomerKey>\r
+            <Name>Import_To_DE_Market2Lead</Name>\r
+            <Description>Import_To_DE_Market2Lead</Description>\r
+            <AllowErrors>true</AllowErrors>\r
+            <DestinationObject xsi:type="ns1:DataExtension">\r
+               <CustomerKey>et tester ej</CustomerKey>\r
+               <ObjectID xsi:nil="true"/>\r
+            </DestinationObject>\r
+            <FieldMappingType>InferFromColumnHeadings</FieldMappingType>\r
+            <FileSpec>Import2M2L.csv</FileSpec>\r
+            <FileType>CSV</FileType>\r
+            <Notification>\r
+               <ResponseType>email</ResponseType>\r
+               <ResponseAddress>ebeard@exacttarget.com</ResponseAddress>\r
+            </Notification>\r
+            <RetrieveFileTransferLocation>\r
+               <CustomerKey>ExactTarget Enhanced FTP</CustomerKey>\r
+            </RetrieveFileTransferLocation>\r
+            <UpdateType>AddAndDoNotUpdate</UpdateType>\r
+         </Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="4597ccf7-fa59-4ab4-8263-dcb7e20164c9"/>
+        <con:assertion type="SOAP Fault Assertion" id="49d34d22-c2b5-441b-9b50-f4c48269ca37"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Perform Import Def 1" id="e5430e69-b5f0-4678-bc7e-84dc50b79e92">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Perform</con:operation>
+      <con:request name="Perform Import Def 1" id="21e328bc-bd42-455e-b847-7b322b944231">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#TestCase#Username}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <PerformRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Action>start</Action>\r
+         <Definitions>\r
+            <Definition xsi:type="ImportDefinition">\r
+               <CustomerKey>Import_To_DE_Market2Lead_Key</CustomerKey>\r
+            </Definition>\r
+         </Definitions>\r
+      </PerformRequestMsg>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="f66b6eac-9135-486a-93a4-e849f41ce533"/>
+        <con:assertion type="SOAP Fault Assertion" id="1516f731-4989-4dc1-97ac-2c03e6f4a81d"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Perform Import Def 2" id="514b8567-f307-4462-99e0-9ed50c3c9099">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Perform</con:operation>
+      <con:request name="Perform Import Def 2" id="8ae386ed-8e04-4556-8668-f9adb378c83d">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#TestCase#Username}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <PerformRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Action>start</Action>\r
+         <Definitions>\r
+            <Definition xsi:type="ImportDefinition">\r
+               <CustomerKey>Import_To_DE_Market2Lead_Key</CustomerKey>\r
+            </Definition>\r
+         </Definitions>\r
+      </PerformRequestMsg>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="d4d0174e-758c-4d16-9f9e-51bde29806a4"/>
+        <con:assertion type="SOAP Fault Assertion" id="f8c180aa-a1b7-4dda-8987-aa432ade2ac4"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Query Def" id="beb51fe2-d501-4331-9e25-b85963ed7731">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Query Def" id="f348061e-e815-4c57-91ed-3175f3c11f70">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#TestCase#Username}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="QueryDefinition">\r
+            <PartnerKey xsi:nil="true"/>\r
+            <ObjectID xsi:nil="true"/>\r
+            <CustomerKey>New Query Key</CustomerKey>\r
+            <Name>New Query</Name>\r
+            <Description>Some Description</Description>\r
+            <QueryText>Select EMAIL_ADDRESS as EMAIL from [Example DE]</QueryText>\r
+            <TargetType>DE</TargetType>\r
+            <DataExtensionTarget>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <CustomerKey>FIRST SEND</CustomerKey>\r
+               <Name>First Send</Name>\r
+            </DataExtensionTarget>\r
+            <TargetUpdateType>Overwrite</TargetUpdateType>\r
+         </Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="36cdd4c8-8ab2-4ee4-bdd0-2cd11cc10786"/>
+        <con:assertion type="SOAP Fault Assertion" id="932d8cea-a41b-486f-8b42-56a97d39fbcd"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Email Send Def" id="2baa9d1a-dc62-4c72-8c8c-a32d1f7d8e52">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Email Send Def" id="6f3eea84-5e36-4578-a65f-3caf10ff8bb8">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#TestCase#Username}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="EmailSendDefinition">\r
+            <ObjectID xsi:nil="true"/>\r
+            <CustomerKey>7dc973cc-e0ab-4aec-9ba8-cf0b739e02dc</CustomerKey>\r
+            <Name>ESD_Name_7dc973cc-e0ab-4aec-9ba8-cf0b739e02dc</Name>\r
+            <Description>ESD_Desc_7dc973cc-e0ab-4aec-9ba8-cf0b739e02dc</Description>\r
+            <SendClassification>\r
+               <ObjectID>51422ad6-6f65-de11-bf42-001e0bbb7678</ObjectID>\r
+            </SendClassification>\r
+            <SendDefinitionList>\r
+               <ObjectID xsi:nil="true"/>\r
+               <CustomerKey>SDL CustomerKey</CustomerKey>\r
+               <SendDefinitionListType>SourceList</SendDefinitionListType>\r
+               <CustomObjectID>729860f8-7d66-de11-bf42-001e0bbb7678</CustomObjectID>\r
+               <DataSourceTypeID>CustomObject</DataSourceTypeID>\r
+               <Name>SDL Name</Name>\r
+            </SendDefinitionList>\r
+            <Email>\r
+               <ID>542894</ID>\r
+               <ObjectID xsi:nil="true"/>\r
+            </Email>\r
+            <EmailSubject>ESD Email Subject</EmailSubject>\r
+            <Additional>cb99f3b1-67a4-452a-94c0-886e9a930961</Additional>\r
+         </Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="d95f2d59-0c0d-4209-8560-7a1e943795be"/>
+        <con:assertion type="SOAP Fault Assertion" id="1622b6e9-e91c-412f-82ef-c6b0d7b2a4a9"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Start Email Send Def" id="021db2e3-6082-47b1-b14d-e69c5c5b4c58">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Perform</con:operation>
+      <con:request name="Start Email Send Def" id="fc869fe0-ac58-41b3-99fa-86932cce872b">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#TestCase#Username}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <PerformRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Action>start</Action>\r
+         <Definitions>\r
+            <Definition xsi:type="EmailSendDefinition">\r
+               <ObjectID xsi:nil="true"/>\r
+               <CustomerKey>7dc973cc-e0ab-4aec-9ba8-cf0b739e02dc</CustomerKey>\r
+               <Name>ESD_Name_7dc973cc-e0ab-4aec-9ba8-cf0b739e02dc</Name>\r
+               <Description>ESD_Desc_7dc973cc-e0ab-4aec-9ba8-cf0b739e02dc</Description>\r
+               <SendClassification>\r
+                  <ObjectID>51422ad6-6f65-de11-bf42-001e0bbb7678</ObjectID>\r
+               </SendClassification>\r
+               <SendDefinitionList>\r
+                  <ObjectID xsi:nil="true"/>\r
+                  <CustomerKey>SDL CustomerKey</CustomerKey>\r
+                  <SendDefinitionListType>SourceList</SendDefinitionListType>\r
+                  <CustomObjectID>729860f8-7d66-de11-bf42-001e0bbb7678</CustomObjectID>\r
+                  <DataSourceTypeID>CustomObject</DataSourceTypeID>\r
+                  <Name>SDL Name</Name>\r
+               </SendDefinitionList>\r
+               <Email>\r
+                  <ID>123</ID>\r
+                  <ObjectID xsi:nil="true"/>\r
+               </Email>\r
+               <EmailSubject>ESD Email Subject</EmailSubject>\r
+               <Additional>cb99f3b1-67a4-452a-94c0-886e9a930961</Additional>\r
+            </Definition>\r
+         </Definitions>\r
+      </PerformRequestMsg>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="0597cf87-c4cc-4190-86f1-fdfb2fdc2e3e"/>
+        <con:assertion type="SOAP Fault Assertion" id="099d4425-8b1d-4ff5-adab-4f2b9d09c278"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update Data Extension" id="dabd8daf-8892-4cc1-8478-6c94f1933901">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update Data Extension" id="8332308e-e2e0-4b83-882c-858797ed3eea">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#TestCase#Username}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="DataExtensionObject">\r
+            <CustomerKey>ExampleDE</CustomerKey>\r
+            <Properties>\r
+               <Property>\r
+                  <Name>EMAIL</Name>\r
+                  <Value>example@example.com</Value>\r
+               </Property>\r
+               <Property xsi:type="NullAPIProperty">\r
+                  <Name>NumberField</Name>\r
+                  <Value/>
+               </Property>\r
+            </Properties>\r
+         </Objects>\r
+      </UpdateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="857cc556-7b2c-4254-a8e5-7bb3da2c70ef"/>
+        <con:assertion type="SOAP Fault Assertion" id="fc2efafa-b823-4f78-9c98-466f5b87aec6"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete Data Extension" id="06507064-b3a3-406b-a77c-bcc4c89ee44a">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Delete</con:operation>
+      <con:request name="Delete Data Extension" id="0931454b-3368-4a04-a87d-34f2b9e5e5c0">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#TestCase#Username}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <DeleteRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="DataExtension">\r
+            <PartnerKey xsi:nil="true"/>\r
+            <ObjectID xsi:nil="true"/>\r
+            <CustomerKey>External key of Data Extension</CustomerKey>\r
+         </Objects>\r
+      </DeleteRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a97020b9-3ea6-4256-ba36-0748e4c87c86"/>
+        <con:assertion type="SOAP Fault Assertion" id="fd8fc4e8-341d-4a05-8b16-44473d8df6bd"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete Account" id="fee61662-ffed-457b-bdd5-4cc77983b16a">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Delete Account" id="b119ce42-bbab-4f3b-a81d-165ea48e2a1a">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#TestCase#Username}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">emails11!</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="Account">\r
+            <Client>\r
+               <ID>${#TestCase#EID}</ID>\r
+            </Client>\r
+            <AccountType>ENTERPRISE_2</AccountType>\r
+            <Name>ET QA Enterprise 2.0</Name>\r
+            <Email>jhedges@salesforce.com</Email>\r
+            <FromName>Jesse Hedges</FromName>\r
+            <BusinessName>Platform Test Team</BusinessName>\r
+            <Address>20 N Meridian Street</Address>\r
+            <City>Indianapolis</City>\r
+            <State>IN</State>\r
+            <Zip>46204</Zip>\r
+            <DBID>${#Project#dbid}</DBID>\r
+            <CustomerID>8323</CustomerID>\r
+            <IsActive>0</IsActive>\r
+         </Objects>\r
+      </UpdateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="ba1695b5-3198-4436-94b3-76337f6f0fed"/>
+        <con:assertion type="SOAP Fault Assertion" id="390a3544-dcf7-466a-a117-7782cd0aec9b"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="74341c03-ea6e-4208-a849-daec82645f58">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>EID</con:name>
+      <con:value>1072101</con:value>
+    </con:property>
+    <con:property>
+      <con:name>ListID</con:name>
+      <con:value>94737</con:value>
+    </con:property>
+    <con:property>
+      <con:name>EmailID</con:name>
+      <con:value>46432</con:value>
+    </con:property>
+    <con:property>
+      <con:name>SubscriberID</con:name>
+      <con:value>293103580</con:value>
+    </con:property>
+    <con:property>
+      <con:name>UserID</con:name>
+      <con:value>309071</con:value>
+    </con:property>
+    <con:property>
+      <con:name>Username</con:name>
+      <con:value>x1072101_admin</con:value>
+    </con:property>
+    <con:property>
+      <con:name>CustomObjectID</con:name>
+      <con:value>d7583b4d-d833-e611-a43e-1cc1deeeba28</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>ea78735a-c0b9-4da8-ad72-410e862cac2f</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>73b13eb9-c3d1-4ef5-9f88-291f8c52169d</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>e5847198-0e78-434b-b10b-301ad4534e1a</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>e76975e4-7cab-400e-bd52-a4f23a676cef</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>fee61662-ffed-457b-bdd5-4cc77983b16a</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

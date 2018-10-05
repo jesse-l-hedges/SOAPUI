@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="74ce4546-6198-4a9e-b5bc-d9447f58f8ba" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="businessRules" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="74ce4546-6198-4a9e-b5bc-d9447f58f8bafileName">businessRules</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="8e7daf12-7198-4dbe-a49e-9512da6ca992">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>av1aoQBEavHHPD6pWGf2X4OW</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getBusinessRuleCollection - Request 1" id="0b8376e6-6c4d-405b-a26b-d67f18f4d41c">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/businessrules/@me" methodName="getBusinessRuleCollection" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getBusinessRuleCollection - Request 1" id="2219972a-80b9-4f8d-80a4-e5c8c4fee248" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/businessrules/@me</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="6a24ad6d-0641-46da-adbd-b208b7c1f696" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="28cefa99-e774-41d9-8364-197ed7b3ba2e" name="Contains">
+          <con:configuration>
+            <token>name</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="5f76ba1d-5ca4-42f5-b497-78043a69edfc" name="Contains data">
+          <con:configuration>
+            <token>data</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="c5f18d08-f6b6-4ff6-8e5a-ad2ddd6ea55b" name="Contains dataDefault">
+          <con:configuration>
+            <token>dataDefault</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="79140fb0-a596-4349-88b3-5cb426858098" name="Contains qualityDefault">
+          <con:configuration>
+            <token>qualityDefault</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

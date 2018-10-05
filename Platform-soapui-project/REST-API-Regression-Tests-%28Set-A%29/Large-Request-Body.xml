@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="d7cb8f44-43d4-451d-b3ce-2e36431ef456" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Large Request Body" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:description>Sends a POST whose request body is a couple of MB in size.
+
+Currently disabled because it results in a 500 error on at least one prod stack (s4). FUEL-4028 filed. 
+
+12/16/15: Reenabled test - using a request body size that will not result in a 500 error.</con:description>
+  <con:settings>
+    <con:setting id="d7cb8f44-43d4-451d-b3ce-2e36431ef456fileName">Large-Request-Body</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="0dec681f-1923-471d-8413-e12d0faf1a16">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accessToken</con:name>
+          <con:value>bOFWkyAyZm1CgqaajYMOBDRy</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>1100419</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>280148</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script To Create Object Name" id="dcd5628a-39a8-4c32-b92f-3e58ef0e82b4">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"DE " + generator( (('A'..'Z')+('0'..'9')).join(), 15 ) + "_QETesting"</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Get Categories Of Type Data Extension" id="5aa69578-9844-43c0-9483-55dc44b22356">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/categories" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Get Categories Of Type Data Extension" id="090be095-b75d-4f01-8034-26f52ce986c5" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/categories</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="8ea8bd74-5d32-4b34-a176-318da83611bc" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="catType" value="dataextension"/>
+          <con:entry key="Host" value=""/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>catType</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="3b843353-f6c7-4630-b3c2-22bc6062ac4d">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script To Create Request Body" id="92ce57a9-da15-4d71-9567-ca62298b0650">
+    <con:settings/>
+    <con:config>
+      <script>import groovy.json.JsonBuilder
+
+rawUserIDs = ["randText", "randFirstName", "randLastName", "randMI", "randCity"]
+userIDs = []
+
+
+def bodyMaxSize = context.expand( '${#TestCase#bodyMaxSize}' )
+
+for (i = 1; i &lt; bodyMaxSize.toInteger(); i++) {
+    rawUserIDs.each {
+         userIDs &lt;&lt; it + i.toString()     
+       }
+    }
+
+
+def json = new JsonBuilder()
+
+json {
+  name('''${Groovy Script To Create Object Name#result}''')
+  customerKey('''${Groovy Script To Create Object Name#result}''')
+  description("Many many columns")
+  categoryID('''${Get Categories Of Type Data Extension#Response#$.items[0].categoryId}''')
+  isSendable(false)
+  isTestable(false)
+  Fields(userIDs.collect{[name: it, type:0, length:100, isNullable:1, defaultValue:"", ordinal:0, isPrimaryKey:0, isTemplateField:0, isInheritable:1, isOverridable:1, mustOverride:0, isHidden:0, isReadonly:0 ]})
+}
+
+json.toString()</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Post Data Extension" id="716b5446-e4c6-47a4-aa45-3c6cfa89057a">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/customobjects" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Post Data Extension" id="f8d76ba5-bbae-48c4-b405-518acc69ea07" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request>${Groovy Script To Create Request Body#result}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/internal/v1/customobjects</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="cc0463fc-4a8a-42a2-b783-fead35d9efc9" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>201</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="Host" value=""/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="3b843353-f6c7-4630-b3c2-22bc6062ac4d">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Delete Data Extension" id="9832d3d8-21c3-4833-a28e-5ee68c6b05e2">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/customobjects/{id}" methodName="Delete" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Delete Data Extension" id="db629e09-f7b3-4d30-873a-0b4f84c25d54" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/internal/v1/customobjects/fc991196-6b3c-e511-882c-0022642d9886</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="fe1052c8-eba0-42ea-ab98-1ce0bc77100a" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>204</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="Host" value=""/>
+          <con:entry key="id" value="${Post Data Extension#Response#$.id}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>id</con:entry>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="3b843353-f6c7-4630-b3c2-22bc6062ac4d">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Retrieve DE To Confirm Deletion" id="53946800-4375-4c96-9f2d-f280acaec644">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/customobjects/{id}" methodName="Get" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Retrieve DE To Confirm Deletion" id="6592ba84-6573-4fac-9005-3eccc1f519c5" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/internal/v1/customobjects/fc991196-6b3c-e511-882c-0022642d9886</con:originalUri>
+        <con:assertion type="JsonPath Match" id="2289010b-cf0c-4178-b3d5-0ee887ccd2f0" name="Message should reflect invalid objectID">
+          <con:configuration>
+            <path>$.message</path>
+            <content>There was no Custom Object found for ID: ${Post Data Extension#ResponseAsXml#declare namespace ns1='https://www.exacttargetapis.com/internal/v1/customobjects'; //ns1:Response[1]/ns1:id[1]}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="46852ed9-b519-49f2-a7f1-e3de7ec3b286" name="Script Assertion">
+          <con:configuration/>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="Host" value=""/>
+          <con:entry key="id" value="${Post Data Extension#Response#$.id}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>id</con:entry>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="3b843353-f6c7-4630-b3c2-22bc6062ac4d">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>bodyMaxSize</con:name>
+      <con:value>100</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>3369b9e0-748a-4f27-9678-c8efbc9806d5</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>bc59e862-6a38-4667-92ec-73dddd571964</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>82540d1c-175f-4229-80bf-f09f96cf5d91</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>dae1df86-0d1d-4aa8-9032-d0ce611cbb90</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

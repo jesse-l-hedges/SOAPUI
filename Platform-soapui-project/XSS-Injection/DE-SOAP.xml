@@ -1,0 +1,1399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="33917251-725a-4395-9e92-b7d34b27d209" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="DE-SOAP" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="33917251-725a-4395-9e92-b7d34b27d209fileName">DE-SOAP</con:setting>
+  </con:settings>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:testStep type="calltestcase" name="DE Cleanup" id="1e334808-dc41-42f7-a7c0-68d803b1e35b">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>cdf1af20-1913-47bc-bdbc-e949bba68204</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>categoryId</con:name>
+        </con:property>
+        <con:property>
+          <con:name>count</con:name>
+        </con:property>
+        <con:property>
+          <con:name>customObjectId</con:name>
+        </con:property>
+      </con:properties>
+      <con:returnProperties/>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="calltestcase" name="Auth" id="244c3594-81af-43ae-a573-a387843ef2d0">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>ahpvRsVRYvtI3d6gfRHSVko9</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>10782007</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>10739553</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Create Random DE Name" id="6ba790f7-5ef5-4144-8600-d30b5003ef7f">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')+('0'..'9')).join(), 15 )</script>
+        </con:configuration>
+        <con:name>DE Name</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Create Random CustomerKey" id="b518e4a4-7d29-4609-98e1-b4d268e07b98">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>import static java.util.UUID.randomUUID 
+ 
+uuid = randomUUID() as String
+uuid = uuid.toUpperCase()
+return uuid</script>
+        </con:configuration>
+        <con:name>customObjectId</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create DE - Invalid Name" id="bfd7a78a-7979-4a59-8e48-ecb020c2da34">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create DE - Invalid Name" id="46680a7d-aa73-4c21-985e-563f97e1d44e">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="DataExtension">\r
+            <CustomerKey>${Create Random DE Name#DE Name}</CustomerKey>\r
+            <Name>&lt;script>alert(1)&lt;/script></Name>\r
+            <IsTestable>false</IsTestable>\r
+            <IsSendable>false</IsSendable>\r
+            <SendableDataExtensionField/>\r
+            <Fields>\r
+               <Field>
+                  <Name>Subscriber Key</Name>
+                  <FieldType>Text</FieldType>
+                  <MaxLength>25</MaxLength>
+                  <IsPrimaryKey>true</IsPrimaryKey>
+                  <IsRequired>true</IsRequired>
+               </Field>
+               <Field>
+                  <Name>EmailAddress</Name>
+                  <FieldType>EmailAddress</FieldType>
+                  <MaxLength>150</MaxLength>
+                  <IsRequired>true</IsRequired>
+               </Field>
+               <Field>
+                  <Name>First Name</Name>
+                  <FieldType>Text</FieldType>
+                  <MaxLength>50</MaxLength>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Last Name</Name>
+                  <FieldType>Text</FieldType>
+                  <MaxLength>50</MaxLength>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Birthdate</Name>
+                  <FieldType>Date</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Age</Name>
+                  <FieldType>Number</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>HTML Email</Name>
+                  <FieldType>Boolean</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+            </Fields>
+         </Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="1f4589f9-62c5-4ea3-826f-0f0cd93e7b91"/>
+        <con:assertion type="SOAP Fault Assertion" id="13d9677b-e08c-47ad-b7af-1527f586fd2b"/>
+        <con:assertion type="Valid HTTP Status Codes" id="864e44ea-6227-4118-900c-2a8b7a83f27b" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="c266b700-88e7-4c6f-8dd2-d964f1946734" name="Status Message">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>The data extension name cannot contain the character &lt;. The data extension name cannot contain the character >. The data extension name cannot contain the character /. The data extension name cannot contain the character (. The data extension name cannot contain the character ).</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="5217c704-0347-4510-8e50-14e0d9447cd5">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Create Random DE Name 2" id="0a3ef66b-8e8f-4e81-8ab3-a30c745c24e2">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')+('0'..'9')).join(), 15 )</script>
+        </con:configuration>
+        <con:name>DE Name</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create DE - Invalid CustomerKey" id="222a39d6-fd6f-47df-9229-e6f70531c9a8">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create DE - Invalid CustomerKey" id="9f903657-ba20-4701-89ca-3586c103c3e4">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options/>
+         <Objects xsi:type="DataExtension">
+            <CustomerKey><![CDATA[<data><script>alert(1)</script></data>]]]]>><![CDATA[</CustomerKey>
+            <Name>QETest_${Create Random DE Name 2#DE Name}</Name>
+            <IsTestable>false</IsTestable>
+            <IsSendable>false</IsSendable>
+            <SendableDataExtensionField/>
+            <Fields>
+               <Field>
+                  <Name>Subscriber Key</Name>
+                  <FieldType>Text</FieldType>
+                  <MaxLength>25</MaxLength>
+                  <IsPrimaryKey>true</IsPrimaryKey>
+                  <IsRequired>true</IsRequired>
+               </Field>
+               <Field>
+                  <Name>EmailAddress</Name>
+                  <FieldType>EmailAddress</FieldType>
+                  <MaxLength>150</MaxLength>
+                  <IsRequired>true</IsRequired>
+               </Field>
+               <Field>
+                  <Name>First Name</Name>
+                  <FieldType>Text</FieldType>
+                  <MaxLength>50</MaxLength>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Last Name</Name>
+                  <FieldType>Text</FieldType>
+                  <MaxLength>50</MaxLength>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Birthdate</Name>
+                  <FieldType>Date</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Age</Name>
+                  <FieldType>Number</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>HTML Email</Name>
+                  <FieldType>Boolean</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+            </Fields>
+         </Objects>
+      </CreateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="e0a02a31-81e9-4176-bdc6-bbfcd7d8f41c"/>
+        <con:assertion type="SOAP Fault Assertion" id="65f688bb-6f23-4b3e-ab2c-ed63cc82e090"/>
+        <con:assertion type="Valid HTTP Status Codes" id="09d87431-baf4-423c-9920-8c96396844fa" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="64c8f5f6-9b9f-476d-b362-78f87e1e452a" name="Data Extension created">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Data Extension created.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="5217c704-0347-4510-8e50-14e0d9447cd5">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete DE 2" id="f12004d6-09bd-4b1e-82c6-423c1f59cb3a">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Delete</con:operation>
+      <con:request name="Delete DE 2" id="c9c36e08-df74-4702-8863-ec95378ff576">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <DeleteRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options></Options>
+         <Objects xsi:type="DataExtension">
+            <PartnerKey xsi:nil="true"></PartnerKey>
+            <ObjectID xsi:nil="true"></ObjectID>
+            <Name>QETest_${Create Random DE Name 2#DE Name}</Name>
+         </Objects>
+      </DeleteRequest>
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="c18744ce-7d6c-424b-b6fa-104f5ab716b0"/>
+        <con:assertion type="SOAP Fault Assertion" id="20e12109-c2d6-49c0-99d1-07fe2275fb4f"/>
+        <con:assertion type="Valid HTTP Status Codes" id="dc5a3c1f-4a2c-4223-88c1-184cbd75a07d" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="d471a14a-ba4b-4b88-9610-ce326080927d" name="Data Extension Deleted">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Data Extension deleted.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Create Random DE Name 3" id="e6aeb11f-9160-4cb7-8fbc-b87966f9f1aa">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')+('0'..'9')).join(), 15 )</script>
+        </con:configuration>
+        <con:name>DE Name</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create DE - Invalid Description" id="9b87c7a5-f74f-4930-8261-9332698ac088">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create DE - Invalid Description" id="17fda10c-219b-4dd7-836d-c94324db53d2">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options/>
+         <Objects xsi:type="DataExtension">
+            <CustomerKey>${Create Random DE Name 3#DE Name}</CustomerKey>
+            <Name>QETest_${Create Random DE Name 3#DE Name}</Name>
+            <Description>&lt;script>alert(1)&lt;/script></Description>
+            <IsTestable>false</IsTestable>
+            <IsSendable>false</IsSendable>
+            <SendableDataExtensionField/>
+            <Fields>
+               <Field>
+                  <Name>Subscriber Key</Name>
+                  <FieldType>Text</FieldType>
+                  <MaxLength>25</MaxLength>
+                  <IsPrimaryKey>true</IsPrimaryKey>
+                  <IsRequired>true</IsRequired>
+               </Field>
+               <Field>
+                  <Name>EmailAddress</Name>
+                  <FieldType>EmailAddress</FieldType>
+                  <MaxLength>150</MaxLength>
+                  <IsRequired>true</IsRequired>
+               </Field>
+               <Field>
+                  <Name>First Name</Name>
+                  <FieldType>Text</FieldType>
+                  <MaxLength>50</MaxLength>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Last Name</Name>
+                  <FieldType>Text</FieldType>
+                  <MaxLength>50</MaxLength>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Birthdate</Name>
+                  <FieldType>Date</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Age</Name>
+                  <FieldType>Number</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>HTML Email</Name>
+                  <FieldType>Boolean</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+            </Fields>
+         </Objects>
+      </CreateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="5ef48f5b-a9c8-428d-998b-9c1dbd455d33"/>
+        <con:assertion type="SOAP Fault Assertion" id="73408f1d-6a22-410a-a763-dfa84b1d2379"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="5217c704-0347-4510-8e50-14e0d9447cd5">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete DE 3" id="528b6ce6-2641-4a9b-b108-117bb8144667">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Delete</con:operation>
+      <con:request name="Delete DE 3" id="c9c36e08-df74-4702-8863-ec95378ff576">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <DeleteRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options></Options>
+         <Objects xsi:type="DataExtension">
+            <PartnerKey xsi:nil="true"></PartnerKey>
+            <ObjectID xsi:nil="true"></ObjectID>
+            <CustomerKey>${Create Random DE Name 3#DE Name}</CustomerKey>
+         </Objects>
+      </DeleteRequest>
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="c18744ce-7d6c-424b-b6fa-104f5ab716b0"/>
+        <con:assertion type="SOAP Fault Assertion" id="20e12109-c2d6-49c0-99d1-07fe2275fb4f"/>
+        <con:assertion type="Valid HTTP Status Codes" id="8c96066a-11ab-4fda-8232-2c334fa084b6" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="7605541a-b4e9-4770-a3a6-33083078036c" name="Data Extension deleted">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Data Extension deleted.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Create Random DE Name 4" id="1d1fcb5d-4ebd-4530-b0b6-f34654bd0668">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')+('0'..'9')).join(), 15 )</script>
+        </con:configuration>
+        <con:name>DE Name</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create DE - Invalid Field Name" id="55b4a4c8-0aea-4876-b1d2-cfc19a0fd92f">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create DE - Invalid Field Name" id="b321e509-aa29-4c2c-af28-7f7b3988cafc">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="DataExtension">\r
+            <CustomerKey>${Create Random DE Name 4#DE Name}</CustomerKey>\r
+            <Name>QETest_${Create Random DE Name 4#DE Name}</Name>\r
+            <Description>description</Description>\r
+            <IsTestable>false</IsTestable>\r
+            <IsSendable>false</IsSendable>\r
+            <SendableDataExtensionField/>\r
+            <Fields>\r
+               <Field>\r
+                  <Name>Subscriber Key</Name>\r
+                  <FieldType>Text</FieldType>\r
+                  <MaxLength>25</MaxLength>\r
+                  <IsPrimaryKey>true</IsPrimaryKey>\r
+                  <IsRequired>true</IsRequired>\r
+               </Field>\r
+               <Field>\r
+                  <Name>EmailAddress</Name>\r
+                  <FieldType>EmailAddress</FieldType>\r
+                  <MaxLength>150</MaxLength>\r
+                  <IsRequired>true</IsRequired>\r
+               </Field>\r
+               <Field>\r
+                  <Name>&lt;script>alert(1)&lt;/script></Name>\r
+                  <FieldType>Text</FieldType>\r
+                  <Length>75</Length>\r
+               </Field>\r
+               <Field>\r
+                  <Name>Last Name</Name>\r
+                  <FieldType>Text</FieldType>\r
+                  <MaxLength>50</MaxLength>\r
+                  <IsRequired>false</IsRequired>\r
+               </Field>\r
+               <Field>\r
+                  <Name>Birthdate</Name>\r
+                  <FieldType>Date</FieldType>\r
+                  <IsRequired>false</IsRequired>\r
+               </Field>\r
+               <Field>\r
+                  <Name>Age</Name>\r
+                  <FieldType>Number</FieldType>\r
+                  <IsRequired>false</IsRequired>\r
+               </Field>\r
+               <Field>\r
+                  <Name>HTML Email</Name>\r
+                  <FieldType>Boolean</FieldType>\r
+                  <IsRequired>false</IsRequired>\r
+               </Field>\r
+            </Fields>\r
+         </Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="701d91b8-6f47-4426-a3e2-eb92558f1091"/>
+        <con:assertion type="SOAP Fault Assertion" id="45fe8033-85d5-435e-af37-a6b390ad6c43"/>
+        <con:assertion type="Valid HTTP Status Codes" id="a5c3a207-cca4-40ef-9e5d-f2455be1772e" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="94a0114d-a2b2-443f-84be-689397aa4aee" name="Status Message">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Field name cannot contain the character &lt;. Field name cannot contain the character >. Field name cannot contain the character /. Field name cannot contain the character (. Field name cannot contain the character ).</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="5217c704-0347-4510-8e50-14e0d9447cd5">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Create Random DE Name 5" id="299a81af-d80c-4c90-b323-2a347fa330c9">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')+('0'..'9')).join(), 15 )</script>
+        </con:configuration>
+        <con:name>DE Name</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create DE - Invalid Default Value" id="eb28986a-110c-45ad-b953-17ee1ec6f676">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create DE - Invalid Default Value" id="65b345a2-a3a6-4c7f-a401-d4b1bda954e8">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="DataExtension">\r
+            <CustomerKey>${Create Random DE Name 5#DE Name}</CustomerKey>\r
+            <Name>QETest_${Create Random DE Name 5#DE Name}</Name>\r
+            <Description>description</Description>\r
+            <IsTestable>false</IsTestable>\r
+            <IsSendable>false</IsSendable>\r
+            <SendableDataExtensionField/>\r
+            <Fields>\r
+               <Field>\r
+                  <Name>Subscriber Key</Name>\r
+                  <FieldType>Text</FieldType>\r
+                  <MaxLength>25</MaxLength>\r
+                  <IsPrimaryKey>true</IsPrimaryKey>\r
+                  <IsRequired>true</IsRequired>\r
+               </Field>\r
+               <Field>\r
+                  <Name>EmailAddress</Name>\r
+                  <FieldType>EmailAddress</FieldType>\r
+                  <MaxLength>150</MaxLength>\r
+                  <IsRequired>true</IsRequired>\r
+               </Field>\r
+               <Field>\r
+                  <Name>First Name</Name>\r
+                  <FieldType>Text</FieldType>\r
+                  <MaxLength>50</MaxLength>\r
+                  <IsRequired>false</IsRequired>\r
+               </Field>\r
+               <Field>\r
+                  <Name>Last Name</Name>\r
+                  <FieldType>Text</FieldType>\r
+                  <MaxLength>50</MaxLength>\r
+                  <IsRequired>false</IsRequired>\r
+               </Field>\r
+               <Field>\r
+                  <Name>Birthdate</Name>\r
+                  <FieldType>Date</FieldType>\r
+                  <IsRequired>false</IsRequired>\r
+               </Field>\r
+               <Field>\r
+                  <Name>Age</Name>\r
+                  <FieldType>Number</FieldType>\r
+                  <IsRequired>false</IsRequired>\r
+               </Field>\r
+               <Field>\r
+                  <Name>HTML Email</Name>\r
+                  <FieldType>Boolean</FieldType>\r
+                  <IsRequired>false</IsRequired>\r
+               </Field>\r
+            </Fields>\r
+            <Properties>\r
+               <Property>\r
+                  <Name>FirstName</Name>\r
+                  <Value>&lt;script>alert(1)&lt;/script></Value>\r
+               </Property>\r
+            </Properties>\r
+         </Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="9b8e22c4-9344-4b01-aeb1-5837bb516425"/>
+        <con:assertion type="SOAP Fault Assertion" id="df9dbcda-23d3-42fc-9dfb-90eca74a9521"/>
+        <con:assertion type="Valid HTTP Status Codes" id="42a7592f-c9c1-4a01-b753-c6ab538a267a" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="acc213ec-0784-410a-921c-1976a07e8759" name="Status Message">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Data Extension created.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="5217c704-0347-4510-8e50-14e0d9447cd5">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete DE 4" id="c19d49d5-7eba-478a-8d97-404d3fc4b915">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Delete</con:operation>
+      <con:request name="Delete DE 4" id="c9c36e08-df74-4702-8863-ec95378ff576">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <DeleteRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options></Options>
+         <Objects xsi:type="DataExtension">
+            <PartnerKey xsi:nil="true"></PartnerKey>
+            <ObjectID xsi:nil="true"></ObjectID>
+            <Name>QETest_${Create Random DE Name 5#DE Name}</Name>
+         </Objects>
+      </DeleteRequest>
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="c18744ce-7d6c-424b-b6fa-104f5ab716b0"/>
+        <con:assertion type="SOAP Fault Assertion" id="20e12109-c2d6-49c0-99d1-07fe2275fb4f"/>
+        <con:assertion type="Valid HTTP Status Codes" id="1c5e2725-ee0d-4035-a4cd-a6d013c6dbba" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="465b882d-4859-4e4c-ba37-528f31475970" name="Data Extension deleted">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Data Extension deleted.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Create Random DE Name 6" id="9507d5f9-b731-4677-8b26-320ddcf5dfb7">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')+('0'..'9')).join(), 15 )</script>
+        </con:configuration>
+        <con:name>DE Name</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create DE - Valid" id="644b31d4-f96c-4743-aa8c-f56030639ed3">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create DE - Valid" id="db9861da-b12f-4030-9817-ab06c6edefff">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options/>
+         <Objects xsi:type="DataExtension">
+            <CustomerKey>${Create Random DE Name 6#DE Name}</CustomerKey>
+            <Name>QETest_${Create Random DE Name 6#DE Name}</Name>
+            <Description>description</Description>
+            <IsTestable>false</IsTestable>
+            <IsSendable>false</IsSendable>
+            <SendableDataExtensionField/>
+            <Fields>
+               <Field>
+                  <Name>SubscriberKey</Name>
+                  <FieldType>Text</FieldType>
+                  <Length>50</Length>
+               </Field>
+               <Field>
+                  <Name>EmailAddress</Name>
+                  <FieldType>EmailAddress</FieldType>
+               </Field>
+               <Field>
+                  <Name>First Name</Name>
+                  <FieldType>Text</FieldType>
+                  <Length>75</Length>
+               </Field>
+               <Field>
+                  <Name>Last Name</Name>
+                  <FieldType>Text</FieldType>
+                  <Length>75</Length>
+               </Field>
+               <Field>
+                  <Name>Birthdate</Name>
+                  <FieldType>Date</FieldType>
+               </Field>
+               <Field>
+                  <Name>Age</Name>
+                  <FieldType>Number</FieldType>
+               </Field>
+            </Fields>
+         </Objects>
+      </CreateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="bed44715-6341-4d45-8327-f2c7bcf97298"/>
+        <con:assertion type="SOAP Fault Assertion" id="f8b91ba6-3812-416b-b29e-dfa87e2ece4d"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="5217c704-0347-4510-8e50-14e0d9447cd5">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer CustomerKey" id="d7b90d7a-cd49-45f0-abc0-f816aca03897">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>customerKey</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create DE - Valid</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:Object[1]/ns1:CustomerKey[1]</con:sourcePath>
+        <con:targetType>CustomerKey</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>customObjectId</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create DE - Valid</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewObjectID[1]</con:sourcePath>
+        <con:targetType>customObjectId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update DE - Invalid Name" id="dc52bb2c-210d-4a17-9475-08687297ca83">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update DE - Invalid Name" id="20c1f454-1701-4041-b276-d415acc86bfe">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="DataExtension">\r
+            <ObjectID>${#TestCase#customObjectId}</ObjectID>\r
+            <Name>&lt;script>alert(1)&lt;/script></Name>\r
+         </Objects>\r
+      </UpdateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="6a33797c-2113-4ee7-8c61-648980eff521"/>
+        <con:assertion type="SOAP Fault Assertion" id="27643636-875d-4eb3-888e-cb0209bb310b"/>
+        <con:assertion type="Valid HTTP Status Codes" id="444c23d3-bd9d-4846-b185-e71e095cbaa5" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="6ffd26fb-6233-45ff-8085-66c0fc84d7f8" name="Status Message">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>The data extension name cannot contain the character &lt;. The data extension name cannot contain the character >. The data extension name cannot contain the character /. The data extension name cannot contain the character (. The data extension name cannot contain the character ).</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="5217c704-0347-4510-8e50-14e0d9447cd5">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update DE - Invalid CustomerKey" id="9b6930a5-46e2-46e2-8820-0852c6af7237">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update DE - Invalid CustomerKey" id="20c1f454-1701-4041-b276-d415acc86bfe">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="DataExtension">\r
+            <ObjectID>${#TestCase#customObjectId}</ObjectID>\r
+            <CustomerKey>&lt;script>alert(1)&lt;/script></CustomerKey>\r
+         </Objects>\r
+      </UpdateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="6a33797c-2113-4ee7-8c61-648980eff521"/>
+        <con:assertion type="SOAP Fault Assertion" id="27643636-875d-4eb3-888e-cb0209bb310b"/>
+        <con:assertion type="XPath Match" id="4764f7ae-b4c8-4f6d-a031-f2ea55abb20d" name="Data extension updated">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Data Extension updated.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="5217c704-0347-4510-8e50-14e0d9447cd5">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update DE - Invalid Description" id="5767ee82-0bbf-4a91-8626-e148e0244c64">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update DE - Invalid Description" id="20c1f454-1701-4041-b276-d415acc86bfe">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options/>
+         <Objects xsi:type="DataExtension">
+            <ObjectID>${#TestCase#customObjectId}</ObjectID>
+            <Description>&lt;script>alert(1)&lt;/script></Description>
+         </Objects>
+      </UpdateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="6a33797c-2113-4ee7-8c61-648980eff521"/>
+        <con:assertion type="SOAP Fault Assertion" id="27643636-875d-4eb3-888e-cb0209bb310b"/>
+        <con:assertion type="Valid HTTP Status Codes" id="d00cc3a8-a7bc-489e-9696-aead79655ffc" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="8a579cec-b620-4392-a648-0c7c6ab667fe" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Data Extension updated.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="5217c704-0347-4510-8e50-14e0d9447cd5">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update DE - Invalid Field Name" id="00eee435-adf2-404e-a697-6d878d167e26">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update DE - Invalid Field Name" id="20c1f454-1701-4041-b276-d415acc86bfe">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="DataExtension">\r
+            <ObjectID>${#TestCase#customObjectId}</ObjectID>\r
+            <Fields>\r
+               <Field>\r
+                  <Name>&lt;script>alert(1)&lt;/script></Name>\r
+                  <MaxLength>200</MaxLength>\r
+                  <IsRequired>true</IsRequired>\r
+               </Field>\r
+            </Fields>\r
+         </Objects>\r
+      </UpdateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="6a33797c-2113-4ee7-8c61-648980eff521"/>
+        <con:assertion type="SOAP Fault Assertion" id="27643636-875d-4eb3-888e-cb0209bb310b"/>
+        <con:assertion type="Valid HTTP Status Codes" id="1b2c5c31-965e-4b07-8f7a-22c41c229e14" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="7eb598ad-26ed-47a7-b2d6-6b4ce17dfeb2" name="Status Message">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Field name cannot contain the character &lt;. Field name cannot contain the character >. Field name cannot contain the character /. Field name cannot contain the character (. Field name cannot contain the character ).</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="5217c704-0347-4510-8e50-14e0d9447cd5">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update DE - Invalid Default Value" id="6b143435-1757-4356-964b-d127736c1a0a">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update DE - Invalid Default Value" id="20c1f454-1701-4041-b276-d415acc86bfe">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="DataExtension">\r
+            <ObjectID>${#TestCase#customObjectId}</ObjectID>\r
+            <Fields>\r
+               <Field>\r
+                  <Name>New Field</Name>\r
+                  <MaxLength>200</MaxLength>\r
+                  <IsRequired>true</IsRequired>\r
+                  <DefaultValue>&lt;script>alert(1)&lt;/script></DefaultValue>\r
+               </Field>\r
+            </Fields>\r
+         </Objects>\r
+      </UpdateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="6a33797c-2113-4ee7-8c61-648980eff521"/>
+        <con:assertion type="SOAP Fault Assertion" id="27643636-875d-4eb3-888e-cb0209bb310b"/>
+        <con:assertion type="Valid HTTP Status Codes" id="88c56466-cb34-4cc8-8f2e-84709f7bb467" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="1657b12d-d584-4bab-8be5-d48a4b27910d" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Data Extension updated.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="5217c704-0347-4510-8e50-14e0d9447cd5">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete DE" id="e598040d-9bbe-42a1-862b-c09a5154dc9e">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Delete</con:operation>
+      <con:request name="Delete DE" id="507733e9-2804-42af-ba3a-ff498c381a4c">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <DeleteRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options></Options>
+         <Objects xsi:type="DataExtension">
+            <PartnerKey xsi:nil="true"></PartnerKey>
+            <ObjectID>${#TestCase#customObjectId}</ObjectID>
+         </Objects>
+      </DeleteRequest>
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="1606d0f3-ecd0-4fc3-98ad-6cdad721cd70"/>
+        <con:assertion type="SOAP Fault Assertion" id="53f27c5d-a7ff-4683-bd9c-ad51965ddb2c"/>
+        <con:assertion type="Valid HTTP Status Codes" id="525f1e39-46c3-4198-baee-8f1c8728e439" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="405e32b5-d0fb-440d-8bb5-0be405ac28bb" name="Data extension deleted">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Data Extension deleted.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="5217c704-0347-4510-8e50-14e0d9447cd5">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>CustomerKey</con:name>
+      <con:value>PN4DL036L7JZ241</con:value>
+    </con:property>
+    <con:property>
+      <con:name>customObjectId</con:name>
+      <con:value>a821a250-74b6-e611-80cf-1402ec6b9529</con:value>
+    </con:property>
+    <con:property>
+      <con:name>DE_name</con:name>
+      <con:value>QETest_S9PDRGG1JLI0A8X</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>e8bc2a7b-e3cf-446a-9ab2-04b02ab0c586</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>566a89c3-b957-4755-a649-bb56a42236e8</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>9177d5e2-6872-4cbf-a396-5b69a778ed2c</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>7f61f740-ee3c-4e16-84a7-830ba200da2b</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>7693024d-226d-40bc-aa7b-76aa775ce754</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>c08c0782-70bf-4299-909c-5b966a467a61</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>385a3e28-2cd5-4dd2-a037-aa66d223acb4</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>b518e4a4-7d29-4609-98e1-b4d268e07b98</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

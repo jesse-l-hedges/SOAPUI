@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="Authorize" path="adfs/oauth2/authorize" id="eb9c3a05-d3bf-4143-a6e6-10e08f720c70" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="eb9c3a05-d3bf-4143-a6e6-10e08f720c70fileName">Authorize</con:setting>
+  </con:settings>
+  <con:parameters>
+    <con:parameter>
+      <con:name>Cookie</con:name>
+      <con:value xsi:nil="true"/>
+      <con:style>HEADER</con:style>
+      <con:default xsi:nil="true"/>
+    </con:parameter>
+    <con:parameter>
+      <con:name>code</con:name>
+      <con:value xsi:nil="true"/>
+      <con:style>QUERY</con:style>
+      <con:default xsi:nil="true"/>
+    </con:parameter>
+  </con:parameters>
+  <con:method name="Authorize GET" id="0ea6b21f-84ee-4376-b4b6-a7820b770ed0" method="GET">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>response_type</con:name>
+        <con:value xsi:nil="true"/>
+        <con:style>QUERY</con:style>
+        <con:default xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>client_id</con:name>
+        <con:value xsi:nil="true"/>
+        <con:style>QUERY</con:style>
+        <con:default xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>resource</con:name>
+        <con:value xsi:nil="true"/>
+        <con:style>QUERY</con:style>
+        <con:default xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>redirect_uri</con:name>
+        <con:value xsi:nil="true"/>
+        <con:style>QUERY</con:style>
+        <con:default xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType>text/html; charset=utf-8</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:request name="Request 1" id="6102c6ee-a462-496a-b81a-0d4ea47d7749" mediaType="application/json">
+      <con:settings/>
+      <con:endpoint>https://auth.qa.local</con:endpoint>
+      <con:request/>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+  <con:method name="Authorize POST" id="48f9cbf4-6982-4092-8d18-1c755a757d47" method="POST">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>response_type</con:name>
+        <con:value xsi:nil="true"/>
+        <con:style>QUERY</con:style>
+        <con:default xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>client_id</con:name>
+        <con:value xsi:nil="true"/>
+        <con:style>QUERY</con:style>
+        <con:default xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>resource</con:name>
+        <con:value xsi:nil="true"/>
+        <con:style>QUERY</con:style>
+        <con:default xsi:nil="true"/>
+      </con:parameter>
+      <con:parameter>
+        <con:name>redirect_uri</con:name>
+        <con:value xsi:nil="true"/>
+        <con:style>QUERY</con:style>
+        <con:default xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:representation type="REQUEST" id="">
+      <con:mediaType>application/x-www-form-urlencoded</con:mediaType>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType>application/x-www-form-urlencoded</con:mediaType>
+      <con:status/>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType>application/x-www-form-urlencoded</con:mediaType>
+      <con:status/>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="FAULT" id="">
+      <con:mediaType>text/html; charset=utf-8</con:mediaType>
+      <con:status>404</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType>text/html; charset=utf-8</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:request name="Request 1" id="1929e5cf-7a74-408e-817c-44655fe8565e" mediaType="application/x-www-form-urlencoded">
+      <con:settings/>
+      <con:endpoint>https://auth.qa.local</con:endpoint>
+      <con:request/>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+</con:resource>

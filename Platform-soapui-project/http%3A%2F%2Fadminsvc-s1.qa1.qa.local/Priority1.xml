@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="Priority" path="adminservice/v1/ErrorLookup/priority" id="f66baa89-b5f0-49d0-9907-17092591a014" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="f66baa89-b5f0-49d0-9907-17092591a014fileName">Priority1</con:setting>
+  </con:settings>
+  <con:parameters>
+    <con:parameter>
+      <con:name>Authorization</con:name>
+      <con:value xsi:nil="true"/>
+      <con:style>HEADER</con:style>
+      <con:default xsi:nil="true"/>
+    </con:parameter>
+    <con:parameter>
+      <con:name>Content-Type</con:name>
+      <con:value xsi:nil="true"/>
+      <con:style>HEADER</con:style>
+      <con:default xsi:nil="true"/>
+    </con:parameter>
+  </con:parameters>
+  <con:method name="Add" id="b54b8ab5-de74-408f-b461-a3ba7ad39497" method="POST">
+    <con:settings/>
+    <con:parameters/>
+    <con:representation type="REQUEST" id="">
+      <con:mediaType>application/json</con:mediaType>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status/>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status/>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="FAULT" id="">
+      <con:mediaType>application/json; charset=UTF-8</con:mediaType>
+      <con:status>400 403</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType>application/json; charset=UTF-8</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:request name="Request 1" id="4a0e1547-73b7-4692-82ba-ce654fb97ca0" mediaType="application/json">
+      <con:settings/>
+      <con:endpoint>http://adminsvc-s1.qa1.qa.local</con:endpoint>
+      <con:request/>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+  <con:method name="Get" id="0594d197-3ebd-4239-8bcf-01486b71ede9" method="GET">
+    <con:settings/>
+    <con:parameters/>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status/>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status/>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="FAULT" id="">
+      <con:mediaType>application/json; charset=UTF-8</con:mediaType>
+      <con:status>400 403</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType>application/json; charset=UTF-8</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:request name="Request 1" id="f6f5100e-1e75-4f7c-b316-e1a9e677d312" mediaType="application/json">
+      <con:settings/>
+      <con:endpoint>http://adminsvc-s1.qa1.qa.local</con:endpoint>
+      <con:request/>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+</con:resource>

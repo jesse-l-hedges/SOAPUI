@@ -1,0 +1,1128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="3dd4e37c-3575-451e-8643-3db094d22fd9" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Create, Update and Delete TriggeredSendDefinition - No Conversation ID" searchProperties="true" timeout="0" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="a76e344e-5aab-40e4-bb4e-48b09421b870fileName">Triggered-Send-End-to-End---No-List</con:setting>
+    <con:setting id="681b90d5-0ec4-4cf8-b120-172ebe0bbb92fileName">Create%2C-Update%2C-Perform-and-Delete-TriggeredSend---No-Conversation-ID</con:setting>
+    <con:setting id="e51e5d07-2755-4eb4-b423-f1d6e0c2564cfileName">Create%2C-Update-and-Delete-TriggeredSendDefinition---No-Conversation-ID</con:setting>
+    <con:setting id="3dd4e37c-3575-451e-8643-3db094d22fd9fileName">Create%2C-Update-and-Delete-TriggeredSendDefinition---No-Conversation-ID</con:setting>
+  </con:settings>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:testStep type="restrequest" name="RequestAuth - Request 1" id="255679cd-64dc-4eb1-9a1b-f22bf72da185">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RequestAuth - Request 1" id="cd080263-4158-4399-87d7-e0540300f461" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+   "clientId": "${#Project#asyncClientID}",
+   "clientSecret": "${#Project#asyncClientSecret}"
+}</con:request>
+        <con:originalUri>https://auth-qa3s1.exacttargetapis.com/v1/requestToken</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>legacy</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Property Transfer auth" id="e2c0722f-c0c1-45c1-8855-9ad19d4649dd">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>transfer token</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>RequestAuth - Request 1</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://auth-qa3s1.exacttargetapis.com/v1/requestToken';
+//ns1:Response[1]/ns1:accessToken[1]</con:sourcePath>
+        <con:targetType>accessToken</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Create New FuelBin" id="d8e09393-16dc-41a7-97c9-c278f5751131">
+    <con:settings/>
+    <con:config service="FuelBin" resourcePath="/bin" methodName="Create New FuelBin ID" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Create New FuelBin" id="ecce9464-96a2-45a7-9668-dab62f8c6fc3" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>https://fuelbin.dev.marketingcloudapps.com</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://fuelbin.int.marketingcloudapps.com/bin</con:originalUri>
+        <con:assertion type="JsonPath Existence Match" id="4f06ff23-e27d-4268-99f3-73266e8374c4" name="Check for existence of [id]">
+          <con:configuration>
+            <path>$.id</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Retrieve Send Classification" id="7f150d17-ddf5-4287-8430-df5565f91671">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve Send Classification" id="f01891c0-6b33-4c8c-8bd9-72f53a17f621">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${#TestCase#accessToken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <RetrieveRequest>
+            <ObjectType>SendClassification</ObjectType>
+            <Properties>CustomerKey</Properties>
+            <Properties>Name</Properties>
+            <Properties>ObjectID</Properties>
+            <ns1:Filter xsi:type="ns1:ComplexFilterPart" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+               <ns1:LeftOperand xsi:type="ns1:SimpleFilterPart">
+                  <ns1:Property>Name</ns1:Property>
+                  <ns1:SimpleOperator>equals</ns1:SimpleOperator>
+                  <ns1:Value>Default Commercial</ns1:Value>
+               </ns1:LeftOperand>
+               <ns1:LogicalOperator>OR</ns1:LogicalOperator>
+               <ns1:RightOperand xsi:type="ns1:SimpleFilterPart">
+                  <ns1:Property>Name</ns1:Property>
+                  <ns1:SimpleOperator>equals</ns1:SimpleOperator>
+                  <ns1:Value>Marketing Send</ns1:Value>
+               </ns1:RightOperand>
+            </ns1:Filter>
+         </RetrieveRequest>
+      </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="3db620b0-9017-4198-a5f4-bc8b4e6145d9"/>
+        <con:assertion type="SOAP Fault Assertion" id="8c25387e-39f7-4cf6-8114-cb966c088e26"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create Random Email Name" id="708df2a4-ed71-4abe-9ea8-589bef7ee38c">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+return "QETest_" + generator( (('A'..'Z')+('0'..'9')).join(), 12 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Email" id="1f3b03f7-e4f5-442e-b458-6e993b8dc6ae">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Email" id="d06c2d75-82e5-4eeb-84fc-82d26d292f4c">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${#TestCase#accesstoken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options/>
+         <Objects xsi:type="Email">
+            <PartnerKey xsi:nil="true"/>
+            <ModifiedDate xsi:nil="true"/>
+            <ObjectID xsi:nil="true"/>
+            <Name>${Create Random Email Name#result}</Name>
+            <HTMLBody><![CDATA[<html>
+<body>
+
+<p>
+This paragraph
+contains a lot of lines
+in the source code,
+but the browser 
+ignores it.
+</p>
+
+<p>
+This paragraph
+contains      a lot of spaces
+in the source     code,
+but the    browser 
+ignores it.
+</p>
+
+<p>
+The number of lines in a paragraph depends on the size of your browser window. If you resize the browser window, the number of lines in this paragraph will change.
+</p>
+
+</body>
+</html>
+
+
+<table cellpadding="2" cellspacing="0" width="600" ID="Table5" Border=0><tr><td><font face="verdana" size="1" color="#444444">This email was sent to:  %%emailaddr%% <br><br><b>Email Sent By:</b> %%Member_Busname%%<br>%%Member_Addr%% %%Member_City%%, %%Member_State%%, %%Member_PostalCode%%, %%Member_Country%%<br><br></font></td></tr></table>
+<br>
+<a href="%%profile_center_url%%" alias="Update Profile">Update Profile</a>]]]]>><![CDATA[</HTMLBody>
+            <Subject>TS Email - no list</Subject>
+            <IsHTMLPaste>true</IsHTMLPaste>
+         </Objects>
+      </CreateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="8dde20fb-2ffa-4397-9224-b8fbdafaca18"/>
+        <con:assertion type="SOAP Fault Assertion" id="770111b5-5063-474d-b228-cd154d8a9d4b"/>
+        <con:assertion type="Valid HTTP Status Codes" id="271bb611-a9a4-4c0b-8c51-977e1cec5c05" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="f80b49dd-a8f8-4360-bc3a-205146991d25" name="Match content of [StatusMessage]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]/text()</path>
+            <content>Created Email.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer EmailID" id="5f18ad5d-5af5-458c-9cf0-d1d4c6a3266f">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>emailId</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Email</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>EmailID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create Random Triggered Send Name" id="83b03220-d9c5-432d-96dd-c01cf3bed936">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+return "TS_" + generator( (('A'..'Z')+('0'..'9')).join(), 12 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer TriggeredSendName" id="95cc0e0d-14e1-40b8-8516-a89368b5d709">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>triggered send name</con:name>
+        <con:sourceType>result</con:sourceType>
+        <con:sourceStep>Create Random Triggered Send Name</con:sourceStep>
+        <con:sourcePath/>
+        <con:targetType>TriggeredSendName</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Triggered Send Definition" id="a17adee6-c005-49ab-8359-9c10e12550f5">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Triggered Send Definition" id="ea308c82-7821-4783-8f97-21a13f63ad79">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${#TestCase#accesstoken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options>
+		   <SendResponseTo>
+		      <ResponseType>HTTPPost</ResponseType>
+		      <ResponseAddress>${#Project#fuelbinendpoint}/${Create New FuelBin#Response#$.id}</ResponseAddress>
+		      <RespondWhen>Always</RespondWhen>
+		      <IncludeResults>true</IncludeResults>
+		      <IncludeObjects>true</IncludeObjects>
+		   </SendResponseTo>
+		   
+		   <OrdinalID>0</OrdinalID>
+		   <RequestType>Asynchronous</RequestType>
+		</Options>
+         <Objects xsi:type="TriggeredSendDefinition">
+            <PartnerKey xsi:nil="true"/>
+            <ModifiedDate xsi:nil="true"/>
+            <ObjectID xsi:nil="true"/>
+            <Name>${Create Random Triggered Send Name#result}</Name>
+            <SendClassification>
+               <PartnerKey xsi:nil="true"/>
+               <ModifiedDate xsi:nil="true"/>
+               <CustomerKey>Default Commercial</CustomerKey>
+            </SendClassification>
+            <SuppressTracking>false</SuppressTracking>
+            <TriggeredSendType>Continuous</TriggeredSendType>
+            <Email>
+               <PartnerKey xsi:nil="true"/>
+               <ModifiedDate xsi:nil="true"/>
+               <ID>${#TestCase#EmailID}</ID>
+               <ObjectID xsi:nil="true"/>
+            </Email>
+            <BatchInterval>0</BatchInterval>
+         </Objects>
+      </CreateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="ff8c724f-a3db-4b86-898f-d824ab1149ac"/>
+        <con:assertion type="SOAP Fault Assertion" id="d5893e3a-af8f-4c89-8363-c197a5ccac91"/>
+        <con:assertion type="Valid HTTP Status Codes" id="c50ec1f0-f0cd-416d-a6ba-1b700bdac1d0" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="a281707e-937b-4d3a-9ee4-4d149135a167" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Queued</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Retrieve TriggerSendDefinition" id="0819ccfc-be6a-44c2-9a6d-a0f992464500">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve TriggerSendDefinition" id="464fcb5f-7138-4a4e-af07-f023bda26cb0" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${#TestCase#accesstoken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <RetrieveRequest>
+            <ObjectType>TriggeredSendDefinition</ObjectType>
+            <Properties>Name</Properties><Properties>ObjectID</Properties><Properties>TriggeredSendStatus</Properties>
+            <Filter xsi:type="ns211:SimpleFilterPart" xmlns:ns211="http://exacttarget.com/wsdl/partnerAPI">
+   		  	<ns211:Property>Name</ns211:Property>
+   		  	<ns211:SimpleOperator>equals</ns211:SimpleOperator>
+   		  	<ns211:Value>${#TestCase#TriggeredSendName}</ns211:Value> 
+		  </Filter>
+            <Properties>Client.PartnerClientKey</Properties>
+            <Properties>Name</Properties>
+            <Properties>PartnerKey</Properties>
+            <Properties>SendClassification.CustomerKey</Properties>
+            <Properties>SenderProfile.CustomerKey</Properties>
+            <Properties>DeliveryProfile.CustomerKey</Properties>
+            <Properties>List.PartnerKey</Properties>
+            <Properties>Email.PartnerKey</Properties>
+            <Properties>SendClassification.PartnerKey</Properties>
+         </RetrieveRequest>
+      </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="0cd2fcad-dbd5-4f3b-a3d1-96e841e2bf6e"/>
+        <con:assertion type="XPath Match" id="db83acfb-4962-4ab4-b9e5-f699574cb855" name="XPath Match" disabled="true">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+exists( //ns1:RetrieveResponseMsg/ns1:Results/ns1:ObjectID)</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Confirm Create" id="79407ae3-f75b-417c-89c3-f63c086bae07">
+    <con:settings/>
+    <con:config>
+      <script>import groovy.util.XmlSlurper
+
+def response = new XmlSlurper().parseText(context.expand( '${Retrieve TriggerSendDefinition#Response#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:RetrieveResponseMsg[1]}' ))
+
+if( context.loopIndex == null )
+context.loopIndex = 0
+def numberOfTimes = context.expand( '${#TestCase#numberOfTimes}' ).toInteger()
+
+if ( response.Results.ObjectID.size() == 0 ) {
+  if ( ++context.loopIndex &lt;  numberOfTimes ) {
+    log.info "TriggerSendDefinition not created yet"
+    sleep(1000)
+    testRunner.gotoStepByName( "Retrieve TriggerSendDefinition" )
+  }
+  else {
+    log.info "Timeout, test should fail"
+    testRunner.fail("TriggerSendDefinition not created after " + numberOfTimes.toString() + " retrieve attempts, timing out")
+  }
+}
+else {
+  log.info "TriggerSendDefinition created"
+  testRunner.gotoStepByName( "Transfer TriggeredSendObjectID" ) 
+}</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer TriggeredSendObjectID" id="cc29722f-6829-4364-b0c1-759962da2aa2">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>triggered send name</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Retrieve TriggerSendDefinition</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:RetrieveResponseMsg[1]/ns1:Results[1]/ns1:ObjectID[1]</con:sourcePath>
+        <con:targetType>TriggeredSendID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Start Triggered Send" id="2801e931-2c97-4b33-bd06-945feef59a5e">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Start Triggered Send" id="c06763f6-89f2-4ce2-9350-cf283d6c9477">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${#TestCase#accesstoken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options>
+		   <SendResponseTo>
+		      <ResponseType>HTTPPost</ResponseType>
+		      <ResponseAddress>${#Project#fuelbinendpoint}/${Create New FuelBin#Response#$.id}</ResponseAddress>
+		      <RespondWhen>Always</RespondWhen>
+		      <IncludeResults>true</IncludeResults>
+		      <IncludeObjects>true</IncludeObjects>
+		   </SendResponseTo>
+		   
+		   <OrdinalID>0</OrdinalID>
+		   <RequestType>Asynchronous</RequestType>
+		</Options>
+         <Objects xsi:type="TriggeredSendDefinition">
+            <PartnerKey xsi:nil="true"/>
+            <ModifiedDate xsi:nil="true"/>
+            <ObjectID>${#TestCase#TriggeredSendID}</ObjectID>
+            <TriggeredSendStatus>Active</TriggeredSendStatus>
+         </Objects>
+      </UpdateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="8f39b4ba-3ee0-470f-b37c-1da8bdd663bb"/>
+        <con:assertion type="SOAP Fault Assertion" id="bcdafe53-0e37-4360-b039-75cadbf75c9c"/>
+        <con:assertion type="Valid HTTP Status Codes" id="f982de86-57be-434b-b8db-bec8a009872e" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="1db0120a-ee8f-4c22-a616-b2dd0f252d6c" name="TriggeredSendDef updated">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Queued</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer RequestID" id="36140e5d-a132-4a8d-b8cd-1cd8e7fdb8a6">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>transfer requestid</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Start Triggered Send</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:RequestID[1]</con:sourcePath>
+        <con:targetType>RequestID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Retrieve Async Response" id="40d3853a-b85d-4915-83a7-aa4294feeaeb">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve Async Response" id="464fcb5f-7138-4a4e-af07-f023bda26cb0" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${#TestCase#accesstoken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <RetrieveRequest>
+            <ObjectType>ResultItem</ObjectType>
+            <Properties>RequestType</Properties>
+            <Properties>ErrorCode</Properties>
+            <Properties>StatusCode</Properties>
+            <Properties>StatusMessage</Properties>
+            <Filter xsi:type="ns211:SimpleFilterPart" xmlns:ns211="http://exacttarget.com/wsdl/partnerAPI">
+   		  	<ns211:Property>RequestID</ns211:Property>
+   		  	<ns211:SimpleOperator>equals</ns211:SimpleOperator>
+   		  	<ns211:Value>${#TestCase#RequestID}</ns211:Value> 
+		  </Filter>
+         </RetrieveRequest>
+      </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="0cd2fcad-dbd5-4f3b-a3d1-96e841e2bf6e"/>
+        <con:assertion type="XPath Match" id="db83acfb-4962-4ab4-b9e5-f699574cb855" name="Check OverallStatus OK" disabled="true">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:RetrieveResponseMsg[1]/ns1:OverallStatus[1]</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="bfeacfa5-6bc3-4660-9d94-884a615b815b" name="Check Object Status OK" disabled="true">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:RetrieveResponseMsg[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="f47441c9-648b-4f3c-9ef2-45deb9570960" name="Check RequestType Asynchronous" disabled="true">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:RetrieveResponseMsg[1]/ns1:Results[1]/ns1:RequestType[1]</path>
+            <content>Asynchronous</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Confirm Update" id="31969928-f280-4502-bae9-8359f2996ac9">
+    <con:settings/>
+    <con:config>
+      <script>import groovy.util.XmlSlurper
+
+def response = new XmlSlurper().parseText(context.expand( '${Retrieve Async Response#Response#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:RetrieveResponseMsg[1]}' ))
+
+if( context.loopIndex == null )
+context.loopIndex = 0
+def numberOfTimes = context.expand( '${#TestCase#numberOfTimes}' ).toInteger()
+if ( response.Results.StatusCode != "OK" ) {
+  if ( ++context.loopIndex &lt;  numberOfTimes ) {
+    log.info "TriggeredSendDefinition not started yet"
+    sleep(1000)
+    testRunner.gotoStepByName( "Retrieve Async Response" )
+  }
+  else {
+    log.info "Timeout, test should fail"
+    testRunner.fail("TriggeredSendDefinition not started  after " + numberOfTimes.toString() + " retrieve attempts, timing out")
+  }
+}
+else {
+  log.info "TriggeredSendDefinition started "
+  testRunner.gotoStepByName( "Update EmailID - Expect Failure" ) 
+}</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update EmailID - Expect Failure" id="cc64209a-925e-411b-a850-208146425a00">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update EmailID - Expect Failure" id="093e0862-d8ab-4960-b946-a1fa243c7a7b">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${#TestCase#accesstoken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options/>
+         <Objects xsi:type="TriggeredSendDefinition">
+            <PartnerKey xsi:nil="true"/>
+            <ModifiedDate xsi:nil="true"/>
+            <ObjectID>${#TestCase#TriggeredSendID}</ObjectID>
+            <Email>
+               <PartnerKey xsi:nil="true"/>
+               <ModifiedDate xsi:nil="true"/>
+               <ID>${#TestCase#EmailID}</ID>
+               <ObjectID xsi:nil="true"/>
+            </Email>
+         </Objects>
+      </UpdateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="7a8dd272-5a6c-4121-acc2-48bcfdb815c9"/>
+        <con:assertion type="SOAP Fault Assertion" id="6051ba1e-9740-413c-9a05-df95ce8371d5"/>
+        <con:assertion type="XPath Match" id="eb2ca829-4e59-428f-8f5d-bce50c5224f4" name="StatusCode">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>Error</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="8de110c1-2bca-4fe5-96c5-c19fc03f6037" name="StatusMessage">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>An active TriggeredSendDefinition can not be updated or have it's content refreshed</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Pause Send Definition" id="8a80a9c6-c7bb-4500-ac7f-d74c7a596eb0">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Pause Send Definition" id="d3849a05-f0fc-4db8-8cc7-6430df8d4322">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${#TestCase#accesstoken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options/>
+         <ns1:Objects xsi:type="ns1:TriggeredSendDefinition" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+            <ns1:PartnerKey xsi:nil="true"/>
+            <ns1:ModifiedDate xsi:nil="true"/>
+            <ns1:ObjectID>${#TestCase#TriggeredSendID}
+</ns1:ObjectID>
+            <ns1:TriggeredSendStatus>Inactive</ns1:TriggeredSendStatus>
+         </ns1:Objects>
+      </UpdateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="b9b69b4e-41b7-4e43-a093-107092993a6a"/>
+        <con:assertion type="SOAP Fault Assertion" id="1dfa61e1-0fa0-4d25-9785-a26359c1b76d"/>
+        <con:assertion type="Valid HTTP Status Codes" id="2c8ec774-18bb-4dcb-b3a5-cff8be0e6104" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="32ae97aa-4f77-4beb-b049-266470459c7b" name="Match content of [StatusMessage]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]/text()</path>
+            <content>TriggeredSendDefinition updated</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="00301518-867c-4072-8f9e-782f0f23b3bc" name="Match content of [TriggeredSendStatus]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:Object[1]/ns1:TriggeredSendStatus[1]/text()</path>
+            <content>Inactive</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update EmailID" id="fc2abe21-b05d-4515-a29f-3f08ee42e9d7">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update EmailID" id="093e0862-d8ab-4960-b946-a1fa243c7a7b">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${#TestCase#accesstoken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options/>
+         <Objects xsi:type="TriggeredSendDefinition">
+            <PartnerKey xsi:nil="true"/>
+            <ModifiedDate xsi:nil="true"/>
+            <ObjectID>${#TestCase#TriggeredSendID}</ObjectID>
+            <Email>
+               <PartnerKey xsi:nil="true"/>
+               <ModifiedDate xsi:nil="true"/>
+               <ID>${#TestCase#EmailID}</ID>
+               <ObjectID xsi:nil="true"/>
+            </Email>
+         </Objects>
+      </UpdateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="7a8dd272-5a6c-4121-acc2-48bcfdb815c9"/>
+        <con:assertion type="SOAP Fault Assertion" id="6051ba1e-9740-413c-9a05-df95ce8371d5"/>
+        <con:assertion type="XPath Match" id="eb2ca829-4e59-428f-8f5d-bce50c5224f4" name="StatusCode">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="8de110c1-2bca-4fe5-96c5-c19fc03f6037" name="StatusMessage">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>TriggeredSendDefinition updated</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete Triggered Send Definition" id="fb79d965-5b26-482f-bade-0fd9139e4ced">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Delete</con:operation>
+      <con:request name="Delete Triggered Send Definition" id="72053888-438e-4558-9a24-84d6edddc1ff">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <SOAP-ENV:Header>
+     <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${#TestCase#accessToken}</h:fueloauth>
+   </SOAP-ENV:Header>
+ <SOAP-ENV:Body>
+  <DeleteRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+      <Options>
+   <SendResponseTo>
+      <ResponseType>HTTPPost</ResponseType>
+      <ResponseAddress>${#Project#fuelbinendpoint}/${Create New FuelBin#Response#$.id}</ResponseAddress>
+      <RespondWhen>Always</RespondWhen>
+      <IncludeResults>true</IncludeResults>
+      <IncludeObjects>true</IncludeObjects>
+   </SendResponseTo>
+   
+   <OrdinalID>0</OrdinalID>
+   <RequestType>Asynchronous</RequestType>
+</Options>
+   <ns1:Objects xsi:type="ns1:TriggeredSendDefinition" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <ns1:ObjectID>${#TestCase#TriggeredSendID}</ns1:ObjectID>
+    </ns1:Objects>
+ </DeleteRequest>
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="8f99371a-8b89-4c99-ac2b-4667798a6da1"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Retrieve TriggerSendDefinition to confirm Delete" id="c8577026-471c-4cf0-9608-109210b74ce4">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve TriggerSendDefinition to confirm Delete" id="464fcb5f-7138-4a4e-af07-f023bda26cb0" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${#TestCase#accesstoken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <RetrieveRequest>
+            <ObjectType>TriggeredSendDefinition</ObjectType>
+            <Properties>Name</Properties><Properties>ObjectID</Properties><Properties>TriggeredSendStatus</Properties>
+            <Filter xsi:type="ns211:SimpleFilterPart" xmlns:ns211="http://exacttarget.com/wsdl/partnerAPI">
+   		  	<ns211:Property>Name</ns211:Property>
+   		  	<ns211:SimpleOperator>equals</ns211:SimpleOperator>
+   		  	<ns211:Value>${#TestCase#TriggeredSendName}</ns211:Value> 
+		  </Filter>
+            <Properties>Client.PartnerClientKey</Properties>
+            <Properties>Name</Properties>
+            <Properties>PartnerKey</Properties>
+            <Properties>SendClassification.CustomerKey</Properties>
+            <Properties>SenderProfile.CustomerKey</Properties>
+            <Properties>DeliveryProfile.CustomerKey</Properties>
+            <Properties>List.PartnerKey</Properties>
+            <Properties>Email.PartnerKey</Properties>
+            <Properties>SendClassification.PartnerKey</Properties>
+         </RetrieveRequest>
+      </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="0cd2fcad-dbd5-4f3b-a3d1-96e841e2bf6e"/>
+        <con:assertion type="XPath Match" id="db83acfb-4962-4ab4-b9e5-f699574cb855" name="XPath Match" disabled="true">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+exists( //ns1:RetrieveResponseMsg/ns1:Results/ns1:ObjectID)</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Confirm Delete" id="0416a651-3e49-430b-9083-6a0c23aa7635">
+    <con:settings/>
+    <con:config>
+      <script>import groovy.util.XmlSlurper
+
+def response = new XmlSlurper().parseText(context.expand( '${Retrieve TriggerSendDefinition to confirm Delete#Response#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:RetrieveResponseMsg[1]}' ))
+
+if( context.loopIndex == null )
+context.loopIndex = 0
+def numberOfTimes = context.expand( '${#TestCase#numberOfTimes}' ).toInteger()
+if ( response.Results.TriggeredSendStatus != "Deleted" ) {
+  if ( ++context.loopIndex &lt;  numberOfTimes ) {
+    log.info "Delete for TriggeredSendDefinition not executed yet"
+    sleep(1000)
+    testRunner.gotoStepByName( "Retreive TriggeredSendDefinition to confirm Delete" )
+  }
+  else {
+    log.info "Timeout, test should fail"
+    testRunner.fail("TriggeredSendDefinition not Deleted after " + numberOfTimes.toString() + " retrieve attempts, timing out")
+  }
+}
+else {
+  log.info "TriggeredSendDefinition was Deleted"
+}</script>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>EmailID</con:name>
+      <con:value>92730</con:value>
+    </con:property>
+    <con:property>
+      <con:name>TriggeredSendID</con:name>
+      <con:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">a84deb08-156c-e711-80d4-1402ec6b94d5</con:value>
+    </con:property>
+    <con:property>
+      <con:name>accessToken</con:name>
+      <con:value>c23dwu49NgKvH9jr8iHpHlZk</con:value>
+    </con:property>
+    <con:property>
+      <con:name>TriggeredSendName</con:name>
+      <con:value>TS_2XHLD2RDY3PD</con:value>
+    </con:property>
+    <con:property>
+      <con:name>numberOfTimes</con:name>
+      <con:value>90</con:value>
+    </con:property>
+    <con:property>
+      <con:name>RequestID</con:name>
+      <con:value>364ebaa6-556f-412c-854b-9b838a42f7fe</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>bdad798d-305d-4890-8549-77153bf31263</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>d146fa8a-0538-4959-b163-aaf6e9dc3714</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>87a2825f-30a0-48c7-bd4f-b5fa923666cf</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>d52c1467-85c5-42fe-bfab-c0816d8c79ca</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>64919476-a515-4968-b034-adf6390f27be</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>3f69d618-2265-4753-adf6-01c5c002338a</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>5c207626-ea18-4161-bd77-81976dc70d7d</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>45590a58-aec6-4929-8830-87275cd842a2</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>78f4640d-dfd0-4d8e-8cf3-46091d54e318</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>15050c1c-b51d-44d4-be41-4c3e550412fd</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>11893401-929d-48c3-a625-d553d2763e1a</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>4d1875db-3586-4254-9877-ce477cc0af98</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>a63479e3-0d76-48bc-9c2f-6d33c2a5a258</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>f76ceee1-9a18-402e-9197-83bacaf8cc8c</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>a31ed1db-8b9e-48c8-bd24-c0db207d1427</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>e73595b5-6666-4dcd-87be-9f177953cbb6</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

@@ -1,0 +1,1335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Request Token Negative Path" searchProperties="true" id="38e0d48b-a16b-41ca-9ffa-2163ca7a9aa9" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config">
+  <con:description>* valid clientid and secret/Invalid refresh token - s/b 401
+* valid clientid and secret, access type offline - use refresh token twice - s/b 200 then 401</con:description>
+  <con:settings>
+    <con:setting id="38e0d48b-a16b-41ca-9ffa-2163ca7a9aa9fileName">Request-Token-Negative-Path</con:setting>
+  </con:settings>
+  <con:testStep type="delay" name="Delay" id="cd8b2cc6-62f7-4a1c-b721-02fe4e2067af" disabled="true">
+    <con:settings/>
+    <con:config>
+      <delay>120000</delay>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="invalidClientId" id="92b3389e-f785-4a29-ac7e-0b89dfa30743">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="invalidClientId" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "InvalidClientId",
+    "clientSecret": "${#Project#clientsecret}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 401" id="766cda08-b5c3-4548-8f15-2d9e85cabe90">
+          <con:settings/>
+          <con:configuration>
+            <codes>401</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="236bb19c-5971-4c02-8b59-ed522bce060b" name="Validate Response Has Body">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="invalidClientSecret" id="b11e16bf-992d-4550-8a7b-ce9a3e2d3631">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="invalidClientSecret" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "${#Project#clientid}",
+    "clientSecret": "InvalidClientSecret"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 401" id="a2f67b85-a290-4a2e-848b-8dbb82a26c47">
+          <con:settings/>
+          <con:configuration>
+            <codes>401</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="0ff3e9ab-53f0-46da-9e75-32811ee3ab7c" name="Validate Response Has Body">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="invalidClientSecret&amp;clientId" id="33c5d22c-d61a-4de6-80ea-43cd4b8eb18c">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="invalidClientSecret&amp;clientId" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "InvalidClientId",
+    "clientSecret": "InvalidClientSecret"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 401" id="27ef87c2-139b-4191-9ade-56db2c48202a">
+          <con:settings/>
+          <con:configuration>
+            <codes>401</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="8ac6d73a-ce4f-4137-810f-2153b70f89c2" name="Validate Response Has Body">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="blank ClientId" id="44b63f8a-ac71-4a3f-a83b-b21d2bda38ff">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="blank ClientId" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "",
+    "clientSecret": "${#Project#clientsecret}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 400" id="01c8fafe-5f73-4f6d-9d24-627e8cf45cea">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="220b2366-72ef-4709-bd51-b63903c43f13" name="Validate Response Has Body" disabled="true">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="blank ClientSecret" id="fd099c12-75b4-439a-aaac-39ca4dfba84b">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="blank ClientSecret" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "${#Project#clientid}",
+    "clientSecret": ""
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 400" id="d97f171d-d910-4720-9447-94a299360ea2">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="9a16bfbd-8e2a-49e7-b30c-152cf47e96ca" name="Validate Response Has Body" disabled="true">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="blank ClientSecret&amp;clientId" id="ae19de29-d0fe-4fcd-8a3a-5e9bf188d0a2">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="blank ClientSecret&amp;clientId" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "",
+    "clientSecret": ""
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 400" id="7b3de361-567c-49e4-a285-6d3d6ab074f4">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="48f1f715-c25f-4a25-ac93-d8252654fe1a" name="Validate Response Has Body" disabled="true">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RequestTokenLegacy - invalid clientId" id="d63af78f-d553-42d6-97ae-ddb04248908e">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="Request Legacy Token" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RequestTokenLegacy - invalid clientId" mediaType="application/json" postQueryString="false" id="1e535511-8a8c-445a-ae2f-d4a49b48f4e5">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "wrongclientId",
+    "clientSecret": "${#Project#clientsecret}"
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 401" id="ff8a361e-fead-4b5f-b993-035c70042ec4">
+          <con:settings/>
+          <con:configuration>
+            <codes>401</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="ffcaa8aa-418e-405d-958b-f0bec6f70f64" name="Validate Response Has Body">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RequestTokenLegacy - invalid clientSecret" id="7a0cc17b-e058-4d50-8020-1178a5b4fe49">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="Request Legacy Token" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RequestTokenLegacy - invalid clientSecret" mediaType="application/json" postQueryString="false" id="1e535511-8a8c-445a-ae2f-d4a49b48f4e5">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "${#Project#clientid}",
+    "clientSecret": "wrongclientsecret"
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 401" id="ff8a361e-fead-4b5f-b993-035c70042ec4">
+          <con:settings/>
+          <con:configuration>
+            <codes>401</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="ffcaa8aa-418e-405d-958b-f0bec6f70f64" name="Validate Response Has Body">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RequestTokenLegacy - invalid clientId and clientSecret" id="3cf49410-655b-4997-9fa8-7d7bee7610f0">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="Request Legacy Token" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RequestTokenLegacy - invalid clientId and clientSecret" mediaType="application/json" postQueryString="false" id="1e535511-8a8c-445a-ae2f-d4a49b48f4e5">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "wrongclientId",
+    "clientSecret": "wrongclientSecret"
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 401" id="ff8a361e-fead-4b5f-b993-035c70042ec4">
+          <con:settings/>
+          <con:configuration>
+            <codes>401</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="ffcaa8aa-418e-405d-958b-f0bec6f70f64" name="Validate Response Has Body">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RequestTokenLegacy - missing clientId" id="68b16f30-2173-4353-84f2-cb302f0723c0">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="Request Legacy Token" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RequestTokenLegacy - missing clientId" mediaType="application/json" postQueryString="false" id="1e535511-8a8c-445a-ae2f-d4a49b48f4e5">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientSecret": "${#Project#clientsecret}"
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 401" id="ff8a361e-fead-4b5f-b993-035c70042ec4">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="ffcaa8aa-418e-405d-958b-f0bec6f70f64" name="Validate Response Has Body" disabled="true">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RequestTokenLegacy - missing clientSecret" id="42335852-100c-4fef-bd1f-3007ceb21f6d">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="Request Legacy Token" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RequestTokenLegacy - missing clientSecret" mediaType="application/json" postQueryString="false" id="1e535511-8a8c-445a-ae2f-d4a49b48f4e5">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "${#Project#clientid}"
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 401" id="ff8a361e-fead-4b5f-b993-035c70042ec4">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="ffcaa8aa-418e-405d-958b-f0bec6f70f64" name="Validate Response Has Body" disabled="true">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RequestTokenLegacy - missing clientId and clientSecret" id="b3557ffd-a7ee-4c4a-9070-e8e6d9e0fe90">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="Request Legacy Token" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RequestTokenLegacy - missing clientId and clientSecret" mediaType="application/json" postQueryString="false" id="1e535511-8a8c-445a-ae2f-d4a49b48f4e5">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>${authendpoint}/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 401" id="ff8a361e-fead-4b5f-b993-035c70042ec4">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="ffcaa8aa-418e-405d-958b-f0bec6f70f64" name="Validate Response Has Body" disabled="true">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Invalid RefreshToken" id="10e560d8-f207-42ea-84f0-fdc1a016941f">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Invalid RefreshToken" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#clientid}",
+   "clientSecret": "${#Project#clientsecret}",
+   "accessType": "offline",
+   "refreshToken": "InvalidRefreshToken"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="52f54643-c200-4d2a-a4d3-dd00f25a9f57" name="401 Status Code">
+          <con:settings/>
+          <con:configuration>
+            <codes>401</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="b6349918-958e-4b97-a5a9-501a44d56073" name="Validate Response Has Body">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Get Initial Refresh Token" id="e6c89375-ca17-409c-828f-a71e8302cda8" disabled="true">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Get Initial Refresh Token" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "${clientid}",
+    "clientSecret": "${clientsecret}",
+    "accessType": "offline"
+   
+    
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and refreshToken" id="2d978192-07e5-4730-867a-be771c00318b">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def refresh = json.refreshToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert refresh =~/^[0-9a-zA-Z\-]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Get New Access Token With Refresh Token" id="f6398ad6-5d9c-45da-a47a-6c91466450b3" disabled="true">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Get New Access Token With Refresh Token" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${clientid}",
+   "clientSecret": "${clientsecret}",
+   "accessType": "offline",
+   "refreshToken": "${Get Initial Refresh Token#Response#$.refreshToken}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and refreshToken" id="2d978192-07e5-4730-867a-be771c00318b">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def refresh = json.refreshToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert refresh =~/^[0-9a-zA-Z\-]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Second Request With Refresh Token" id="938e0726-e62b-4a9a-9a73-949660cfb55e">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Second Request With Refresh Token" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#clientid}",
+   "clientSecret": "${#Project#clientsecret}",
+   "accessType": "offline",
+   "refreshToken": "${#TestSuite#refreshToken}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="401 Status Code" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and refreshToken" id="2d978192-07e5-4730-867a-be771c00318b">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def refresh = json.refreshToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert refresh =~/^[0-9a-zA-Z\-]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="4cf0186f-64bf-4828-a555-273b7295d29c" name="Validate Response Has Body" disabled="true">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4A Org User - Get Access Token With MID1 Scope MID2 ClientID" id="f6f851db-a17f-4d10-8c0f-0d0d0103bcdb" disabled="true">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4A Org User - Get Access Token With MID1 Scope MID2 ClientID" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${clientID}",
+   "clientSecret": "${clientSecret}",
+   "scope": "/organization:${bu1user1orgID} /user:${bu1user1userID}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9326c5c3-4414-40e0-b377-9e2f047514ca">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="2274a833-2756-497a-af55-05f05c48bcc2" name="Response Values Match Expected Patterns">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires>1150</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4A CAS - Get Legacy Token - Cross MID" id="a36c2663-6105-4195-ae7a-aee4cc29ebd8" disabled="true">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="Request Legacy Token" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4A CAS - Get Legacy Token - Cross MID" mediaType="application/json" postQueryString="false" id="e42004f8-5745-47e9-944f-9addf66a40c6">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#bu1user1clientID}",
+   "clientSecret": "${#Project#bu1user1clientSecret}"
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requetToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="cf3539d0-0288-4eb5-972e-09a2f0150de9">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and legacyToken" id="d37f15e2-dfa7-4f48-add9-5bc5e08205ae">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def legacy = json.legacyToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert legacy =~/^[0-9a-zA-Z\-_]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="7eea835d-e858-43c3-9fb4-bf3d41de1366" name="Validate Response Has Body">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>legacy</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4A CAS - Get Access Token With CAS Scope - CrossMID" id="e277eea2-85dc-46ba-8f16-1ceb15151a5f" disabled="true">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="Request Legacy Token" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4A CAS - Get Access Token With CAS Scope - CrossMID" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#casclientid}",
+   "clientSecret": "${#Project#casclientsecret}",
+   "scope": "cas:${Scenario 4A CAS - Get Legacy Token - Cross MID#Response#$.legacyToken}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9326c5c3-4414-40e0-b377-9e2f047514ca">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="2274a833-2756-497a-af55-05f05c48bcc2" name="Response Values Match Expected Patterns">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires>1150</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="a5035e83-08c8-4607-a9fc-89c07cb5fa4d" name="Validate Response Has Body">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4B CAS - Get Legacy Token - MID 1" id="d8e5f816-8469-47d9-9b4f-ed82863ffce5" disabled="true">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="Request Legacy Token" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4B CAS - Get Legacy Token - MID 1" mediaType="application/json" postQueryString="false" id="e42004f8-5745-47e9-944f-9addf66a40c6">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#bu1user1clientID}",
+   "clientSecret": "${#Project#bu1user1clientSecret}"
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requetToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="cf3539d0-0288-4eb5-972e-09a2f0150de9">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and legacyToken" id="d37f15e2-dfa7-4f48-add9-5bc5e08205ae">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def legacy = json.legacyToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert legacy =~/^[0-9a-zA-Z\-_]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>legacy</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4B CAS - Get Initial Refresh Token - MID 2" id="8df2eaa6-a8ce-478d-959b-d27c082a8a4e" disabled="true">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4B CAS - Get Initial Refresh Token - MID 2" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#casclientid}",
+   "clientSecret": "${#Project#casclientsecret}",
+   "accessType": "offline",
+   "scope": "cas:${Scenario 4B CAS - Get Legacy Token - MID 1#Response#$.legacyToken}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and refreshToken" id="2d978192-07e5-4730-867a-be771c00318b">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def refresh = json.refreshToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert refresh =~/^[0-9a-zA-Z\-]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="c29bf2a8-81e4-4ce2-b2f9-1511837fed8b" name="Validate Response Has Body">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4C CAS - Get Legacy Token - MID 1" id="e571be97-a9fb-4d2b-a076-3d08f454b3c3">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="Request Legacy Token" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4C CAS - Get Legacy Token - MID 1" mediaType="application/json" postQueryString="false" id="e42004f8-5745-47e9-944f-9addf66a40c6">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#casclientid}",
+   "clientSecret": "${#Project#casclientsecret}"
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requetToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="cf3539d0-0288-4eb5-972e-09a2f0150de9">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and legacyToken" id="d37f15e2-dfa7-4f48-add9-5bc5e08205ae">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def legacy = json.legacyToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert legacy =~/^[0-9a-zA-Z\-_]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="79083fbe-ee19-4768-9ecb-ab4219fe4352" name="Validate Response Has Body" disabled="true">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="legacy" value="1" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>legacy</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4C CAS - Get Initial Refresh Token - MID 1" id="81e80cc8-0e97-4aaf-a49b-f15bcc4fdbd9">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4C CAS - Get Initial Refresh Token - MID 1" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#clientid}",
+   "clientSecret": "${#Project#clientsecret}",
+   "accessType": "offline",
+   "scope": "cas:${Scenario 4C CAS - Get Legacy Token - MID 1#Response#$.legacyToken}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and refreshToken" id="2d978192-07e5-4730-867a-be771c00318b">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def refresh = json.refreshToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert refresh =~/^[0-9a-zA-Z\-]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="54fedb2f-e508-4fe1-bdc5-3a3b68f819fd" name="Validate Response Has Body" disabled="true">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4C CAS - Get New Access Token With Refresh Token - MID 2" id="58b63d0e-6fa4-4162-b645-d7a90a620275">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4C CAS - Get New Access Token With Refresh Token - MID 2" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#bu1user1clientID}",
+   "clientSecret": "${#Project#bu1user1clientSecret}",
+   "accessType": "offline",
+   "refreshToken": "${Scenario 4C CAS - Get Initial Refresh Token - MID 1#Response#$.refreshToken}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 401" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>401</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="2c1586dd-b7bb-4a94-b9f8-dc21f23c3908" name="Validate Response Has Body">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RequestTokenLegacy - empty clientId" id="b03af894-afd5-4edb-acf7-cc5a9e9ee121">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="Request Legacy Token" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RequestTokenLegacy - empty clientId" mediaType="application/json" postQueryString="false" id="1e535511-8a8c-445a-ae2f-d4a49b48f4e5">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "",
+    "clientSecret": "${#Project#clientsecret}"
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 401" id="ff8a361e-fead-4b5f-b993-035c70042ec4">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="ffcaa8aa-418e-405d-958b-f0bec6f70f64" name="Validate Response Has Body" disabled="true">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="legacy" value="1" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RequestTokenLegacy - empty clientSecret" id="1b4367f9-7639-4a91-896d-21c4db5475a3">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="Request Legacy Token" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RequestTokenLegacy - empty clientSecret" mediaType="application/json" postQueryString="false" id="1e535511-8a8c-445a-ae2f-d4a49b48f4e5">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "${#Project#clientid}",
+    "clientSecret": ""
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 400" id="ff8a361e-fead-4b5f-b993-035c70042ec4">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="ffcaa8aa-418e-405d-958b-f0bec6f70f64" name="Validate Response Has Body" disabled="true">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RequestTokenLegacy - empty clientID and clientSecret" id="70406439-2c6a-4c59-837e-ebff5a6c8d44">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="Request Legacy Token" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RequestTokenLegacy - empty clientID and clientSecret" mediaType="application/json" postQueryString="false" id="1e535511-8a8c-445a-ae2f-d4a49b48f4e5">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "",
+    "clientSecret": ""
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 400" id="ff8a361e-fead-4b5f-b993-035c70042ec4">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="ffcaa8aa-418e-405d-958b-f0bec6f70f64" name="Validate Response Has Body" disabled="true">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Content-Length"][0].toInteger() > 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>d63af78f-d553-42d6-97ae-ddb04248908e</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>7a0cc17b-e058-4d50-8020-1178a5b4fe49</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>3cf49410-655b-4997-9fa8-7d7bee7610f0</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>68b16f30-2173-4353-84f2-cb302f0723c0</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>42335852-100c-4fef-bd1f-3007ceb21f6d</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>b3557ffd-a7ee-4c4a-9070-e8e6d9e0fe90</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

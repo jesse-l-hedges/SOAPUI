@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="" path="/v1" id="8ad38731-2b43-4f3a-bced-d9ee2cc06929" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="8ad38731-2b43-4f3a-bced-d9ee2cc06929fileName"/>
+  </con:settings>
+  <con:parameters/>
+  <con:resource name="secret" path="secret" id="70b068c9-4c0f-4df1-afe9-0aeb585aeae3">
+    <con:settings/>
+    <con:parameters/>
+    <con:resource name="platform" path="platform/{environment}" id="f5badc45-3f9f-486b-ae5a-6204afa79369">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>environment</con:name>
+          <con:value/>
+          <con:style>TEMPLATE</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>X-Vault-Token</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="GET Creds" id="38bddd76-46b5-4b48-bb2c-733281939f76" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:representation type="FAULT">
+          <con:mediaType>application/json</con:mediaType>
+          <con:status>404 400</con:status>
+          <con:params/>
+          <con:element xmlns:plat="https://etinbyaroch01.ET.LOCAL/v1/secret/platform/">plat:Fault</con:element>
+        </con:representation>
+        <con:representation type="RESPONSE">
+          <con:mediaType>application/json</con:mediaType>
+          <con:status>200</con:status>
+          <con:params/>
+          <con:element xmlns:plat="https://etinbyaroch01.ET.LOCAL/v1/secret/platform/">plat:Response</con:element>
+        </con:representation>
+        <con:request name="Request 1" id="51f21a57-1b0d-4827-8c3a-8ea51cd68099" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>X-Vault-Token</con:entry>
+            <con:entry>environment</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+  </con:resource>
+  <con:resource name="auth" path="auth" id="e3021127-9788-46fc-abd8-084152c3ddd5">
+    <con:settings/>
+    <con:parameters/>
+    <con:resource name="platform" path="Platform" id="cf6fbd54-bf39-4074-b7f7-6fc19cc77fa8">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>X-Vault-Token</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:resource name="login" path="login" id="a4937a58-a179-43f0-9898-d053d45ecfa7">
+        <con:settings/>
+        <con:parameters/>
+        <con:method name="Login" id="9bf2949c-f0ff-4a4b-97c1-3815595064ed" method="POST">
+          <con:settings/>
+          <con:parameters/>
+          <con:representation type="REQUEST">
+            <con:mediaType>application/json</con:mediaType>
+            <con:params/>
+          </con:representation>
+          <con:representation type="RESPONSE">
+            <con:mediaType xsi:nil="true"/>
+            <con:status>0</con:status>
+            <con:params/>
+            <con:element>data</con:element>
+          </con:representation>
+          <con:representation type="FAULT">
+            <con:mediaType>application/json</con:mediaType>
+            <con:status>400</con:status>
+            <con:params/>
+            <con:element xmlns:log="https://etinbyaroch01.ET.LOCAL/v1/auth/platform/login">log:Fault</con:element>
+          </con:representation>
+          <con:representation type="RESPONSE">
+            <con:mediaType>application/json</con:mediaType>
+            <con:status>200</con:status>
+            <con:params/>
+            <con:element xmlns:log="https://etinbyaroch01.ET.LOCAL/v1/auth/platform/login">log:Response</con:element>
+          </con:representation>
+          <con:request name="Login" id="65d50a2e-5a29-4a03-9041-045e52b8a483" mediaType="application/json" postQueryString="false">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters/>
+            <con:parameterOrder/>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+    </con:resource>
+  </con:resource>
+</con:resource>

@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="00221a88-b718-4e9c-b662-f9a6c1c0ca37" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Create Import Update Delete List" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="70114007-1969-4b13-af5c-a99d008c58f6fileName">Create-Import-Update-Delete-List</con:setting>
+    <con:setting id="00221a88-b718-4e9c-b662-f9a6c1c0ca37fileName">Create-Import-Update-Delete-List</con:setting>
+  </con:settings>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:testStep type="calltestcase" name="Auth" id="083ea8b5-92b1-4824-a8ce-794e59deb4ff">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>aPrCdFLCVVqMoIHWfGnbauxE</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>10782007</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>10739553</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create List Name" id="4c6afa04-8ecd-4a76-843b-0926f73efeac">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+'QETesting-List' + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Random GUID" id="f9e6d7e1-92a4-4180-b8c2-261d4ea28aa7">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>def guidVal = java.util.UUID.randomUUID()
+
+return guidVal</script>
+        </con:configuration>
+        <con:name>customerId</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create List" id="581d2a34-b539-45dc-8e69-8deb0194766e">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create List" id="8edae1cf-7e89-4ec3-8544-74c255ba50bb" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#Project#user}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#Project#pass}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="List">\r
+            <ListName>${Create List Name#result}</ListName>\r
+            <CustomerKey>${Random GUID#customerId}</CustomerKey>\r
+            <Type>Public</Type>\r
+         </Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="3201eec3-f9e7-442c-b83c-7c4b154957b4"/>
+        <con:assertion type="SOAP Fault Assertion" id="c37bfa2b-936a-41e7-b3bf-9650ac6ff75c"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer ListID" id="9919c301-ff18-40f8-868c-b1a72d6eb27a">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>listId</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create List</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>listId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Perform Import Without Import Definition" id="bfec4f62-1b5d-4c23-8256-4e59279c2540" disabled="true">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Perform</con:operation>
+      <con:request name="Perform Import Without Import Definition" id="10dc7e65-6b24-4884-9f13-a835c21df4a2" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#Project#user}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#Project#pass}</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <PerformRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Action>start</Action>\r
+         <Definitions>\r
+            <Definition xsi:type="ImportDefinition" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+               <Name>Import Def - ${Create List Name#result}</Name>\r
+               <Description>Import def created on the fly</Description>\r
+               <AllowErrors>true</AllowErrors>\r
+               <SubscriberImportType>Email</SubscriberImportType>\r
+               <UpdateType>AddAndUpdate</UpdateType>\r
+               <MaxFileAge>1</MaxFileAge>\r
+               <MaxFileAgeScheduleOffset>0</MaxFileAgeScheduleOffset>\r
+               <MaxImportFrequency>0</MaxImportFrequency>\r
+               <Delimiter>;</Delimiter>\r
+               <DestinationObject xsi:type="DataExtension">\r
+                  <ObjectID>${#TestCase#listId}</ObjectID>\r
+                  <CustomerKey>${Random GUID#customerId}</CustomerKey>\r
+               </DestinationObject>\r
+               <FieldMappingType>InferFromColumnHeadings</FieldMappingType>\r
+               <FileSpec>Mobile_Subscribers.csv</FileSpec>\r
+               <FileType>CSV</FileType>\r
+               <Notification>\r
+                  <ResponseType>email</ResponseType>\r
+                  <ResponseAddress>jhedges@salesforce.com</ResponseAddress>\r
+               </Notification>\r
+               <RetrieveFileTransferLocation>\r
+                  <CustomerKey>ExactTarget Enhanced FTP</CustomerKey>\r
+               </RetrieveFileTransferLocation>\r
+            </Definition>\r
+         </Definitions>\r
+      </PerformRequestMsg>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="ddbe118a-4fea-4a45-8850-96ff12af23b2"/>
+        <con:assertion type="SOAP Fault Assertion" id="02f0b687-1af4-43be-bb4f-c7c1097f8e3f"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Import Without Import Def" id="fd638b97-a7de-4dbf-aabb-b0a276253c50">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Perform</con:operation>
+      <con:request name="Import Without Import Def" id="aa93ef3f-ef12-4a50-8b97-50a25c060174" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#Project#user}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#Project#pass}</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <PerformRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Definitions>\r
+            <Definition xsi:type="ImportDefinition" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+               <Name>TestImport-ListData</Name>\r
+               <Description>This import definition was created through the API.</Description>\r
+               <AllowErrors>true</AllowErrors>\r
+               <SubscriberImportType>Email</SubscriberImportType>\r
+               <UpdateType>AddAndUpdate</UpdateType>\r
+               <MaxFileAge>1</MaxFileAge>\r
+               <MaxFileAgeScheduleOffset>0</MaxFileAgeScheduleOffset>\r
+               <MaxImportFrequency>0</MaxImportFrequency>\r
+               <DestinationObject xsi:type="SubscriberList">\r
+                  <ID>${#TestCase#listId}</ID>\r
+                  <CustomerKey>${Random GUID#customerId}</CustomerKey>\r
+               </DestinationObject>\r
+               <FieldMappingType>InferFromColumnHeadings</FieldMappingType>\r
+               <FileSpec>#{file_name}</FileSpec>\r
+               <FileType>CSV</FileType>\r
+               <Notification>\r
+                  <ResponseType>email</ResponseType>\r
+                  <ResponseAddress>jhedges@salesforce.com</ResponseAddress>\r
+               </Notification>\r
+               <RetrieveFileTransferLocation>\r
+                  <CustomerKey>ExactTarget Enhanced FTP</CustomerKey>\r
+               </RetrieveFileTransferLocation>\r
+            </Definition>\r
+         </Definitions>\r
+         <RequestType>Synchronous</RequestType>\r
+      </PerformRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="84327fed-430b-4dc9-ae4b-8bfa523eebc9"/>
+        <con:assertion type="SOAP Fault Assertion" id="15b22118-0b83-4d74-97bf-16c417b7c290"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>listId</con:name>
+      <con:value>207282</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+</con:testCase>

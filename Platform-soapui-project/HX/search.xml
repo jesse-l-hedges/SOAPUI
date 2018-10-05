@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="search" path="/search" id="4be87789-07bf-4704-bece-7837926f6958" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="4be87789-07bf-4704-bece-7837926f6958fileName">search</con:setting>
+  </con:settings>
+  <con:parameters>
+    <con:parameter>
+      <con:name>Authorization</con:name>
+      <con:value/>
+      <con:style>HEADER</con:style>
+      <con:default/>
+      <con:description xsi:nil="true"/>
+    </con:parameter>
+  </con:parameters>
+  <con:method name="Method 1" id="b4fd073e-e6cf-4e5f-bac1-966e5bda1c5b" method="GET">
+    <con:settings/>
+    <con:parameters/>
+    <con:request name="Request 1" id="cf2e68ee-bc03-4be8-9710-489d8dfb8e9e" mediaType="application/json">
+      <con:settings/>
+      <con:request/>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters/>
+      <con:parameterOrder>
+        <con:entry>Authorization</con:entry>
+      </con:parameterOrder>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+</con:resource>

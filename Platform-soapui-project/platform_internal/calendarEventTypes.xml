@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="26643ceb-2519-46a0-84e7-1d748906c29e" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="calendarEventTypes" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="26643ceb-2519-46a0-84e7-1d748906c29efileName">calendarEventTypes</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="90afd375-47b1-4747-b6af-d1577ebafc72">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>av1aoQBEavHHPD6pWGf2X4OW</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>10782007</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>10739553</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getCalendarEventTypes - Request 1" id="c155e776-a01b-4a60-b5ea-aa1ebbfd1f76">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/calendar-eventtypes" methodName="getCalendarEventTypes" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getCalendarEventTypes - Request 1" id="d6a4d983-aa79-4b79-b32d-5b6fda0b8a6f" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/calendar-eventtypes</con:originalUri>
+        <con:assertion type="Simple Contains" id="c75ef3b7-4191-448a-9505-7b075ba85338" name="Contains">
+          <con:configuration>
+            <token>count</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="a3e492d3-2653-4361-9241-3f272b0d2fce" name="Contains eventCalendarItemTypeId">
+          <con:configuration>
+            <token>eventCalendarItemTypeId</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="d81545d7-b2bd-4a14-b271-eebe1becaf7b" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="mids" value="${mid}"/>
+          <con:entry key="$page" value="1"/>
+          <con:entry key="$pageSize" value="50"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>mids</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getEventTypesForAllMids - Request 1" id="63d9e8e1-31fd-4ce5-8a0b-21241215b919">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/mids/all/calendareventtypes" methodName="getEventTypesForAllMids" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getEventTypesForAllMids - Request 1" id="b399f2b4-381f-4032-966f-935b31ded3f7" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/mids/all/calendareventtypes</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="c0d15555-ae25-42e8-9d05-be6436edbba5" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="fde8154e-aa5d-4bc6-9c82-9fe0a0bb8d0a" name="Contains">
+          <con:configuration>
+            <token>count</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="8e968545-07ce-449c-bc66-d4384353ed21" name="Contains eventCalendarItemTypeId">
+          <con:configuration>
+            <token>eventCalendarItemTypeId</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="$page" value="1"/>
+          <con:entry key="$pageSize" value="50"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

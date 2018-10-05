@@ -1,0 +1,15 @@
+Post-and-Delete-Data-Event-Rowset-by-Key.xml
+Post-Data-Event-Rowset-by-DE-ID.xml
+Async-Post-and-Delete-Data-Event-Rowset-by-Key.xml
+Async-Post-Data-Event-Rowset-by-GUID-Delete-Rowset-By-Key.xml
+Upsert-DE-Row-by-DE-Key-and-Row-Key.xml
+Upsert-DE-Row-by-DE-ID-and-Row-Key.xml
+Async-Upsert-DE-Row-by-DE-Key-and-Row-Key.xml
+Async-Upsert-DE-Row-by-DE-ID-and-Row-Key.xml
+Increment-Column-Value-by-DE-Key-and-Row-Key.xml
+Increment-Column-Value-by-DE-ID-and-Row-Key.xml
+Async-Increment-Column-Value-by-DE-Key-and-Row-Key.xml
+Async-Increment-Column-Value-by-DE-ID-and-Row-Key.xml
+Post-and-Delete-Data-Event-Rowset-by-Key-BulkInsert.xml
+Post-Data-Event-Rowset-With-No-Primary-Key-by-DE-ID.xml
+Post-Data-Event-Rowset-Upsert-Scenarios.xml

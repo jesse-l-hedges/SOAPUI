@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="6cf30621-07f1-42bb-8dbf-81f70380e277" name="Platform Route Regression Test Suite" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="6cf30621-07f1-42bb-8dbf-81f70380e277fileName">Platform-Route-Regression-Test-Suite</con:setting>
+  </con:settings>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:runType>SEQUENTIAL</con:runType>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testSuite>

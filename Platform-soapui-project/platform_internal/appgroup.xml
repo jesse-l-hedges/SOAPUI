@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="4b8658c1-e77b-4d1a-8c97-41aae55a9d1e" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="appgroup" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="4b8658c1-e77b-4d1a-8c97-41aae55a9d1efileName">appgroup</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="2acdcda2-aed8-4ea1-9c5f-c22d140bc885">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>av1aoQBEavHHPD6pWGf2X4OW</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getappgroups - Request 1" id="5204d167-30e9-4c04-9970-386ee3139f2c">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/appgroups" methodName="getappgroups" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getappgroups - Request 1" id="909d6333-d501-41e0-980e-a63e4aa4d2be" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/appgroups</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="50b1d7c8-6819-4ae0-bd5b-9caa0c20fe05" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="c5353b8a-2f02-4b6f-943d-4f6d5ad64987" name="Contains applicationGroupId">
+          <con:configuration>
+            <token>applicationGroupId</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="55c30de8-c25c-4e56-9826-430f7a9c1e65" name="Contains applicationGroupSectionId">
+          <con:configuration>
+            <token>applicationGroupSectionId</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="6f31f8fc-2144-443c-a409-b1f0ffef47c2" name="Contains name">
+          <con:configuration>
+            <token>name</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="$page" value="1"/>
+          <con:entry key="$pageSize" value="50"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getappgroupsections - Request 1" id="03b4b6c3-3def-4989-bc4a-01a582150cf7">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/appgroupsections" methodName="getappgroupsections" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getappgroupsections - Request 1" id="4facb24d-bddf-4a50-848c-ccfa99a9e501" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/appgroupsections</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="de058bda-0b3f-46a9-95ea-c16e9857272f" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="b2b1a0db-f59e-42ae-897e-02adfdb6d04c" name="Contains applicationGroupSectionId">
+          <con:configuration>
+            <token>applicationGroupSectionId</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="cdbc1e5e-deab-407c-a620-59e6163b753b" name="Contains displayOrder">
+          <con:configuration>
+            <token>displayOrder</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="$page" value="1"/>
+          <con:entry key="$pageSize" value="50"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

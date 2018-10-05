@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="f1dab194-139e-4d29-8c2a-de4ba3ff7f60" failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Verify One Whitelisted Domain" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="f1dab194-139e-4d29-8c2a-de4ba3ff7f60fileName">Verify-One-Whitelisted-Domain</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="977afdc2-d25d-47ed-ba06-7516828bbb82">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>5b64a7c3-23e7-49bc-83fe-9983c3df8feb</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>cLLJ2KkVngzi4alZaYb9v39e</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Asset Discovery With Valid CORS Request Header" id="068234af-7c7b-4725-9e3b-f94a4bedd6cc">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/asset/v1/rest" methodName="asset/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Asset Discovery With Valid CORS Request Header" id="748baca9-e6d7-46ff-8a20-b559659372e5" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="origin" value="https://www.hersheysweetmail.com" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/asset/v1/rest</con:originalUri>
+        <con:assertion type="GroovyScriptAssertion" id="6263675d-0df1-454a-8214-3b741c3fae93" name="Access-Control-Allow-Origin Header Present">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Access-Control-Allow-Origin"] != null</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="6263675d-0df1-454a-8214-3b741c3fae93" name="Access-Control-Allow-Origin Header Value Same As Origin">
+          <con:configuration>
+            <scriptText>try {
+	assert messageExchange.responseHeaders["Access-Control-Allow-Origin"] == messageExchange.requestHeaders["origin"]
+}
+catch (Throwable e) {
+	log.info messageExchange.requestHeaders["origin"] + " not found in whitelist."
+}</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="Host" value="${apihost}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>de981fef-8ccb-471d-b7f4-cb12879045fd</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

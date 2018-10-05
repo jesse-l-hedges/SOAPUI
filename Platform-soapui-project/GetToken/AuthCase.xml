@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="AuthCase" searchProperties="true" id="01ab17fb-6ad8-4905-8453-0713fdf89d0e" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="3da2b503-ac74-44b3-964a-4e48469b9e9cfileName">AuthCase</con:setting>
+    <con:setting id="01ab17fb-6ad8-4905-8453-0713fdf89d0efileName">AuthCase</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Get Creds" id="024cf004-8099-492f-aca2-825ccfd7f233">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>425a3536-148a-4fad-afe1-eb96123c3104</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>clientid</con:name>
+          <con:value>t4qf4ll9acp8e164uv9r0dn3</con:value>
+        </con:property>
+        <con:property>
+          <con:name>clientsecret</con:name>
+          <con:value>c6uk72eASafOputfM7d34HiO</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>clientid</con:entry>
+        <con:entry>clientsecret</con:entry>
+      </con:returnProperties>
+      <con:runMode>SINGLETON_AND_WAIT</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RequestAuthByClientIdAndSecret - NEW" id="80e88a56-ff31-496b-8733-ff990358c557">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RequestAuthByClientIdAndSecret - NEW" mediaType="application/json" postQueryString="false" id="eb262c87-9aa0-4c79-ba9e-94e75063a779">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint xsi:nil="true"/>
+        <con:request>{
+   "clientId": "${#Project#clientid}",
+   "clientSecret": "${#Project#clientsecret}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="93026dc3-65b2-4e5f-a45b-83c80fa2cd5a">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" name="XPath Match" id="ec734a6b-64a9-4235-8929-5c63449ae100">
+          <con:configuration>
+            <path>//*:accessToken</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>true</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>legacy</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RequestAuthByClientIdAndSecret" id="4973d8cd-1237-4499-b014-f54d0ab32963" disabled="true">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RequestAuthByClientIdAndSecret" mediaType="application/json" postQueryString="false" id="eb262c87-9aa0-4c79-ba9e-94e75063a779">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#clientid}",
+   "clientSecret": "${#Project#clientsecret}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="93026dc3-65b2-4e5f-a45b-83c80fa2cd5a">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" name="XPath Match" id="ec734a6b-64a9-4235-8929-5c63449ae100">
+          <con:configuration>
+            <path>//*:accessToken</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>true</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>legacy</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="RecordAccessToken" id="8c6d1f4e-2b1d-49fd-a3e5-66a54769f251">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+        <con:name>accesstoken</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>RequestAuthByClientIdAndSecret - NEW</con:sourceStep>
+        <con:sourcePath>//*:accessToken</con:sourcePath>
+        <con:targetType>accesstoken</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RequestContextByClientIdAndSecret - NEW" id="7c6d3828-3492-439e-98dd-d50e4882c069">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestContext" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RequestContextByClientIdAndSecret - NEW" mediaType="application/json" postQueryString="false" id="7042ff4a-0baf-493d-8963-46977d82f651">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#clientid}",
+   "clientSecret": "${#Project#clientsecret}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="5cda2762-8647-4e84-901a-a7baefd1c589">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" name="XPath Match" id="81f68d03-bc68-4dc6-9327-dc357b6a83d7">
+          <con:configuration>
+            <path>//*:enterprise</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>true</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RequestContextByClientIdAndSecret" id="29ed7d88-d154-45ec-837b-d2541bbc01d3" disabled="true">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestContext" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RequestContextByClientIdAndSecret" mediaType="application/json" postQueryString="false" id="7042ff4a-0baf-493d-8963-46977d82f651">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#clientid}",
+   "clientSecret": "${#Project#clientsecret}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="5cda2762-8647-4e84-901a-a7baefd1c589">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" name="XPath Match" id="81f68d03-bc68-4dc6-9327-dc357b6a83d7">
+          <con:configuration>
+            <path>//*:enterprise</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>true</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="RecordAuthContext" id="66809f94-e39d-4fe1-941c-345c4c8647f8">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false" disabled="false">
+        <con:name>userid</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>RequestContextByClientIdAndSecret - NEW</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://localhost/Auth/v1/requestToken';
+//ns1:Response[1]/ns1:user[1]/ns1:id[1]</con:sourcePath>
+        <con:targetType>userid</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" entitize="false" transferToAll="false" ignoreEmpty="false" useXQuery="false" transferChildNodes="false">
+        <con:name>mid</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>RequestContextByClientIdAndSecret - NEW</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://localhost/Auth/v1/requestToken';
+//ns1:Response[1]/ns1:enterprise[1]/ns1:id[1]</con:sourcePath>
+        <con:targetType>mid</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>accesstoken</con:name>
+      <con:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">cUi8ENGhYV4NPaD9g2pgaMi4</con:value>
+    </con:property>
+    <con:property>
+      <con:name>userid</con:name>
+      <con:value>302586</con:value>
+    </con:property>
+    <con:property>
+      <con:name>mid</con:name>
+      <con:value>280509</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>80e88a56-ff31-496b-8733-ff990358c557</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>d563168d-962d-40b7-9ab0-451e45e43712</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>7c6d3828-3492-439e-98dd-d50e4882c069</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

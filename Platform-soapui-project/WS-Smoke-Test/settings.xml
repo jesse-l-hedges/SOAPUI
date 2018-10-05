@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="6d9a008e-c18c-4717-adfd-131a4d3b9037" name="WS Smoke Test" disabled="true" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="6d9a008e-c18c-4717-adfd-131a4d3b9037fileName">WS-Smoke-Test</con:setting></con:settings><con:savedRecentRuns>1</con:savedRecentRuns><con:runType>SEQUENTIAL</con:runType><con:properties/><con:reportParameters/></con:testSuite>

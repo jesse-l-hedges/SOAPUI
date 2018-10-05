@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="id" path="/{id}" id="bce2191a-3503-4f11-aea4-859d9862b795" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="bce2191a-3503-4f11-aea4-859d9862b795fileName">id</con:setting>
+  </con:settings>
+  <con:parameters>
+    <con:parameter>
+      <con:name>id</con:name>
+      <con:value>id</con:value>
+      <con:style>TEMPLATE</con:style>
+      <con:default>id</con:default>
+    </con:parameter>
+  </con:parameters>
+  <con:method name="Get FuelBin Entry By ID" id="0360e2c1-d56a-43e3-a09f-c75d467b062f" method="GET">
+    <con:settings/>
+    <con:parameters/>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/json; charset=utf-8</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xmlns:ssq="https://fuelbin.int.marketingcloudapps.com/SSqK3t1">ssq:Response</con:element>
+    </con:representation>
+    <con:request name="Request 1" id="b7b44438-7376-4273-9eeb-c36e3935c598" mediaType="application/json">
+      <con:settings/>
+      <con:request/>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+  <con:method name="Post To FuelBin ID" id="d094658a-08d1-4608-82b6-dbf8a632be99" method="POST">
+    <con:settings/>
+    <con:parameters/>
+    <con:request name="Request 1" id="c0d434ed-a145-4f5e-b5a3-3d9d767d23fb" mediaType="application/json" postQueryString="false">
+      <con:settings/>
+      <con:request/>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+  <con:method name="Delete FuelBin By ID" id="4bebcf0b-3777-44e5-90e4-96a4e6e6ccba" method="DELETE">
+    <con:settings/>
+    <con:parameters/>
+    <con:request name="Request 1" id="50454700-a134-4193-ab50-20f1f5998056" mediaType="application/json" postQueryString="false">
+      <con:settings/>
+      <con:request/>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+</con:resource>

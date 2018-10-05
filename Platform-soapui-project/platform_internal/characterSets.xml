@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="0f0a3352-b4b0-485c-85a1-f84f831c60cd" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="characterSets" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="0f0a3352-b4b0-485c-85a1-f84f831c60cdfileName">characterSets</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="cfd31be8-30ab-4a70-ab23-3b0ca687611a">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>av1aoQBEavHHPD6pWGf2X4OW</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getCharactersetCollection - Request 1" id="94a17fad-3139-49b0-8e8b-7ef5d9da09f8">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/characterSets" methodName="getCharactersetCollection" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getCharactersetCollection - Request 1" id="b95f9206-c5e7-4b46-b5f0-543df35dcbdd" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/characterSets</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="310cc5d6-44cf-4835-9926-52a087647c62" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="42e1cc4c-aeb5-48b8-814e-fd209d18762f" name="Contains">
+          <con:configuration>
+            <token>id</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="da7e82ae-3436-4d65-9a44-26588c16e8b7" name="Contains count">
+          <con:configuration>
+            <token>count</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="d452d1e5-17e8-44b9-845a-317fd5ea0892" name="Contains enhancedContentTransferEncodingId">
+          <con:configuration>
+            <token>enhancedContentTransferEncodingId</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="$page" value="1"/>
+          <con:entry key="$pageSize" value="50"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>$orderby</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="getProperties" id="d9cff851-7bc4-436c-919e-e407a9042876">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>characterSet</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>getCharactersetCollection - Request 1</con:sourceStep>
+        <con:sourcePath>//*:characterSet</con:sourcePath>
+        <con:targetType>characterSet</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>name</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>getCharactersetCollection - Request 1</con:sourceStep>
+        <con:sourcePath>//*:name</con:sourcePath>
+        <con:targetType>name</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>id</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>getCharactersetCollection - Request 1</con:sourceStep>
+        <con:sourcePath>//*:id</con:sourcePath>
+        <con:targetType>id</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getCharactersetById - Request 1" id="6027331b-eefc-44fc-84f9-4a5eaa973524">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/characterSets/{id}" methodName="getCharactersetById" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getCharactersetById - Request 1" id="a3f8eb4c-c650-4911-9c70-bf6ee7bccb4d" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/characterSets/%24%7B%23TestCase%23id</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="17bde486-8208-479a-821c-bfbf87f3df9f" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="5d8e2ae7-8e2c-426f-a0dc-0cb35ddcb2e7" name="XPath Match">
+          <con:configuration>
+            <path>//*:name</path>
+            <content>${#TestCase#name}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="1fa001a4-9409-438f-976b-488896f8dda2" name="XPath Match characterSet">
+          <con:configuration>
+            <path>//*:characterSet</path>
+            <content>${#TestCase#characterSet}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="id" value="${#TestCase#id}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>$orderby</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>id</con:name>
+      <con:value>7</con:value>
+    </con:property>
+    <con:property>
+      <con:name>name</con:name>
+      <con:value>Unicode - UTF-8</con:value>
+    </con:property>
+    <con:property>
+      <con:name>characterSet</con:name>
+      <con:value>utf-8</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>cfd31be8-30ab-4a70-ab23-3b0ca687611a</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>d9cff851-7bc4-436c-919e-e407a9042876</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

@@ -1,0 +1,2211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="5e11ea05-c2b5-4ee5-baac-4d977e65bb6d" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Post Data Event Rowset Upsert Scenarios" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="f63ee565-c027-49ea-a610-42f1455d979dfileName">Post-Data-Event-Rowset-by-Key</con:setting>
+    <con:setting id="1e181fd9-387d-4381-9caf-05a6170734dcfileName">Post-and-Delete-Data-Event-Rowset-by-Key-BulkInsert</con:setting>
+    <con:setting id="5e11ea05-c2b5-4ee5-baac-4d977e65bb6dfileName">Post-Data-Event-Rowset-Upsert-Scenarios</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="bc90f489-14d8-4e93-869b-7a9dbb1c58d4">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>5b64a7c3-23e7-49bc-83fe-9983c3df8feb</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>apyEaLk2bYMXE5flf73hwZlw</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Retrieve DE Check if it Exists" id="798ba79a-a8da-47d2-aa42-79fde2454ecf">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve DE Check if it Exists" id="d9412851-a03e-493f-b996-c89f86b4d693" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soapenv:Header>
+     <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${Auth#accessToken}</h:fueloauth>
+  </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+      <RetrieveRequest>
+         <ObjectType>DataExtension</ObjectType>
+         <Properties>ObjectID</Properties>
+         <Filter xsi:type="SimpleFilterPart">
+            <Property>Name</Property>
+            <SimpleOperator>equals</SimpleOperator>
+            <Value>${#TestCase#CustomObjectName}</Value>
+         </Filter>
+      </RetrieveRequest>
+   </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="47853253-cfed-4fd7-b9cc-fbf80534a1a8"/>
+        <con:assertion type="XPath Match" id="9ca11bb7-46a9-41a3-9a37-4f103fd4d9c2" name="Check for existence of [ObjectID]" disabled="true">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+exists( //ns1:RetrieveResponseMsg/ns1:Results/ns1:ObjectID)</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete Data Extension By Name" id="c6e9f4cb-bfbb-4fe3-a143-c0b081db7598" disabled="true">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Delete</con:operation>
+      <con:request name="Delete Data Extension By Name" id="7bf289f2-9a9e-45fa-8bca-66dc6efc4661" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <SOAP-ENV:Header>
+     <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${Auth#accessToken}</h:fueloauth>
+   </SOAP-ENV:Header>
+ <SOAP-ENV:Body>
+  <DeleteRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+      
+   <ns1:Objects xsi:type="ns1:DataExtension" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <ns1:Name>${#TestCase#CustomObjectName}</ns1:Name>
+    </ns1:Objects>
+ </DeleteRequest>
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="076d4771-7559-4c05-9430-a70f41a0bd00"/>
+        <con:assertion type="Valid HTTP Status Codes" id="d76b221c-a2ae-4601-8687-ac32fc6f0055" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="e9bceb57-b667-47f1-b4ee-11e1510d6d4b" name="Match content of [StatusCode]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusCode[1]/text()</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="ba9a87e7-7f19-4482-8b21-27a5e062689c" name="Match content of [StatusMessage]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]/text()</path>
+            <content>Data Extension deleted.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Run Delete If DE Exists" id="9b5715e0-43cc-414b-9420-d2e073b3e15e">
+    <con:settings/>
+    <con:config>
+      <script>import com.eviware.soapui.support.XmlHolder
+
+def response = context.expand( '${Retrieve DE Check if it Exists#Response}' )
+def holder = new XmlHolder(response)
+def DeExist = holder["//ns1:RetrieveResponseMsg/ns1:Results/ns1:ObjectID"]
+
+if(DeExist){
+testRunner.runTestStepByName("Delete Data Extension By Name")
+}</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getCategoryId" id="e587d6b4-032c-43f1-badd-59fec6db4a12">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/categories" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getCategoryId" id="14fdd691-6ef9-4352-8fab-0ab67de1b042" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/categories</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="9513e72a-e55b-4221-8589-57ad342bd072" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="catType" value="dataextension"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>catType</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer CategoryId" id="611d26ae-593e-4abe-9ace-7f7116b5682d">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>categoryId</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>getCategoryId</con:sourceStep>
+        <con:sourcePath>$.items[0].categoryId</con:sourcePath>
+        <con:targetType>categoryId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:type>JSONPATH</con:type>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create RandomCustomObject Customer Key" id="3f9013f9-2848-451e-8731-961c39e0b50b">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')+('0'..'9')).join(), 15 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="createCustomObject" id="c1682d32-bb08-4d4e-a499-7dc0ef1b410d">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/customobjects" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="createCustomObject" id="af985593-8319-42a7-adab-c3589ba969e8" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request>{
+	"name":"${#TestCase#CustomObjectName}",
+	"customerKey":"${Create RandomCustomObject Customer Key#result}",
+	"description":"${Create Random CustomObjectName-orig#result}",
+	"categoryID":${#TestCase#categoryId},
+	"isActive":true,
+	"status":0,
+	"isObjectDeletable":true,
+	"isFieldAdditionAllowed":true,
+	"isFieldModificationAllowed":true,
+	"isTestable":false,
+	"isSendable":false,
+	"fields":
+	[
+{
+	"name": "FirstName",
+	"ordinal": 0,
+	"type": "Text",
+	"length": 256,
+	"scale": 0,
+	"isPrimaryKey": true,
+	"defaultValue": "",
+	"isNullable": false,
+	"isTemplateField": false,
+	"isHidden": false,
+	"isReadOnly": false,
+	"isOverridable": false,
+	"isInheritable": false,
+	"updatable": true,
+	"retrievable": true,
+	"isActive": true,
+	"mustOverride": false
+},
+{
+	"name": "MiddleName",
+	"ordinal": 1,
+	"type": "Text",
+	"length": 256,
+	"scale": 0,
+	"isPrimaryKey": true,
+	"defaultValue": "",
+	"isNullable": false,
+	"isTemplateField": false,
+	"isHidden": false,
+	"isReadOnly": false,
+	"isOverridable": false,
+	"isInheritable": false,
+	"updatable": true,
+	"retrievable": true,
+	"isActive": true,
+	"mustOverride": false
+},
+{
+	"name": "LastName",
+	"ordinal": 2,
+	"type": "Text",
+	"length": 256,
+	"scale": 0,
+	"isPrimaryKey": true,
+	"defaultValue": "",
+	"isNullable": false,
+	"isTemplateField": false,
+	"isHidden": false,
+	"isReadOnly": false,
+	"isOverridable": false,
+	"isInheritable": false,
+	"updatable": true,
+	"retrievable": true,
+	"isActive": true,
+	"mustOverride": false
+},
+{
+	"name": "EmailAddress",
+	"ordinal": 3,
+	"type": "EmailAddress",
+	"length": 254,
+	"scale": 0,
+	"isPrimaryKey": false,
+	"defaultValue": "",
+	"isNullable": true,
+	"isTemplateField": false,
+	"isHidden": false,
+	"isReadOnly": false,
+	"isOverridable": false,
+	"isInheritable": false,
+	"updatable": true,
+	"retrievable": true,
+	"isActive": true,
+	"mustOverride": false
+},
+{
+	"name": "Phone Number",
+	"ordinal": 4,
+	"type": "Phone",
+	"scale": 0,
+	"isPrimaryKey": false,
+	"defaultValue": "",
+	"isNullable": true,
+	"isTemplateField": false,
+	"isHidden": false,
+	"isReadOnly": false,
+	"isOverridable": false,
+	"isInheritable": false,
+	"updatable": true,
+	"retrievable": true,
+	"isActive": true,
+	"mustOverride": false
+},
+{
+	"name": "Birthdate",
+	"ordinal": 5,
+	"type": "Date",
+	"scale": 0,
+	"isPrimaryKey": false,
+	"defaultValue": "",
+	"isNullable": true,
+	"isTemplateField": false,
+	"isHidden": false,
+	"isReadOnly": false,
+	"isOverridable": false,
+	"isInheritable": false,
+	"updatable": true,
+	"retrievable": true,
+	"isActive": true,
+	"mustOverride": false
+},
+{
+	"name": "NullableTextColumn",
+	"ordinal": 6,
+	"type": "Text",
+	"length": 256,
+	"scale": 0,
+	"isPrimaryKey": false,
+	"defaultValue": "",
+	"isNullable": true,
+	"isTemplateField": false,
+	"isHidden": false,
+	"isReadOnly": false,
+	"isOverridable": false,
+	"isInheritable": false,
+	"updatable": true,
+	"retrievable": true,
+	"isActive": true,
+	"mustOverride": false
+},
+{
+	"name": "RequiredTextColumn",
+	"ordinal": 6,
+	"type": "Text",
+	"length": 256,
+	"scale": 0,
+	"isPrimaryKey": false,
+	"defaultValue": "",
+	"isNullable": false,
+	"isTemplateField": false,
+	"isHidden": false,
+	"isReadOnly": false,
+	"isOverridable": false,
+	"isInheritable": false,
+	"updatable": true,
+	"retrievable": true,
+	"isActive": true,
+	"mustOverride": false
+}]
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/internal/v1/customobjects</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="5e5a432d-3896-4a20-bece-56805ee33739" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>201</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer CustomObjectId" id="99bc3397-4c8e-46c1-b0fd-021e751875e3">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>customObjectId</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>createCustomObject</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/internal/v1/customobjects';
+//ns1:Response[1]/ns1:id[1]</con:sourcePath>
+        <con:targetType>customObjectId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>externalKey</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>createCustomObject</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/internal/v1/customobjects';
+//ns1:Response[1]/ns1:customerKey[1]</con:sourcePath>
+        <con:targetType>externalKey</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create Random Email Address" id="013bd6a6-9435-4eca-8489-5e30d30713c8">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')).join(), 9 ) + '@bh.exacttarget.com'</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create Random Phone Number" id="170df7bd-7391-4e65-adf1-918047977f2f">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('1'..'9')).join(), 10 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create RandomDate" id="8efd3118-66a2-4f00-a9ab-97109854fb47">
+    <con:settings/>
+    <con:config>
+      <script>import java.text.SimpleDateFormat
+
+Date randomDate(Range&lt;Date> range) {
+    range.from + new Random().nextInt(range.to - range.from + 1)
+}
+
+String newDate
+
+def start = Date.parse('mm/dd/yyyy', '01/01/1950')
+def end   = Date.parse('mm/dd/yyyy', '01/01/1985')
+newDate = new SimpleDateFormat("mm/dd/yyyy").format(randomDate(start..end))</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Prime 10 Rows Of Data" id="6b798597-e9fc-4d1a-9392-b6ad1decf3a6">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/hub/v1/dataevents/key:{key}/rowset" methodName="Upsert Batch of DE Rows by Key" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Prime 10 Rows Of Data" id="925de299-bee8-4cd8-a1a7-f5997803553c" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request>[
+{
+	"keys": {
+		"FirstName":"Adam",
+		"MiddleName":"Middle",
+		"LastName": "Adamsan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Billy",
+		"MiddleName":"Middle",
+		"LastName": "Billysan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Charlie",
+		"MiddleName":"Middle",
+		"LastName": "Charliesan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Daniel",
+		"MiddleName":"Middle",
+		"LastName": "Danielsan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Eric",
+		"MiddleName":"Middle",
+		"LastName": "Ericsan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Frank",
+		"MiddleName":"Middle",
+		"LastName": "Franksan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue"
+	}
+},
+{
+	"keys": {
+		"FirstName":"George",
+		"MiddleName":"Middle",
+		"LastName": "Georgesan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Henry",
+		"MiddleName":"Middle",
+		"LastName": "Henrysan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Ian",
+		"MiddleName":"Middle",
+		"LastName": "Iansan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Jack",
+		"MiddleName":"Middle",
+		"LastName": "Jacksan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue"
+	}
+}
+]</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/hub/v1/dataEvents/key:key/rowset</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="315e0696-c80a-4200-bd8a-5fb8de0a8b39" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="e47dd580-2fcf-484a-9844-77ba9f20ba18" name="Log Time Elapsed">
+          <con:configuration>
+            <scriptText>log.info messageExchange.timeTaken</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+          <con:entry key="key" value="${#TestCase#externalKey}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>key</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>method</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Retrieve CustomObject To Confirm RowCount = 10" id="7a16bfbb-0973-4b69-a1f7-9972d8ceeba1">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/customobjects/{id}" methodName="Get" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Retrieve CustomObject To Confirm RowCount = 10" id="4bbd09de-08f5-4be6-931c-c524c9c3f76f" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/internal/v1/customobjects/beae32eb-e35a-e511-8b2d-ac162dbccdac</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="44f85cd3-5141-42e5-b743-db86f22d7483" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="3ce5bcb8-925d-4da3-9c77-3fd061b3dae7" name="CustomObjectID Match">
+          <con:configuration>
+            <path>$.id</path>
+            <content>${#TestCase#customObjectId}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="081fc3f9-5376-417b-b392-9a0637394cac" name="RowCount As Expected">
+          <con:configuration>
+            <path>$.totalRowCount</path>
+            <content>10</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+          <con:entry key="id" value="${#TestCase#customObjectId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario #1: Update All Rows - Keys Not In Values (PrimedTestValue-Updated)" id="6043d15a-7da7-47fa-88da-224805931e75">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/hub/v1/dataevents/key:{key}/rowset" methodName="Upsert Batch of DE Rows by Key" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario #1: Update All Rows - Keys Not In Values (PrimedTestValue-Updated)" id="925de299-bee8-4cd8-a1a7-f5997803553c" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request>[
+{
+	"keys": {
+		"FirstName":"Adam",
+		"MiddleName":"Middle",
+		"LastName": "Adamsan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Billy",
+		"MiddleName":"Middle",
+		"LastName": "Billysan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Charlie",
+		"MiddleName":"Middle",
+		"LastName": "Charliesan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Daniel",
+		"MiddleName":"Middle",
+		"LastName": "Danielsan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Eric",
+		"MiddleName":"Middle",
+		"LastName": "Ericsan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Frank",
+		"MiddleName":"Middle",
+		"LastName": "Franksan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated"
+	}
+},
+{
+	"keys": {
+		"FirstName":"George",
+		"MiddleName":"Middle",
+		"LastName": "Georgesan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Henry",
+		"MiddleName":"Middle",
+		"LastName": "Henrysan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Ian",
+		"MiddleName":"Middle",
+		"LastName": "Iansan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Jack",
+		"MiddleName":"Middle",
+		"LastName": "Jacksan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated"
+	}
+}
+]</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/hub/v1/dataEvents/key:key/rowset</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="315e0696-c80a-4200-bd8a-5fb8de0a8b39" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="e47dd580-2fcf-484a-9844-77ba9f20ba18" name="Log Time Elapsed">
+          <con:configuration>
+            <scriptText>log.info messageExchange.timeTaken</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+          <con:entry key="key" value="${#TestCase#externalKey}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>key</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>method</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Retrieve CustomObject To Confirm RowCount = 10 2" id="a681da92-950e-4b12-a15f-2314e88a0170">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/customobjects/{id}" methodName="Get" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Retrieve CustomObject To Confirm RowCount = 10 2" id="4bbd09de-08f5-4be6-931c-c524c9c3f76f" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/internal/v1/customobjects/beae32eb-e35a-e511-8b2d-ac162dbccdac</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="44f85cd3-5141-42e5-b743-db86f22d7483" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="3ce5bcb8-925d-4da3-9c77-3fd061b3dae7" name="CustomObjectID Match">
+          <con:configuration>
+            <path>$.id</path>
+            <content>${#TestCase#customObjectId}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="081fc3f9-5376-417b-b392-9a0637394cac" name="RowCount As Expected">
+          <con:configuration>
+            <path>$.totalRowCount</path>
+            <content>10</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+          <con:entry key="id" value="${#TestCase#customObjectId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Confirm all rows were updated (PrimedTestValue-Updated)" id="5ae75b78-a74c-430b-8fda-d4303ba1bb46">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Confirm all rows were updated (PrimedTestValue-Updated)" id="d9412851-a03e-493f-b996-c89f86b4d693" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${Auth#accesstoken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <RetrieveRequest>
+            <ObjectType>DataExtensionObject [${#TestCase#CustomObjectName}]</ObjectType>
+            <Properties>FirstName</Properties>
+            <Properties>LastName</Properties>
+            <Properties>RequiredTextColumn</Properties>
+            <Filter xsi:type="ns1:SimpleFilterPart" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    		  	<Property>RequiredTextColumn</Property>
+              	<SimpleOperator>equals</SimpleOperator>
+              	<Value>PrimedTestValue-Updated</Value>
+   		  </Filter>
+         </RetrieveRequest>
+      </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="47853253-cfed-4fd7-b9cc-fbf80534a1a8"/>
+        <con:assertion type="XPath Match" id="9d13b5d3-0de4-49f6-859c-563199dbfbd0" name="XPath Match">
+          <con:configuration>
+            <path>${Confirm all rows were updated (PrimedTestValue-Updated)#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; count(//ns1:RetrieveResponseMsg[1]/ns1:Results)
+}</path>
+            <content>10</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario #2: Update All Rows - All Same Keys  In Values (PrimedTestValue)" id="307ea27a-3eac-4df9-b125-05a888828e96">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/hub/v1/dataevents/key:{key}/rowset" methodName="Upsert Batch of DE Rows by Key" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario #2: Update All Rows - All Same Keys  In Values (PrimedTestValue)" id="925de299-bee8-4cd8-a1a7-f5997803553c" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request>[
+{
+	"keys": {
+		"FirstName":"Adam",
+		"MiddleName":"Middle",
+		"LastName": "Adamsan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue",
+		"FirstName":"Adam",
+		"MiddleName":"Middle",
+		"LastName": "Adamsan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Billy",
+		"MiddleName":"Middle",
+		"LastName": "Billysan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue",
+		"FirstName":"Billy",
+		"MiddleName":"Middle",
+		"LastName": "Billysan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Charlie",
+		"MiddleName":"Middle",
+		"LastName": "Charliesan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue",
+		"FirstName":"Charlie",
+		"MiddleName":"Middle",
+		"LastName": "Charliesan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Daniel",
+		"MiddleName":"Middle",
+		"LastName": "Danielsan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue",
+		"FirstName":"Daniel",
+		"MiddleName":"Middle",
+		"LastName": "Danielsan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Eric",
+		"MiddleName":"Middle",
+		"LastName": "Ericsan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue",
+		"FirstName":"Eric",
+		"MiddleName":"Middle",
+		"LastName": "Ericsan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Frank",
+		"MiddleName":"Middle",
+		"LastName": "Franksan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue",
+		"FirstName":"Frank",
+		"MiddleName":"Middle",
+		"LastName": "Franksan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"George",
+		"MiddleName":"Middle",
+		"LastName": "Georgesan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue",
+		"FirstName":"George",
+		"MiddleName":"Middle",
+		"LastName": "Georgesan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Henry",
+		"MiddleName":"Middle",
+		"LastName": "Henrysan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue",
+		"FirstName":"Henry",
+		"MiddleName":"Middle",
+		"LastName": "Henrysan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Ian",
+		"MiddleName":"Middle",
+		"LastName": "Iansan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue",
+		"FirstName":"Ian",
+		"MiddleName":"Middle",
+		"LastName": "Iansan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Jack",
+		"MiddleName":"Middle",
+		"LastName": "Jacksan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue",
+		"FirstName":"Jack",
+		"MiddleName":"Middle",
+		"LastName": "Jacksan"
+	}
+}
+]</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/hub/v1/dataEvents/key:key/rowset</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="315e0696-c80a-4200-bd8a-5fb8de0a8b39" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="e47dd580-2fcf-484a-9844-77ba9f20ba18" name="Log Time Elapsed">
+          <con:configuration>
+            <scriptText>log.info messageExchange.timeTaken</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+          <con:entry key="key" value="${#TestCase#externalKey}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>key</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>method</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Retrieve CustomObject To Confirm RowCount = 10 3" id="e657f68f-5360-4af7-a8a2-5472dbc2c3a6">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/customobjects/{id}" methodName="Get" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Retrieve CustomObject To Confirm RowCount = 10 3" id="4bbd09de-08f5-4be6-931c-c524c9c3f76f" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/internal/v1/customobjects/beae32eb-e35a-e511-8b2d-ac162dbccdac</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="44f85cd3-5141-42e5-b743-db86f22d7483" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="3ce5bcb8-925d-4da3-9c77-3fd061b3dae7" name="CustomObjectID Match">
+          <con:configuration>
+            <path>$.id</path>
+            <content>${#TestCase#customObjectId}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="081fc3f9-5376-417b-b392-9a0637394cac" name="RowCount As Expected">
+          <con:configuration>
+            <path>$.totalRowCount</path>
+            <content>10</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+          <con:entry key="id" value="${#TestCase#customObjectId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Confirm all rows were updated (PrimedTestValue)" id="9260435b-2bb1-4380-9d18-4af68bd17335">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Confirm all rows were updated (PrimedTestValue)" id="d9412851-a03e-493f-b996-c89f86b4d693" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${Auth#accesstoken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <RetrieveRequest>
+            <ObjectType>DataExtensionObject [${#TestCase#CustomObjectName}]</ObjectType>
+            <Properties>FirstName</Properties>
+            <Properties>LastName</Properties>
+            <Properties>RequiredTextColumn</Properties>
+            <Filter xsi:type="ns1:SimpleFilterPart" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    		  	<Property>RequiredTextColumn</Property>
+              	<SimpleOperator>equals</SimpleOperator>
+              	<Value>PrimedTestValue</Value>
+   		  </Filter>
+         </RetrieveRequest>
+      </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="47853253-cfed-4fd7-b9cc-fbf80534a1a8"/>
+        <con:assertion type="XPath Match" id="9d13b5d3-0de4-49f6-859c-563199dbfbd0" name="XPath Match">
+          <con:configuration>
+            <path>${Confirm all rows were updated (PrimedTestValue)#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; count(//ns1:RetrieveResponseMsg[1]/ns1:Results)
+}</path>
+            <content>10</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario #3: Update All Rows - All Updated Keys  In Values (Middle-Updated, PrimedTestValue-Updated))" id="665675f8-ba6b-4bb8-a561-4b6059f3150e">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/hub/v1/dataevents/key:{key}/rowset" methodName="Upsert Batch of DE Rows by Key" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario #3: Update All Rows - All Updated Keys  In Values (Middle-Updated, PrimedTestValue-Updated))" id="925de299-bee8-4cd8-a1a7-f5997803553c" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request>[
+{
+	"keys": {
+		"FirstName":"Adam",
+		"MiddleName":"Middle",
+		"LastName": "Adamsan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated",
+		"FirstName":"Adam",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Adamsan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Billy",
+		"MiddleName":"Middle",
+		"LastName": "Billysan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated",
+		"FirstName":"Billy",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Billysan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Charlie",
+		"MiddleName":"Middle",
+		"LastName": "Charliesan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated",
+		"FirstName":"Charlie",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Charliesan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Daniel",
+		"MiddleName":"Middle",
+		"LastName": "Danielsan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated",
+		"FirstName":"Daniel",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Danielsan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Eric",
+		"MiddleName":"Middle",
+		"LastName": "Ericsan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated",
+		"FirstName":"Eric",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Ericsan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Frank",
+		"MiddleName":"Middle",
+		"LastName": "Franksan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated",
+		"FirstName":"Frank",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Franksan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"George",
+		"MiddleName":"Middle",
+		"LastName": "Georgesan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated",
+		"FirstName":"George",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Georgesan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Henry",
+		"MiddleName":"Middle",
+		"LastName": "Henrysan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated",
+		"FirstName":"Henry",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Henrysan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Ian",
+		"MiddleName":"Middle",
+		"LastName": "Iansan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated",
+		"FirstName":"Ian",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Iansan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Jack",
+		"MiddleName":"Middle",
+		"LastName": "Jacksan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated",
+		"FirstName":"Jack",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Jacksan"
+	}
+}
+]</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/hub/v1/dataEvents/key:key/rowset</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="315e0696-c80a-4200-bd8a-5fb8de0a8b39" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="e47dd580-2fcf-484a-9844-77ba9f20ba18" name="Log Time Elapsed">
+          <con:configuration>
+            <scriptText>log.info messageExchange.timeTaken</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+          <con:entry key="key" value="${#TestCase#externalKey}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>key</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>method</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Retrieve CustomObject To Confirm RowCount = 10 4" id="038582cd-4f37-4b44-b7b4-65ddf6b1fe39">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/customobjects/{id}" methodName="Get" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Retrieve CustomObject To Confirm RowCount = 10 4" id="4bbd09de-08f5-4be6-931c-c524c9c3f76f" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/internal/v1/customobjects/beae32eb-e35a-e511-8b2d-ac162dbccdac</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="44f85cd3-5141-42e5-b743-db86f22d7483" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="3ce5bcb8-925d-4da3-9c77-3fd061b3dae7" name="CustomObjectID Match">
+          <con:configuration>
+            <path>$.id</path>
+            <content>${#TestCase#customObjectId}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="081fc3f9-5376-417b-b392-9a0637394cac" name="RowCount As Expected">
+          <con:configuration>
+            <path>$.totalRowCount</path>
+            <content>10</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+          <con:entry key="id" value="${#TestCase#customObjectId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Confirm all rows were updated (Middle-Updated)" id="3b5c7db0-f501-4406-8791-e3cff7ce1a54">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Confirm all rows were updated (Middle-Updated)" id="d9412851-a03e-493f-b996-c89f86b4d693" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${Auth#accesstoken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <RetrieveRequest>
+            <ObjectType>DataExtensionObject [${#TestCase#CustomObjectName}]</ObjectType>
+            <Properties>FirstName</Properties>
+            <Properties>MiddleName</Properties>
+            <Properties>LastName</Properties>
+            <Properties>RequiredTextColumn</Properties>
+            <Filter xsi:type="ns1:SimpleFilterPart" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    		  	<Property>MiddleName</Property>
+              	<SimpleOperator>equals</SimpleOperator>
+              	<Value>Middle-Updated</Value>
+   		  </Filter>
+         </RetrieveRequest>
+      </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="47853253-cfed-4fd7-b9cc-fbf80534a1a8"/>
+        <con:assertion type="XPath Match" id="9d13b5d3-0de4-49f6-859c-563199dbfbd0" name="XPath Match">
+          <con:configuration>
+            <path>${Confirm all rows were updated (Middle-Updated)#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; count(//ns1:RetrieveResponseMsg[1]/ns1:Results)
+}</path>
+            <content>10</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario #4: Update All Rows - All Updated Keys  In Values (Middle-Updated, PrimedTestValue-Updated))" id="3bd45846-d680-4164-9ce2-e942087dfd23">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/hub/v1/dataevents/key:{key}/rowset" methodName="Upsert Batch of DE Rows by Key" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario #4: Update All Rows - All Updated Keys  In Values (Middle-Updated, PrimedTestValue-Updated))" id="925de299-bee8-4cd8-a1a7-f5997803553c" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request>[
+{
+	"keys": {
+		"FirstName":"Adam",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Adamsan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated",
+		"FirstName":"Adam",
+		"MiddleName":"Middle",
+		"LastName": "Adamsan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Billy",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Billysan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated",
+		"FirstName":"Billy",
+		"MiddleName":"Middle",
+		"LastName": "Billysan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Charlie",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Charliesan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated",
+		"FirstName":"Charlie",
+		"MiddleName":"Middle",
+		"LastName": "Charliesan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Daniel",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Danielsan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated",
+		"FirstName":"Daniel",
+		"MiddleName":"Middle",
+		"LastName": "Danielsan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Eric",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Ericsan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue-Updated",
+		"FirstName":"Eric",
+		"MiddleName":"Middle",
+		"LastName": "Ericsan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Frank",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Franksan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue",
+		"FirstName":"Frank",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Franksan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"George",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Georgesan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue",
+		"FirstName":"George",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Georgesan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Henry",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Henrysan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue",
+		"FirstName":"Henry",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Henrysan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Ian",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Iansan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue",
+		"FirstName":"Ian",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Iansan"
+	}
+},
+{
+	"keys": {
+		"FirstName":"Jack",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Jacksan"
+	},
+	"values": {
+		"EmailAddress": "0${Create Random Email Address#result}",
+		"Phone Number": "${Create Random Phone Number#result}",
+		"Birthdate": "${Create RandomDate#result}",
+		"RequiredTextColumn": "PrimedTestValue",
+		"FirstName":"Jack",
+		"MiddleName":"Middle-Updated",
+		"LastName": "Jacksan"
+	}
+}
+]</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/hub/v1/dataEvents/key:key/rowset</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="315e0696-c80a-4200-bd8a-5fb8de0a8b39" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="e47dd580-2fcf-484a-9844-77ba9f20ba18" name="Log Time Elapsed">
+          <con:configuration>
+            <scriptText>log.info messageExchange.timeTaken</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+          <con:entry key="key" value="${#TestCase#externalKey}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>key</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>method</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Confirm all rows were updated (Middle-Updated (5))" id="13460858-8117-424e-a147-bd731388c7dd">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Confirm all rows were updated (Middle-Updated (5))" id="d9412851-a03e-493f-b996-c89f86b4d693" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${Auth#accesstoken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <RetrieveRequest>
+            <ObjectType>DataExtensionObject [${#TestCase#CustomObjectName}]</ObjectType>
+            <Properties>FirstName</Properties>
+            <Properties>MiddleName</Properties>
+            <Properties>LastName</Properties>
+            <Properties>RequiredTextColumn</Properties>
+            <Filter xsi:type="ns1:SimpleFilterPart" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    		  	<Property>MiddleName</Property>
+              	<SimpleOperator>equals</SimpleOperator>
+              	<Value>Middle-Updated</Value>
+   		  </Filter>
+         </RetrieveRequest>
+      </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="47853253-cfed-4fd7-b9cc-fbf80534a1a8"/>
+        <con:assertion type="XPath Match" id="9d13b5d3-0de4-49f6-859c-563199dbfbd0" name="XPath Match">
+          <con:configuration>
+            <path>${Confirm all rows were updated (Middle-Updated (5))#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; count(//ns1:RetrieveResponseMsg[1]/ns1:Results)
+}</path>
+            <content>5</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Confirm all rows were updated (PrimedTestValue-Updated (5))" id="4a25efe1-ffda-47d1-ae35-80a7c048e587">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Confirm all rows were updated (PrimedTestValue-Updated (5))" id="d9412851-a03e-493f-b996-c89f86b4d693" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${Auth#accesstoken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <RetrieveRequest>
+            <ObjectType>DataExtensionObject [${#TestCase#CustomObjectName}]</ObjectType>
+            <Properties>FirstName</Properties>
+            <Properties>MiddleName</Properties>
+            <Properties>LastName</Properties>
+            <Properties>RequiredTextColumn</Properties>
+            <Filter xsi:type="ns1:SimpleFilterPart" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    		  	<Property>RequiredTextColumn</Property>
+              	<SimpleOperator>equals</SimpleOperator>
+              	<Value>PrimedTestValue-Updated</Value>
+   		  </Filter>
+         </RetrieveRequest>
+      </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="47853253-cfed-4fd7-b9cc-fbf80534a1a8"/>
+        <con:assertion type="XPath Match" id="9d13b5d3-0de4-49f6-859c-563199dbfbd0" name="XPath Match">
+          <con:configuration>
+            <path>${Confirm all rows were updated (PrimedTestValue-Updated (5))#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; count(//ns1:RetrieveResponseMsg[1]/ns1:Results)
+}</path>
+            <content>5</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Delete Data Extension" id="6d8238f1-55ef-40ad-a234-feab33e675d8">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/customobjects/{id}" methodName="Delete" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Delete Data Extension" id="7d09d70c-6ba9-4f1e-9af4-075569633ed2" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/internal/v1/customobjects/id</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="8eab20c2-86a5-4ce8-91e9-1206374384e5" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>204</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+          <con:entry key="id" value="${#TestCase#customObjectId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>categoryId</con:name>
+      <con:value>387665</con:value>
+    </con:property>
+    <con:property>
+      <con:name>customObjectId</con:name>
+      <con:value>f434dd95-72b6-e611-80cf-1402ec6b9529</con:value>
+    </con:property>
+    <con:property>
+      <con:name>externalKey</con:name>
+      <con:value>8XKGDH1E9ME9JI3</con:value>
+    </con:property>
+    <con:property>
+      <con:name>CustomObjectName</con:name>
+      <con:value>DE-BulkUpsert-Test</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>dd16044e-66c9-470e-bad4-ac96c4c81305</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>04473922-6751-4d7c-aa4f-04b970b95e2b</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>2b1c7779-7477-43bd-a509-af77a6f135d4</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>33d078c9-95f0-489f-a8dd-b190e47e99f4</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>bf6ebf21-73d1-42d8-8635-af3eac14723c</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>46ae2f86-d208-43bc-a778-89dd243aa7f2</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>54c65587-e645-4592-92f5-131e48b7138f</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>2259ef2d-b8a3-4bd9-859f-bd8187b14908</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>f286df23-f87d-46a7-acee-d30c3ecc367b</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>d24883d1-3dbf-4917-b0d5-737ea151a8e8</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>014091fe-94f7-4228-a439-5a33a52daf26</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>68cf7313-5395-4a07-902e-e140844b1628</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>2259a5c1-d3d1-4447-8afc-47f1d91197cc</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>3f1fdfe7-375f-4f7c-a9eb-a491a9bbec2a</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>e8e9cd0d-ccac-4e6d-9b92-5990ffc51b94</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>b36aa839-d973-431b-8b2e-c929fb55e100</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>dbb98b5d-99e6-4cb8-b52a-81ba38bd84cf</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>342746dd-ad84-4e21-b904-6ba25f56142e</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>4a336ff9-42ab-4343-8053-ada6ce775474</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>6043d15a-7da7-47fa-88da-224805931e75</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>5ae75b78-a74c-430b-8fda-d4303ba1bb46</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>7a16bfbb-0973-4b69-a1f7-9972d8ceeba1</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>307ea27a-3eac-4df9-b125-05a888828e96</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>9260435b-2bb1-4380-9d18-4af68bd17335</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>665675f8-ba6b-4bb8-a561-4b6059f3150e</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>3b5c7db0-f501-4406-8791-e3cff7ce1a54</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>3bd45846-d680-4164-9ce2-e942087dfd23</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>a681da92-950e-4b12-a15f-2314e88a0170</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>e657f68f-5360-4af7-a8a2-5472dbc2c3a6</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>038582cd-4f37-4b44-b7b4-65ddf6b1fe39</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>13460858-8117-424e-a147-bd731388c7dd</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>4a25efe1-ffda-47d1-ae35-80a7c048e587</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

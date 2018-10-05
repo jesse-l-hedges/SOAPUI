@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="Discovery" path="/v1/rest" id="6df9fc07-0da6-4903-9362-2df744e9445c" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="6df9fc07-0da6-4903-9362-2df744e9445cfileName">Discovery</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:method name="auth/Discovery" id="eb07c404-2d62-4097-a027-53f611e94889" method="GET">
+    <con:settings/>
+    <con:parameters/>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:request name="Request 1" id="fd543b26-803c-48bd-a6cd-4b0092ca366e" mediaType="application/json">
+      <con:settings/>
+      <con:request/>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+</con:resource>

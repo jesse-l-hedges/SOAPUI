@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="account" path="/account" id="055a9f2b-e928-4908-ac54-55aa98782d0f" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="055a9f2b-e928-4908-ac54-55aa98782d0ffileName">account</con:setting>
+  </con:settings>
+  <con:parameters>
+    <con:parameter>
+      <con:name>Authorization</con:name>
+      <con:value/>
+      <con:style>HEADER</con:style>
+      <con:default/>
+      <con:description xsi:nil="true"/>
+    </con:parameter>
+  </con:parameters>
+  <con:resource name="applications" path="applications" id="4b01cfa3-03f6-46e4-bdfa-01aa6b118fb0">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:resource name="{applicationId}" path="{applicationId}" id="2dfdc359-752d-4ea6-9fc6-6e89f6a0f94a">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>applicationId</con:name>
+          <con:value>applicationId</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>applicationId</con:default>
+        </con:parameter>
+      </con:parameters>
+      <con:resource name="dataaccess" path="dataaccess" id="f8191186-4992-415c-ac3a-0e611fa8bdff">
+        <con:settings/>
+        <con:parameters/>
+        <con:method name="Method 1" id="777a47d0-cc20-45c6-ba0b-07da598e4f63" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="getAdminHXApplicationDataAccess" id="1f541da3-a065-4ef7-bcba-70266d15bf62" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters/>
+            <con:parameterOrder>
+              <con:entry>Authorization</con:entry>
+              <con:entry>applicationId</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+      <con:resource name="licensedbusinessunits" path="licensedbusinessunits" id="ed3701fc-ef81-4b30-844f-708b7ca0a304">
+        <con:settings/>
+        <con:parameters/>
+        <con:method name="Method 1" id="ed3751ab-a980-48f3-91d7-36986a75379e" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="getAdminHXLicensedBusinessUnits" id="7fe115b7-336a-44dc-840e-9068cd351bcf" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters/>
+            <con:parameterOrder>
+              <con:entry>Authorization</con:entry>
+              <con:entry>applicationId</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+      <con:resource name="licensedusers" path="licensedusers" id="0c7d94d7-6faf-4c95-8558-1cf7435a4cc9">
+        <con:settings/>
+        <con:parameters/>
+        <con:method name="Method 1" id="a930be4f-72ed-4fd5-9b94-72fc6db653a0" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="getAdminHXLicensedUsers" id="0fcfe8ff-78ab-4d1c-a267-3e007a4a01e4" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters/>
+            <con:parameterOrder>
+              <con:entry>Authorization</con:entry>
+              <con:entry>applicationId</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+      <con:resource name="unlicensedusers" path="unlicensedusers" id="8c88c3df-082d-4c4c-a0e4-5dfc11ba227c">
+        <con:settings/>
+        <con:parameters/>
+        <con:method name="Method 1" id="933ca49c-edce-427e-b34f-5e42b9b9f4d1" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="getAdminHXUnlicensedUsers" id="a2a5b4eb-27a9-4693-a82c-4a2a7394849c" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters/>
+            <con:parameterOrder>
+              <con:entry>Authorization</con:entry>
+              <con:entry>applicationId</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+      <con:resource name="userswithlicenserequest" path="userswithlicenserequest" id="917f4ee5-c16c-4bee-9e2b-6a9ebde1ca88">
+        <con:settings/>
+        <con:parameters/>
+        <con:method name="Method 1" id="5f7c0bd1-a16b-4fb2-b04f-a9a68f3541c0" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:representation type="FAULT">
+            <con:mediaType>text/html; charset=utf-8</con:mediaType>
+            <con:status>404</con:status>
+            <con:params/>
+            <con:element>html</con:element>
+          </con:representation>
+          <con:request name="getAdminHXUsersWithLicenseRequest" id="855f5c16-b063-499f-9efe-459978d6a6e4" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/account/applications/applicationId/userswithlicenserequest</con:originalUri>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters/>
+            <con:parameterOrder>
+              <con:entry>Authorization</con:entry>
+              <con:entry>applicationId</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+    </con:resource>
+    <con:resource name="requested" path="requested" id="6d75b8ad-546f-44b3-9a17-ad396154d4f0">
+      <con:settings/>
+      <con:parameters/>
+      <con:method name="Method 1" id="474d3959-df2c-4840-be88-10ea18ea558d" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="getAdminHXApplicationsRequested" id="efa5a113-80d4-4d88-af67-a58d6b781ab1" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:method name="Method 1" id="0aa72905-c33d-4bb8-aa77-e220fdb4dd03" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:representation type="FAULT">
+        <con:mediaType>text/html; charset=utf-8</con:mediaType>
+        <con:status>404</con:status>
+        <con:params/>
+        <con:element>html</con:element>
+      </con:representation>
+      <con:request name="getAdminHXApplications" id="d8e45a83-5c8c-4c84-95da-5ea0558ca360" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/account/applications</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer aiwhvWxuF6SELGExRIL9DV40" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="businessunits" path="businessunits" id="36e2427b-72f1-41cd-ab4b-4a1f6ca847f7">
+    <con:settings/>
+    <con:parameters/>
+    <con:resource name="{memberId}" path="{memberId}" id="0e07c6f1-84f6-4367-8fcb-ec39663aec41">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>memberId</con:name>
+          <con:value>memberId</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>memberId</con:default>
+        </con:parameter>
+      </con:parameters>
+      <con:resource name="licensedusers" path="applications/{applicationId}/licensedusers" id="2ebafcdd-8272-4754-812b-48de1f0a437a">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>applicationId</con:name>
+            <con:value>applicationId</con:value>
+            <con:style>TEMPLATE</con:style>
+            <con:default>applicationId</con:default>
+          </con:parameter>
+        </con:parameters>
+        <con:method name="Method 1" id="415196c2-1b33-4414-8f19-06dea76e946b" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:representation type="FAULT">
+            <con:mediaType>text/html; charset=utf-8</con:mediaType>
+            <con:status>404</con:status>
+            <con:params/>
+            <con:element>html</con:element>
+          </con:representation>
+          <con:request name="getAdminHXLicensedBusinessUnitUsers" id="3a8a6391-0d40-406e-a9c6-48f4a4fb5b91" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/account/businessunits/memberId/applications/applicationId/licensedusers</con:originalUri>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters/>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+      <con:resource name="users" path="users" id="aca2a4bb-3cc2-49b0-9a0b-c802994c6b5b">
+        <con:settings/>
+        <con:parameters/>
+        <con:method name="Method 1" id="07141dc7-0cdf-40ee-9361-3a26e407a241" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="getAdminHXBusinessUnitUsers" id="201e0f24-bc0a-49eb-bf96-27e8e315a558" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters/>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+    </con:resource>
+    <con:method name="Method 1" id="ad8ba21e-d51e-4603-81ca-985cfda7b5a6" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="getAdminHXBusinessUnits" id="31f4e849-8564-4bcb-a41c-ce9c97445e20" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="installmode" path="installmode" id="69182c47-265d-407b-8886-b82489d52131">
+    <con:settings/>
+    <con:parameters/>
+    <con:method name="Method 1" id="7cc8b610-29d2-47de-8c7a-c397b8b24072" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="getGlobalInstallMode" id="7aa0164d-7c05-4ba2-af1b-a4be7daaf602" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="privateapplications" path="privateapplications" id="47d44b44-7936-402c-9516-13531f0e10ce">
+    <con:settings/>
+    <con:parameters/>
+    <con:method name="Method 1" id="ce7d6fb2-d6d7-4592-9736-5483ac494b15" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="getPrivateApplications" id="683e27cd-7b80-4467-940c-8f9c320cde1f" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="{userId}" path="users/{userId}" id="1dfb79bb-632f-456c-ac2d-5ef4ef44ceb0">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>userId</con:name>
+        <con:value>userId</con:value>
+        <con:style>TEMPLATE</con:style>
+        <con:default>userId</con:default>
+      </con:parameter>
+    </con:parameters>
+    <con:method name="Method 1" id="8957c60f-0e4e-411f-adfa-e36c9941fe20" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="getAdminHXAccountUser" id="17b34f98-491e-4948-bafe-4a73489f4bfe" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:method name="Method 1" id="0e77d516-d86d-4afc-b0e0-a9db5df35296" method="GET">
+    <con:settings/>
+    <con:parameters/>
+    <con:representation type="FAULT">
+      <con:mediaType>text/html; charset=utf-8</con:mediaType>
+      <con:status>404</con:status>
+      <con:params/>
+      <con:element>html</con:element>
+    </con:representation>
+    <con:request name="Request 1" id="f9a91ba4-b78d-440a-b60c-950bf480f873" mediaType="application/json">
+      <con:settings>
+        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+      </con:settings>
+      <con:request/>
+      <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/account</con:originalUri>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters>
+        <entry key="Authorization" value="Bearer aiwhvWxuF6SELGExRIL9DV40" xmlns="http://eviware.com/soapui/config"/>
+      </con:parameters>
+      <con:parameterOrder>
+        <con:entry>Authorization</con:entry>
+      </con:parameterOrder>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+</con:resource>

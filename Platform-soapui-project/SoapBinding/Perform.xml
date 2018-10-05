@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:operation id="e0661cf9-0f8a-4d3f-b6d1-4fe81e7180b5" isOneWay="false" action="Perform" name="Perform" bindingOperationName="Perform" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="e0661cf9-0f8a-4d3f-b6d1-4fe81e7180b5fileName">Perform</con:setting></con:settings></con:operation>

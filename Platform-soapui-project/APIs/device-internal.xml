@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="device-internal" path="/device-internal" id="e1f29a57-0a50-45c2-9954-af566de02c7a" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="e1f29a57-0a50-45c2-9954-af566de02c7afileName">device-internal</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:resource name="v1" path="v1" id="df5668d2-f7de-4e19-81f6-dd18fc4f3a65">
+    <con:settings/>
+    <con:parameters/>
+    <con:resource name="rest" path="rest" id="f2469d0a-6a67-4d7a-b12b-8152d4f4b140">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="device-internal/Discovery" id="bd5691f9-8dbb-4d74-9fef-c0f4ae97f5ec" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="0bf8d6fc-4a5c-4b74-9fdf-25b2fc7ae8a9" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+  </con:resource>
+</con:resource>

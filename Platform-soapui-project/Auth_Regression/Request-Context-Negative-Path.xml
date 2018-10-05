@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Request Context Negative Path" searchProperties="true" id="a7c5fead-5380-4012-926b-1f898f980189" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config">
+      <con:settings><con:setting id="a7c5fead-5380-4012-926b-1f898f980189fileName">Request-Token-Negative-Path1</con:setting></con:settings>
+      <con:testStep type="restrequest" name="RequestContextByWrongClientId" disabled="true" id="f7b6ec4d-d648-4807-88e5-12ee38bf902b">
+        <con:settings/>
+        <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="RequestContextByWrongClientId" mediaType="application/json" postQueryString="false" id="a4f64d63-3c3b-4059-9651-28f3dcc97b19">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:endpoint>${authendpoint}</con:endpoint>
+            <con:request>{
+    "clientId": "wrongClientId",
+    "clientSecret": "${clientsecret}"
+}</con:request>
+            <con:originalUri>${authendpoint}/v1/requestContext</con:originalUri>
+            <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 401" id="909d5c47-ee47-403c-80af-b923094c1330">
+              <con:settings/><con:configuration>
+                <codes>401</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:jmsPropertyConfig/>
+            <con:parameters/>
+          <con:parameterOrder><con:entry>Host</con:entry></con:parameterOrder></con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="restrequest" name="RequestContextByWrongClientSecret" disabled="true" id="ed1a3201-ae1a-4a5e-b5d9-14e21a53fd08">
+        <con:settings/>
+        <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="RequestContextByWrongClientSecret" mediaType="application/json" postQueryString="false" id="2e7c6049-3e17-4472-91ba-a580704bfa81">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:endpoint>${authendpoint}</con:endpoint>
+            <con:request>{
+    "clientId": "${clientId}",
+    "clientSecret": "wrongclientsecret"
+}</con:request>
+            <con:originalUri>${authendpoint}/v1/requestContext</con:originalUri>
+            <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 401" id="2e55a1c9-895e-4a21-8541-7013ad84f602">
+              <con:settings/><con:configuration>
+                <codes>400</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:jmsPropertyConfig/>
+            <con:parameters/>
+          <con:parameterOrder><con:entry>Host</con:entry></con:parameterOrder></con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="restrequest" name="RequestContextByWrongClientSecret&amp;Secret" disabled="true" id="4aa08f27-cf62-4371-8571-3bd69648939c">
+        <con:settings/>
+        <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="RequestContextByWrongClientSecret&amp;Secret" mediaType="application/json" postQueryString="false" id="1b7db165-e86f-4794-82f0-b53dedca208d">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:endpoint>${authendpoint}</con:endpoint>
+            <con:request>{
+    "clientId": "wrongClientId",
+    "clientSecret": "wrongClientSecret"
+}</con:request>
+            <con:originalUri>${authendpoint}/v1/requestContext</con:originalUri>
+            <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 401" id="8be7f41f-1f94-44d7-be67-850a6918c44d">
+              <con:settings/><con:configuration>
+                <codes>400</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:jmsPropertyConfig/>
+            <con:parameters/>
+          <con:parameterOrder><con:entry>Host</con:entry></con:parameterOrder></con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="restrequest" name="RequestContextByMissingClientId" disabled="true" id="d346c848-f143-4439-bad9-9d3f57af3e0c">
+        <con:settings/>
+        <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="RequestContextByMissingClientId" mediaType="application/json" postQueryString="false" id="a1c287d2-ead6-489e-8e9b-244b0c1d3159">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:endpoint>${authendpoint}</con:endpoint>
+            <con:request>{
+    "clientId": "",
+    "clientSecret": "${clientsecret}"
+}</con:request>
+            <con:originalUri>${authendpoint}/v1/requestContext</con:originalUri>
+            <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 400" id="a4fa2570-71ad-4c8e-9b44-0c5687300bda">
+              <con:settings/><con:configuration>
+                <codes>400</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:jmsPropertyConfig/>
+            <con:parameters/>
+          <con:parameterOrder><con:entry>Host</con:entry></con:parameterOrder></con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="restrequest" name="RequestContextByMissingClientSecret" disabled="true" id="6bd6f247-44f1-469f-9d84-7f44a2919fe8">
+        <con:settings/>
+        <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="RequestContextByMissingClientSecret" mediaType="application/json" postQueryString="false" id="4d9e5bde-fec1-41ed-88d1-39b5f3b27142">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:endpoint>${authendpoint}</con:endpoint>
+            <con:request>{
+    "clientId": "${clientId}",
+    "clientSecret": ""
+}</con:request>
+            <con:originalUri>${authendpoint}/v1/requestContext</con:originalUri>
+            <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 400" id="1ce0b444-f197-42bf-b8fd-93e510852686">
+              <con:settings/><con:configuration>
+                <codes>400</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:jmsPropertyConfig/>
+            <con:parameters/>
+          <con:parameterOrder><con:entry>Host</con:entry></con:parameterOrder></con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="restrequest" name="RequestContextByMissingClientSecret&amp;Secret" disabled="true" id="13603b12-0a1a-49a7-bce6-c4c8b48748d9">
+        <con:settings/>
+        <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="RequestContextByMissingClientSecret&amp;Secret" mediaType="application/json" postQueryString="false" id="f75d0ade-dbe3-4fb9-a7c9-2ed413fc6da4">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:endpoint>${authendpoint}</con:endpoint>
+            <con:request>{
+    "clientId": "",
+    "clientSecret": ""
+}</con:request>
+            <con:originalUri>${authendpoint}/v1/requestContext</con:originalUri>
+            <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 400" id="7f88d74e-0ff9-45d6-8769-437f88cbe8df">
+              <con:settings/><con:configuration>
+                <codes>400</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:jmsPropertyConfig/>
+            <con:parameters/>
+          <con:parameterOrder><con:entry>Host</con:entry></con:parameterOrder></con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:properties/>
+    <con:reportParameters/></con:testCase>

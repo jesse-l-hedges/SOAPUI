@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="platform" path="/platform" id="5564584b-61c0-437d-942e-f93682d7c119" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="5564584b-61c0-437d-942e-f93682d7c119fileName">platform</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:resource name="v1" path="v1" id="aae9742a-a31b-4a29-bf36-17f3b1220034">
+    <con:settings/>
+    <con:parameters/>
+    <con:resource name="rest" path="rest" id="465f69a7-d131-4612-9608-fd519b3c04ec">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:resource name="experimental" path="experimental" id="c5a06c7e-fc2c-4714-9870-84a5fb62d5e4">
+        <con:settings/>
+        <con:parameters/>
+        <con:method name="platform/DiscoveryExperimental" id="82ecadaa-a0fb-4476-bb28-d263896159ab" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="Request 1" id="6009bbca-153e-4b92-8712-a0739cc987dc" mediaType="application/json">
+            <con:settings/>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters/>
+            <con:parameterOrder>
+              <con:entry>Authorization</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+      <con:method name="platform/Discovery" id="f572e85c-b430-4418-9212-fe3f282ce863" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="93f6a71e-097c-4831-a0fc-33f1027cc521" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="tokenContext" path="tokenContext" id="baa15658-a0cb-4985-909b-ffee837a70db">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="Method 1" id="f8112d7d-4e31-4aa3-bac1-a127c7b137a2" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="8685a54a-d6cf-47de-b77a-14f00fe0cdda" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="webhooks" path="webhooks" id="7e389dd8-8b72-469e-8c30-d7dbaafbd412">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:resource name="verify" path="verify" id="8603309e-1547-4f2c-84cf-abd8d75f7e18">
+        <con:settings/>
+        <con:parameters/>
+        <con:method name="postWebhookVerification" id="b172aaa2-f687-425e-8642-909194e1b4ae" method="POST">
+          <con:settings/>
+          <con:parameters/>
+        </con:method>
+      </con:resource>
+      <con:resource name="webhookId" path="webhookId" id="455c429c-4dad-4ccc-b2e1-671749173544">
+        <con:settings/>
+        <con:parameters/>
+        <con:method name="Method 1" id="a62b9c18-4c46-496d-8457-78f008f8c88b" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="Request 1" id="e2f2cf46-5f5c-4be4-91ea-e405d94e3b40" mediaType="application/json">
+            <con:settings/>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters/>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+      <con:resource name="${#TestCase#WebhookID}" path="${ID}" id="a98bcee5-86d2-4702-947e-4ff222da7cde">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>ID</con:name>
+            <con:value>#TestCase#WebhookID</con:value>
+            <con:style>TEMPLATE</con:style>
+            <con:default>#TestCase#WebhookID</con:default>
+          </con:parameter>
+        </con:parameters>
+        <con:method name="getWebhook" id="ceb0cce5-ad29-4fca-89b6-2b69f88c1a25" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="getWebhook" id="0cc6b561-b4b2-4141-9caa-721d00f26a96" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters>
+              <entry key="ID" value="" xmlns="http://eviware.com/soapui/config"/>
+            </con:parameters>
+            <con:parameterOrder>
+              <con:entry>Authorization</con:entry>
+              <con:entry>ID</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+        <con:method name="deleteWebhook" id="d2d7ea49-9f58-4693-aca5-967ba98693d0" method="DELETE">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="deleteWebhook" id="1dbeb3ca-bfeb-4e4c-a61b-ccaa702d4432" mediaType="application/json" postQueryString="false">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters>
+              <entry key="ID" value="" xmlns="http://eviware.com/soapui/config"/>
+            </con:parameters>
+            <con:parameterOrder>
+              <con:entry>Authorization</con:entry>
+              <con:entry>ID</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+      <con:method name="postWebhook" id="b9020114-d205-483d-86aa-4ba9467d8e01" method="POST">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="postWebhook" id="1ef0ec66-69b3-4163-b9f0-d80f1c5700ff" mediaType="application/json" postQueryString="false">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:request>{
+	"name" : "QETestWebhook",
+	"callbackUrl" : "http://fuelbin.int.marketingcloudapps.com/S5KpwLZ",
+	"callbackKey" : "QETestWebhook",
+	"configuration" : {
+		"FuelMessagingEvents": [
+			"Processed",
+			"Dropped",
+			"Sent",
+			"Delayed",
+			"Bounce",
+			"Open",
+			"Click",
+			"Spam",
+			"Unsubscribe"
+			],
+		"TriggeredSendEvents": [
+			"Processed",
+			"Dropped",
+			"Sent",
+			"Delayed",
+			"Bounce",
+			"Open",
+			"Click",
+			"Spam",
+			"Unsubscribe"
+			]
+	}
+}</con:request>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="Authorization" value="Bearer" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+      <con:method name="deleteWebhook" id="cf29e293-dfc9-4a28-8232-e3493bec4594" method="DELETE">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="deleteWebhook" id="e3ce334d-9a48-40ec-b6c1-e9edcc5fd836" mediaType="application/json" postQueryString="false">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="webhooks" path="accounts/current/webhooks" id="a947c0ea-22ac-4cda-96d5-3f637a9ae69a">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>$page</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="Method 1" id="42ee3a0b-3ac7-42bf-a4d6-6201f9d8368a" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="getAllWebhooks" id="6f8cd777-2fa2-43db-8275-2c304df62610" mediaType="application/json">
+          <con:settings>
+            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+          </con:settings>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <entry key="$page" value="${#TestCase#Page}" xmlns="http://eviware.com/soapui/config"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+            <con:entry>$page</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+    <con:resource name="endpoints" path="endpoints" id="a028e451-1f66-4f3b-b09d-d555bc9ee36a">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>Host</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>env</con:name>
+          <con:value/>
+          <con:style>QUERY</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="Method 1" id="db6546c0-1435-4022-afde-d85b8f88ecd6" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="90d6d67e-3673-4fe5-ac74-e9ca2a5df1ef" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+            <con:entry>Host</con:entry>
+            <con:entry>env</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+  </con:resource>
+</con:resource>

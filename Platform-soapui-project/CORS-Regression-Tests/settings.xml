@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="86ce2388-2b66-4959-a9ee-f363b2b3caf6" name="CORS Regression Tests" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="86ce2388-2b66-4959-a9ee-f363b2b3caf6fileName">CORS-Regression-Tests</con:setting>
+  </con:settings>
+  <con:runType>SEQUENTIAL</con:runType>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testSuite>

@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="f58fcffe-1c1d-4fa9-ab44-88e264735757" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Create Retrieve Update Delete Email" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="f58fcffe-1c1d-4fa9-ab44-88e264735757fileName">Create-Retrieve-Update-Delete-Email</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="c66b7a0c-69b3-4931-8fe7-ea30ce98203b">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>aEqw2gqQl0Y7KZL9v52HhovK</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>10782007</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>10739553</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Random Email Name" id="3a0d2b46-05ac-42eb-8a94-bea99857f613">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+'QETest_' + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+        </con:configuration>
+        <con:name>EmailName</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Email" id="775171d4-c45a-45b5-a451-7464410b38bd">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Email" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="Email">\r
+            <ObjectID xsi:nil="true"/>\r
+            <Name>${Random Email Name#EmailName}</Name>\r
+            <Description>Description</Description>\r
+            <HTMLBody><![CDATA[this email is created for ESD regression
+
+<table cellpadding="2" cellspacing="0" width="600" ID="Table5" Border=0><tr><td><font face="verdana" size="1" color="#444444">This email was sent to:  %%emailaddr%% <br><br><b>Email Sent By:</b> %%Member_Busname%%<br>%%Member_Addr%% %%Member_City%%, %%Member_State%%, %%Member_PostalCode%%, %%Member_Country%%<br><br></font></td></tr></table>
+<br>
+<a href="%%profile_center_url%%" alias="Update Profile">Update Profile</a>]]]]>><![CDATA[</HTMLBody>\r
+            <Subject>Test Subject</Subject>\r
+            <EmailType>HTML</EmailType>\r
+            <IsHTMLPaste>true</IsHTMLPaste>\r
+         </Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="562b71d6-f3a9-4be7-8554-ea299f4bef34" name="Created Email">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Created Email.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer EmailID" id="312fd261-8781-4412-b90f-bfef2a875f70">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>EmailID</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Email</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>EmailID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Retrieve Email" id="7d80c104-464f-49d1-8650-08d893af9f09">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve Email" id="1482fc5b-f2a4-44bf-8588-c4e1a0ad93fc" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+
+   <soapenv:Body>\r
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+            <RetrieveRequest>
+                <ObjectType>Email</ObjectType>
+                <Properties>ID</Properties>
+                <Filter xsi:type="SimpleFilterPart" xmlns="http://exacttarget.com/wsdl/partnerAPI">
+                    <Property>EmailName</Property>
+                    <SimpleOperator>equals</SimpleOperator>
+                    <Value>${Random Email Name#EmailName}</Value>
+                </Filter>
+            </RetrieveRequest>
+        </RetrieveRequestMsg>
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="ebd8af38-266e-4438-8717-5e8a087a9f36"/>
+        <con:assertion type="SOAP Fault Assertion" id="6e178a32-2ffa-41e9-b93a-e4ca4b138542"/>
+        <con:assertion type="XPath Match" id="0eb31b1f-9592-437a-8b28-0a3e4ef42c2e" name="Verify EmailID">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:RetrieveResponseMsg[1]/ns1:Results[1]/ns1:ID[1]</path>
+            <content>${#TestCase#EmailID}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update Subject and Description" id="a823ff79-6a72-4551-9583-1ec7005496ef">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update Subject and Description" id="4494c984-3311-4582-8a68-d929faf467c6" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="Email">\r
+            <ID>${#TestCase#EmailID}</ID>\r
+            <Subject>UPDATED SUBJECT LINE</Subject>\r
+            <Name>${Random Email Name#EmailName}_Update</Name>
+         </Objects>\r
+      </UpdateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="4d3a5b65-9208-49c6-b4de-c5d62db049e1"/>
+        <con:assertion type="SOAP Fault Assertion" id="c526b18c-7c71-468e-ba9b-80e7c99a4be7"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete Email" id="e0b1e720-7c8e-44b8-9bae-42f8826c33eb">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Delete</con:operation>
+      <con:request name="Delete Email" id="42d97f3b-b63e-46bb-8519-1905368e79c0" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body xmlns:xsd="http://www.w3.org/2001/XMLSchema">\r
+      <DeleteRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="Email">\r
+            <ID>${#TestCase#EmailID}</ID>\r
+            <ObjectID xsi:nil="true"/>\r
+         </Objects>\r
+      </DeleteRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a9c36ce6-1f94-494b-889c-79262a835196"/>
+        <con:assertion type="SOAP Fault Assertion" id="c4d9375a-dc38-42db-9a4d-2a3cd889c37b"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Retrieve Email - Verify Deleted" id="5acb039d-b0c7-45fc-895f-428e470a8d17">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve Email - Verify Deleted" id="1f75cfef-7b7d-45a2-97d1-f6ad0dae0273" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <RetrieveRequest>\r
+            <ObjectType>Email</ObjectType>\r
+            <Properties>ID</Properties>\r
+            <Filter xsi:type="SimpleFilterPart">\r
+               <Property>EmailName</Property>\r
+               <SimpleOperator>equals</SimpleOperator>\r
+               <Value>${Random Email Name#EmailName}</Value>\r
+            </Filter>\r
+         </RetrieveRequest>\r
+      </RetrieveRequestMsg>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="16e18503-df6b-4c28-99cd-c1b91fc466fb"/>
+        <con:assertion type="SOAP Fault Assertion" id="73dcac12-2210-4a2c-bf81-0c4392dfd44d"/>
+        <con:assertion type="Simple NotContains" id="64605ae1-89c4-4d8c-ba59-60a0109d7fbd" name="Not Contains">
+          <con:configuration>
+            <token>${#TestCase#EmailID}</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>ListID</con:name>
+      <con:value>84136</con:value>
+    </con:property>
+    <con:property>
+      <con:name>EmailID</con:name>
+      <con:value>79250</con:value>
+    </con:property>
+    <con:property>
+      <con:name>SendClassID</con:name>
+      <con:value>ac43b1a3-de05-e311-b427-0022642d9886</con:value>
+    </con:property>
+    <con:property>
+      <con:name>SendDefID</con:name>
+      <con:value>db72184e-2aed-e511-a9a6-0022642d9886</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+</con:testCase>

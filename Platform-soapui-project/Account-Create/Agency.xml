@@ -1,0 +1,1940 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="1bc4303c-6c0b-4ea5-a6a3-b693ea12eff7" discardOkResults="true" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="Agency" searchProperties="true" timeout="360000" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" maxResults="0" disabled="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="1bc4303c-6c0b-4ea5-a6a3-b693ea12eff7fileName">Agency</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="4cdab078-a051-4bc7-838e-aa72ce5c1243">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>aSyYKInhqrSgYeuEFrNGV3pO</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>10782007</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>10739553</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create PartnerKey" id="03d23518-b80a-446e-8eec-82e8e09ceb05">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"QETest_" + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create CustomerKey" id="e94a36f5-bcac-4364-aa9b-27673e043702">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"QETest_" + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create UserID" id="a1e166a3-d408-4137-ae47-45dceb06dcff">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"QETest_" + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Get Today's Date" id="0e1c6c9c-c651-45a6-bac4-e216fac03831">
+    <con:settings/>
+    <con:config>
+      <script>import java.text.SimpleDateFormat
+ 
+def date = new Date()
+sdf = new SimpleDateFormat("yyyy-MM-dd")
+return sdf.format(date)</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Agency Account" id="3ab9531e-8b08-4f63-bdef-4c4bb8e5b1b1">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Agency Account" id="108abc10-8aeb-409d-9a18-6e9ab7819ab6" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>https://webservice.s1.qa1.exacttarget.com/Service.asmx</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <ns1:Objects xsi:type="ns1:Account" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+            <ns1:PartnerKey xsi:nil="true"/>\r
+            <ns1:ModifiedDate xsi:nil="true"/>\r
+            <ns1:ObjectID xsi:nil="true"/>\r
+            <ns1:AccountType>PRO_CONNECT</ns1:AccountType>\r
+            <ns1:Name>QETesting Agency ${Get Today's Date#result}</ns1:Name>\r
+            <ns1:Email>jhedges@salesforce.com</ns1:Email>\r
+            <ns1:FromName>Jesse Hedges</ns1:FromName>\r
+            <ns1:BusinessName>Platform Test Team</ns1:BusinessName>\r
+            <ns1:Address>20 N Meridian Street</ns1:Address>\r
+            <ns1:City>Indianapolis</ns1:City>\r
+            <ns1:State>IN</ns1:State>\r
+            <ns1:Zip>46204</ns1:Zip>\r
+            <ns1:IsActive>1</ns1:IsActive>\r
+            <ns1:DBID>${#Project#dbid}</ns1:DBID>\r
+            <ns1:CustomerID>8323</ns1:CustomerID>\r
+            <EditionID>10</EditionID>
+            <ns1:Children xsi:nil="true"/>\r
+            <ns1:Subscription>
+               <ns1:SubscriptionID xsi:nil="true"/>
+               <ns1:EmailsPurchased>50000</ns1:EmailsPurchased>
+               <ns1:AccountsPurchased>10</ns1:AccountsPurchased>
+               <ns1:AdvAccountsPurchased>10</ns1:AdvAccountsPurchased>
+               <ns1:LPAccountsPurchased>10</ns1:LPAccountsPurchased>
+               <ns1:DOTOAccountsPurchased>10</ns1:DOTOAccountsPurchased>
+               <ns1:BUAccountsPurchased>10</ns1:BUAccountsPurchased>
+               <ns1:BeginDate>${Get Today's Date#result}T00:00:00.000Z</ns1:BeginDate>
+               <ns1:EndDate>${Get Today's Date#result}T23:59:59.999Z</ns1:EndDate>
+               <ns1:Notes xsi:nil="true"/>
+               <ns1:Period/>
+               <ns1:NotificationTitle xsi:nil="true"/>
+               <ns1:NotificationMessage xsi:nil="true"/>
+               <ns1:NotificationFlag xsi:nil="true"/>
+               <ns1:NotificationExpDate xsi:nil="true"/>
+               <ns1:ForAccounting xsi:nil="true"/>
+               <ns1:HasPurchasedEmails>true</ns1:HasPurchasedEmails>
+               <ns1:NumberofEmails>0</ns1:NumberofEmails>
+            </ns1:Subscription>
+            <ns1:PrivateLabels xsi:nil="true"/>\r
+         </ns1:Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="7bb5e400-e7a8-46df-9536-afe87ad37819"/>
+        <con:assertion type="SOAP Fault Assertion" id="89790693-a0ce-4612-aeea-a56eef2971da"/>
+        <con:assertion type="XPath Match" id="b43232ab-e25e-4b6e-b1eb-ea45c36711ae" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Account Updated / Created</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="10154565-c593-451c-8689-109bf86ce9b4">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="82ab5148-9714-42ef-af39-ee5fbb6ca8c1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="6901eefd-b5d4-4673-acf0-da1cf3cce2a1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="3f3884b8-e078-4799-b7b3-07d917085c26">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7e8b5727-d88d-4374-bbba-3ab9d6f8edc3">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b118cf05-935a-465a-8370-ead560c9099f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="5915ed76-ee98-487a-9443-3833065b0289">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b0b4a87f-deae-468e-b326-f1e89b76355f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer EID" id="d051df27-0133-4e1f-bd49-d4181323e374">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>EID</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Agency Account</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>EID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Add BRs" id="f320e35a-655d-4075-a959-bdb4093c7162">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Add BRs" id="6f6338b3-0652-4297-b96d-2587daffb1cc">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="Account">\r
+            <PartnerKey xsi:nil="true"/>\r
+            <ModifiedDate xsi:nil="true"/>\r
+            <ObjectID xsi:nil="true"/>\r
+            <AccountType>PRO_CONNECT</AccountType>\r
+            <Name>QETesting Agency ${Get Today's Date#result}</Name>\r
+            <Email>jhedges@salesforce.com</Email>\r
+            <FromName>Jesse Hedges</FromName>\r
+            <BusinessName>Platform Test Team</BusinessName>\r
+            <Address>20 N Meridian Street</Address>\r
+            <City>Indianapolis</City>\r
+            <State>IN</State>\r
+            <Zip>46204</Zip>\r
+            <IsActive>1</IsActive>\r
+            <DBID>${#Project#dbid}</DBID>\r
+            <CustomerID>8323</CustomerID>\r
+            <EditionID>10</EditionID>\r
+            <Children xsi:nil="true"/>\r
+            <Subscription>\r
+               <SubscriptionID xsi:nil="true"/>\r
+               <EmailsPurchased>50000</EmailsPurchased>\r
+               <AccountsPurchased>10</AccountsPurchased>\r
+               <AdvAccountsPurchased>10</AdvAccountsPurchased>\r
+               <LPAccountsPurchased>10</LPAccountsPurchased>\r
+               <DOTOAccountsPurchased>10</DOTOAccountsPurchased>\r
+               <BUAccountsPurchased>10</BUAccountsPurchased>\r
+               <BeginDate>${Get Today's Date#result}T00:00:00.000Z</BeginDate>\r
+               <EndDate>${Get Today's Date#result}T23:59:59.999Z</EndDate>\r
+               <Notes xsi:nil="true"/>\r
+               <Period/>\r
+               <NotificationTitle xsi:nil="true"/>\r
+               <NotificationMessage xsi:nil="true"/>\r
+               <NotificationFlag xsi:nil="true"/>\r
+               <NotificationExpDate xsi:nil="true"/>\r
+               <ForAccounting xsi:nil="true"/>\r
+               <HasPurchasedEmails>true</HasPurchasedEmails>\r
+               <NumberofEmails>0</NumberofEmails>\r
+            </Subscription>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>0</Data>\r
+               <Quality/>\r
+               <Name>ID_VALIDATION</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>0</Data>\r
+               <Quality/>\r
+               <Name>ENHANCED_SECURITY_QUESTIONS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>ROLE_BASED_ACCESS_CONTROL</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>API</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>WebServices</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality>orange</Quality>\r
+               <Name>CUSTOM_OBJECTS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality>orange</Quality>\r
+               <Name>SLOT_SERVICE_IMPORT</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>AB_TESTING_ACCESS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>2</Data>\r
+               <Quality/>\r
+               <Name>ASYNC_API</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>Content_Creation_V2</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>CONTENT_LOCKING</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>DATA_EXTRACT_ACTIVITY</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>DYNAMIC_CONTENT</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality>\\filer1.np.local\QA2s1_FTP\115180</Quality>\r
+               <Name>EnhancedFTP</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>FILE_TRANSFER_LOCATIONS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>FTP_IMPORT</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>FULL_HTML_PASTE</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>MULTI-PART_MIME</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>NEW_SUBSCRIBER_LISTING_PAGES</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>REPORT_ACTIVITY</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>2</Data>\r
+               <Quality/>\r
+               <Name>REPORTING_ACCESS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>SECURE_LINK_WRAPPING</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>SMS_SEND</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>SMS_MO_SHARED</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>TRACKING2</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>ACTIVITIES</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>ALL_SUBSCRIBERS_ACCESS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>BOUNCE_HOST</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>Conversion Tracking</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>DATA_EXTRACT</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>DOCUMENT_LIBRARY</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>DYNAMIC_CONTENT_MULTI_ATTRIBUTES</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>Filtering</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>FORWARD_TO_FRIEND</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>FROM_EMAIL_MANAGEMENT</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>GROUP_ACCESS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>INTERACTIONS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>INTERACTIONS_SENDS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>MEASURE</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>MESSAGE_FUNCTIONS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>MESSAGE_PRIORITY</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>MICROSITES</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality>25</Quality>\r
+               <Name>MULTI_FROM_CONNECT</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>40</Data>\r
+               <Quality>25</Quality>\r
+               <Name>MULTI_USER_CONNECT</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>PERSONALIZED_URLS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>CAMPAIGNS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>PROFILE_ACCESS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>QUERY_ACTIVITY</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>SEND_LOGGING</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>SEND_TIME_FILTERING</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>2</Data>\r
+               <Quality/>\r
+               <Name>SURVEYS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>SUBSCRIBER_KEY</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>TRIGGERED_SENDS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>TriggeredSend_To_DataExtension</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>BCC_EMAIL</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>TEXT_ONLY_EMAIL</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>200</Data>\r
+               <Quality/>\r
+               <Name>Available Profile Attributes</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>SERVER_SIDE_JS_ACTIVITY</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>PORTFOLIO_ACCESS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>DATA_EXTENSION_RETENTION_POLICIES</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>INTERACTION_STUDIO</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality/>\r
+               <Name>PROGRAMS_30</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+            <BusinessRules>\r
+               <PartnerKey xsi:nil="true"/>\r
+               <ModifiedDate xsi:nil="true"/>\r
+               <ObjectID xsi:nil="true"/>\r
+               <MemberBusinessRuleID>0</MemberBusinessRuleID>\r
+               <BusinessRuleID>0</BusinessRuleID>\r
+               <Data>1</Data>\r
+               <Quality>trackchanges</Quality>\r
+               <Name>CONTACTS</Name>\r
+               <DisplayName/>\r
+               <ProductCode/>\r
+            </BusinessRules>\r
+         </Objects>\r
+      </UpdateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="fc10110f-3272-4d42-8c1d-c6eb0c9e4056"/>
+        <con:assertion type="SOAP Fault Assertion" id="b887e5a0-cfd3-4a98-ba2d-801a838da026"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="10154565-c593-451c-8689-109bf86ce9b4">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="82ab5148-9714-42ef-af39-ee5fbb6ca8c1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="6901eefd-b5d4-4673-acf0-da1cf3cce2a1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="3f3884b8-e078-4799-b7b3-07d917085c26">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7e8b5727-d88d-4374-bbba-3ab9d6f8edc3">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b118cf05-935a-465a-8370-ead560c9099f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="5915ed76-ee98-487a-9443-3833065b0289">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b0b4a87f-deae-468e-b326-f1e89b76355f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Agency Client" id="9b12dce1-1701-4a1b-ba23-193f83c7d791">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Agency Client" id="6954ff42-78d7-4b02-84f7-edbae2d30bf1" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <ns1:Objects xsi:type="ns1:BusinessUnit" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+            <ns1:PartnerKey xsi:nil="true"/>\r
+            <ns1:ModifiedDate xsi:nil="true"/>\r
+            <ns1:ObjectID>${#TestCase#EID}</ns1:ObjectID>\r
+            <ns1:AccountType>PRO_CONNECT_CLIENT</ns1:AccountType>\r
+            <ns1:Name>QETesting Agency Client ${Get Today's Date#result}</ns1:Name>\r
+            <ns1:Email>mc-fuelframeworkdev@salesforce.com</ns1:Email>\r
+            <ns1:FromName>QETesting Agency Client</ns1:FromName>\r
+            <ns1:BusinessName>QETesting Agency</ns1:BusinessName>\r
+            <ns1:Address>20 N Meridian Street</ns1:Address>\r
+            <ns1:City>Indianapolis</ns1:City>\r
+            <ns1:State>IN</ns1:State>\r
+            <ns1:Zip>46204</ns1:Zip>\r
+            <ns1:Country>USA</ns1:Country>\r
+            <ns1:DBID>7010</ns1:DBID>\r
+            <ns1:Children xsi:nil="true"/>\r
+            <ns1:Subscription xsi:nil="true"/>\r
+            <ns1:PrivateLabels xsi:nil="true"/>\r
+            <ns1:ParentAccount>\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ID>${#TestCase#EID}</ns1:ID>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:AccountType>PRO_CONNECT</ns1:AccountType>\r
+               <ns1:Children xsi:nil="true"/>\r
+               <ns1:Subscription xsi:nil="true"/>\r
+               <ns1:PrivateLabels xsi:nil="true"/>\r
+               <ns1:BusinessRules xsi:nil="true"/>\r
+               <ns1:AccountUsers xsi:nil="true"/>\r
+            </ns1:ParentAccount>\r
+            <ns1:BusinessRules>\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:MemberBusinessRuleID>0</ns1:MemberBusinessRuleID>\r
+               <ns1:BusinessRuleID>0</ns1:BusinessRuleID>\r
+               <ns1:Data>1</ns1:Data>\r
+               <ns1:Quality/>\r
+               <ns1:Name>API</ns1:Name>\r
+               <ns1:DisplayName/>\r
+               <ns1:ProductCode/>\r
+            </ns1:BusinessRules>\r
+            <ns1:BusinessRules>\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:MemberBusinessRuleID>0</ns1:MemberBusinessRuleID>\r
+               <ns1:BusinessRuleID>0</ns1:BusinessRuleID>\r
+               <ns1:Data>1</ns1:Data>\r
+               <ns1:Quality/>\r
+               <ns1:Name>WebServices</ns1:Name>\r
+               <ns1:DisplayName/>\r
+               <ns1:ProductCode/>\r
+            </ns1:BusinessRules>\r
+            <ns1:AccountUsers xsi:nil="true"/>\r
+         </ns1:Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="7705b4e0-b9ef-4eeb-afab-b9a9a7ea77bd"/>
+        <con:assertion type="SOAP Fault Assertion" id="b49bfd6f-348c-4666-b2a2-817ea6e9e516"/>
+        <con:assertion type="XPath Match" id="25897d0a-55cd-41a2-941f-858012bb8a06" name="Account Created">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Account Updated / Created</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="10154565-c593-451c-8689-109bf86ce9b4">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="82ab5148-9714-42ef-af39-ee5fbb6ca8c1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="6901eefd-b5d4-4673-acf0-da1cf3cce2a1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="3f3884b8-e078-4799-b7b3-07d917085c26">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7e8b5727-d88d-4374-bbba-3ab9d6f8edc3">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b118cf05-935a-465a-8370-ead560c9099f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="5915ed76-ee98-487a-9443-3833065b0289">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b0b4a87f-deae-468e-b326-f1e89b76355f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer Client MID" id="2bcb8722-3b0d-43c3-a8a8-7c405a039b53">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>Client MID</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Agency Client</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>BU_MID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Account User" id="f73bbd0e-aaf7-44c9-9599-2dfee5839354">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Account User" id="b1459dff-6e18-4c99-a1c9-47c11e69876f" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <ns1:Objects xsi:type="ns1:AccountUser" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+            <ns1:Client>\r
+               <ns1:ClientID>${#TestCase#EID}</ns1:ClientID>\r
+            </ns1:Client>\r
+            <ns1:PartnerKey xsi:nil="true"/>\r
+            <ns1:ModifiedDate xsi:nil="true"/>\r
+            <ns1:ObjectID xsi:nil="true"/>\r
+            <ns1:AccountUserID xsi:nil="true"/>\r
+            <ns1:UserID>${Create UserID#result}</ns1:UserID>\r
+            <ns1:Password>emails11!</ns1:Password>\r
+            <ns1:Name>QETesting Agency API User</ns1:Name>\r
+            <ns1:Email>mc-fuelframeworkdev@salesforce.com</ns1:Email>\r
+            <ns1:MustChangePassword>false</ns1:MustChangePassword>\r
+            <ns1:ChallengePhrase>qa</ns1:ChallengePhrase>\r
+            <ns1:ChallengeAnswer>qa</ns1:ChallengeAnswer>\r
+            <ns1:Delete>0</ns1:Delete>\r
+            <ns1:IsAPIUser>true</ns1:IsAPIUser>\r
+            <ns1:NotificationEmailAddress>mc-fuelframeworkdev@salesforce.com</ns1:NotificationEmailAddress>\r
+         </ns1:Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="9ebeb90f-2f8c-4991-b4d4-f8d288753053"/>
+        <con:assertion type="SOAP Fault Assertion" id="20cdc784-941d-4ccb-b5fb-4bae3f238fbe"/>
+        <con:assertion type="XPath Match" id="18241436-db11-4c64-a2ed-c8a5c5c6d013" name="Account User Created">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Account User Updated / Created</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="10154565-c593-451c-8689-109bf86ce9b4">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="82ab5148-9714-42ef-af39-ee5fbb6ca8c1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="6901eefd-b5d4-4673-acf0-da1cf3cce2a1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="3f3884b8-e078-4799-b7b3-07d917085c26">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7e8b5727-d88d-4374-bbba-3ab9d6f8edc3">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b118cf05-935a-465a-8370-ead560c9099f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="5915ed76-ee98-487a-9443-3833065b0289">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b0b4a87f-deae-468e-b326-f1e89b76355f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer UserId" id="aae001b7-4900-4312-9925-b214a5ded1d1">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>UserID</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Account User</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>UserID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>Username</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Account User</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:Object[1]/ns1:UserID[1]</con:sourcePath>
+        <con:targetType>Username</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update User With SYS_DEF_ADMIN Role" id="52d3543c-eab2-4c1c-947d-b4c26ac5502a">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update User With SYS_DEF_ADMIN Role" id="c5970459-1d9e-4b59-be7a-0d4beb08caed" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Objects xsi:type="AccountUser">\r
+            <Client>\r
+               <ID>${#TestCase#EID}</ID>\r
+            </Client>\r
+            <ID>${#TestCase#UserID}</ID>\r
+            <UserPermissions>
+               <ID>4</ID>
+               <ID>3</ID>
+               <ID>23</ID>        
+            </UserPermissions>
+         </Objects>\r
+      </UpdateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="4a88e556-0ed6-4340-bf6d-af4ed80e3a5c"/>
+        <con:assertion type="SOAP Fault Assertion" id="1977c320-3e41-4b5c-9fdc-c4470607c8aa"/>
+        <con:assertion type="XPath Match" id="de468b9f-8bb1-472b-9013-94aa0d4f7206" name="Account User Updated">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Account User Updated / Created</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="10154565-c593-451c-8689-109bf86ce9b4">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="82ab5148-9714-42ef-af39-ee5fbb6ca8c1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="6901eefd-b5d4-4673-acf0-da1cf3cce2a1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="3f3884b8-e078-4799-b7b3-07d917085c26">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7e8b5727-d88d-4374-bbba-3ab9d6f8edc3">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b118cf05-935a-465a-8370-ead560c9099f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="5915ed76-ee98-487a-9443-3833065b0289">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b0b4a87f-deae-468e-b326-f1e89b76355f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update Agency Client" id="b9e06e11-e69e-45fe-964a-f219fc4381fb">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update Agency Client" id="66de1a00-6bcd-4b48-b963-389d942efeff" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <ns1:Objects xsi:type="ns1:Account" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+            <ns1:PartnerKey xsi:nil="true"/>\r
+            <ns1:ModifiedDate xsi:nil="true"/>\r
+            <ns1:ID>${#TestCase#BU_MID}</ns1:ID>\r
+            <ns1:ObjectID xsi:nil="true"/>\r
+            <ns1:AccountType>None</ns1:AccountType>\r
+            <ns1:Children xsi:nil="true"/>\r
+            <ns1:Subscription xsi:nil="true"/>\r
+            <ns1:PrivateLabels xsi:nil="true"/>\r
+            <ns1:BusinessRules>\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:MemberBusinessRuleID>0</ns1:MemberBusinessRuleID>\r
+               <ns1:BusinessRuleID>0</ns1:BusinessRuleID>\r
+               <ns1:Data>1</ns1:Data>\r
+               <ns1:Quality>\\filer1\qa_FTP\33376</ns1:Quality>\r
+               <ns1:Name>EnhancedFTP</ns1:Name>\r
+               <ns1:DisplayName/>\r
+               <ns1:ProductCode/>\r
+            </ns1:BusinessRules>\r
+            <ns1:BusinessRules>\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:MemberBusinessRuleID>0</ns1:MemberBusinessRuleID>\r
+               <ns1:BusinessRuleID>0</ns1:BusinessRuleID>\r
+               <ns1:Data>1</ns1:Data>\r
+               <ns1:Quality/>\r
+               <ns1:Name>Activities</ns1:Name>\r
+               <ns1:DisplayName/>\r
+               <ns1:ProductCode/>\r
+            </ns1:BusinessRules>\r
+            <ns1:BusinessRules>\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:MemberBusinessRuleID>0</ns1:MemberBusinessRuleID>\r
+               <ns1:BusinessRuleID>0</ns1:BusinessRuleID>\r
+               <ns1:Data>1</ns1:Data>\r
+               <ns1:Quality/>\r
+               <ns1:Name>ALL_SUBSCRIBERS_ACCESS</ns1:Name>\r
+               <ns1:DisplayName/>\r
+               <ns1:ProductCode/>\r
+            </ns1:BusinessRules>\r
+            <ns1:BusinessRules>\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:MemberBusinessRuleID>0</ns1:MemberBusinessRuleID>\r
+               <ns1:BusinessRuleID>0</ns1:BusinessRuleID>\r
+               <ns1:Data>1</ns1:Data>\r
+               <ns1:Quality/>\r
+               <ns1:Name>API</ns1:Name>\r
+               <ns1:DisplayName/>\r
+               <ns1:ProductCode/>\r
+            </ns1:BusinessRules>\r
+            <ns1:BusinessRules>\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:MemberBusinessRuleID>0</ns1:MemberBusinessRuleID>\r
+               <ns1:BusinessRuleID>0</ns1:BusinessRuleID>\r
+               <ns1:Data>1</ns1:Data>\r
+               <ns1:Quality/>\r
+               <ns1:Name>CAMPAIGNS</ns1:Name>\r
+               <ns1:DisplayName/>\r
+               <ns1:ProductCode/>\r
+            </ns1:BusinessRules>\r
+            <ns1:BusinessRules>\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:MemberBusinessRuleID>0</ns1:MemberBusinessRuleID>\r
+               <ns1:BusinessRuleID>0</ns1:BusinessRuleID>\r
+               <ns1:Data>1</ns1:Data>\r
+               <ns1:Quality/>\r
+               <ns1:Name>INTERACTIONS</ns1:Name>\r
+               <ns1:DisplayName/>\r
+               <ns1:ProductCode/>\r
+            </ns1:BusinessRules>\r
+            <ns1:BusinessRules>\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:MemberBusinessRuleID>0</ns1:MemberBusinessRuleID>\r
+               <ns1:BusinessRuleID>0</ns1:BusinessRuleID>\r
+               <ns1:Data>1</ns1:Data>\r
+               <ns1:Quality/>\r
+               <ns1:Name>PROFILE_ACCESS</ns1:Name>\r
+               <ns1:DisplayName/>\r
+               <ns1:ProductCode/>\r
+            </ns1:BusinessRules>\r
+            <ns1:BusinessRules>\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:MemberBusinessRuleID>0</ns1:MemberBusinessRuleID>\r
+               <ns1:BusinessRuleID>0</ns1:BusinessRuleID>\r
+               <ns1:Data>1</ns1:Data>\r
+               <ns1:Quality/>\r
+               <ns1:Name>SUBSCRIBER_KEY</ns1:Name>\r
+               <ns1:DisplayName/>\r
+               <ns1:ProductCode/>\r
+            </ns1:BusinessRules>\r
+            <ns1:BusinessRules>\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:MemberBusinessRuleID>0</ns1:MemberBusinessRuleID>\r
+               <ns1:BusinessRuleID>0</ns1:BusinessRuleID>\r
+               <ns1:Data>1</ns1:Data>\r
+               <ns1:Quality/>\r
+               <ns1:Name>WebServices</ns1:Name>\r
+               <ns1:DisplayName/>\r
+               <ns1:ProductCode/>\r
+            </ns1:BusinessRules>\r
+            <ns1:BusinessRules>\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:MemberBusinessRuleID>0</ns1:MemberBusinessRuleID>\r
+               <ns1:BusinessRuleID>0</ns1:BusinessRuleID>\r
+               <ns1:Data>1</ns1:Data>\r
+               <ns1:Quality/>\r
+               <ns1:Name>TRIGGERED_SENDS</ns1:Name>\r
+               <ns1:DisplayName/>\r
+               <ns1:ProductCode/>\r
+            </ns1:BusinessRules>\r
+         </ns1:Objects>\r
+      </UpdateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="eb23990f-37d6-405b-9fc6-77ac60aa6697"/>
+        <con:assertion type="SOAP Fault Assertion" id="b83b6434-e7f1-407d-aced-4207a53d9bb8"/>
+        <con:assertion type="XPath Match" id="952523b3-60c3-4aa6-b157-69bc5b5b265c" name="Account Updated Created">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Account Updated / Created</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="10154565-c593-451c-8689-109bf86ce9b4">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="82ab5148-9714-42ef-af39-ee5fbb6ca8c1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="6901eefd-b5d4-4673-acf0-da1cf3cce2a1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="3f3884b8-e078-4799-b7b3-07d917085c26">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7e8b5727-d88d-4374-bbba-3ab9d6f8edc3">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b118cf05-935a-465a-8370-ead560c9099f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="5915ed76-ee98-487a-9443-3833065b0289">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b0b4a87f-deae-468e-b326-f1e89b76355f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create Client UserID" id="3a4b6971-5a8c-4ac9-8472-b49819e99fe3">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"QETest_" + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Client Account User" id="1659ad4d-9cc3-4d96-bbd8-7afa7031af10">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Client Account User" id="85bee8c3-cf62-4f3c-b2c1-e0185588fee6" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options/>
+         <ns1:Objects xsi:type="ns1:AccountUser" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+            <ns1:Client>
+               <ns1:ClientID>${#TestCase#BU_MID}</ns1:ClientID>
+            </ns1:Client>
+            <ns1:PartnerKey xsi:nil="true"/>
+            <ns1:ModifiedDate xsi:nil="true"/>
+            <ns1:ObjectID xsi:nil="true"/>
+            <ns1:AccountUserID xsi:nil="true"/>
+            <ns1:UserID>${Create Client UserID#result}</ns1:UserID>
+            <ns1:Password>emails1!</ns1:Password>
+            <ns1:Name>QETesting Agency Client API User</ns1:Name>
+            <ns1:Email>mc-fuelframeworkdev@salesforce.com</ns1:Email>
+            <ns1:MustChangePassword>false</ns1:MustChangePassword>
+            <ns1:ChallengePhrase>qa</ns1:ChallengePhrase>
+            <ns1:ChallengeAnswer>qa</ns1:ChallengeAnswer>
+            <ns1:Delete>0</ns1:Delete>
+            <ns1:IsAPIUser>true</ns1:IsAPIUser>
+            <ns1:NotificationEmailAddress>mc-fuelframeworkdev@salesforce.com</ns1:NotificationEmailAddress>
+         </ns1:Objects>
+      </CreateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="ee80c346-9b62-4e8f-b198-f68959e44e48"/>
+        <con:assertion type="SOAP Fault Assertion" id="a04a9b89-71df-4ee1-b928-26cd8a215704"/>
+        <con:assertion type="XPath Match" id="81e2ba5c-e1c6-4e35-8311-3b71bc6eb99a" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Account User Updated / Created</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="10154565-c593-451c-8689-109bf86ce9b4">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="82ab5148-9714-42ef-af39-ee5fbb6ca8c1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="6901eefd-b5d4-4673-acf0-da1cf3cce2a1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="3f3884b8-e078-4799-b7b3-07d917085c26">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7e8b5727-d88d-4374-bbba-3ab9d6f8edc3">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b118cf05-935a-465a-8370-ead560c9099f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="5915ed76-ee98-487a-9443-3833065b0289">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b0b4a87f-deae-468e-b326-f1e89b76355f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer Client UserID" id="3ebfd650-dc69-41f4-9fd2-7cef6c549885">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>BU UserID</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Client Account User</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>BU_UserID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update BU User With SYS_DEF_ADMIN Role" id="98d8e488-b644-4c00-94cb-94ea2116f58e">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update BU User With SYS_DEF_ADMIN Role" id="0b5c6c09-26ca-42b8-a41c-35e3a4665591" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Objects xsi:type="AccountUser">
+            <Client>
+               <ID>${#TestCase#BU_MID}</ID>
+            </Client>
+            <ID>${#TestCase#BU_UserID}</ID>
+            <UserPermissions>
+               <ID>4</ID>
+               <ID>3</ID>
+               <ID>23</ID>        
+            </UserPermissions>
+         </Objects>
+      </UpdateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="b188da9f-0e10-40a9-8ab7-1085d563fb76"/>
+        <con:assertion type="SOAP Fault Assertion" id="0630e8ae-3e16-4ccc-81de-d912a328afe6"/>
+        <con:assertion type="XPath Match" id="073fcdbd-734d-4619-af3e-23e9e3799ddf" name="Account User Updated">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Account User Updated / Created</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="10154565-c593-451c-8689-109bf86ce9b4">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="82ab5148-9714-42ef-af39-ee5fbb6ca8c1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="6901eefd-b5d4-4673-acf0-da1cf3cce2a1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="3f3884b8-e078-4799-b7b3-07d917085c26">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7e8b5727-d88d-4374-bbba-3ab9d6f8edc3">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b118cf05-935a-465a-8370-ead560c9099f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="5915ed76-ee98-487a-9443-3833065b0289">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b0b4a87f-deae-468e-b326-f1e89b76355f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Disable Account" id="820e2995-4565-40d4-bcbb-a3c337b21eff">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Disable Account" id="169e8afe-5348-412a-ad94-f54556842993">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="Account">\r
+            <PartnerKey xsi:nil="true"/>\r
+            <ModifiedDate xsi:nil="true"/>\r
+            <ObjectID xsi:nil="true"/>\r
+            <AccountType>PRO_CONNECT</AccountType>\r
+            <Name>QETesting Agency ${Get Today's Date#result}</Name>\r
+            <Email>jhedges@salesforce.com</Email>\r
+            <FromName>Jesse Hedges</FromName>\r
+            <BusinessName>Platform Test Team</BusinessName>\r
+            <Address>20 N Meridian Street</Address>\r
+            <City>Indianapolis</City>\r
+            <State>IN</State>\r
+            <Zip>46204</Zip>\r
+            <IsActive>0</IsActive>\r
+            <DBID>${#Project#dbid}</DBID>\r
+            <CustomerID>8323</CustomerID>\r
+            <EditionID>10</EditionID>\r
+            <Children xsi:nil="true"/>\r
+            <Subscription>\r
+               <SubscriptionID xsi:nil="true"/>\r
+               <EmailsPurchased>50000</EmailsPurchased>\r
+               <AccountsPurchased>10</AccountsPurchased>\r
+               <AdvAccountsPurchased>10</AdvAccountsPurchased>\r
+               <LPAccountsPurchased>10</LPAccountsPurchased>\r
+               <DOTOAccountsPurchased>10</DOTOAccountsPurchased>\r
+               <BUAccountsPurchased>10</BUAccountsPurchased>\r
+               <BeginDate>${Get Today's Date#result}T00:00:00.000Z</BeginDate>\r
+               <EndDate>${Get Today's Date#result}T23:59:59.999Z</EndDate>\r
+               <Notes xsi:nil="true"/>\r
+               <Period/>\r
+               <NotificationTitle xsi:nil="true"/>\r
+               <NotificationMessage xsi:nil="true"/>\r
+               <NotificationFlag xsi:nil="true"/>\r
+               <NotificationExpDate xsi:nil="true"/>\r
+               <ForAccounting xsi:nil="true"/>\r
+               <HasPurchasedEmails>true</HasPurchasedEmails>\r
+               <NumberofEmails>0</NumberofEmails>\r
+            </Subscription>\r
+         </Objects>\r
+      </UpdateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="2556fea4-14bb-4f1b-bed3-9b4391d03b42"/>
+        <con:assertion type="SOAP Fault Assertion" id="7fc35e30-ecae-4757-a190-3ed6143414b8"/>
+        <con:assertion type="XPath Match" id="4d0f574a-fd50-4862-bea5-c38ea8c3f78f" name="IsActive=0">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:Object[1]/ns1:IsActive[1]</path>
+            <content>0</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="10154565-c593-451c-8689-109bf86ce9b4">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="82ab5148-9714-42ef-af39-ee5fbb6ca8c1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="6901eefd-b5d4-4673-acf0-da1cf3cce2a1">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="3f3884b8-e078-4799-b7b3-07d917085c26">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7e8b5727-d88d-4374-bbba-3ab9d6f8edc3">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b118cf05-935a-465a-8370-ead560c9099f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="5915ed76-ee98-487a-9443-3833065b0289">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="b0b4a87f-deae-468e-b326-f1e89b76355f">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>EID</con:name>
+      <con:value>10752100</con:value>
+    </con:property>
+    <con:property>
+      <con:name>BU_MID</con:name>
+      <con:value>10752105</con:value>
+    </con:property>
+    <con:property>
+      <con:name>UserID</con:name>
+      <con:value>10812679</con:value>
+    </con:property>
+    <con:property>
+      <con:name>BU_UserID</con:name>
+      <con:value>10812680</con:value>
+    </con:property>
+    <con:property>
+      <con:name>Username</con:name>
+      <con:value>QETest_688PUL0HZ</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>55ddc4da-2876-4ce1-935c-024a792c1d30</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

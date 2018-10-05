@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="a96cc520-1128-4a44-9cd4-aa53ff65e43d" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Create and Retrieve TriggerSend Definiton-With UserNamePass" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="a96cc520-1128-4a44-9cd4-aa53ff65e43dfileName">Create-and-Retrieve-TriggerSend-Definiton-With-UserNamePass</con:setting>
+  </con:settings>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:testStep type="calltestcase" name="Create 2.0 Account/User with PartnerKey" id="876640d2-6c62-47d7-ba22-063937e8451d">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>7dd8c2d1-bae7-4e84-9c6d-092a4669fff4</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>EID</con:name>
+          <con:value>10757861</con:value>
+        </con:property>
+        <con:property>
+          <con:name>UserID</con:name>
+          <con:value>QETest_BV4LX9VUK</con:value>
+        </con:property>
+        <con:property>
+          <con:name>Password</con:name>
+          <con:value>K@1FZM03K5Q4KZN</con:value>
+        </con:property>
+        <con:property>
+          <con:name>MID</con:name>
+          <con:value>10838421</con:value>
+        </con:property>
+        <con:property>
+          <con:name>PartnerKey</con:name>
+          <con:value>QETest_ZTONPNY7B</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>EID</con:entry>
+        <con:entry>UserID</con:entry>
+        <con:entry>Password</con:entry>
+        <con:entry>MID</con:entry>
+        <con:entry>PartnerKey</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script to Create Object Name" id="33306e0f-dd09-453d-91f3-f954a3183585">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Property Transfer" id="4b9d6c82-5c33-4066-b413-fb049ead7639">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" entitize="false" transferChildNodes="false">
+        <con:name>ObjectName</con:name>
+        <con:sourceType>result</con:sourceType>
+        <con:sourceStep>Groovy Script to Create Object Name</con:sourceStep>
+        <con:sourcePath/>
+        <con:targetType>ObjectName</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Email" id="29299aa8-1e7a-4920-bbdb-93013a499521">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Email" id="67e1b31c-37a0-4cbb-972c-327d16148831">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${Create 2.0 Account/User with PartnerKey#UserID}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${Create 2.0 Account/User with PartnerKey#Password}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options/>
+         <ns1:Objects xsi:type="ns1:Email" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+            <ns1:PartnerKey xsi:nil="true"/>
+            <ns1:ModifiedDate xsi:nil="true"/>
+            <ns1:ObjectID xsi:nil="true"/>
+            <ns1:CustomerKey>${#TestCase#objectName}</ns1:CustomerKey>
+            <ns1:Name>Email ${#TestCase#objectName}</ns1:Name>
+            <ns1:HTMLBody><![CDATA[<html>
+<body>
+The content of the body element is displayed in your browser.
+This was sent by a TS Async email.
+</body>
+</html>
+
+<table cellpadding="2" cellspacing="0" width="600" ID="Table5" Border=0><tr><td><font face="verdana" size="1" color="#444444">This email was sent to:  %%emailaddr%% <br><br><b>Email Sent By:</b> %%Member_Busname%%<br>%%Member_Addr%% %%Member_City%%, %%Member_State%%, %%Member_PostalCode%%, %%Member_Country%%<br><br></font></td></tr></table><custom name="opencounter" type="tracking"><a href="%%profile_center_url%%" alias="Update Profile">Update Profile</a>
+
+
+<a href="%%ftaf_url%%"><img src="http://www.exacttarget.com/members/newsletters/gfx/forwardafriendicon.gif" border="0"></a>]]]]>><![CDATA[</ns1:HTMLBody>
+            <ns1:Subject>Async TS ${#TestCase#objectName}</ns1:Subject>
+            <ns1:IsHTMLPaste>true</ns1:IsHTMLPaste>
+         </ns1:Objects>
+      </CreateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="fc66ee19-6df2-4c00-a5a8-280579d6e5fa"/>
+        <con:assertion type="Valid HTTP Status Codes" id="2c2a7dbe-1ecb-4136-9716-c8ef0dc963da" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Sender Profile" id="9c104b94-e7f1-4eb0-b554-ffb96516e940">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Sender Profile" id="d44faae9-ffb6-4485-9408-b8420b9ec25b">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${Create 2.0 Account/User with PartnerKey#UserID}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${Create 2.0 Account/User with PartnerKey#Password}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options/>
+         <Objects xsi:type="SenderProfile">
+            <PartnerKey xsi:nil="true"/>
+            <ObjectID xsi:nil="true"/>
+            <Name>API Created Sender Profile ${#TestCase#objectName}</Name>
+            <CustomerKey>${#TestCase#objectName}</CustomerKey>
+            <Description>API Created Sender Profile</Description>
+            <FromName>Uriah Heep</FromName>
+            <FromAddress>uheep@mailinator.com</FromAddress>
+         </Objects>
+      </CreateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="edc3a57b-d295-4fbe-9c21-cd22acedd2ae"/>
+        <con:assertion type="Valid HTTP Status Codes" id="a8019b19-084a-4bd5-8ace-92c55aee15d8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Delivery Profile With Account Defaults" id="28d17a38-f3f1-4bce-bf18-9579eb908f36">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Delivery Profile With Account Defaults" id="6a57c9c0-b3ef-440b-a34e-5cfd4479fa54">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${Create 2.0 Account/User with PartnerKey#UserID}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${Create 2.0 Account/User with PartnerKey#Password}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options/>
+         <ns1:Objects xsi:type="ns1:DeliveryProfile" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+            <ns1:PartnerKey xsi:nil="true"/>
+            <ns1:ModifiedDate xsi:nil="true"/>
+            <ns1:ObjectID xsi:nil="true"/>
+            <ns1:CustomerKey>${#TestCase#objectName}</ns1:CustomerKey>
+            <ns1:Name>DeliveryP ${#TestCase#objectName}</ns1:Name>
+            <ns1:SourceAddressType>DefaultPrivateIPAddress</ns1:SourceAddressType>
+            <ns1:DomainType>DefaultDomain</ns1:DomainType>
+         </ns1:Objects>
+      </CreateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="42c3fa95-5044-40f2-9e91-f263bcf62587"/>
+        <con:assertion type="Valid HTTP Status Codes" id="072d2f42-0cd2-4c32-acf3-12c867c7c4dd" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Send Classification - Commercial" id="e3ceb128-88cf-4405-9935-103bdaa0fd0f">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Send Classification - Commercial" id="5e452d0c-a2a8-4215-aa74-93c5a0e38f32">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${Create 2.0 Account/User with PartnerKey#UserID}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${Create 2.0 Account/User with PartnerKey#Password}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options/>
+         <ns1:Objects xsi:type="ns1:SendClassification" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+            <ns1:PartnerKey xsi:nil="true"/>
+            <ns1:ModifiedDate xsi:nil="true"/>
+            <ns1:ObjectID xsi:nil="true"/>
+            <ns1:SendClassificationType>Marketing</ns1:SendClassificationType>
+            <ns1:CustomerKey>${#TestCase#objectName}</ns1:CustomerKey>
+            <ns1:Name>SClass ${#TestCase#objectName}</ns1:Name>
+            <ns1:SenderProfile>
+               <ns1:PartnerKey xsi:nil="true"/>
+               <ns1:ModifiedDate xsi:nil="true"/>
+               <ns1:ObjectID xsi:nil="true"/>
+               <ns1:CustomerKey>${#TestCase#objectName}</ns1:CustomerKey>
+            </ns1:SenderProfile>
+            <ns1:DeliveryProfile>
+               <ns1:PartnerKey xsi:nil="true"/>
+               <ns1:ModifiedDate xsi:nil="true"/>
+               <ns1:ObjectID xsi:nil="true"/>
+               <ns1:CustomerKey>${#TestCase#objectName}</ns1:CustomerKey>
+            </ns1:DeliveryProfile>
+         </ns1:Objects>
+      </CreateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="9f503b35-ad20-4f4e-9601-0868a91be90d"/>
+        <con:assertion type="Valid HTTP Status Codes" id="2974c10b-17e1-4b99-9367-9e943948bb7f" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Retrieve Email by CustomerKey" id="597c4f93-7ae3-4634-8eb5-a258026aaeb7">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve Email by CustomerKey" id="59a9c766-3a8e-4a17-96e1-2c46e642d103">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${Create 2.0 Account/User with PartnerKey#UserID}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${Create 2.0 Account/User with PartnerKey#Password}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <RetrieveRequest>
+            <ObjectType>Email</ObjectType>
+            <Properties>ID</Properties>
+            <Properties>Name</Properties>
+            <Filter xsi:type="SimpleFilterPart">
+               <Property>CustomerKey</Property>
+               <SimpleOperator>equals</SimpleOperator>
+               <Value>${#TestCase#objectName}</Value>
+            </Filter>
+         </RetrieveRequest>
+      </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="07286b91-60fe-4a5e-a118-40411836fd0d"/>
+        <con:assertion type="Valid HTTP Status Codes" id="8fa39733-4678-4d19-9319-c64cf985ac96" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Retrieve Send Classification by CustomerKey" id="0f6e2f5f-b927-4ae6-9406-d953692a7172">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve Send Classification by CustomerKey" id="471cbb1e-2d62-431d-beb8-526e336387bc">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${Create 2.0 Account/User with PartnerKey#UserID}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${Create 2.0 Account/User with PartnerKey#Password}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <RetrieveRequest>
+            <ObjectType>SendClassification</ObjectType>
+            <Properties>ObjectID</Properties>
+            <Properties>CustomerKey</Properties>
+            <Properties>Name</Properties>
+            <Filter xsi:type="SimpleFilterPart">
+               <Property>CustomerKey</Property>
+               <SimpleOperator>equals</SimpleOperator>
+               <Value>${#TestCase#objectName}</Value>
+            </Filter>
+         </RetrieveRequest>
+      </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="1a839319-4c71-4a25-a7f6-f5d97191e382"/>
+        <con:assertion type="Valid HTTP Status Codes" id="533c9ec5-08b9-4afe-8c35-6c595f0b64af" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Triggered Send Definition" id="a84e097f-f884-42d0-9d70-d38af7d5ff2b">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Triggered Send Definition" id="6e2513b1-96f7-417a-a192-d3e5ba3d936e">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+ <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${Create 2.0 Account/User with PartnerKey#UserID}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${Create 2.0 Account/User with PartnerKey#Password}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <ns1:Objects xsi:type="ns1:TriggeredSendDefinition" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+            <ns1:CustomerKey>${#TestCase#objectName}</ns1:CustomerKey>
+            <ns1:ModifiedDate xsi:nil="true"/>\r
+            <ns1:ObjectID xsi:nil="true"/>\r
+            <ns1:CustomerKey>${#TestCase#objectName}</ns1:CustomerKey>\r
+            <ns1:Name>TSDef ${#TestCase#objectName}</ns1:Name>\r
+            <ns1:SendClassification>\r
+               <ns1:PartnerKey>PartnerKey${#TestCase#objectName}</ns1:PartnerKey>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID>${Retrieve Send Classification by CustomerKey#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; //ns1:RetrieveResponseMsg[1]/ns1:Results[1]/ns1:ObjectID[1]}</ns1:ObjectID>\r
+            </ns1:SendClassification>\r
+            <ns1:SuppressTracking>false</ns1:SuppressTracking>\r
+            <ns1:TriggeredSendType>Continuous</ns1:TriggeredSendType>\r
+            <ns1:Email>\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ID>${Retrieve Email by CustomerKey#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; //ns1:RetrieveResponseMsg[1]/ns1:Results[1]/ns1:ID[1]}</ns1:ID>\r
+            </ns1:Email>\r
+            <ns1:BatchInterval>0</ns1:BatchInterval>\r
+         </ns1:Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="f7957a70-dba3-4b08-9c68-b49f491f89b3"/>
+        <con:assertion type="Valid HTTP Status Codes" id="03f99583-55ee-4f70-9841-80f2e5d0ec34" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="TriggerSendDefinition Retrieve" id="c14f0e58-a10e-4b20-8e74-84d6a251672c">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="TriggerSendDefinition Retrieve" id="464fcb5f-7138-4a4e-af07-f023bda26cb0" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${Create 2.0 Account/User with PartnerKey#UserID}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${Create 2.0 Account/User with PartnerKey#Password}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <RetrieveRequest>
+            <ObjectType>TriggeredSendDefinition</ObjectType>
+            <Properties>PartnerKey</Properties>
+            <Properties>ObjectID</Properties>
+            <Properties>Client.PartnerClientKey</Properties>
+            <Properties>Name</Properties>
+         </RetrieveRequest>
+      </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="0cd2fcad-dbd5-4f3b-a3d1-96e841e2bf6e"/>
+        <con:assertion type="Valid HTTP Status Codes" id="95b13310-774a-400e-9177-74603507a274" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="ec2ec455-c876-479d-9ddb-38e7b77a87f2" name="Check for existence of [PartnerClientKey]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+exists( //ns1:RetrieveResponseMsg/ns1:Results/ns1:Client/ns1:PartnerClientKey)</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="301b6607-c831-49e5-89d7-d2e1ac172c2b" name="Match content of [PartnerKey]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:RetrieveResponseMsg[1]/ns1:Results[1]/ns1:PartnerKey[1]</path>
+            <content>&lt;PartnerKey xmlns="http://exacttarget.com/wsdl/partnerAPI" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"/></content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="SOAP Fault Assertion" id="6fa44790-d431-440e-95bd-45e10d08975d" name="Not SOAP Fault"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="TriggerSendDefinition Retrieve with Client.PartnerClientFilter" id="e998207c-9f52-457f-ae53-3f52633709a1">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="TriggerSendDefinition Retrieve with Client.PartnerClientFilter" id="464fcb5f-7138-4a4e-af07-f023bda26cb0" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${Create 2.0 Account/User with PartnerKey#UserID}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${Create 2.0 Account/User with PartnerKey#Password}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <RetrieveRequest>
+            <ObjectType>TriggeredSendDefinition</ObjectType>
+            <Properties>PartnerKey</Properties>
+            <Properties>ObjectID</Properties>
+            <Properties>Client.PartnerClientKey</Properties>
+            <Properties>Name</Properties>
+            <ns1:Filter xsi:type="ns1:SimpleFilterPart" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+               <ns1:Property>Client.PartnerClientKey</ns1:Property>
+               <ns1:SimpleOperator>equals</ns1:SimpleOperator>
+               <ns1:Value>${Create 2.0 Account/User with PartnerKey#PartnerKey}</ns1:Value>
+            </ns1:Filter>
+         </RetrieveRequest>
+      </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="0cd2fcad-dbd5-4f3b-a3d1-96e841e2bf6e"/>
+        <con:assertion type="Valid HTTP Status Codes" id="95b13310-774a-400e-9177-74603507a274" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>ObjectName</con:name>
+      <con:value>28V7Q4XCN</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>597c4f93-7ae3-4634-8eb5-a258026aaeb7</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>0f6e2f5f-b927-4ae6-9406-d953692a7172</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>876640d2-6c62-47d7-ba22-063937e8451d</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

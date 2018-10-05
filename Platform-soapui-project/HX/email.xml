@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="email" path="/email" id="e2348cee-4929-48e6-985c-94e2a3c588e4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="e2348cee-4929-48e6-985c-94e2a3c588e4fileName">email</con:setting>
+  </con:settings>
+  <con:parameters>
+    <con:parameter>
+      <con:name>Authorization</con:name>
+      <con:value/>
+      <con:style>HEADER</con:style>
+      <con:default/>
+    </con:parameter>
+  </con:parameters>
+  <con:resource name="more-info" path="more-info" id="7865dc12-fd3c-4a25-bead-957fe9c0bcec">
+    <con:settings/>
+    <con:parameters/>
+    <con:method name="Method 1" id="54cab05f-43a6-46cf-8f4c-347ee38a9d2b" method="POST">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="postEmailMoreInfo" id="b9d6bf52-be2e-4765-bd31-ef408af435d1" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"applicationName":"HX Send Email",
+	"partnerName":"ExactTarget",
+	"displayKey":"hubexchange/write-subs",
+	"id":"d3c6aa33-c03b-4361-82fd-f15b524526fa",
+	"name":"James Leclair",
+	"company-name":"MyCompany",
+	"email":"james.leclair@salesforce.com",
+	"number":"5555555555",
+	"website":"mycompanywebsite.com",
+	"message":"this is the message"
+}</con:request>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="opt-in" path="opt-in" id="7eaa09d8-a97a-4bd5-adc5-bffd41f86b02">
+    <con:settings/>
+    <con:parameters/>
+    <con:method name="Method 1" id="934e2e5c-354f-44cf-b08c-30af50cecbfb" method="POST">
+      <con:settings/>
+      <con:parameters/>
+      <con:representation type="FAULT">
+        <con:mediaType>application/json; charset=utf-8</con:mediaType>
+        <con:status>500</con:status>
+        <con:params/>
+        <con:element xmlns:opt="https://hubexchange.qa1s1.marketingcloudapps.com/email/opt-in">opt:Fault</con:element>
+      </con:representation>
+      <con:representation type="REQUEST">
+        <con:mediaType>application/json</con:mediaType>
+        <con:params/>
+      </con:representation>
+      <con:request name="postEmailOptin" id="baf9fdd8-931e-4955-a94e-969f5d0ccf75" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"applicationName":"HX Send Email",
+	"partnerName":"ExactTarget",
+	"displayKey":"hubexchange/write-subs",
+	"id":"d3c6aa33-c03b-4361-82fd-f15b524526fa",
+	"name":"James Leclair",
+	"company-name":"MyCompany",
+	"email":"james.leclair@salesforce.com",
+	"number":"5555555555",
+	"website":"mycompanywebsite.com",
+	"message":"this is the message"
+}</con:request>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/email/opt-in</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer aoqEk5IOkmZB9wZ6qjq8wTUd" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="validation" path="validation" id="590ce9c8-ce58-4408-9a8a-855e7ec2fed7">
+    <con:settings/>
+    <con:parameters/>
+    <con:method name="Method 1" id="49b16229-0808-4e7d-a0a2-e3a2c413d77a" method="POST">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="postEmailValidation" id="4aa3818a-ed2a-40c9-b2a8-25f2178a8beb" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"listing":{
+		"listingId":"5d1a5f35-9fd8-4a76-9d3b-2ab3c7261111",
+		"id":"0c219d7e-1ed8-47c2-b766-6eb1b65932b2",
+		"applicationName":"HX Read All",
+		"displayKey":"hubexchange/read-all",
+		"partnerName":"HubExchange",
+		"iconURL":"hubexchange/beta-apps/v1",
+		"logoURL":"",
+		"longDescription":"",
+		"shortDescription":"",
+		"priceHTML":"",
+		"displayOrder":9999,
+		"isExactTarget":false
+	},
+	"validation":[],
+	"id":"0c219d7e-1ed8-47c2-b766-6eb1b65932b2"
+}</con:request>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="verification" path="verification" id="40a63fb5-114e-43c1-8c56-cbcc4188d498">
+    <con:settings/>
+    <con:parameters/>
+    <con:method name="Method 1" id="e3d247ed-6613-4dc4-bb81-1125845bbf07" method="POST">
+      <con:settings/>
+      <con:parameters/>
+      <con:representation type="REQUEST">
+        <con:mediaType>application/json</con:mediaType>
+        <con:params/>
+      </con:representation>
+      <con:representation type="FAULT">
+        <con:mediaType>application/json; charset=utf-8</con:mediaType>
+        <con:status>500</con:status>
+        <con:params/>
+        <con:element xmlns:ver="https://hubexchange.qa1s1.marketingcloudapps.com/email/verification">ver:Fault</con:element>
+      </con:representation>
+      <con:request name="Request 1" id="1f435f9d-f542-422e-babe-18a7d8c3241c" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"applicationName": "HX Read All",
+	"partnerName": "HubExchange",
+	"displayKey": "hubexchange/read-all",
+	"id": "0c219d7e-1ed8-47c2-b766-6eb1b65932b2",
+	"name": "James LeClair",
+	"company-name": "MyCompany",
+	"email": "james.leclair@salesforce.com",
+	"message": "Confirm configuration message",
+	"listing": {
+		"listingId": "5d1a5f35-9fd8-4a76-9d3b-2ab3c7261111",
+		"id": "0c219d7e-1ed8-47c2-b766-6eb1b65932b2",
+		"applicationName": "HX Read All",
+		"displayKey": "hubexchange/read-all",
+		"partnerName": "HubExchange",
+		"iconURL": "hubexchange/beta-apps/v1",
+		"logoURL": "",
+		"longDescription": "",
+		"shortDescription": "",
+		"priceHTML": "",
+		"displayOrder": 9999,
+		"isExactTarget": false
+	},
+	"validation": []
+}</con:request>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+    <con:method name="Method 1" id="fa8280c4-804f-4fd2-a8dd-2f00119d077e" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="getEmailVerification" id="8c382eff-ccc1-454b-8e6f-fbd4271f05bc" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+</con:resource>

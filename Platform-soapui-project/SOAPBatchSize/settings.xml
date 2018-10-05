@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="8971f373-7ce2-4d9f-a387-85d456f5330f" name="SOAPBatchSize" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="8971f373-7ce2-4d9f-a387-85d456f5330ffileName">SOAPBatchSize</con:setting></con:settings><con:runType>SEQUENTIAL</con:runType><con:properties><con:property><con:name>listId</con:name><con:value>207261</con:value></con:property></con:properties><con:reportParameters/></con:testSuite>

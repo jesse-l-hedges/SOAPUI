@@ -1,0 +1,732 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Deleted DiscoveryCase - Deployed" searchProperties="true" id="0f5a4274-fadd-4456-a3fc-4f9f44d393bf" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config">
+  <con:description>Some teste are disabled:
+- Address-experimental - see Jira FUEL-3514
+- Automation - see Jira FUEL-3515
+- Connectors - see Jira FUEL3516
+- Logging - see Jira FUEL-3517
+- Sites - see Jira FUEL-3518
+- Social - see Jira FUEL-3519</con:description>
+  <con:settings>
+    <con:setting id="ce401d4f-49e2-430a-a8c7-f055e269950afileName">DiscoveryCase</con:setting>
+    <con:setting id="269ea9ee-b289-4d13-a7dd-45d50de0b07afileName">DiscoveryCase</con:setting>
+    <con:setting id="0f5a4274-fadd-4456-a3fc-4f9f44d393bffileName">Deleted-DiscoveryCase---Deployed</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="c190b890-1342-4c2f-bc01-2ff7bbd2b099">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>axKePy78sNkZHMuh8Un9xDdW</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>10782007</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>10739553</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="address-internal/GetDiscovery" id="527a5f39-317d-4105-b83f-f433af14ac36">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/address-internal/v1/rest" methodName="address-internal/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="address-internal/GetDiscovery" mediaType="application/json" id="d2fa3d30-d938-42d1-996a-fad74d0d93ac">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="4b725613-37ec-4aff-b9a2-98008bf2e587">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="address-experimental/GetDiscovery" id="8d46ebdb-10c2-4396-a11e-85e5d5122d89">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/address-experimental/v1/rest" methodName="address-experimental/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="address-experimental/GetDiscovery" mediaType="application/json" id="b58c745e-3d9c-41c5-b5c1-c71610c60f83">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="bbb04852-f6f2-428a-b0f6-38e55f82cc61">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="asset-experimental/GetDiscovery" id="dd686587-a986-450c-9bcf-b9e9a9bee8ed">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/asset-experimental/v1/rest" methodName="asset-experimental/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="asset-experimental/GetDiscovery" mediaType="application/json" id="33557265-27bf-4894-b041-31ce2ce54645">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="9fa92d33-7f7d-4cac-bf88-86d4a37df7f1">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="automation-internal/GetDiscovery" id="c5b034fe-9984-4112-adf8-c2da0fe38900">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/automation-internal/v1/rest" methodName="automation-internal/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="automation-internal/GetDiscovery" mediaType="application/json" id="dd2455aa-1418-4a9e-a3dc-553d87a4f172">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="35cb9e61-c381-4991-803b-3b53a4c0b9ad">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="automation-experimental/GetDiscovery" id="2372f991-8ddf-4942-983e-4649c57bd718">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/automation-experimental/v1/rest" methodName="automation-experimental/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="automation-experimental/GetDiscovery" mediaType="application/json" id="045dec17-bc89-46fc-abce-50f1f672fefd">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="60a8bad6-abf4-4251-852d-6e5bed60ae78">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="event-experimental/GetDiscovery" id="ad8709c0-8837-4dff-9ccf-283fc6534302">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/event-experimental/v1/rest" methodName="event-experimental/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="event-experimental/GetDiscovery" mediaType="application/json" id="4689fe19-0f7e-4f1f-8421-73c7527f5af9">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="7c8fb997-cb3e-42e0-bf74-65729d6de5ea">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="contacts-experimental/GetDiscovery" id="e89b3e2f-3cac-4e8f-a800-38a29ae06ac4">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/contacts-experimental/v1/rest" methodName="contacts-experimental/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="contacts-experimental/GetDiscovery" mediaType="application/json" id="bb9f8d3d-618f-44bd-b287-8c553a9b354a">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="57f6b06a-d911-4223-bae9-7fd7eb138327">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="data-experimental/GetDiscovery" id="fac2218f-21d1-4bef-b997-75b6b45c47ac">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/data-experimental/v1/rest" methodName="data-experimental/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="data-experimental/GetDiscovery" mediaType="application/json" id="e4d89ee3-f710-491e-bb28-85141040fe53">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="fbb64950-52ec-45af-ba4b-16af55de4487">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="device-internal/GetDiscovery" id="6a06e398-f8dc-4c2b-bc1c-bbd7a37958de">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/device-internal/v1/rest" methodName="device-internal/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="device-internal/GetDiscovery" mediaType="application/json" id="69107386-2b32-4338-a8fd-eb5f74f39d16">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="7c24f189-d5de-4c5c-a4c0-63756eb99a5f">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="device-experimental/GetDiscovery" id="8476079a-9154-4c49-b459-52287e8aa1c0">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/device-experimental/v1/rest" methodName="device-experimental/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="device-experimental/GetDiscovery" mediaType="application/json" id="1a46ff67-8715-4767-b403-8f856b87e492">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="ef866fe8-d9ce-4791-8d26-e884bf5f28d2">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="email-internal/GetDiscovery" id="88811288-ec87-4588-b5ca-13a1715e7634">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email-internal/v1/rest" methodName="email-internal/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="email-internal/GetDiscovery" mediaType="application/json" id="e6e45e28-509f-4276-bc14-4533c4ac7058">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="0835bc2f-a485-4e36-a349-68f2c8e39a81">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="email-experimental/GetDiscovery" id="cc919279-0ab1-4632-8dd5-34848e7c72d1">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email-experimental/v1/rest" methodName="email-experimental/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="email-experimental/GetDiscovery" mediaType="application/json" id="2dfdfbff-6973-4141-8ba4-80ab3d8e6697">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="8762cbd4-d448-4cdc-b760-7f68d2d590f2">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="event-internal/GetDiscovery" id="3dac9bc7-4af9-4906-8a0e-8431e7ebe1a6">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/event-internal/v1/rest" methodName="event-internal/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="event-internal/GetDiscovery" mediaType="application/json" id="82802684-49df-477f-b60a-c8033531e1aa">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="d8f94a55-20cc-4fc9-99db-50a13d99d2dc">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="hub-experimental/GetDiscovery" id="0e63900f-2cf3-4efa-b36a-0ca28d2f86bb">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/hub-experimental/v1/rest" methodName="hub-experimental/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="hub-experimental/GetDiscovery" mediaType="application/json" id="28c774d2-f2f1-4eb4-a2eb-4e60ed59be06">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="bcc23859-780d-4fa4-93de-11a81d1419ff">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="sites-experimental/GetDiscovery" id="8b9ae1ae-b22b-4a66-a339-2403a1a1aeda">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/sites-experimental/v1/rest" methodName="sites-experimental/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="sites-experimental/GetDiscovery" mediaType="application/json" id="67638f64-504d-4340-81b1-a14919eb1141">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="5b394f01-a7d3-4d50-bcc3-0cebd0b26e13">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="sms-experimental/GetDiscovery" id="3cdbd6a1-e805-4b3f-ac36-8d9c13bc01e8">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/sms-experimental/v1/rest" methodName="sms-experimental/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="sms-experimental/GetDiscovery" mediaType="application/json" id="d684baf5-f39d-4e39-a591-910b9a283c7c">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="cf00d2ae-3fdb-4f2f-a6ba-b2cc2576c724">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="social-internal/GetDiscovery" id="5cbda6cf-369d-4499-bfff-27457d927145">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/social-internal/v1/rest" methodName="social-internal/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="social-internal/GetDiscovery" mediaType="application/json" id="bf79c19d-2dd2-4a46-ba12-317b763da690">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="b28ac959-73b9-4d30-986c-4c22f648cd5a">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="social-experimental/GetDiscovery" id="95315fbb-1aa5-466a-aa3a-2538a0b06a34">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/social-experimental/v1/rest" methodName="social-experimental/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="social-experimental/GetDiscovery" mediaType="application/json" id="fbbb816e-af11-4656-ab22-820e10f32bed">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="866ada4a-0dfa-46b0-8c4b-adc6bd49010a">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="provisioning-experimental/GetDiscovery" id="7d70553e-308e-4331-8881-4c7c538125f7">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/provisioning-experimental/v1/rest" methodName="provisioning-experimental/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="provisioning-experimental/GetDiscovery" mediaType="application/json" id="c41346d1-0216-4703-b303-e685620b8009">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${#Project#apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="46c99a5a-ed1b-4225-a4c4-f22502a5d992">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>ff184a1a-41e0-41e2-a3a0-a77979733eab</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

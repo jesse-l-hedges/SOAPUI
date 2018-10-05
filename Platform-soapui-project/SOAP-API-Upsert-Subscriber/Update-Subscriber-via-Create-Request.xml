@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="50f88dd5-1160-4fdc-bfc0-685f36d807d1" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Update Subscriber via Create Request" searchProperties="true" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="50f88dd5-1160-4fdc-bfc0-685f36d807d1fileName">Update-Subscriber-via-Create-Request</con:setting></con:settings><con:properties/><con:reportParameters/></con:testCase>

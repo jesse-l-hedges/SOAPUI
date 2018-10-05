@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="d7e701be-4bbe-485d-9075-834180bf7398" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Retrieve Email" searchProperties="true" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="d7e701be-4bbe-485d-9075-834180bf7398fileName">Retrieve-Email</con:setting></con:settings><con:testStep type="calltestcase" name="Copy of Auth" id="b2d96e2e-5872-4a82-b500-d867c2bad2ad">
+        <con:settings/>
+        <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:targetTestCase>5b64a7c3-23e7-49bc-83fe-9983c3df8feb</con:targetTestCase>
+          <con:properties>
+            <con:property>
+              <con:name>accessToken</con:name>
+              <con:value>aEqw2gqQl0Y7KZL9v52HhovK</con:value>
+            </con:property>
+          <con:property><con:name>userid</con:name></con:property><con:property><con:name>mid</con:name></con:property></con:properties>
+          <con:returnProperties>
+            <con:entry>accessToken</con:entry>
+          </con:returnProperties>
+          <con:runMode>PARALLELL</con:runMode>
+        </con:config>
+      </con:testStep><con:properties/><con:reportParameters/></con:testCase>

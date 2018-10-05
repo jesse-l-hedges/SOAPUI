@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="52bcaedf-2302-4560-9c76-bad14df8a8e4" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="List Cleanup" searchProperties="true" disabled="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="52bcaedf-2302-4560-9c76-bad14df8a8e4fileName">List-Cleanup</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="f978c2b4-7f33-4bf4-aff5-9edf0d9a2ac9">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>8T75t0eASvyKcuABVkApVrwo</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>8201327</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>8200333</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="get List CategoryID" id="2f5de943-5a32-49b9-949f-d02c9ea8b7c4">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/categories" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="get List CategoryID" id="5eb3a26c-a37c-446e-ac2f-b91f1f054198" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/categories</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="7d8fa471-f602-4987-8723-8a2fdd5bd3fd" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="46f197a2-6ad5-49a4-ad53-d46f92988e5c" name="catType = list">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/email/v1/categories';
+//ns1:Response[1]/ns1:items[1]/ns1:e[1]/ns1:catType[1]</path>
+            <content>list</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="catType" value="list"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>catType</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer list CategoryId" id="b3f3e015-4125-48af-8cde-579c731ad59e">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>categoryId</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>get List CategoryID</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/email/v1/categories';
+//ns1:Response[1]/ns1:items[1]/ns1:e[1]/ns1:categoryId[1]</con:sourcePath>
+        <con:targetType>categoryId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="get Lists" id="3ac4d47b-8f6f-456f-9773-13997578efb5">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/lists/category/{id}" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="get Lists" id="31bbec5e-9ecc-4491-a044-add24d2d9f6b" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/lists/category/1069513</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="694c5e84-7776-46a9-b495-10687847b2cc" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="id" value="${#TestCase#categoryId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>$orderBy</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer count" id="8b608ddf-84e1-43ce-bd90-57d6733061d9">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>count</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>get Lists</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/email/v1/lists/category/1069513';
+//ns1:Response[1]/ns1:count[1]</con:sourcePath>
+        <con:targetType>count</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="get ListId" id="152dd717-ab24-4dbe-b3c5-0901b648d12c">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>listId</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>get Lists</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/email/v1/lists/category/1069513';
+//ns1:Response[1]/ns1:items[1]/ns1:e[1]/ns1:listId[1]</con:sourcePath>
+        <con:targetType>listId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="delete list" id="6b81c55b-0f4a-47ea-9a4f-850df96fc33d" disabled="true">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/lists/{id}" methodName="Method 3" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="delete list" id="0704932c-7d76-4a94-8650-7665368ea1e6" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/lists/id</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="843ad323-ee7f-4a36-9a41-9ea8f037da3a" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>202</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="DeleteSubscribers" value="true"/>
+          <con:entry key="id" value="${#TestCase#listId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>DeleteSubscribers</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Delete All Lists" id="040823e9-9a62-4718-b415-351eb594654c">
+    <con:settings/>
+    <con:config>
+      <script>def count = testRunner.testCase.getPropertyValue("count") as int
+
+log.info count
+if (count > 0)
+	for (i in 1..count)
+	{
+		testRunner.runTestStepByName("get Lists")
+		testRunner.runTestStepByName("get ListId")
+		testRunner.runTestStepByName("delete list")
+	}
+else {log.info "No lists to delete"}</script>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>categoryId</con:name>
+      <con:value>8045</con:value>
+    </con:property>
+    <con:property>
+      <con:name>count</con:name>
+      <con:value>4</con:value>
+    </con:property>
+    <con:property>
+      <con:name>listId</con:name>
+      <con:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">36805</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+</con:testCase>

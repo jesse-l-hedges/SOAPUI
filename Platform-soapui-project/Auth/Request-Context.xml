@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="Request Context" path="/v1/requestContext" id="034bc923-b68e-46a3-8531-1e5bbf75d29b" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="034bc923-b68e-46a3-8531-1e5bbf75d29bfileName">Request-Context</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:method name="RequestAuth" id="e68ccc86-204e-4c41-b1b8-4395a2216973" method="POST">
+    <con:settings/>
+    <con:parameters/>
+    <con:representation type="REQUEST" id="">
+      <con:mediaType>application/json</con:mediaType>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType/>
+      <con:status>0</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType/>
+      <con:status>0</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType/>
+      <con:status>0</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType/>
+      <con:status>0</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="FAULT" id="">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status>404</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="FAULT" id="">
+      <con:mediaType>application/json; charset=utf-8</con:mediaType>
+      <con:status>400</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE">
+      <con:mediaType xsi:nil="true"/>
+      <con:status>0</con:status>
+      <con:params/>
+      <con:element>data</con:element>
+    </con:representation>
+    <con:request name="Request 1" id="cd080263-4158-4399-87d7-e0540300f461" mediaType="application/json" postQueryString="false">
+      <con:settings>
+        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+      </con:settings>
+      <con:request>{
+    "clientId": "${clientid}",
+    "clientSecret": "${clientsecret}"
+}</con:request>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+</con:resource>

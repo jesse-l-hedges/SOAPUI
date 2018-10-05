@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="dac62e05-b64e-4bfe-858c-3f9714e8fd69" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="VaultDemo" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="dac62e05-b64e-4bfe-858c-3f9714e8fd69fileName">VaultDemo</con:setting>
+  </con:settings>
+  <con:testStep type="groovy" name="Get Active Environment" id="0bae3a5f-fcf3-48b2-879d-5737382d3eec">
+    <con:settings/>
+    <con:config>
+      <script>environment = testRunner.testCase.testSuite.project.getActiveEnvironmentName()
+//log.info (environment)</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="POST github Token" id="f0dc6c9a-78f1-48ed-b076-c9a2285104ec">
+    <con:settings/>
+    <con:config service="Vault" resourcePath="/v1/auth/Platform/login" methodName="Login" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="POST github Token" id="65d50a2e-5a29-4a03-9041-045e52b8a483" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+   "token": "${#Env#GITHUB_TOKEN}"
+}</con:request>
+        <con:originalUri>https://etinbyaroch01.ET.LOCAL/v1/auth/platform/login</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="4ef868d1-fcfb-4612-a53b-2e19c78bfb8e" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:parameterOrder/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Get Vault Creds" id="d5ce3b78-a88a-476b-925a-f1aec18135c0">
+    <con:settings/>
+    <con:config service="Vault" resourcePath="/v1/secret/platform/{environment}" methodName="GET Creds" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Get Vault Creds" id="51f21a57-1b0d-4827-8c3a-8ea51cd68099" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://etinbyaroch01.ET.LOCAL/v1/secret/platform/</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="07394a82-bb0c-41b9-8a54-32e26b9a744c" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="environment" value="${Get Active Environment#result}"/>
+          <con:entry key="X-Vault-Token" value="${POST github Token#Response#$.auth.client_token}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>environment</con:entry>
+          <con:entry>X-Vault-Token</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RequestAuthByClientIdAndSecret" id="fe1f2c0b-474c-4d5b-9a9e-13286aaec4f8">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RequestAuthByClientIdAndSecret" mediaType="application/json" postQueryString="false" id="eb262c87-9aa0-4c79-ba9e-94e75063a779">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint xsi:nil="true"/>
+        <con:request>{
+   "clientId": "${Get Vault Creds#Response#$.data.clientid}",
+   "clientSecret": "${Get Vault Creds#Response#$.data.clientsecret}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="93026dc3-65b2-4e5f-a45b-83c80fa2cd5a">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" name="XPath Match" id="ec734a6b-64a9-4235-8929-5c63449ae100">
+          <con:configuration>
+            <path>//*:accessToken</path>
+            <content>*</content>
+            <allowWildcards>true</allowWildcards>
+            <ignoreNamspaceDifferences>true</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>legacy</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="address/GetDiscovery" id="859db1cd-7ea1-41a3-b458-a13f352643ac">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/address/v1/rest" methodName="address/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="address/GetDiscovery" mediaType="application/json" id="2bc8f3e3-cc41-4e2d-a303-9407f61baa39">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint xsi:nil="true"/>
+        <con:request/>
+        <con:originalUri>http://localhost/platform-internal/v1/rest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="2ccc9637-58e6-436e-b048-83380e7b150e">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" name="XPath Match" id="0ae490ca-eb55-4e70-8091-11bed6e53167">
+          <con:configuration>
+            <path>//*:methods/*:discovery/*:path/text()</path>
+            <content>rest</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${RequestAuthByClientIdAndSecret#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:setupScript>//environment = testRunner.testCase.testSuite.project.getActiveEnvironmentName()
+//log.info (environment)</con:setupScript>
+  <con:properties>
+    <con:property>
+      <con:name>accessToken</con:name>
+      <con:value>af7gjHTbyT4mVTPyp8eWGqh2</con:value>
+    </con:property>
+    <con:property>
+      <con:name>environment</con:name>
+      <con:value/>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>9e3dafc5-7e7d-4cd0-805a-98f58f3c03a1</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>fe1f2c0b-474c-4d5b-9a9e-13286aaec4f8</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>fc3dd303-5992-4e42-98a9-9ac922df40e4</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>859db1cd-7ea1-41a3-b458-a13f352643ac</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>5bccf0ac-4f87-4dad-ab13-f8e9fece9420</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>69079656-9773-4cfc-87ae-60444718c5bf</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>c38ebc55-b7ba-4e92-9571-e81eaeddc560</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>d5ce3b78-a88a-476b-925a-f1aec18135c0</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>4401e08f-c808-47f9-ba72-fd50f8a6644f</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>789412a8-4a9c-49f4-84ab-b78f8c625b96</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

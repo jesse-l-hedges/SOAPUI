@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="address" path="/address" id="cef3ba94-8b77-4c2f-9573-7631408ca292" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="cef3ba94-8b77-4c2f-9573-7631408ca292fileName">address</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:resource name="v1" path="v1" id="c1d790a7-3cee-48f8-9d67-1decdcda36af">
+    <con:settings/>
+    <con:parameters/>
+    <con:resource name="rest" path="rest" id="f7769566-17c5-41a3-8f0d-2c29711acba4">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="address/Discovery" id="7d24551f-8936-4c00-adbf-c302d8d0a006" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:representation type="RESPONSE">
+          <con:mediaType>application/json;charset=UTF-8</con:mediaType>
+          <con:status>200</con:status>
+          <con:params/>
+          <con:element xmlns:rest="http://localhost/platform-internal/v1/rest">rest:Response</con:element>
+        </con:representation>
+        <con:request name="Request 1" id="72cd1e49-d0ad-4b3c-87af-7c0d9c1fb323" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+  </con:resource>
+</con:resource>

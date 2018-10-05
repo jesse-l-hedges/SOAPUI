@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="693ac6e9-74de-4fb1-924b-e072875df192" name="Account Create - User/Pass" disabled="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="e6f7356d-db18-4a02-9d58-4836f15b0509fileName">Account Create</con:setting>
+    <con:setting id="693ac6e9-74de-4fb1-924b-e072875df192fileName">Account-Create---User%2FPass</con:setting>
+  </con:settings>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:runType>SEQUENTIAL</con:runType>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testSuite>

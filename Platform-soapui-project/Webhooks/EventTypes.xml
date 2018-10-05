@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="EventTypes" searchProperties="true" id="49b7f764-bd15-4551-9ecf-77ba120f820d" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" disabled="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="49b7f764-bd15-4551-9ecf-77ba120f820dfileName">EventTypes</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="018f4799-0b5e-487a-a423-f69b2a4abfb0">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>aJmPmKNd3XjVu6fpYB3PgijB</con:value>
+          <con:value>aySuQFaF9KIjCokEtIurCOwv</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="CreateClientInformation" id="6e4cadbb-eecf-4baa-a5db-f390866ba97e">
+    <con:settings/>
+    <con:config>
+      <script>import static java.util.UUID.randomUUID
+
+            testRunner.testCase.setPropertyValue("ClientSecretKey", randomUUID() as String)
+            testRunner.testCase.setPropertyValue("WebhookName", randomUUID() as String)</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RegisterWebhookNoEventTypes" id="a43626e4-c6f3-433e-a5cc-a5a3ef220bef">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/webhooks" methodName="postWebhook" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RegisterWebhookNoEventTypes" id="1ef0ec66-69b3-4163-b9f0-d80f1c5700ff" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"name" : "QETest Webhook",
+	"callbackUrl" : "${#Project#fuelbin}",
+	"callbackKey" : "${#TestCase#ClientSecretKey}",
+	"configuration" : {
+		"FuelMessagingEvents": [],
+		"TriggeredSendEvents": []
+	}
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="8152a470-371a-4277-bf85-d4c0b5793c76" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Invalid HTTP Status Codes" id="a301b476-8207-46e6-975f-0ea90ee997d5" name="Invalid HTTP Status Codes">
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="b24e62fc-c0cd-496d-b76b-a82af0e0ebde" name="message">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/webhooks';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>The webhook must have events.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RegisterWebhookInvalidEventTypeMessaging" id="8fa8d2b5-a33d-41da-aaf8-65725667080e">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/webhooks" methodName="postWebhook" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RegisterWebhookInvalidEventTypeMessaging" id="1ef0ec66-69b3-4163-b9f0-d80f1c5700ff" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"name" : "QETest Webhook",
+	"callbackUrl" : "${#Project#fuelbin}",
+	"callbackKey" : "${#TestCase#ClientSecretKey}",
+	"configuration" : {
+		"FuelMessagingEvents": ["Bogus"],
+		"TriggeredSendEvents": ["open"]
+	}
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="04b6891b-52ca-4fad-b857-f05dfa77a91d" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Invalid HTTP Status Codes" id="cf063e4d-3578-4b97-a348-12afff8ba110" name="Invalid HTTP Status Codes">
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="20a9323f-c103-4e9c-ae38-74818c666827" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/webhooks';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>Incorrect configuration type</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RegisterWebhookInvalidEventTypeTriggered" id="865c43e9-3282-40ff-817e-610d8d38fddc">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/webhooks" methodName="postWebhook" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RegisterWebhookInvalidEventTypeTriggered" id="1ef0ec66-69b3-4163-b9f0-d80f1c5700ff" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"name" : "QETest Webhook",
+	"callbackUrl" : "${#Project#fuelbin}",
+	"callbackKey" : "${#TestCase#ClientSecretKey}",
+	"configuration" : {
+		"FuelMessagingEvents": ["open"],
+		"TriggeredSendEvents": ["bogus"]
+	}
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="60c765f0-8ff4-4fea-a23a-8bd988469edb" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Invalid HTTP Status Codes" id="e832d4f4-d03e-4fc5-afe3-bc954124b353" name="Invalid HTTP Status Codes">
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="78071242-c00c-4e81-80f4-0022b20fe247" name="message">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/webhooks';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>Incorrect configuration type</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RegisterWebhookInvalidEventTypeBoth" id="739cf02a-42b2-4bba-821e-a667ea4e76b6">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/webhooks" methodName="postWebhook" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RegisterWebhookInvalidEventTypeBoth" id="1ef0ec66-69b3-4163-b9f0-d80f1c5700ff" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"name" : "QETest Webhook",
+	"callbackUrl" : "${#Project#fuelbin}",
+	"callbackKey" : "${#TestCase#ClientSecretKey}",
+	"configuration" : {
+		"FuelMessagingEvents": ["Bogus"],
+		"TriggeredSendEvents": ["Bogus"]
+	}
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="a49bba36-753a-47ca-be77-2d4a529dc395" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Invalid HTTP Status Codes" id="5a31795c-d119-4e7f-a558-116a99fb1439" name="Invalid HTTP Status Codes">
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="e68a554e-5168-4636-95f3-d6b423ba5875" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/webhooks';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>Incorrect configuration type</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>SecretKey</con:name>
+      <con:value>hEmv7FHWJWgM1XXLswzhcbvEU0W1ihViqO4rqIeIdrg=</con:value>
+    </con:property>
+    <con:property>
+      <con:name>ClientSecretKey</con:name>
+      <con:value>fef93a38-6a25-4d60-b3e6-408c690ab007</con:value>
+      <con:value>e4162b4c-f3b1-425c-a85d-c2b398f7a883</con:value>
+    </con:property>
+    <con:property>
+      <con:name>WebhookID</con:name>
+      <con:value>c0134c68-9eea-42fd-a68b-022a3e9e7cf3</con:value>
+    </con:property>
+    <con:property>
+      <con:name>WebhookName</con:name>
+      <con:value>76256176-eaf1-4725-b880-9dbe8518b025</con:value>
+      <con:value>f7e99b52-d34d-4880-936a-bd5613c12e8b</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>a43626e4-c6f3-433e-a5cc-a5a3ef220bef</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

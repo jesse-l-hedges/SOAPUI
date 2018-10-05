@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="RegisterInvalidURL" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" id="26508d85-50c9-46b0-ae2b-bd9a8a5535be" disabled="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="26508d85-50c9-46b0-ae2b-bd9a8a5535befileName">RegisterInvalidURL</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="e1bb8176-e658-42c3-b33a-bf532d080c89">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>amxwedmWAmBsp1R3m7LDwGi0</con:value>
+          <con:value>aySuQFaF9KIjCokEtIurCOwv</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="CreateClientInformation" id="75c5c34a-a488-4cad-a649-b98a03224679">
+    <con:settings/>
+    <con:config>
+      <script>import static java.util.UUID.randomUUID
+
+            testRunner.testCase.setPropertyValue("ClientSecretKey", randomUUID() as String)
+            testRunner.testCase.setPropertyValue("WebhookName", randomUUID() as String)</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RegisterWebhook" id="cbb13f50-8a7d-4da8-b05e-65f7a45ff44d">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/webhooks" methodName="postWebhook" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RegisterWebhook" id="1ef0ec66-69b3-4163-b9f0-d80f1c5700ff" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+              "name" : "QETest Webhook",
+              "callbackUrl" : "http://ThisIsNotAValidURL.com",
+              "callbackKey" : "${#TestCase#ClientSecretKey}",
+              "configuration" : {
+              "FuelMessagingEvents": ["open"],
+              "TriggeredSendEvents": ["open"]
+              }
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="7c0bdfb2-701d-44e9-bdb0-6a14c65457b8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Invalid HTTP Status Codes" id="8822d9cc-f054-4752-a3fe-d4750cdb6591" name="Invalid HTTP Status Codes">
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="3b401e28-30ee-418b-980f-56668a600b79" name="message">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/webhooks';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>Unable to connect to remote server.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>SecretKey</con:name>
+      <con:value>MhO347rMzWe+Sh9pPl4+SjkMKWvb4yvpmHr2l+niJkc=</con:value>
+    </con:property>
+    <con:property>
+      <con:name>ClientSecretKey</con:name>
+      <con:value>c564f105-780b-4106-9bc4-3762854fcf7a</con:value>
+      <con:value>91b2306b-9f8a-42e4-acec-bb631f3abe3a</con:value>
+    </con:property>
+    <con:property>
+      <con:name>WebhookID</con:name>
+      <con:value>5edf4473-c4e6-4353-ab0a-e6472202d85a</con:value>
+    </con:property>
+    <con:property>
+      <con:name>WebhookName</con:name>
+      <con:value>1e3a9925-8978-45a4-806c-d2004dc6fd4c</con:value>
+      <con:value>ecd16ce1-ea89-4f61-926d-1b517235e46d</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+</con:testCase>

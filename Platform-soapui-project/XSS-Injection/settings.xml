@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="788b829f-64ac-49b8-b16c-60b56ff6c62c" name="XSS-Injection" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="788b829f-64ac-49b8-b16c-60b56ff6c62cfileName">XSS-Injection</con:setting></con:settings><con:savedRecentRuns>1</con:savedRecentRuns><con:runType>SEQUENTIAL</con:runType><con:properties/><con:reportParameters/></con:testSuite>

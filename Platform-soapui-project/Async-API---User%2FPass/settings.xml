@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="1ab462d6-2940-48f7-bd4f-dce5e2d8161b" name="Async API - User/Pass" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="1ab462d6-2940-48f7-bd4f-dce5e2d8161bfileName">Async-API---User%2FPass</con:setting></con:settings><con:savedRecentRuns>1</con:savedRecentRuns><con:runType>SEQUENTIAL</con:runType><con:properties><con:property><con:name>testSuiteUserId</con:name><con:value>APIFW-Account-QA1S1_admintwo</con:value></con:property><con:property><con:name>testSuitePassword</con:name><con:value>testing1!</con:value></con:property><con:property><con:name>testSuiteMID</con:name><con:value>10739553</con:value></con:property></con:properties><con:setupScript>import org.joda.time.DateTime
+
+day = new DateTime().getDayOfWeek()
+
+log.info "day of week is " + day
+
+if (testSuite.project.activeEnvironment.name in ['qa1', 'qa3']) {
+
+	if (day in [2, 4, 6]) {
+		testSuite.setPropertyValue( "testSuiteUserID", context.expand( '${#Project#user}' ) ) 
+		testSuite.setPropertyValue( "testSuitePassword", context.expand( '${#Project#pass}') )
+		testSuite.setPropertyValue( "testSuiteMID", context.expand( '${#Project#mid}') )
+	}
+
+	else {
+		testSuite.setPropertyValue( "testSuiteUserID", context.expand( '${#Project#userVSdisabled}' ) )
+		testSuite.setPropertyValue( "testSuitePassword", context.expand( '${#Project#passVSdisabled}' ) )
+		testSuite.setPropertyValue( "testSuiteMID", context.expand( '${#Project#midVSdisabled}') )
+	}
+}
+else {
+	testSuite.setPropertyValue( "testSuiteUserID", context.expand( '${#Project#user}' ) ) 
+	testSuite.setPropertyValue( "testSuitePassword", context.expand( '${#Project#pass}') )
+	testSuite.setPropertyValue( "testSuiteMID", context.expand( '${#Project#mid}') )
+}
+
+</con:setupScript><con:reportParameters/></con:testSuite>

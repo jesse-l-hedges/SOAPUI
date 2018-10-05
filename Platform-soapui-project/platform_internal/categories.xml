@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="cdc66b50-b09e-4a9d-b8c8-ee03b7e0d96d" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="categories" searchProperties="true" maxResults="0" disabled="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="cdc66b50-b09e-4a9d-b8c8-ee03b7e0d96dfileName">categories</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="5f198ddf-e927-4248-9cc6-51ecd9ec0a99">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>cEHCexDGsOdOWNHcrQKMFQ3d</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>302586</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>280509</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getCategoryCollection" id="656d214c-4d69-445d-986d-374fa4825bd8">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/categories" methodName="getCategoryCollection" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getCategoryCollection" id="e453960c-ad11-42e9-942c-865be37dff7f" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/categories</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="951ee79d-e1fc-4a65-9cad-b6e2d8e3507a" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="e6f3a9a0-1cdf-4add-a9b5-d2768f4f4287" name="categoryType">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform-internal/v1/categories';
+//ns1:Response[1]/ns1:items[1]/ns1:e[1]/ns1:categoryType[1]</path>
+            <content>email</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="includeFullPath" value=""/>
+          <con:entry key="$pagesize" value=""/>
+          <con:entry key="$filter" value="categoryType eq EMAIL"/>
+          <con:entry key="$page" value=""/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>$page</con:entry>
+          <con:entry>$pagesize</con:entry>
+          <con:entry>$orderby</con:entry>
+          <con:entry>$search</con:entry>
+          <con:entry>includeFullPath</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>Authorization</con:entry>
+          <con:entry>categoryType</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer CategoryID" id="293170d7-244e-425e-b57e-1fcdad0ec818">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>categoryId</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>getCategoryCollection</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/platform-internal/v1/categories';
+//ns1:Response[1]/ns1:items[1]/ns1:e[1]/ns1:id[1]</con:sourcePath>
+        <con:targetType>categoryId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="postCategory" id="d8b28cfd-daeb-4098-bba1-991fff28cf0d">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/categories" methodName="postCategory" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="postCategory" id="e453960c-ad11-42e9-942c-865be37dff7f" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request>{
+         "parentId": "${#TestCase#categoryId}",
+         "name":"QETesting Email Sub",
+         "description":"",
+         "categoryType":"email",
+         "iconType":"folder",
+         "editable":1,
+         "extendable":1,
+         "hasChildren":true
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/categories</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="047faee8-5ee1-425b-9d88-1866fa6fe9f3" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>201</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="d75fc93f-b144-4f6f-bed8-5f9bf4dfe876" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform-internal/v1/categories';
+//ns1:Response[1]/ns1:categoryType[1]</path>
+            <content>email</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="categoryType" value=""/>
+          <con:entry key="$pagesize" value=""/>
+          <con:entry key="$page" value=""/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pagesize</con:entry>
+          <con:entry>$orderby</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>Authorization</con:entry>
+          <con:entry>categoryType</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer new CategoryId" id="cc871c39-a6a4-412f-b82b-93941d0e71b6">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>categoryId2</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>postCategory</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/platform-internal/v1/categories';
+//ns1:Response[1]/ns1:id[1]</con:sourcePath>
+        <con:targetType>newCategoryId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getCategoryById" id="13f4e382-e787-4663-b765-c98203ab7c98">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/categories/{id}" methodName="getCategory" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getCategoryById" id="ea9b6042-de15-4833-9f2f-8688c0dac1a8" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/categories/399551</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="abdf00e4-b962-472a-bfee-501a00537d21" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="fa942f35-879a-4559-bd35-e05697a7c8df" name="categoryType">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform-internal/v1/categories/399551';
+//ns1:Response[1]/ns1:categoryType[1]</path>
+            <content>email</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="e33f4204-0281-4658-9ace-2d302dc9ab2a" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform-internal/v1/categories/399551';
+//ns1:Response[1]/ns1:id[1]</path>
+            <content>${#TestCase#newCategoryId}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="$pagesize" value=""/>
+          <con:entry key="id" value="${#TestCase#newCategoryId}"/>
+          <con:entry key="$page" value=""/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pagesize</con:entry>
+          <con:entry>$orderby</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>categoryType</con:entry>
+          <con:entry>id</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="updateCategoryById" id="33b6e7a5-b89a-4501-b884-e4d2d2a864b0">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/categories/{id}" methodName="updateCategory" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="updateCategoryById" id="f7486cbe-554b-4e22-b120-89338554ffbc" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+         "name":"QETesting Email Sub Update",
+         "description":"New Description",
+         "categoryType":"email",
+         "iconType":"email",
+         "editable":1,
+         "extendable":1,
+         "hasChildren":true
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/categories/399551</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="a1c6fabd-ba8f-4870-bc15-27c7c7b55cf6" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="59a88ea3-d29f-4ba1-91dd-e0869f6a9cbd" name="categoryType">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform-internal/v1/categories/399551';
+//ns1:Response[1]/ns1:categoryType[1]</path>
+            <content>email</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="9dac640a-122e-4c26-8c46-8753be8c3c95" name="Name Update">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform-internal/v1/categories/399551';
+//ns1:Response[1]/ns1:name[1]</path>
+            <content>QETesting Email Sub Update</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="b589c672-8a6a-4580-8070-f4b197744b71" name="iconType Update">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform-internal/v1/categories/399551';
+//ns1:Response[1]/ns1:iconType[1]</path>
+            <content>email</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="4a6ff392-e847-4a0d-982f-c136f0a47089" name="categoryId">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform-internal/v1/categories/399551';
+//ns1:Response[1]/ns1:id[1]</path>
+            <content>${#TestCase#newCategoryId}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="$pagesize" value=""/>
+          <con:entry key="id" value="${#TestCase#newCategoryId}"/>
+          <con:entry key="$page" value=""/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pagesize</con:entry>
+          <con:entry>$orderby</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>categoryType</con:entry>
+          <con:entry>id</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getCategoryChildren" id="29787c36-1b03-4935-b89e-a3e3923e7065">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/categories/{id}/children" methodName="getCategoryChildren" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getCategoryChildren" id="e2e57522-0484-41ed-a5ce-b9141b4130ed" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/categories/id/children</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="b00e68f4-548d-4529-a9d6-685a1b647fbd" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="69aa4b2d-7384-442d-ae57-44fd94087fb2" name="Parent CategoryId">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform-internal/v1/categories/id/children';
+//ns1:Response[1]/ns1:items[1]/ns1:e[1]/ns1:parentId[1]</path>
+            <content>${#TestCase#categoryId}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="bf1a36d0-b2cc-4b01-9907-6dd527fde6f9" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform-internal/v1/categories/id/children';
+//ns1:Response[1]/ns1:items[1]/ns1:e[1]/ns1:categoryType[1]</path>
+            <content>email</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="categoryType" value=""/>
+          <con:entry key="$pagesize" value=""/>
+          <con:entry key="id" value="${#TestCase#categoryId}"/>
+          <con:entry key="$page" value=""/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pagesize</con:entry>
+          <con:entry>$orderby</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>Authorization</con:entry>
+          <con:entry>categoryType</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getCategoryFullPath" id="d0973185-fd48-4944-ad41-3d199826d3b8">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/categories/{id}/fullPath" methodName="getCategoryFullPath" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getCategoryFullPath" id="d2e54003-1249-4f06-8c09-da9afebde025" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/categories/id/fullPath</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="6cb4d64d-d40b-4154-9ef2-960e0685ec1c" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="5a4216d6-78fa-4eb9-ab19-af8de76ea047" name="FullPath">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform-internal/v1/categories/id/fullPath';
+//ns1:Response[1]/ns1:items[1]/ns1:e[2]/ns1:links[1]/ns1:fullpath[1]/ns1:href[1]</path>
+            <content>/v1/categories/${#TestCase#newCategoryId}/fullPath</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="categoryType" value=""/>
+          <con:entry key="$pagesize" value=""/>
+          <con:entry key="id" value="${#TestCase#newCategoryId}"/>
+          <con:entry key="$page" value=""/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pagesize</con:entry>
+          <con:entry>$orderby</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>Authorization</con:entry>
+          <con:entry>categoryType</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="deleteCategory" id="664dcc9b-5d15-482c-bc00-44f7136cd520">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/categories/{id}" methodName="deleteCategory" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="deleteCategory" id="59258ae1-c6a5-43dd-8c1f-9843a1d5bf4a" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/categories/399551</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="4ec9604a-a16e-4677-8c1b-8eb4f0cc679e" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="$pagesize" value=""/>
+          <con:entry key="id" value="${#TestCase#newCategoryId}"/>
+          <con:entry key="$page" value=""/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pagesize</con:entry>
+          <con:entry>$orderby</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>categoryType</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getCategory - Verify Category Deleted" id="16cb351a-2b51-4612-a71c-546ca8609372">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/categories/{id}" methodName="getCategory" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getCategory - Verify Category Deleted" id="ea9b6042-de15-4833-9f2f-8688c0dac1a8" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/categories/399551</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="2822c8a1-54d1-41aa-8492-0065204ed4cc" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="09e635a4-efec-4b31-a9c4-5e80bfd2bcfc" name="Cound not find a category">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform-internal/v1/categories/399551';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>Could not find a Category with Id: ${#TestCase#newCategoryId}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="$pagesize" value=""/>
+          <con:entry key="id" value="${#TestCase#newCategoryId}"/>
+          <con:entry key="$page" value=""/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pagesize</con:entry>
+          <con:entry>$orderby</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>categoryType</con:entry>
+          <con:entry>id</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>categoryId</con:name>
+      <con:value>19138</con:value>
+    </con:property>
+    <con:property>
+      <con:name>newCategoryId</con:name>
+      <con:value>230907</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+</con:testCase>

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:operation id="4ce253d2-8e6d-46f9-8aee-76862c7032d8" isOneWay="false" action="Execute" name="Execute" bindingOperationName="Execute" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="4ce253d2-8e6d-46f9-8aee-76862c7032d8fileName">Execute</con:setting></con:settings></con:operation>

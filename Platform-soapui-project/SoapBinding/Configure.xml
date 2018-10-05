@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:operation id="9b72e086-dbf7-4f0f-84a2-61bc342a7248" isOneWay="false" action="Configure" name="Configure" bindingOperationName="Configure" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="9b72e086-dbf7-4f0f-84a2-61bc342a7248fileName">Configure</con:setting></con:settings></con:operation>

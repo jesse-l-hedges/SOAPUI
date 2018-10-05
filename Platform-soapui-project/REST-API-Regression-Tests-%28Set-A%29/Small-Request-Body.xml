@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="6c5be287-147d-4762-90f9-291c13948d58" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Small Request Body" searchProperties="true" disabled="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="6c5be287-147d-4762-90f9-291c13948d58fileName">Small-Request-Body</con:setting>
+  </con:settings>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:testStep type="calltestcase" name="Auth" id="9c63d439-9a6a-4a8c-ab5e-e0ae4b3c3ed9">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accessToken</con:name>
+          <con:value>bJjA9nsyLzXHFqTge4jtmOK9</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>1100419</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>280148</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Get Contact Data Sources" id="f1fb1e1e-1c27-4ed4-9c78-38fd89d4e22f">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/contacts-internal/v1/dataSources" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Get Contact Data Sources" id="4424da98-9a77-4bb1-bfbc-d74f07aded81" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/contacts-internal/v1/datasources</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="d6f243bd-664f-476a-acb1-8e88646f2664" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="3b843353-f6c7-4630-b3c2-22bc6062ac4d">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Post Data Source Status - Request 1" id="9655c8b4-88ea-440d-8f8c-0284365e1064">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/contacts-internal/v1/dataSources/dataSourceStatus" methodName="Post Data Source Status" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Post Data Source Status - Request 1" id="cf58a299-2174-4f35-babe-ba2418b011a2" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="accept" value="application/json, text/javascript, */*, q=0.01" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request>[{
+   "id": 1,
+   "key": ""
+}]</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/contacts-internal/v1/dataSources/dataSourceStatus</con:originalUri>
+        <con:assertion type="JsonPath Existence Match" id="98e0217d-a8c8-4b9d-acc0-7f736ca4488a" name="Check for existence of [resultMessages]">
+          <con:configuration>
+            <path>$.resultMessages</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="9ef8db65-9cc4-4d1f-bffa-b8fa3875efa2" name="200 HTTP Status Code">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="3b843353-f6c7-4630-b3c2-22bc6062ac4d">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>886525b0-72ad-487f-96c7-a41f78a3a2d4</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

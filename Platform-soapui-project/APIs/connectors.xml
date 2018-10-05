@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="connectors" path="/connectors" id="b4d757a1-7ac6-450a-80a7-dd43546604dd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="b4d757a1-7ac6-450a-80a7-dd43546604ddfileName">connectors</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:resource name="v1" path="v1" id="770bc90d-c99f-4baa-9482-07b303ee6ff5">
+    <con:settings/>
+    <con:parameters/>
+    <con:resource name="rest" path="rest" id="92923151-be10-41f3-b0eb-b19091a4ead7">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="connectors/Discovery" id="0dc696fb-f872-4cfb-9f5d-1d6dacb40f4a" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="dcc1b039-bf76-42b2-aa92-11dd732ab080" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+  </con:resource>
+</con:resource>

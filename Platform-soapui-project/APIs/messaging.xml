@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="messaging" path="/messaging" id="e4fd7bc8-de74-4628-baf0-c9e76cfb699d" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="8589bfa6-23e2-4fc1-bb36-d2dee08f99b3fileName">messaging-internal</con:setting>
+    <con:setting id="e4fd7bc8-de74-4628-baf0-c9e76cfb699dfileName">messaging</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:resource name="v1" path="v1" id="8d934b39-87b4-4128-9df3-3a68a2283694">
+    <con:settings/>
+    <con:parameters/>
+    <con:resource name="rest" path="rest" id="7cbb49b3-bc55-41cf-af2e-695bba025a3a">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:resource name="experimental" path="experimental" id="f1d056a0-fa56-4124-b57c-cdc26f1272e7">
+        <con:settings/>
+        <con:parameters/>
+        <con:method name="messaging/DiscoveryExperimental" id="1c27287e-6c1b-488c-8563-733db2596438" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="Request 1" id="154dd88e-04fc-4d8e-b295-e5be30ccbc53" mediaType="application/json">
+            <con:settings/>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters/>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+      <con:method name="messaging/Discovery" id="c264104c-829a-4cc3-b490-ed2298b8a861" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="6c00e466-8b2f-4cde-9608-aacb58d38bac" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+  </con:resource>
+  <con:resource name="experimental" path="experimental" id="e4f85514-22c7-4c2f-bc96-149acf9bd6b6">
+    <con:settings/>
+    <con:parameters/>
+    <con:resource name="v1" path="v1" id="1600c580-b259-4f67-b65e-9da511502a9f">
+      <con:settings/>
+      <con:parameters/>
+      <con:resource name="rest" path="rest" id="34cf66df-2325-4edb-a8fc-f3f67083d336">
+        <con:settings/>
+        <con:parameters>
+          <con:parameter>
+            <con:name>Authorization</con:name>
+            <con:value/>
+            <con:style>HEADER</con:style>
+            <con:default/>
+            <con:description xsi:nil="true"/>
+          </con:parameter>
+        </con:parameters>
+        <con:method name="messaging/experimental/Discovery" id="73e2d3ae-8fa1-4699-82b7-412e12363bbe" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="Request 1" id="83fc5065-76de-45d8-b995-09796a273e97" mediaType="application/json">
+            <con:settings/>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters/>
+            <con:parameterOrder>
+              <con:entry>Authorization</con:entry>
+            </con:parameterOrder>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+    </con:resource>
+  </con:resource>
+</con:resource>

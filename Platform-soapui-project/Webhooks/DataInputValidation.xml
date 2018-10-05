@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="DataInputValidation" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" id="8076fdc3-c9b3-4add-8265-ce2b9ee318da" disabled="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="8076fdc3-c9b3-4add-8265-ce2b9ee318dafileName">DataInputValidation</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="1d528547-4e8f-4e0d-b39a-e6de197829b0">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>aJmPmKNd3XjVu6fpYB3PgijB</con:value>
+          <con:value>aySuQFaF9KIjCokEtIurCOwv</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="CreateClientInformation" id="07813912-bd4b-48c5-9636-8796bded5632">
+    <con:settings/>
+    <con:config>
+      <script>import static java.util.UUID.randomUUID
+
+def maxNameLength = testRunner.testCase.testSuite.getPropertyValue("MaxSizeName").toInteger()
+def maxCallbackUrlLength = testRunner.testCase.testSuite.getPropertyValue("MaxSizeCallbackUrl").toInteger()
+def maxCallbackKeyLength = testRunner.testCase.testSuite.getPropertyValue("MaxSizeCallbackKey").toInteger()
+def generator = { String alphabet, int n ->
+
+new Random().with {
+(1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+}
+}
+
+testRunner.testCase.setPropertyValue("ClientSecretKey", randomUUID() as String)
+testRunner.testCase.setPropertyValue("WebhookName", randomUUID() as String)
+
+testRunner.testCase.setPropertyValue("LongName", generator( (('A'..'Z')+('0'..'9')).join(), (maxNameLength + 11) ) as String)
+testRunner.testCase.setPropertyValue("LongCallbackKey", generator( (('A'..'Z')+('0'..'9')).join(), (maxCallbackKeyLength + 1) ) as String)
+
+def url = testRunner.testCase.testSuite.project.getPropertyValue("fuelbin") + "?rand="
+def randString = generator( (('A'..'Z')+('0'..'9')).join(), (maxCallbackUrlLength + 1 - url.length()) ) as String
+
+testRunner.testCase.setPropertyValue("LongCallbackUrl",  url + randString)
+
+log.info url</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RegisterWebhookNameOverflow" id="01a93f97-809e-4487-9241-e588d5c41f28">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/webhooks" methodName="postWebhook" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RegisterWebhookNameOverflow" id="1ef0ec66-69b3-4163-b9f0-d80f1c5700ff" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"name" : "${#TestCase#LongName}",
+	"callbackUrl" : "${#Project#fuelbin}",
+	"callbackKey" : "${#TestCase#ClientSecretKey}",
+	"configuration" : {
+		"FuelMessagingEvents": ["Sent"],
+		"TriggeredSendEvents": ["Sent"]
+	}
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="da411731-0fb9-4780-8947-e4f04e7fb4b8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="c2c6d9cf-42a2-42d6-a040-a2c655de3d64" name="message">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/webhooks';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>The webhook name must be less than 500 characters.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RegisterWebhookCallbackUrlOverflow" id="9551c198-c250-4254-802c-8b0767625806">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/webhooks" methodName="postWebhook" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RegisterWebhookCallbackUrlOverflow" id="1ef0ec66-69b3-4163-b9f0-d80f1c5700ff" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"name" : "QE Test CallbackOverflowTest",
+	"callbackUrl" : "${#TestCase#LongCallbackUrl}",
+	"callbackKey" : "${#TestCase#ClientSecretKey}",
+	"configuration" : {
+		"FuelMessagingEvents": ["Sent"],
+		"TriggeredSendEvents": ["Sent"]
+	}
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="da411731-0fb9-4780-8947-e4f04e7fb4b8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="6de4a917-97bd-41a5-af36-8777f92143da" name="message">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/webhooks';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>The webhook callbackUrl must be less than 500 characters.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RegisterWebhookCallbackKeyOverflow" id="3ba68827-4b8e-4f60-8c8c-41473e1b40c8">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/webhooks" methodName="postWebhook" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RegisterWebhookCallbackKeyOverflow" id="1ef0ec66-69b3-4163-b9f0-d80f1c5700ff" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"name" : "CallbackKeyOverflowTest",
+	"callbackUrl" : "${#Project#fuelbin}",
+	"callbackKey" : "${#TestCase#LongCallbackKey}",
+	"configuration" : {
+		"FuelMessagingEvents": ["open"],
+		"TriggeredSendEvents": ["open"]
+	}
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="da411731-0fb9-4780-8947-e4f04e7fb4b8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="6de4a917-97bd-41a5-af36-8777f92143da" name="message">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/webhooks';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>The webhook callbackKey must be less than 500 characters.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RegisterWebhookInvalidURL" id="193c7c69-7d04-446f-8cd6-1c82edd20381">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/webhooks" methodName="postWebhook" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RegisterWebhookInvalidURL" id="1ef0ec66-69b3-4163-b9f0-d80f1c5700ff" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"name" : "QETest Invalid URL",
+	"callbackUrl" : "This is not a valid URL",
+	"callbackKey" : "${#TestCase#LongCallbackKey}",
+	"configuration" : {
+		"FuelMessagingEvents": ["open"],
+		"TriggeredSendEvents": ["open"]
+	}
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="da411731-0fb9-4780-8947-e4f04e7fb4b8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="6de4a917-97bd-41a5-af36-8777f92143da" name="message">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/webhooks';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>The webhook must have a well formed callbackUrl.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RegisterWebhookNonExistingURL" id="3ac42582-0764-489c-8334-924ddc79ee45">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/webhooks" methodName="postWebhook" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RegisterWebhookNonExistingURL" id="1ef0ec66-69b3-4163-b9f0-d80f1c5700ff" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"name" : "QETest Nonexistant URL",
+	"callbackUrl" : "http://iamnotavalidurl.com",
+	"callbackKey" : "${#TestCase#ClientSecretKey}",
+	"configuration" : {
+		"FuelMessagingEvents": ["open"],
+		"TriggeredSendEvents": ["open"]
+	}
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="da411731-0fb9-4780-8947-e4f04e7fb4b8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="6de4a917-97bd-41a5-af36-8777f92143da" name="message">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/webhooks';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>Unable to connect to remote server.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="MissingCallbackURL" id="b02906e6-d362-44e6-9630-f97ea7185667">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/webhooks" methodName="postWebhook" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="MissingCallbackURL" id="1ef0ec66-69b3-4163-b9f0-d80f1c5700ff" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"name" : "QETest Missing URL",
+	"callbackKey" : "${#TestCase#ClientSecretKey}",
+	"configuration" : {
+		"FuelMessagingEvents": ["open"],
+		"TriggeredSendEvents": ["open"]
+	}
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="da411731-0fb9-4780-8947-e4f04e7fb4b8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="6de4a917-97bd-41a5-af36-8777f92143da" name="message">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/webhooks';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>The webhook must have a callbackUrl.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="MissingCallbackKey" id="12e67b13-e7cf-41f8-af2f-8dd4cea98a2c">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/webhooks" methodName="postWebhook" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="MissingCallbackKey" id="1ef0ec66-69b3-4163-b9f0-d80f1c5700ff" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"name" : "QETest Nonexistant URL",
+	"callbackUrl" : "${#Project#fuelbin}",
+	"configuration" : {
+		"FuelMessagingEvents": ["open"],
+		"TriggeredSendEvents": ["open"]
+	}
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="da411731-0fb9-4780-8947-e4f04e7fb4b8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="6de4a917-97bd-41a5-af36-8777f92143da" name="message">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/webhooks';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>The webhook must have a callbackKey.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="MissingName" id="806014ea-ecf1-4b86-8b84-c8a1a5910217">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/webhooks" methodName="postWebhook" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="MissingName" id="1ef0ec66-69b3-4163-b9f0-d80f1c5700ff" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"callbackUrl" : "http://iamnotavalidurl.com",
+	"callbackKey" : "${#TestCase#ClientSecretKey}",
+	"configuration" : {
+		"FuelMessagingEvents": ["open"],
+		"TriggeredSendEvents": ["open"]
+	}
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="da411731-0fb9-4780-8947-e4f04e7fb4b8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="6de4a917-97bd-41a5-af36-8777f92143da" name="message">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/webhooks';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>The webhook must have a name provided.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="EmptyCallbackKey" id="d1b7e29c-4d37-4185-baae-13e222d4d664">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/webhooks" methodName="postWebhook" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="EmptyCallbackKey" id="1ef0ec66-69b3-4163-b9f0-d80f1c5700ff" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"name" : "QETest MissingKey",
+	"callbackUrl" : "${#Project#fuelbin}",
+	"callbackKey" : "",
+	"configuration" : {
+		"FuelMessagingEvents": ["open"],
+		"TriggeredSendEvents": ["open"]
+	}
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="da411731-0fb9-4780-8947-e4f04e7fb4b8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="6de4a917-97bd-41a5-af36-8777f92143da" name="message">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/webhooks';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>The webhook must have a callbackKey.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="EmptyCallbackUrl" id="3c454f75-f10d-445c-ba70-b79fe0f6db01">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/webhooks" methodName="postWebhook" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="EmptyCallbackUrl" id="1ef0ec66-69b3-4163-b9f0-d80f1c5700ff" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"name" : "QETest Empty URL",
+	"callbackUrl" : "",
+	"callbackKey" : "${#TestCase#ClientSecretKey}",
+	"configuration" : {
+		"FuelMessagingEvents": ["open"],
+		"TriggeredSendEvents": ["open"]
+	}
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="da411731-0fb9-4780-8947-e4f04e7fb4b8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="6de4a917-97bd-41a5-af36-8777f92143da" name="message">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/webhooks';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>The webhook must have a callbackUrl.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="EmptyName" id="c6868a76-99ed-4fc3-a11d-dd6c68202fff">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/webhooks" methodName="postWebhook" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="EmptyName" id="1ef0ec66-69b3-4163-b9f0-d80f1c5700ff" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"name" : "",
+	"callbackUrl" : "${#Project#fuelbin}",
+	"callbackKey" : "${#TestCase#ClientSecretKey}",
+	"configuration" : {
+		"FuelMessagingEvents": ["open"],
+		"TriggeredSendEvents": ["open"]
+	}
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="da411731-0fb9-4780-8947-e4f04e7fb4b8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="6de4a917-97bd-41a5-af36-8777f92143da" name="message">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/webhooks';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>The webhook must have a name provided.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>SecretKey</con:name>
+      <con:value>jj97ISThP6oB1sJs/pi/pV0kz5xpcgXFNtxi5Jr1mkw=</con:value>
+    </con:property>
+    <con:property>
+      <con:name>ClientSecretKey</con:name>
+      <con:value>334ef19c-63f9-460d-ab37-af8e1a3ec1b0</con:value>
+      <con:value>2241406d-32c8-407a-b96b-e3de5121ae87</con:value>
+    </con:property>
+    <con:property>
+      <con:name>WebhookID</con:name>
+      <con:value>7483b4fe-6f1e-4f77-a24b-e60fd6f7a5a6</con:value>
+    </con:property>
+    <con:property>
+      <con:name>WebhookName</con:name>
+      <con:value>34e47305-9baf-4568-bd32-fda04c2a7874</con:value>
+    </con:property>
+    <con:property>
+      <con:name>LongName</con:name>
+      <con:value>ZKKBYO4JTUUFZNSSM3SE9AL64HQSVZS37F9T61IF65LQKBBX7UDRKGJ82GQOJ7KK2JEAXUPFZZ2CXWOQIDG8WWOKNVQDVAJ0TTCCC7XSC8PLO2J6TZY0JZSAUA5EXW3NZ9UKQ8IXLO5S76V6A6E1FSFB3Y3TUYQMG71YHTC376JRREQ85WHMOBIFU7TDYI5G9QTYZ7WPHUA1S0NRWXI6CS3LC1R51Y5TC3L8LDW4VQ3PDJACDYEAPBBLJR4B2DCI79HCUNHN5OLSCFV27B4RWH6VUY4TEV07AYELC5VUGXHBN0JIB09NLS81IYCGP14EZBKH1VUUFW34JN4JGSKRCMU4HQ4KRT7YW7IEAHFEZUPGN6JDE0MVLY6QY3JDO9R84KDUF4OUINENL3S913J2JO9UP8UJFZZUC3OVGMAZAE8LZLJYEQI67KFLEU8AXD6BZ3OI4D95ESRAQ0KDBDRQ1B5AQLA6UYMOHPSR5KME3XTUAG0D337QGFXXWHBBMRM</con:value>
+    </con:property>
+    <con:property>
+      <con:name>LongCallbackUrl</con:name>
+      <con:value>https://fuelbin.dev.marketingcloudapps.com/WEBHKS1?rand=AVBYET63W0YDZOVDMHT36K65MIARROWFAPUT3OCCZQIK5OG7YYOA0U015CPVM0VDBIZACBRG3STMCSW5ASCY5QPE1CY5FAVC22A6E1V7XZCKUDPJ63VADS0RZ6K31FJQ0PNWDVW82PVTCN4D2J8BZJBHDHJCAQ3HS3BCWDHKJ745P9HEFO0JS01GXZKLN0EE6SMYO2K7AEDGFJWVN22002HSPN7K0G9GISNEKQOKT4ANNETWC97XF6H5ZTAZCJ1WGC2DMMSLFV2P1YKTH5H3GJR6UL3HWO4N5EJAVI14CAXESE4UIYRPZED0JCABJG76JVFAIHS2KGWZ5QR2B8YJ235J08E3QI20OBAKD8N3CVIVFSZUT0PP7XSIQQ7GHB94737C5ENM6D4URHQEQKX0IKUNEMQ68NCX8PAI904HGSX1LK29STPVDH7WRCQUU</con:value>
+    </con:property>
+    <con:property>
+      <con:name>LongCallbackKey</con:name>
+      <con:value>UCVT60EKSAA5OD2RLS9C84UBXJB6Z8TPA39JXG842CHAR17QUODULGV05HSO0UYRFOFID957AY8RNT18N3RPP2IT93Z5TIBRWZXKAQ7HFAPHAJ4N6E6FWUV80QMMANEHY7360RTDPHMLVFDO8XRF2TRN32JTGYPK4EW52TNW5RGE2KNAO82UBR52XJ7SHYRLNYPCE75HRDBK2E6VMV3INJHAZTIQI4GCE9IRJHKX24RBLM6ORQDWMDBZTGVCGUXW25ZI9K343RBZU7OXV595CT0TT4VKDN9IFZOLO7F1DXK0P2NPLZR8PCZFILA3NGSP0ZOCXB69DI2R2PCXI6R55IOMAYCQKCRE5HGOIB20EP5VXF1850T8O2SE6DLCUOO9FPWGOKAELG1CEI44NIS96W6MXWOHNZ5A2N4GNHVIH9HU5IKANXDD3S23B1VL5HMS9ZKO7A8SRL6PYNYT6F867FSS5AZO6BXGC8V8G8LAQXGL5UTVOH1M7</con:value>
+      <con:value>0cf9cb5a-51b4-446f-8671-c9ca9291c2b5</con:value>
+    </con:property>
+    <con:property>
+      <con:name>MaxSizeName</con:name>
+      <con:value>250</con:value>
+    </con:property>
+    <con:property>
+      <con:name>MaxSizeCallbackUrl</con:name>
+      <con:value>500</con:value>
+    </con:property>
+    <con:property>
+      <con:name>MaxSizeCallbackKey</con:name>
+      <con:value>500</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>01a93f97-809e-4487-9241-e588d5c41f28</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

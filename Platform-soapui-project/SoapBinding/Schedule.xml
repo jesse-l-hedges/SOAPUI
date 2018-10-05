@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:operation id="9aeaa9d3-dadd-4174-b6e0-9a105c2325ac" isOneWay="false" action="Schedule" name="Schedule" bindingOperationName="Schedule" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="9aeaa9d3-dadd-4174-b6e0-9a105c2325acfileName">Schedule</con:setting></con:settings></con:operation>

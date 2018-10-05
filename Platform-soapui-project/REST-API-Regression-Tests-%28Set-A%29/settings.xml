@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="03df02e3-b1de-46e2-89cd-404c46c14987" name="REST API Regression Tests (Set A)" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="03df02e3-b1de-46e2-89cd-404c46c14987fileName">REST-API-Regression-Tests-%28Set-A%29</con:setting>
+  </con:settings>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:runType>SEQUENTIAL</con:runType>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testSuite>

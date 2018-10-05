@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:interface xsi:type="con:RestService" id="b0955084-7570-478d-8900-a3b6a33884c2" wadlVersion="http://wadl.dev.java.net/2009/02" name="Auth" type="rest" definitionUrl="" basePath="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="b0955084-7570-478d-8900-a3b6a33884c2fileName">Auth</con:setting></con:settings><con:definitionCache type="TEXT" rootPart=""/><con:endpoints/></con:interface>

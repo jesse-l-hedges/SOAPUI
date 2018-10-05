@@ -1,0 +1,3377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Request Token Happy Path" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" id="096cf17a-a89f-41fc-9299-500f0db7b159" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="096cf17a-a89f-41fc-9299-500f0db7b159fileName">Request-Token-Happy-Path</con:setting>
+  </con:settings>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:testStep type="calltestcase" name="Get Creds" id="6ffb7f64-7ac3-4791-b0d3-7473817d68e6">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>425a3536-148a-4fad-afe1-eb96123c3104</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>clientid</con:name>
+        </con:property>
+        <con:property>
+          <con:name>clientsecret</con:name>
+        </con:property>
+      </con:properties>
+      <con:returnProperties/>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 1 - Get Vanilla Access Token" id="843539e2-c011-4b79-98da-122c48270896">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 1 - Get Vanilla Access Token" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "${#Project#clientid}",
+    "clientSecret": "${#Project#clientsecret}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes-200" id="7b149267-6343-4c36-9fae-ec74d3736fdb">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating AccessToken and ExpiresIn value" id="51b0b2db-d8dc-4123-b7e0-91bfd69ac051">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires> 0 &amp;&amp; expires &lt;= 3600</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validate Response Format" id="3d50c996-13e6-4a01-957d-41acfadacba6" disabled="true">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['Auth_Regression'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#ByClientIdAndSecret}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 1 - Get Platform Discovery" id="e9f7cd0e-6bec-4a5f-a6c5-b25649b04e03">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/rest" methodName="platform/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 1 - Get Platform Discovery" id="a299e711-5e6d-4043-9ccb-531b19d6f3ca" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/rest</con:originalUri>
+        <con:assertion type="JsonPath Match" id="55d9951e-389d-478d-807c-68c9ab4868cc" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 1 - Get Vanilla Access Token#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="properties" name="Response Validation Parameters" id="ca493ad6-e0d1-4740-ab72-eaefb5c578a4">
+    <con:settings/>
+    <con:config xsi:type="con:PropertiesStep" saveFirst="true" discardValuesOnSave="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:properties>
+        <con:property>
+          <con:name>ByClientIdAndSecret</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+        <con:property>
+          <con:name>legacyToken</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+        <con:property>
+          <con:name>refreshToken</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+        <con:property>
+          <con:name>legacyTokenwithRefreshToken</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+      </con:properties>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 2 - Get Legacy Token - Single MID" id="96a69002-d755-4aec-8b62-f070b11989e4">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 2 - Get Legacy Token - Single MID" mediaType="application/json" postQueryString="false" id="e42004f8-5745-47e9-944f-9addf66a40c6">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#casclientid}",
+   "clientSecret": "${#Project#casclientsecret}"
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requetToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="cf3539d0-0288-4eb5-972e-09a2f0150de9">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and legacyToken" id="d37f15e2-dfa7-4f48-add9-5bc5e08205ae">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def legacy = json.legacyToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert legacy =~/^[0-9a-zA-Z\-_]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating Response Format" id="03707d0c-5626-4757-b808-8be3fa4616f8" disabled="true">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['Auth_Regression'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#legacyToken}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="legacy" value="1" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>legacy</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 2 - Get Access Token With CAS Scope" id="e0435a4b-22e7-442a-aaf7-62e0f0aaf890">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 2 - Get Access Token With CAS Scope" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "${#Project#clientid}",
+    "clientSecret": "${#Project#clientsecret}",
+   "scope": "cas:${Scenario 2 - Get Legacy Token - Single MID#Response#$.legacyToken}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9326c5c3-4414-40e0-b377-9e2f047514ca">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="2274a833-2756-497a-af55-05f05c48bcc2" name="Response Values Match Expected Patterns">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires>1150</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="5c3e3216-ae39-4333-834f-22a760c4d63c" name="Old Access Token Differs From New">
+          <con:configuration>
+            <scriptText>def oldAccessToken = context.expand( '${Scenario 2 - Get Legacy Token - Single MID#Response#$.accessToken}' )
+def newAccessToken = context.expand( '${Scenario 2 - Get Access Token With CAS Scope - Single MID#Response#$.accessToken}' )
+
+
+assert oldAccessToken != newAccessToken</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 2 - Get Platform Discovery" id="ffcea16f-9bff-4757-85e6-c7b86f89ec44">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/rest" methodName="platform/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 2 - Get Platform Discovery" id="a299e711-5e6d-4043-9ccb-531b19d6f3ca" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/rest</con:originalUri>
+        <con:assertion type="JsonPath Match" id="93d76e04-9649-4220-8736-22c5e170d3a5" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 2 - Get Access Token With CAS Scope#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 3 - Get Initial Refresh Token" id="bfe7492b-7274-4606-b3da-c5ff413972b4">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 3 - Get Initial Refresh Token" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "${#Project#clientid}",
+    "clientSecret": "${#Project#clientsecret}",
+    "accessType": "offline"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and refreshToken" id="2d978192-07e5-4730-867a-be771c00318b">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def refresh = json.refreshToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert refresh =~/^[0-9a-zA-Z\-]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="PropertyAssertion" id="19dae54f-d87e-4d5d-9b78-b7522cb7558a" disabled="true">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['Auth_Regression'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#refreshToken}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="PropertyTransfer 1" id="87f64662-c892-46fd-8508-798c7bf804c0">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" entitize="false" transferToAll="false">
+        <con:name>refreshToken</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Scenario 3 - Get Initial Refresh Token</con:sourceStep>
+        <con:sourcePath>$.refreshToken</con:sourcePath>
+        <con:targetType>refreshToken</con:targetType>
+        <con:targetStep>#TestSuite#</con:targetStep>
+        <con:targetPath/>
+        <con:type>JSONPATH</con:type>
+        <con:targetTransferType>JSONPATH</con:targetTransferType>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 3 - Get New Access Token With Refresh Token" id="82a174a2-c1cf-4475-a5ad-b8f274fa4344">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 3 - Get New Access Token With Refresh Token" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "${#Project#clientid}",
+    "clientSecret": "${#Project#clientsecret}",
+   "accessType": "offline",
+   "refreshToken": "${Scenario 3 - Get Initial Refresh Token#Response#$.refreshToken}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and refreshToken" id="2d978192-07e5-4730-867a-be771c00318b">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def refresh = json.refreshToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert refresh =~/^[0-9a-zA-Z\-]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="f3a5b178-84ee-4c9a-bb31-d054f43c3a50" name="Old Refresh Token Differs From New">
+          <con:configuration>
+            <scriptText>def oldRefreshToken = context.expand( '${Scenario 3 - Get New Access Token With Refresh Token#RawRequest#$.refreshToken}' )
+def newRefreshToken = context.expand( '${Scenario 3 - Get New Access Token With Refresh Token#Response#$.refreshToken}' )
+
+assert oldRefreshToken != newRefreshToken</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="f3a5b178-84ee-4c9a-bb31-d054f43c3a50" name="Old Access Token Differs From New">
+          <con:configuration>
+            <scriptText>def oldAccessToken = context.expand( '${Scenario 3 - Get New Access Token With Refresh Token#RawRequest#$.accessToken}' )
+def newAccessToken = context.expand( '${Scenario 3 - Get New Access Token With Refresh Token#Response#$.accessToken}' )
+
+assert oldAccessToken != newAccessToken</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="PropertyAssertion" id="19dae54f-d87e-4d5d-9b78-b7522cb7558a" disabled="true">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['Auth_Regression'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#refreshToken}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 3 - Get New Access Token With Refresh Token-UsedToken" id="9f97670d-2992-4afc-8344-9893069ac20e">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 3 - Get New Access Token With Refresh Token-UsedToken" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "${#Project#clientid}",
+    "clientSecret": "${#Project#clientsecret}",
+   "accessType": "offline",
+   "refreshToken": "${Scenario 3 - Get Initial Refresh Token#Response#$.refreshToken}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 401" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="6bc1a34c-caf8-441c-944c-dfbff5ad69a2" name="JsonPath Match" disabled="true">
+          <con:configuration>
+            <path>$.errorcode</path>
+            <content>1</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="dcbfe334-7ab8-4126-a419-0b47f8a46b93" name="JsonPath Match Message" disabled="true">
+          <con:configuration>
+            <path>$.message</path>
+            <content>Unauthorized</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Existence Match" id="a281f07f-379e-4b8f-b788-319740a56836" name="Check for existence of [accessToken]">
+          <con:configuration>
+            <path>$['accessToken']</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Existence Match" id="4ce429ef-285f-4c29-bda9-5ea021a74422" name="Check for existence of [expiresIn]">
+          <con:configuration>
+            <path>$['expiresIn']</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Existence Match" id="1eba4ce1-1b53-4e96-8e70-9aaf2dbbca62" name="Check for existence of [refreshToken]">
+          <con:configuration>
+            <path>$['refreshToken']</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 3 - Get Platform Discovery" id="995f8a0e-a25f-4b52-b9af-5048b1a19cfb">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/rest" methodName="platform/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 3 - Get Platform Discovery" id="a299e711-5e6d-4043-9ccb-531b19d6f3ca" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/rest</con:originalUri>
+        <con:assertion type="JsonPath Match" id="93d76e04-9649-4220-8736-22c5e170d3a5" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="c4d8f555-2c84-4b53-892a-171af80b683b" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 3 - Get New Access Token With Refresh Token#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RequestAuthLegacy - RequestAuthByClientIdAndSecretLegacy with Refresh Token" id="0be122c8-5497-4fad-9acf-b08f9b507a95">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="Request Legacy Token" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RequestAuthLegacy - RequestAuthByClientIdAndSecretLegacy with Refresh Token" mediaType="application/json" postQueryString="false" id="eaa1b3d5-e03c-47d0-a52b-6d65c6458fcc">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "${#Project#clientid}",
+    "clientSecret": "${#Project#clientsecret}",
+    "accessType": "offline"
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requetToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="1298a96e-af02-48c9-a4eb-283ac271d220">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and legacyToken" id="0c715f81-fac9-4c07-a47b-2e1b49ea8c9f">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def legacy = json.legacyToken
+def refresh = json.refreshToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires > 1000 &amp;&amp; expires &lt;= 3600
+assert legacy =~/^[0-9a-zA-Z\-_]+$/
+assert refresh =~/^[0-9a-zA-Z\-]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Property Assertion" id="e6a18937-8a21-421f-a0e6-abef2b42b452" disabled="true">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['Auth_Regression'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#legacyTokenwithRefreshToken}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="legacy" value="1" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>legacy</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4A CAS - Get Legacy Token - Client ID A" id="54c1d6d0-b03f-41b9-88a1-58e794ec768b">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="Request Legacy Token" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4A CAS - Get Legacy Token - Client ID A" mediaType="application/json" postQueryString="false" id="e42004f8-5745-47e9-944f-9addf66a40c6">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#casclientid}",
+   "clientSecret": "${#Project#casclientsecret}"
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requetToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="cf3539d0-0288-4eb5-972e-09a2f0150de9">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and legacyToken" id="d37f15e2-dfa7-4f48-add9-5bc5e08205ae">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def legacy = json.legacyToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert legacy =~/^[0-9a-zA-Z\-_]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Property Assertion" id="03707d0c-5626-4757-b808-8be3fa4616f8" disabled="true">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['Auth_Regression'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#legacyToken}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="legacy" value="1" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>legacy</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4A CAS - Get Token Context - Client ID A" id="79560e8f-4ba0-49e8-a2ec-69b2fb76e0bd">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/tokenContext" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4A CAS - Get Token Context - Client ID A" id="a98d2f7e-c2c6-439e-b14e-dc2df427ea5d" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/tokenContext</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="e4d5711e-c075-4760-bedd-3e85dae990ef" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 4A CAS - Get Legacy Token - Client ID A#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry/>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4A CAS - Get Access Token With CAS Scope - Client ID B" id="6ca37db5-7cd0-4c1c-a582-d4e33ecf26d9">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4A CAS - Get Access Token With CAS Scope - Client ID B" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#clientid}",
+   "clientSecret": "${#Project#clientsecret}",
+   "scope": "cas:${Scenario 4A CAS - Get Legacy Token - Client ID A#Response#$.legacyToken}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9326c5c3-4414-40e0-b377-9e2f047514ca">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="2274a833-2756-497a-af55-05f05c48bcc2" name="Response Values Match Expected Patterns">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires>1150</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="5c3e3216-ae39-4333-834f-22a760c4d63c" name="Old Access Token Differs From New">
+          <con:configuration>
+            <scriptText>def oldAccessToken = context.expand( '${Scenario 4A CAS - Get Legacy Token - Client ID A#Response#$.accessToken}' )
+def newAccessToken = context.expand( '${Scenario 4A CAS - Get Access Token With CAS Scope - Client ID B#Response#$.accessToken}' )
+
+
+assert oldAccessToken != newAccessToken</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4A CAS - Get Platform Discovery - Client ID B" id="55fcb518-4a42-4976-bde5-15291742c07c">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/rest" methodName="platform/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4A CAS - Get Platform Discovery - Client ID B" id="a299e711-5e6d-4043-9ccb-531b19d6f3ca" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/rest</con:originalUri>
+        <con:assertion type="JsonPath Match" id="93d76e04-9649-4220-8736-22c5e170d3a5" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="c4d8f555-2c84-4b53-892a-171af80b683b" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="0283baeb-e357-448a-993a-be372a7c97c4" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 4A CAS - Get Access Token With CAS Scope - Client ID B#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4A CAS - Get Token Context - Verify Scope" id="7e49f0e1-d182-46e9-a11a-338b08c9301a">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/tokenContext" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4A CAS - Get Token Context - Verify Scope" id="a98d2f7e-c2c6-439e-b14e-dc2df427ea5d" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/tokenContext</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="663f0f0a-3a4b-4d06-ad8d-ae15064d3a87" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="265de22a-f899-413b-9c0e-64944c36a166" name="Enterprise ID - Verify Scope Applied">
+          <con:configuration>
+            <path>$.enterprise.id</path>
+            <content>${Scenario 4A CAS - Get Token Context - Client ID A#Response#$.enterprise.id}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="8add27e4-30ab-4f48-8c0f-b01c76a3c2a5" name="Org ID - Verify Scope Applied">
+          <con:configuration>
+            <path>$.organization.id</path>
+            <content>${Scenario 4A CAS - Get Token Context - Client ID A#Response#$.organization.id}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="fb378b74-a40b-4ef0-8f9a-5929d9ebbec5" name="User ID - Verify Scope Applied">
+          <con:configuration>
+            <path>$.user.id</path>
+            <content>${Scenario 4A CAS - Get Token Context - Client ID A#Response#$.user.id}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 4A CAS - Get Access Token With CAS Scope - Client ID B#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4B CAS - Get Legacy Token - Client ID A" id="b135d47f-5080-4adf-9238-dbd8f61d4450">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="Request Legacy Token" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4B CAS - Get Legacy Token - Client ID A" mediaType="application/json" postQueryString="false" id="e42004f8-5745-47e9-944f-9addf66a40c6">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#casclientid}",
+   "clientSecret": "${#Project#casclientsecret}"
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requetToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="cf3539d0-0288-4eb5-972e-09a2f0150de9">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and legacyToken" id="d37f15e2-dfa7-4f48-add9-5bc5e08205ae">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def legacy = json.legacyToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert legacy =~/^[0-9a-zA-Z\-_]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Property Assertion" id="03707d0c-5626-4757-b808-8be3fa4616f8" disabled="true">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['Auth_Regression'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#legacyToken}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="legacy" value="1" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>legacy</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4B CAS - Get Initial Refresh Token - Client ID B" id="b2d03310-647a-4258-ad86-379980f4cf5e">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4B CAS - Get Initial Refresh Token - Client ID B" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#clientid}",
+   "clientSecret": "${#Project#clientsecret}",
+   "accessType": "offline",
+   "scope": "cas:${Scenario 4B CAS - Get Legacy Token - Client ID A#Response#$.legacyToken}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and refreshToken" id="2d978192-07e5-4730-867a-be771c00318b">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def refresh = json.refreshToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert refresh =~/^[0-9a-zA-Z\-]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="PropertyAssertion" id="19dae54f-d87e-4d5d-9b78-b7522cb7558a" disabled="true">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['Auth_Regression'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#refreshToken}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4B CAS - Get Platform Discovery - Client ID B" id="d10487b4-12be-4b5c-a7f2-b24033b87e71">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/rest" methodName="platform/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4B CAS - Get Platform Discovery - Client ID B" id="a299e711-5e6d-4043-9ccb-531b19d6f3ca" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/rest</con:originalUri>
+        <con:assertion type="JsonPath Match" id="93d76e04-9649-4220-8736-22c5e170d3a5" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="c4d8f555-2c84-4b53-892a-171af80b683b" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="0283baeb-e357-448a-993a-be372a7c97c4" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="d8119fe3-d80e-49b3-89ff-d30a76749838" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 4B CAS - Get Initial Refresh Token - Client ID B#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4C CAS - Get Legacy Token - Client ID A" id="604c3d2c-e7de-41e1-bb0e-77ca0a27c08a">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="Request Legacy Token" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4C CAS - Get Legacy Token - Client ID A" mediaType="application/json" postQueryString="false" id="e42004f8-5745-47e9-944f-9addf66a40c6">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#casclientid}",
+   "clientSecret": "${#Project#casclientsecret}"
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requetToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="cf3539d0-0288-4eb5-972e-09a2f0150de9">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and legacyToken" id="d37f15e2-dfa7-4f48-add9-5bc5e08205ae">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def legacy = json.legacyToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert legacy =~/^[0-9a-zA-Z\-_]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Property Assertion" id="03707d0c-5626-4757-b808-8be3fa4616f8" disabled="true">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['Auth_Regression'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#legacyToken}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="legacy" value="1" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>legacy</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4C CAS - Get Token Context - Client ID A" id="69bf8348-c764-46ba-9021-050e972252e5">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/tokenContext" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4C CAS - Get Token Context - Client ID A" id="a98d2f7e-c2c6-439e-b14e-dc2df427ea5d" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/tokenContext</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="e4d5711e-c075-4760-bedd-3e85dae990ef" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 4C CAS - Get Legacy Token - Client ID A#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4C CAS - Get Initial Refresh Token - Client ID B" id="c8b04f74-2fe5-4187-b102-ee0d9e87720a">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4C CAS - Get Initial Refresh Token - Client ID B" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#clientid}",
+   "clientSecret": "${#Project#clientsecret}",
+   "accessType": "offline",
+   "scope": "cas:${Scenario 4C CAS - Get Legacy Token - Client ID A#Response#$.legacyToken}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and refreshToken" id="2d978192-07e5-4730-867a-be771c00318b">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def refresh = json.refreshToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert refresh =~/^[0-9a-zA-Z\-]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="PropertyAssertion" id="19dae54f-d87e-4d5d-9b78-b7522cb7558a" disabled="true">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['Auth_Regression'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#refreshToken}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4C CAS - Get New Access Token With Refresh Token - Client ID B" id="643aeecd-fbc9-4fd6-a99e-25a0885dbdf1">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4C CAS - Get New Access Token With Refresh Token - Client ID B" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#clientid}",
+   "clientSecret": "${#Project#clientsecret}",
+   "accessType": "offline",
+   "refreshToken": "${Scenario 4C CAS - Get Initial Refresh Token - Client ID B#Response#$.refreshToken}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and refreshToken" id="2d978192-07e5-4730-867a-be771c00318b">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def refresh = json.refreshToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert refresh =~/^[0-9a-zA-Z\-]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="f3a5b178-84ee-4c9a-bb31-d054f43c3a50" name="Old Refresh Token Differs From New">
+          <con:configuration>
+            <scriptText>def oldRefreshToken = context.expand( '${Scenario 4C CAS - Get Legacy Token - Client ID A#Response#$.refreshToken}' )
+def newRefreshToken = context.expand( '${Scenario 4C CAS - Get New Access Token With Refresh Token - Client ID B#Response#$.refreshToken}' )
+
+assert oldRefreshToken != newRefreshToken</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="f3a5b178-84ee-4c9a-bb31-d054f43c3a50" name="Old Access Token Differs From New">
+          <con:configuration>
+            <scriptText>def oldAccessToken = context.expand( '${Scenario 4C CAS - Get Legacy Token - Client ID A#Response#$.accessToken}' )
+def newAccessToken = context.expand( '${Scenario 4C CAS - Get New Access Token With Refresh Token - Client ID B#Response#$.accessToken}' )
+
+assert oldAccessToken != newAccessToken</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="PropertyAssertion" id="19dae54f-d87e-4d5d-9b78-b7522cb7558a" disabled="true">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['Auth_Regression'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#refreshToken}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4C CAS - Get Platform Discovery With New Access Token" id="3fc55dbc-275c-4f0d-bcdd-5a7274a81c0a">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/rest" methodName="platform/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4C CAS - Get Platform Discovery With New Access Token" id="a299e711-5e6d-4043-9ccb-531b19d6f3ca" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/rest</con:originalUri>
+        <con:assertion type="JsonPath Match" id="93d76e04-9649-4220-8736-22c5e170d3a5" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="c4d8f555-2c84-4b53-892a-171af80b683b" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="0283baeb-e357-448a-993a-be372a7c97c4" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="d8119fe3-d80e-49b3-89ff-d30a76749838" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="bd0cc0e2-fc75-4220-8ece-278ae526cc9c" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 4C CAS - Get New Access Token With Refresh Token - Client ID B#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4C CAS - Get Token Context - Verify Scope" id="939f36e2-1aa5-4b2c-abcb-78af40cbfa58">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/tokenContext" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4C CAS - Get Token Context - Verify Scope" id="a98d2f7e-c2c6-439e-b14e-dc2df427ea5d" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/tokenContext</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="663f0f0a-3a4b-4d06-ad8d-ae15064d3a87" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="265de22a-f899-413b-9c0e-64944c36a166" name="Initial Enterprise ID Matches Cross MID Ent ID">
+          <con:configuration>
+            <path>$.enterprise.id</path>
+            <content>${Scenario 4C CAS - Get Token Context - Client ID A#Response#$.enterprise.id}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="8add27e4-30ab-4f48-8c0f-b01c76a3c2a5" name="Initial Org ID Matches Cross MID Org ID">
+          <con:configuration>
+            <path>$.organization.id</path>
+            <content>${Scenario 4C CAS - Get Token Context - Client ID A#Response#$.organization.id}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="fb378b74-a40b-4ef0-8f9a-5929d9ebbec5" name="Initial User ID Matches Cross MID User ID">
+          <con:configuration>
+            <path>$.user.id</path>
+            <content>${Scenario 4C CAS - Get Token Context - Client ID A#Response#$.user.id}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 4C CAS - Get New Access Token With Refresh Token - Client ID B#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4A Org User - Get Access Token With User 1 Scope User 2 ClientID" id="bbfccf51-4f04-4d27-aff8-ac997f5ad538">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4A Org User - Get Access Token With User 1 Scope User 2 ClientID" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#bu1user2clientID}",
+   "clientSecret": "${#Project#bu1user2clientSecret}",
+   "scope": "/organization:${#Project#bu1user1orgID} /user:${#Project#bu1user1userID}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9326c5c3-4414-40e0-b377-9e2f047514ca">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="2274a833-2756-497a-af55-05f05c48bcc2" name="Response Values Match Expected Patterns">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires>1150</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4A Org User - Get Platform Discovery - BU 1 User 2" id="c40b1669-c1e8-423c-b931-0965a749f774">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/rest" methodName="platform/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4A Org User - Get Platform Discovery - BU 1 User 2" id="a299e711-5e6d-4043-9ccb-531b19d6f3ca" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/rest</con:originalUri>
+        <con:assertion type="JsonPath Match" id="93d76e04-9649-4220-8736-22c5e170d3a5" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="c4d8f555-2c84-4b53-892a-171af80b683b" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="0283baeb-e357-448a-993a-be372a7c97c4" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 4A Org User - Get Access Token With User 1 Scope User 2 ClientID#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4A Org User - Get Token Context - Verify Scope" id="c950764a-9e0b-4b76-a7ec-54051eb9b446">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/tokenContext" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4A Org User - Get Token Context - Verify Scope" id="a98d2f7e-c2c6-439e-b14e-dc2df427ea5d" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/tokenContext</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="663f0f0a-3a4b-4d06-ad8d-ae15064d3a87" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="265de22a-f899-413b-9c0e-64944c36a166" name="Enterprise ID - Verify Scope Applied">
+          <con:configuration>
+            <path>$.enterprise.id</path>
+            <content>${#Project#mid}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="8add27e4-30ab-4f48-8c0f-b01c76a3c2a5" name="Org ID - Verify Scope Applied">
+          <con:configuration>
+            <path>$.organization.id</path>
+            <content>${#Project#bumid}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="fb378b74-a40b-4ef0-8f9a-5929d9ebbec5" name="User ID - Verify Scope Applied">
+          <con:configuration>
+            <path>$.user.id</path>
+            <content>${#Project#bu1user2userID}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 4A Org User - Get Access Token With User 1 Scope User 2 ClientID#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4B Org User - Get Initial Refresh Token - User 1 Scope User 2 ClientID" id="fbe0e414-c047-4fff-9417-47be4e0ac50a">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4B Org User - Get Initial Refresh Token - User 1 Scope User 2 ClientID" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#bu1user2clientID}",
+   "clientSecret": "${#Project#bu1user2clientSecret}",
+   "accessType": "offline",
+   "scope": "/organization:${#Project#bu1user1orgID} /user:${#Project#bu1user1userID}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and refreshToken" id="2d978192-07e5-4730-867a-be771c00318b">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def refresh = json.refreshToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert refresh =~/^[0-9a-zA-Z\-]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="PropertyAssertion" id="19dae54f-d87e-4d5d-9b78-b7522cb7558a" disabled="true">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['Auth_Regression'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#refreshToken}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4B Org User - Get Platform Discovery - BU 1 User 2" id="da3e1ae1-5046-4f80-af43-830d3d8a9c9e">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/rest" methodName="platform/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4B Org User - Get Platform Discovery - BU 1 User 2" id="a299e711-5e6d-4043-9ccb-531b19d6f3ca" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/rest</con:originalUri>
+        <con:assertion type="JsonPath Match" id="93d76e04-9649-4220-8736-22c5e170d3a5" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="c4d8f555-2c84-4b53-892a-171af80b683b" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="0283baeb-e357-448a-993a-be372a7c97c4" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="d8119fe3-d80e-49b3-89ff-d30a76749838" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 4B Org User - Get Initial Refresh Token - User 1 Scope User 2 ClientID#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4C Org User - Get Initial Refresh Token - User 1 Scope User 2 ClientID" id="307637a1-8498-42d5-a327-7a05367fc1a9">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4C Org User - Get Initial Refresh Token - User 1 Scope User 2 ClientID" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#bu1user2clientID}",
+   "clientSecret": "${#Project#bu1user2clientSecret}",
+   "accessType": "offline",
+   "scope": "/organization:${#Project#bu1user1orgID} /user:${#Project#bu1user1userID}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and refreshToken" id="2d978192-07e5-4730-867a-be771c00318b">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def refresh = json.refreshToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert refresh =~/^[0-9a-zA-Z\-]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="PropertyAssertion" id="19dae54f-d87e-4d5d-9b78-b7522cb7558a" disabled="true">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['Auth_Regression'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#refreshToken}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4C Org User - Get New Access Token With Refresh Token - BU 1 User 2" id="1ef543ef-e043-490a-91a4-1e215108ba9e">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4C Org User - Get New Access Token With Refresh Token - BU 1 User 2" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#bu1user2clientID}",
+   "clientSecret": "${#Project#bu1user2clientSecret}",
+   "accessType": "offline",
+   "refreshToken": "${Scenario 4C Org User - Get Initial Refresh Token - User 1 Scope User 2 ClientID#Response#$.refreshToken}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and refreshToken" id="2d978192-07e5-4730-867a-be771c00318b">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def refresh = json.refreshToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert refresh =~/^[0-9a-zA-Z\-]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="f3a5b178-84ee-4c9a-bb31-d054f43c3a50" name="Old Refresh Token Differs From New">
+          <con:configuration>
+            <scriptText>def oldRefreshToken = context.expand( '${Scenario 4C Org User - Get Legacy Token - BU 1 User 1#Response#$.refreshToken}' )
+def newRefreshToken = context.expand( '${Scenario 4C Org User - Get New Access Token With Refresh Token - BU 1 User 2#Response#$.refreshToken}' )
+
+assert oldRefreshToken != newRefreshToken</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="f3a5b178-84ee-4c9a-bb31-d054f43c3a50" name="Old Access Token Differs From New">
+          <con:configuration>
+            <scriptText>def oldAccessToken = context.expand( '${Scenario 4C Org User - Get Legacy Token - BU 1 User 1#Response#$.refreshToken}' )
+def newAccessToken = context.expand( '${Scenario 4C Org User - Get New Access Token With Refresh Token - BU 1 User 2#Response#$.refreshToken}' )
+
+assert oldAccessToken != newAccessToken</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="PropertyAssertion" id="19dae54f-d87e-4d5d-9b78-b7522cb7558a" disabled="true">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['Auth_Regression'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#refreshToken}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4C Org User - Get Platform Discovery With New Access Token - BU 1 User 2" id="1b5a2d07-1ea4-4545-83ba-6d44804854f5">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/rest" methodName="platform/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4C Org User - Get Platform Discovery With New Access Token - BU 1 User 2" id="a299e711-5e6d-4043-9ccb-531b19d6f3ca" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/rest</con:originalUri>
+        <con:assertion type="JsonPath Match" id="93d76e04-9649-4220-8736-22c5e170d3a5" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="c4d8f555-2c84-4b53-892a-171af80b683b" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="0283baeb-e357-448a-993a-be372a7c97c4" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="d8119fe3-d80e-49b3-89ff-d30a76749838" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="bd0cc0e2-fc75-4220-8ece-278ae526cc9c" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 4C Org User - Get New Access Token With Refresh Token - BU 1 User 2#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4C Org User - Get Token Context - Verify Scope" id="23930a5c-33c3-4588-acdf-fa327114af33">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/tokenContext" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4C Org User - Get Token Context - Verify Scope" id="a98d2f7e-c2c6-439e-b14e-dc2df427ea5d" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/tokenContext</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="663f0f0a-3a4b-4d06-ad8d-ae15064d3a87" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="265de22a-f899-413b-9c0e-64944c36a166" name="Enterprise ID - Verify Scope Applied">
+          <con:configuration>
+            <path>$.enterprise.id</path>
+            <content>${#Project#mid}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="8add27e4-30ab-4f48-8c0f-b01c76a3c2a5" name="Org ID - Verify Scope Applied">
+          <con:configuration>
+            <path>$.organization.id</path>
+            <content>${#Project#bu1user1orgID}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="fb378b74-a40b-4ef0-8f9a-5929d9ebbec5" name="User ID - Verify Scope Applied">
+          <con:configuration>
+            <path>$.user.id</path>
+            <content>${#Project#bu1user2userID}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 4C Org User - Get New Access Token With Refresh Token - BU 1 User 2#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 5 - Get Legacy Token With Main Client ID" id="25aee1c2-786c-40ce-af96-998e224dbfb3">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 5 - Get Legacy Token With Main Client ID" mediaType="application/json" postQueryString="false" id="e42004f8-5745-47e9-944f-9addf66a40c6">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${#Project#clientid}",
+   "clientSecret": "${#Project#clientsecret}"
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requetToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="cf3539d0-0288-4eb5-972e-09a2f0150de9">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and legacyToken" id="d37f15e2-dfa7-4f48-add9-5bc5e08205ae">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def legacy = json.legacyToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert legacy =~/^[0-9a-zA-Z\-_]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating Response Format" id="03707d0c-5626-4757-b808-8be3fa4616f8" disabled="true">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['Auth_Regression'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#legacyToken}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="legacy" value="1" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>legacy</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Scenario 5 - SOAP Retrieve Request with Legacy Token" id="aaa69f34-5c8d-4360-a766-5d72bf6058c6">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Scenario 5 - SOAP Retrieve Request with Legacy Token" id="9e098088-8ff7-48d9-9b5c-14003d951bc1" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <Header>
+      <oAuth xmlns="http://exacttarget.com">
+         <oAuthToken>${Scenario 5 - Get Legacy Token With Main Client ID#Response#$.legacyToken}</oAuthToken>
+      </oAuth>
+      <Security xmlns="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+         <UsernameToken>
+            <Username>*</Username>
+            <Password>*</Password>
+         </UsernameToken>
+      </Security>
+   </Header>
+   <Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <RetrieveRequest>
+            <ObjectType>Account</ObjectType>
+            <Properties>Name</Properties>
+            <Properties>PartnerKey</Properties>
+            <Properties>ID</Properties>
+            <QueryAllAccounts>false</QueryAllAccounts>
+         </RetrieveRequest>
+      </RetrieveRequestMsg>
+   </Body>
+</Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="7e40236b-9bf3-497b-822c-fa55c107ce49"/>
+        <con:assertion type="XPath Match" id="750c14a6-c3b5-44d7-bf81-efbca257039a" name="Match content of [OverallStatus]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:RetrieveResponseMsg[1]/ns1:OverallStatus[1]/text()</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="a7d16932-2af3-4a26-9f95-9ee7f5a1a578" name="Match content of [ID]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:RetrieveResponseMsg[1]/ns1:Results[1]/ns1:ID[1]/text()</path>
+            <content>${#Project#mid}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="properties" name="Properties 1" id="b7fa208b-7191-4772-9773-6fbd83e04e82">
+    <con:settings/>
+    <con:config xsi:type="con:PropertiesStep" saveFirst="true" discardValuesOnSave="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:properties>
+        <con:property>
+          <con:name>refreshToken</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+      </con:properties>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4A JWT- Get Access Token With User 1 JWT User 2 ClientID" id="c1d1fcbc-ffb7-434e-833e-67cc6f888ea9" disabled="true">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4A JWT- Get Access Token With User 1 JWT User 2 ClientID" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${clientID}",
+   "clientSecret": "${clientSecret}",
+   "scope": "jwt:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2NvZGUuZXhhY3R0YXJnZXQuY29tIiwiZXhwIjoiMjAxNS0xMC0wMVQwNDowMDowMC4wMDBaIiwicmVxdWVzdCI6eyJ1c2VyIjp7ImlkIjoyOTUzODF9LCJvcmdhbml6YXRpb24iOnsiaWQiOjI4MDcwMCwiZW50ZXJwcmlzZUlkIjoyODA3MDB9fX0.46K6a7AVXRDqSae-4ZZB-95S1aa6qyv9RmaMmw2g9_4"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9326c5c3-4414-40e0-b377-9e2f047514ca">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="2274a833-2756-497a-af55-05f05c48bcc2" name="Response Values Match Expected Patterns">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires>1150</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4A JWT- Get Platform Discovery - BU 1 User 2" id="1522cd1b-fa78-4571-be77-3c7012918225" disabled="true">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/event-internal/v1/rest" methodName="event-internal/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4A JWT- Get Platform Discovery - BU 1 User 2" id="a299e711-5e6d-4043-9ccb-531b19d6f3ca" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/rest</con:originalUri>
+        <con:assertion type="JsonPath Match" id="93d76e04-9649-4220-8736-22c5e170d3a5" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="c4d8f555-2c84-4b53-892a-171af80b683b" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="0283baeb-e357-448a-993a-be372a7c97c4" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 4A Org User - Get Access Token With User 1 Scope User 2 ClientID#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4A JWT - Get Token Context - Verify Scope" id="adb49ffd-1357-44ec-9ce8-0799e5a1dec7" disabled="true">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/tokenContext" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4A JWT - Get Token Context - Verify Scope" id="a98d2f7e-c2c6-439e-b14e-dc2df427ea5d" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/tokenContext</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="663f0f0a-3a4b-4d06-ad8d-ae15064d3a87" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="265de22a-f899-413b-9c0e-64944c36a166" name="Enterprise ID - Verify Scope Applied">
+          <con:configuration>
+            <path>$.enterprise.id</path>
+            <content>${bumid}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="8add27e4-30ab-4f48-8c0f-b01c76a3c2a5" name="Org ID - Verify Scope Applied">
+          <con:configuration>
+            <path>$.organization.id</path>
+            <content>${bu1user2orgID}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="fb378b74-a40b-4ef0-8f9a-5929d9ebbec5" name="User ID - Verify Scope Applied">
+          <con:configuration>
+            <path>$.user.id</path>
+            <content>${bu1user2userID}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 4A Org User - Get Access Token With User 1 Scope User 2 ClientID#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4B JWT - Get Initial Refresh Token - User 1 JWT User 2 ClientID" id="979de030-9305-45c1-9b07-0f8f3c5d7c0b" disabled="true">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4B JWT - Get Initial Refresh Token - User 1 JWT User 2 ClientID" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${bu1user2clientID}",
+   "clientSecret": "${bu1user2clientSecret}",
+   "accessType": "offline",
+   "scope": "jwt:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2NvZGUuZXhhY3R0YXJnZXQuY29tIiwiZXhwIjoiMjAxNS0xMC0wMVQwNDowMDowMC4wMDBaIiwicmVxdWVzdCI6eyJ1c2VyIjp7ImlkIjoyOTUzODF9LCJvcmdhbml6YXRpb24iOnsiaWQiOjI4MDcwMCwiZW50ZXJwcmlzZUlkIjoyODA3MDB9fX0.46K6a7AVXRDqSae-4ZZB-95S1aa6qyv9RmaMmw2g9_4"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and refreshToken" id="2d978192-07e5-4730-867a-be771c00318b">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def refresh = json.refreshToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert refresh =~/^[0-9a-zA-Z\-]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="PropertyAssertion" id="19dae54f-d87e-4d5d-9b78-b7522cb7558a">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['ClassLibraries'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#refreshToken}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4B JWT - Get Platform Discovery - BU 1 User 2" id="95d25c88-1b40-44c5-ab96-1933277c0104" disabled="true">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/event-internal/v1/rest" methodName="event-internal/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4B JWT - Get Platform Discovery - BU 1 User 2" id="a299e711-5e6d-4043-9ccb-531b19d6f3ca" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/rest</con:originalUri>
+        <con:assertion type="JsonPath Match" id="93d76e04-9649-4220-8736-22c5e170d3a5" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="c4d8f555-2c84-4b53-892a-171af80b683b" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="0283baeb-e357-448a-993a-be372a7c97c4" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="d8119fe3-d80e-49b3-89ff-d30a76749838" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 4B Org User - Get Initial Refresh Token - User 1 Scope User 2 ClientID#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4C JWT - Get Initial Refresh Token - User 1 JWT User 2 ClientID" id="e573130e-bed4-4a29-9318-be2fd1d7c786" disabled="true">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4C JWT - Get Initial Refresh Token - User 1 JWT User 2 ClientID" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${bu1user2clientID}",
+   "clientSecret": "${bu1user2clientSecret}",
+   "accessType": "offline",
+   "scope": "jwt:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2NvZGUuZXhhY3R0YXJnZXQuY29tIiwiZXhwIjoiMjAxNS0xMC0wMVQwNDowMDowMC4wMDBaIiwicmVxdWVzdCI6eyJ1c2VyIjp7ImlkIjoyOTUzODF9LCJvcmdhbml6YXRpb24iOnsiaWQiOjI4MDcwMCwiZW50ZXJwcmlzZUlkIjoyODA3MDB9fX0.46K6a7AVXRDqSae-4ZZB-95S1aa6qyv9RmaMmw2g9_4"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and refreshToken" id="2d978192-07e5-4730-867a-be771c00318b">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def refresh = json.refreshToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert refresh =~/^[0-9a-zA-Z\-]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="PropertyAssertion" id="19dae54f-d87e-4d5d-9b78-b7522cb7558a">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['ClassLibraries'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#refreshToken}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4C JWT - Get New Access Token With Refresh Token - BU 1 User 2" id="44103feb-4346-4afe-96e6-f905a5150ec4" disabled="true">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4C JWT - Get New Access Token With Refresh Token - BU 1 User 2" mediaType="application/json" postQueryString="false" id="227eb03e-a744-4d0e-b894-2b41d2458c23">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+   "clientId": "${bu1user2clientID}",
+   "clientSecret": "${bu1user2clientSecret}",
+   "accessType": "offline",
+   "refreshToken": "${Scenario 4C Org User - Get Initial Refresh Token - User 1 Scope User 2 ClientID#Response#$.refreshToken}"
+}</con:request>
+        <con:originalUri>http://localhost/Auth/v1/requestToken</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="9a677f25-6110-4308-a57f-bd198dd4ab27">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="Validating  Values token, expiresin and refreshToken" id="2d978192-07e5-4730-867a-be771c00318b">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def token = json.accessToken
+def expires = json.expiresIn
+def refresh = json.refreshToken
+assert token =~/^[0-9a-zA-Z\-]+$/
+assert expires &lt;= 3600
+assert refresh =~/^[0-9a-zA-Z\-]+$/</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" name="PropertyAssertion" id="19dae54f-d87e-4d5d-9b78-b7522cb7558a">
+          <con:configuration>
+            <scriptText>library = context.testCase.testSuite.project.testSuites['ClassLibraries'];
+library.testCases['Definitions'].testSteps['ScriptDefinitions'].run(context.testRunner, context);
+def response = messageExchange.response.responseContent
+def expectedData = context.expand( '${Response Validation Parameters#refreshToken}' )
+log.info response
+log.info expectedData
+assert context.jsonComparer.IncludeProperties(expectedData, response, log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="f3a5b178-84ee-4c9a-bb31-d054f43c3a50" name="Old Refresh Token Differs From New">
+          <con:configuration>
+            <scriptText>def oldRefreshToken = context.expand( '${Scenario 4C Org User - Get Legacy Token - BU 1 User 1#Response#$.refreshToken}' )
+def newRefreshToken = context.expand( '${Scenario 4C Org User - Get New Access Token With Refresh Token - BU 1 User 2#Response#$.refreshToken}' )
+
+assert oldRefreshToken != newRefreshToken</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="f3a5b178-84ee-4c9a-bb31-d054f43c3a50" name="Old Access Token Differs From New">
+          <con:configuration>
+            <scriptText>def oldAccessToken = context.expand( '${Scenario 4C Org User - Get Legacy Token - BU 1 User 1#Response#$.refreshToken}' )
+def newAccessToken = context.expand( '${Scenario 4C Org User - Get New Access Token With Refresh Token - BU 1 User 2#Response#$.refreshToken}' )
+
+assert oldAccessToken != newAccessToken</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4C JWT - Get Platform Discovery With New Access Token - BU 1 User 2" id="5c602680-bf77-42ec-885f-69b03d9218c2" disabled="true">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/event-internal/v1/rest" methodName="event-internal/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4C JWT - Get Platform Discovery With New Access Token - BU 1 User 2" id="a299e711-5e6d-4043-9ccb-531b19d6f3ca" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/rest</con:originalUri>
+        <con:assertion type="JsonPath Match" id="93d76e04-9649-4220-8736-22c5e170d3a5" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="c4d8f555-2c84-4b53-892a-171af80b683b" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="0283baeb-e357-448a-993a-be372a7c97c4" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="d8119fe3-d80e-49b3-89ff-d30a76749838" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="bd0cc0e2-fc75-4220-8ece-278ae526cc9c" name="Match content of [basePath]">
+          <con:configuration>
+            <path>$.basePath</path>
+            <content>platformservice</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 4C Org User - Get New Access Token With Refresh Token - BU 1 User 2#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Scenario 4C JWT - Get Token Context - Verify Scope" id="5754cc0c-d2ed-49d6-b949-f0352e70b4e6" disabled="true">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/tokenContext" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Scenario 4C JWT - Get Token Context - Verify Scope" id="a98d2f7e-c2c6-439e-b14e-dc2df427ea5d" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/tokenContext</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="663f0f0a-3a4b-4d06-ad8d-ae15064d3a87" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="265de22a-f899-413b-9c0e-64944c36a166" name="Enterprise ID - Verify Scope Applied">
+          <con:configuration>
+            <path>$.enterprise.id</path>
+            <content>${bumid}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="8add27e4-30ab-4f48-8c0f-b01c76a3c2a5" name="Org ID - Verify Scope Applied">
+          <con:configuration>
+            <path>$.organization.id</path>
+            <content>${bu1user1orgID}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="fb378b74-a40b-4ef0-8f9a-5929d9ebbec5" name="User ID - Verify Scope Applied">
+          <con:configuration>
+            <path>$.user.id</path>
+            <content>${bu1user2userID}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Scenario 4C Org User - Get New Access Token With Refresh Token - BU 1 User 2#Response#$.accessToken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="95f143f9-7083-44e2-bd46-41ef36def9d6">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="7524968a-c75d-47b5-894f-6ea918b172c0">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="2a686521-d364-41ef-92b1-dc6bec31c585">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>8a305bf4-1969-45b9-af61-6ebb1c6336b8</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>5202948d-bcd1-4953-aac7-c4355f46075d</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>7381be7d-759e-47ff-bc12-66dc5c73d53a</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>d726eec2-6740-4a6e-a1d4-eb0e02a4add2</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>79be15aa-0dfd-4a12-9f72-eba422fd5b75</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>5cca0a11-1882-4354-b8cc-210be7e0e4b7</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>83092089-6aa0-4c5a-8266-7ccd7eb6fb3e</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>5fa0d376-06c7-4aba-a770-f0297505074c</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>6610824f-1eb1-4223-84ea-d12cd4840e7a</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>6ae160a4-6c26-41e6-953d-1d6e4524b9b2</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>abe65eba-12bb-40fe-853d-a32711c24c0d</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>33f6eeab-f9e8-4f03-975d-67acb162bf4d</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>35b1f0c9-8709-4be0-af31-b37b60a6fcfa</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>0eb23db7-d764-40a4-bd04-6edfcb5425d6</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>88db874e-d30e-4771-b167-b552b2b58042</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>374a65bf-74ed-4335-ad10-0510886f5d89</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>b605fdaa-0b0e-4d4c-8f93-6840f3f8d64f</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>25aee1c2-786c-40ce-af96-998e224dbfb3</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>aaa69f34-5c8d-4360-a766-5d72bf6058c6</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>6053d3ca-28ed-4ac2-8532-f8e9f6f7c0f5</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>843539e2-c011-4b79-98da-122c48270896</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

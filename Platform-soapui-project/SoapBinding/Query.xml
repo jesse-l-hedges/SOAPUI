@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:operation id="d42be60c-f831-4e77-af38-995e7fe202d0" isOneWay="false" action="Query" name="Query" bindingOperationName="Query" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="d42be60c-f831-4e77-af38-995e7fe202d0fileName">Query</con:setting></con:settings></con:operation>

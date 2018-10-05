@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="0c12c957-a5b4-4929-9201-23ce1ef60eeb" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="application" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="0c12c957-a5b4-4929-9201-23ce1ef60eebfileName">application</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="0c78e453-5e00-4053-bd69-6a3a1a21c842">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>av1aoQBEavHHPD6pWGf2X4OW</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getapplicaitoninstancesbyfields - Request 1" id="9a423a53-454a-48ed-acbc-534df5eccd40">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/applications/@me" methodName="getapplicaitoninstancesbyfields" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getapplicaitoninstancesbyfields - Request 1" id="1bc00c1b-f2ab-4b96-800a-22bf78db7c19" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/applications/@me</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value=""/>
+          <con:entry key="onlymobileapps" value="false"/>
+          <con:entry key="$page" value="1"/>
+          <con:entry key="$pageSize" value="50"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>view</con:entry>
+          <con:entry>onlymobileapps</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="applicationId" id="638c5255-bb0e-4fca-8a8f-0c9bbc015e6d">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>applicationId</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>getapplicaitoninstancesbyfields - Request 1</con:sourceStep>
+        <con:sourcePath>//*:applicationId</con:sourcePath>
+        <con:targetType>applicationId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>applicationId</con:name>
+      <con:value>e3640f97-1328-48ed-b3d5-03ca7c0d2e12</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>0c78e453-5e00-4053-bd69-6a3a1a21c842</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

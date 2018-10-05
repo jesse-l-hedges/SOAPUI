@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="9bee05bc-ccc0-426a-a812-7fb4e9ab8807" name="SOAP Batch Size - User/Pass" xmlns:con="http://eviware.com/soapui/config"><con:description>Suite authentication relies on username and password set at the SUITE level. 
+
+This is so the suite can be run against VALIDATE_SOAP enabled or disabled MIDs on alternate days.
+
+The entire suite must be run initially for authentication to succeed. 
+
+After the suite is run initially in one stack, individual test cases may be then be run in that same stack. </con:description><con:settings><con:setting id="9bee05bc-ccc0-426a-a812-7fb4e9ab8807fileName">SOAP-Batch-Size---User%2FPass</con:setting></con:settings><con:savedRecentRuns>1</con:savedRecentRuns><con:runType>SEQUENTIAL</con:runType><con:properties><con:property><con:name>listId</con:name><con:value>207283</con:value></con:property><con:property><con:name>testSuiteUserId</con:name><con:value>cmooty_10739553_mgr</con:value></con:property><con:property><con:name>testSuitePassword</con:name><con:value>testing1!</con:value></con:property><con:property><con:name>testSuiteMID</con:name><con:value>10733650</con:value></con:property></con:properties><con:setupScript>import org.joda.time.DateTime
+
+day = new DateTime().getDayOfWeek()
+
+if (testSuite.project.activeEnvironment.name in ['qa1', 'qa3']) {
+
+	if (day in [1, 3, 5, 7]) {
+		testSuite.setPropertyValue( "testSuiteUserID", context.expand( '${#Project#user}' ) ) 
+		testSuite.setPropertyValue( "testSuitePassword", context.expand( '${#Project#pass}') )
+		testSuite.setPropertyValue( "testSuiteMID", context.expand( '${#Project#mid}') )
+	}
+
+	else {
+		testSuite.setPropertyValue( "testSuiteUserID", context.expand( '${#Project#userVSdisabled}' ) )
+		testSuite.setPropertyValue( "testSuitePassword", context.expand( '${#Project#passVSdisabled}' ) )
+		testSuite.setPropertyValue( "testSuiteMID", context.expand( '${#Project#midVSdisabled}') )
+	}
+}
+else {
+	testSuite.setPropertyValue( "testSuiteUserID", context.expand( '${#Project#user}' ) ) 
+	testSuite.setPropertyValue( "testSuitePassword", context.expand( '${#Project#pass}') )
+	testSuite.setPropertyValue( "testSuiteMID", context.expand( '${#Project#mid}') )
+}
+
+</con:setupScript><con:reportParameters/></con:testSuite>

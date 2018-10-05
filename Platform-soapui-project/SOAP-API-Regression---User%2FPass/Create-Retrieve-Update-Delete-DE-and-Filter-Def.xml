@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="57f14207-c38e-4a01-ae1e-02f00e30e983" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Create Retrieve Update Delete DE and Filter Def" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="60f4e2ba-262b-420f-ad29-1b84b01a08cbfileName">Create-Retrieve-Update-Delete-DE-and-Filter-Def</con:setting>
+    <con:setting id="57f14207-c38e-4a01-ae1e-02f00e30e983fileName">Create-Retrieve-Update-Delete-DE-and-Filter-Def</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="43c88694-efbb-4c5b-9371-c832d6b383cb">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>5b64a7c3-23e7-49bc-83fe-9983c3df8feb</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accessToken</con:name>
+          <con:value>aPrCdFLCVVqMoIHWfGnbauxE</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accessToken</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script to Create Object Name" id="c29b39c1-2287-4b84-8e91-66fd9fea45c6">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')+('0'..'9')).join(), 9 ) + "_QETesting"</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Property Transfer" id="82623e82-38fc-4aa6-a3cd-6adbf19c1430">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="true" entitize="false" transferChildNodes="false">
+        <con:name>objectName</con:name>
+        <con:sourceType>result</con:sourceType>
+        <con:sourceStep>Groovy Script to Create Object Name</con:sourceStep>
+        <con:targetType>objectName</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" id="440e0a79-0158-470f-b64c-ad8176ad3fba" name="Create Sendable Data Extension">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Sendable Data Extension" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="11b6e56f-6ffe-453e-9ac8-cceccf7e4653" defaultOutgoingWss="" defaultIncomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#Project#user}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#Project#pass}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <ns1:Objects xsi:type="ns1:DataExtension" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+            <ns1:PartnerKey xsi:nil="true"/>\r
+            <ns1:ModifiedDate xsi:nil="true"/>\r
+            <ns1:ObjectID xsi:nil="true"/>\r
+            <ns1:CustomerKey>${Groovy Script to Create Object Name#result}</ns1:CustomerKey>\r
+            <ns1:Name>DE ${Groovy Script to Create Object Name#result}</ns1:Name>\r
+            <ns1:IsSendable>true</ns1:IsSendable>\r
+            <ns1:SendableDataExtensionField>\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:Name>EmailAddress</ns1:Name>\r
+            </ns1:SendableDataExtensionField>\r
+            <ns1:SendableSubscriberField>\r
+               <ns1:Name>Subscriber Key</ns1:Name>\r
+               <ns1:Value>EmailAddress</ns1:Value>\r
+            </ns1:SendableSubscriberField>\r
+            <ns1:Fields>\r
+               <ns1:Field>\r
+                  <ns1:PartnerKey xsi:nil="true"/>\r
+                  <ns1:ModifiedDate xsi:nil="true"/>\r
+                  <ns1:ObjectID xsi:nil="true"/>\r
+                  <ns1:Name>EmailAddress</ns1:Name>\r
+                  <ns1:IsRequired>true</ns1:IsRequired>\r
+                  <ns1:FieldType>EmailAddress</ns1:FieldType>\r
+               </ns1:Field>\r
+               <ns1:Field>\r
+                  <ns1:PartnerKey xsi:nil="true"/>\r
+                  <ns1:ModifiedDate xsi:nil="true"/>\r
+                  <ns1:ObjectID xsi:nil="true"/>\r
+                  <ns1:Name>Gender</ns1:Name>\r
+                  <ns1:IsRequired>false</ns1:IsRequired>\r
+                  <ns1:FieldType>Text</ns1:FieldType>\r
+               </ns1:Field>\r
+               <ns1:Field>\r
+                  <ns1:PartnerKey xsi:nil="true"/>\r
+                  <ns1:ModifiedDate xsi:nil="true"/>\r
+                  <ns1:ObjectID xsi:nil="true"/>\r
+                  <ns1:Name>Region</ns1:Name>\r
+                  <ns1:IsRequired>false</ns1:IsRequired>\r
+                  <ns1:FieldType>Text</ns1:FieldType>\r
+               </ns1:Field>\r
+               <ns1:Field>\r
+                  <ns1:PartnerKey xsi:nil="true"/>\r
+                  <ns1:ModifiedDate xsi:nil="true"/>\r
+                  <ns1:ObjectID xsi:nil="true"/>\r
+                  <ns1:Name>Full Name</ns1:Name>\r
+                  <ns1:IsRequired>false</ns1:IsRequired>\r
+                  <ns1:FieldType>Text</ns1:FieldType>\r
+               </ns1:Field>\r
+            </ns1:Fields>\r
+         </ns1:Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="f6ae2dd4-58cd-4acf-943c-520e4d55e9be" name="SOAP Response"/>
+        <con:assertion type="XPath Match" id="7ed04654-0839-4744-b05b-608bba04a20e" name="Match content of [StatusCode]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]/text()</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="cf55b716-1ee7-4135-b18e-57197d8949aa" name="Match content of [StatusMessage]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]/text()</path>
+            <content>Data Extension created.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="abd95715-cbe1-4e3f-bd65-a20c98c8b7f7" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508" action="Create"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" id="8973df82-9b85-4b9a-9d85-92b7a43e9c75" name="Create Filter Definition on Gender">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Filter Definition on Gender" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="11b6e56f-6ffe-453e-9ac8-cceccf7e4653" defaultOutgoingWss="" defaultIncomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#Project#user}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#Project#pass}</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <ns1:Objects xsi:type="ns1:FilterDefinition" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+            <ns1:PartnerKey xsi:nil="true"/>\r
+            <ns1:ModifiedDate xsi:nil="true"/>\r
+            <ns1:ObjectID xsi:nil="true"/>\r
+            <ns1:CustomerKey>${Groovy Script to Create Object Name#result}</ns1:CustomerKey>\r
+            <ns1:Name>FD ${Groovy Script to Create Object Name#result}</ns1:Name>\r
+            <ns1:Description>Created via SOAP API</ns1:Description>\r
+            <ns1:DataSource xsi:type="ns1:DataExtension">\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:CustomerKey>${Create Sendable Data Extension#RawRequest#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; //ns1:CreateRequest[1]/ns1:Objects[1]/ns1:CustomerKey[1]}</ns1:CustomerKey>\r
+            </ns1:DataSource>\r
+            <ns1:DataFilter xsi:type="ns1:SimpleFilterPart">\r
+               <ns1:Property>Gender</ns1:Property>\r
+               <ns1:SimpleOperator>equals</ns1:SimpleOperator>\r
+               <ns1:Value>Female</ns1:Value>\r
+            </ns1:DataFilter>\r
+         </ns1:Objects>\r
+      </CreateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="f6ae2dd4-58cd-4acf-943c-520e4d55e9be" name="SOAP Response"/>
+        <con:assertion type="XPath Match" id="7ed04654-0839-4744-b05b-608bba04a20e" name="Match content of [StatusCode]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]/text()</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="cf55b716-1ee7-4135-b18e-57197d8949aa" name="Match content of [StatusMessage]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]/text()</path>
+            <content>Filter definition created.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="abd95715-cbe1-4e3f-bd65-a20c98c8b7f7" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508" action="Create"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Retrieve FilterDef by ObjectID" id="9ce8b134-1530-4717-ab8d-410b640c7ce2">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve FilterDef by ObjectID" id="d9412851-a03e-493f-b996-c89f86b4d693" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#Project#user}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#Project#pass}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>\r
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <RetrieveRequest>\r
+            <ObjectType>FilterDefinition</ObjectType>\r
+            <Properties>ObjectID</Properties>\r
+            <Properties>Client.ID</Properties>\r
+            <Properties>Name</Properties>\r
+            <Properties>DataSource.ListName</Properties>\r
+            <Properties>CustomerKey</Properties>\r
+            <Properties>CreatedDate</Properties>\r
+            <Properties>ModifiedDate</Properties>\r
+            <Properties>Description</Properties>\r
+            <Properties>DataSource.ID</Properties>\r
+            <Properties>DataSource.ObjectID</Properties>\r
+            <Properties>DataSource.Name</Properties>\r
+            <Properties>DataSource.CustomerKey</Properties>\r
+            <Properties>DataSource.CreatedDate</Properties>\r
+            <Properties>DataSource.ModifiedDate</Properties>\r
+            <Properties>DataFilter</Properties>\r
+            <ns1:Filter xsi:type="ns1:SimpleFilterPart" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+               <ns1:Property>ObjectID</ns1:Property>\r
+               <ns1:SimpleOperator>equals</ns1:SimpleOperator>\r
+               <ns1:Value>${Create Filter Definition on Gender#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; //ns1:CreateResponse[1]/ns1:Results[1]/ns1:Object[1]/ns1:ObjectID[1]}</ns1:Value>\r
+            </ns1:Filter>\r
+         </RetrieveRequest>\r
+      </RetrieveRequestMsg>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="47853253-cfed-4fd7-b9cc-fbf80534a1a8"/>
+        <con:assertion type="GroovyScriptAssertion" id="9e119bae-9aa2-460e-98d2-d8f017cd56ac" name="Check Filter Name">
+          <con:configuration>
+            <scriptText>def expectedName = context.expand( '${Create Filter Definition on Gender#RawRequest#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:CreateRequest[1]/ns1:Objects[1]/ns1:Name[1]}' )
+def actualName = context.expand( '${Retrieve FilterDef by ObjectID#Response#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:RetrieveResponseMsg[1]/ns1:Results[1]/ns1:Name[1]}' )
+
+assert expectedName == actualName</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="d060b75d-5a50-4940-be1f-a515d60e1452" name="Check Gender Value">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:RetrieveResponseMsg[1]/ns1:Results[1]/ns1:DataFilter[1]/ns1:LeftOperand[1]/ns1:Value[1]/text()</path>
+            <content>Female</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Retrieve FilterDef by DE CustomerKey" id="24fb5f0a-0240-42bb-a25a-db3d45829796">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve FilterDef by DE CustomerKey" id="d9412851-a03e-493f-b996-c89f86b4d693" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#Project#user}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#Project#pass}</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <RetrieveRequest>\r
+            <ObjectType>FilterDefinition</ObjectType>\r
+            <Properties>ObjectID</Properties>\r
+            <Properties>Client.ID</Properties>\r
+            <Properties>Name</Properties>\r
+            <Properties>DataSource.ListName</Properties>\r
+            <Properties>CustomerKey</Properties>\r
+            <Properties>CreatedDate</Properties>\r
+            <Properties>ModifiedDate</Properties>\r
+            <Properties>Description</Properties>\r
+            <Properties>DataSource.ID</Properties>\r
+            <Properties>DataSource.ObjectID</Properties>\r
+            <Properties>DataSource.Name</Properties>\r
+            <Properties>DataSource.CustomerKey</Properties>\r
+            <Properties>DataSource.CreatedDate</Properties>\r
+            <Properties>DataSource.ModifiedDate</Properties>\r
+            <Properties>DataFilter</Properties>\r
+            <ns1:Filter xsi:type="ns1:SimpleFilterPart" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+               <ns1:Property>DataSource.CustomerKey</ns1:Property>\r
+               <ns1:SimpleOperator>equals</ns1:SimpleOperator>\r
+               <ns1:Value>${Create Sendable Data Extension#RawRequest#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; //ns1:CreateRequest[1]/ns1:Objects[1]/ns1:CustomerKey[1]}</ns1:Value>\r
+            </ns1:Filter>\r
+         </RetrieveRequest>\r
+      </RetrieveRequestMsg>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="47853253-cfed-4fd7-b9cc-fbf80534a1a8"/>
+        <con:assertion type="GroovyScriptAssertion" id="9e119bae-9aa2-460e-98d2-d8f017cd56ac" name="Check Filter Name">
+          <con:configuration>
+            <scriptText>def expectedName = context.expand( '${Create Filter Definition on Gender#RawRequest#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:CreateRequest[1]/ns1:Objects[1]/ns1:Name[1]}' )
+def actualName = context.expand( '${Retrieve FilterDef by ObjectID#Response#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:RetrieveResponseMsg[1]/ns1:Results[1]/ns1:Name[1]}' )
+
+assert expectedName == actualName</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="d060b75d-5a50-4940-be1f-a515d60e1452" name="Check Gender Value">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:RetrieveResponseMsg[1]/ns1:Results[1]/ns1:DataFilter[1]/ns1:LeftOperand[1]/ns1:Value[1]/text()</path>
+            <content>Female</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="9e119bae-9aa2-460e-98d2-d8f017cd56ac" name="Check DE Name">
+          <con:configuration>
+            <scriptText>def expectedName = context.expand( '${Create Sendable Data Extension#RawRequest#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:CreateRequest[1]/ns1:Objects[1]/ns1:Name[1]}' )
+def actualName = context.expand( '${Retrieve FilterDef by DE CustomerKey#Response#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:RetrieveResponseMsg[1]/ns1:Results[1]/ns1:DataSource[1]/ns1:Name[1]}' )
+
+assert expectedName == actualName</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update Filter Criteria By CustomerKey" id="eb8c55b1-4ff0-40a0-a0d4-fdfeeb0d6f8e">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update Filter Criteria By CustomerKey" id="bcdfdfeb-65b7-4fc3-abf6-9130d2132ffe" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#Project#user}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#Project#pass}</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <ns1:Objects xsi:type="ns1:FilterDefinition" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+            <ns1:PartnerKey xsi:nil="true"/>\r
+            <ns1:ModifiedDate xsi:nil="true"/>\r
+            <ns1:CustomerKey>${Create Filter Definition on Gender#RawRequest#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; //ns1:CreateRequest[1]/ns1:Objects[1]/ns1:CustomerKey[1]}</ns1:CustomerKey>\r
+            <ns1:DataSource xsi:type="ns1:DataExtension">\r
+               <ns1:PartnerKey xsi:nil="true"/>\r
+               <ns1:ModifiedDate xsi:nil="true"/>\r
+               <ns1:ObjectID xsi:nil="true"/>\r
+               <ns1:CustomerKey>${Create Sendable Data Extension#RawRequest#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; //ns1:CreateRequest[1]/ns1:Objects[1]/ns1:CustomerKey[1]}</ns1:CustomerKey>\r
+            </ns1:DataSource>\r
+            <ns1:DataFilter xsi:type="ns1:SimpleFilterPart">\r
+               <ns1:Property>Gender</ns1:Property>\r
+               <ns1:SimpleOperator>equals</ns1:SimpleOperator>\r
+               <ns1:Value>Prefer not to say</ns1:Value>\r
+            </ns1:DataFilter>\r
+         </ns1:Objects>\r
+      </UpdateRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="17cf4dab-cbb6-4f51-9416-6946c1c49d8b"/>
+        <con:assertion type="XPath Match" id="706c4414-2080-449f-82d9-bbaf46e13003" name="Match content of [StatusCode]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]/text()</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="cc067966-2d13-43ed-b83a-05297884f19a" name="Match content of [StatusMessage]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]/text()</path>
+            <content>Filter definition updated.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="f660a696-ffd9-4b67-a65f-846b2ab5fb3c" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="8d6f4ae4-80c0-4979-b769-71bcee7ebb66" name="Match Content of Updated Filter Value">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:Object[1]/ns1:DataFilter[1]/ns1:Value[1]/text()</path>
+            <content>Prefer not to say</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete FilterDef" id="9001a5f4-e5dc-46f1-b463-7c6f7050de12">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Delete</con:operation>
+      <con:request name="Delete FilterDef" id="7bf289f2-9a9e-45fa-8bca-66dc6efc4661" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#Project#user}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#Project#pass}</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <DeleteRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <ns1:Objects xsi:type="ns1:FilterDefinition" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+            <ns1:ObjectID>${Create Filter Definition on Gender#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; //ns1:CreateResponse[1]/ns1:Results[1]/ns1:Object[1]/ns1:ObjectID[1]}</ns1:ObjectID>\r
+         </ns1:Objects>\r
+      </DeleteRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="076d4771-7559-4c05-9430-a70f41a0bd00"/>
+        <con:assertion type="Valid HTTP Status Codes" id="d76b221c-a2ae-4601-8687-ac32fc6f0055" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="e9bceb57-b667-47f1-b4ee-11e1510d6d4b" name="Match content of [StatusCode]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusCode[1]/text()</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="ba9a87e7-7f19-4482-8b21-27a5e062689c" name="Match content of [StatusMessage]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]/text()</path>
+            <content>Filter definition deleted.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete Data Extension" id="94609b60-c15a-4432-b305-2ccfcfaa23f0">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Delete</con:operation>
+      <con:request name="Delete Data Extension" id="7bf289f2-9a9e-45fa-8bca-66dc6efc4661" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">\r
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">\r
+            <wsse:Username>${#Project#user}</wsse:Username>\r
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#Project#pass}</wsse:Password>\r
+         </wsse:UsernameToken>\r
+      </wsse:Security>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <DeleteRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <ns1:Objects xsi:type="ns1:DataExtension" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">\r
+            <ns1:ObjectID>${Create Sendable Data Extension#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; //ns1:CreateResponse[1]/ns1:Results[1]/ns1:Object[1]/ns1:ObjectID[1]}</ns1:ObjectID>\r
+         </ns1:Objects>\r
+      </DeleteRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="076d4771-7559-4c05-9430-a70f41a0bd00"/>
+        <con:assertion type="Valid HTTP Status Codes" id="d76b221c-a2ae-4601-8687-ac32fc6f0055" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="e9bceb57-b667-47f1-b4ee-11e1510d6d4b" name="Match content of [StatusCode]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusCode[1]/text()</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="ba9a87e7-7f19-4482-8b21-27a5e062689c" name="Match content of [StatusMessage]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]/text()</path>
+            <content>Data Extension deleted.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>objectName</con:name>
+      <con:value>BSUCLA0M3_QETesting</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+</con:testCase>

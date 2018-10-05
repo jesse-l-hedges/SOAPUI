@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="bin" path="/bin" id="fb2bd145-cd70-4899-8bf8-472afde61f17" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="fb2bd145-cd70-4899-8bf8-472afde61f17fileName">bin</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:method name="Create New FuelBin ID" id="bf770bc5-52d0-4d2c-8acd-5c5748764de4" method="GET">
+    <con:settings/>
+    <con:parameters/>
+    <con:representation type="RESPONSE">
+      <con:mediaType>application/json; charset=utf-8</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xmlns:bin="https://fuelbin.dev.marketingcloudapps.com/bin">bin:Response</con:element>
+    </con:representation>
+    <con:request name="Request 1" id="23b28f61-ca1a-4814-8945-dc6f05b7cc53" mediaType="application/json">
+      <con:settings>
+        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+      </con:settings>
+      <con:request/>
+      <con:originalUri>https://fuelbin.dev.marketingcloudapps.com/bin</con:originalUri>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+</con:resource>

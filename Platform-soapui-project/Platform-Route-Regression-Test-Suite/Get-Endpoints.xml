@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="b15cb39c-160e-4ca9-9517-f3ee689b9b43" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Get Endpoints" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="b15cb39c-160e-4ca9-9517-f3ee689b9b43fileName">Get-Endpoints</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="a2fc9853-e6b3-49c2-bc28-198fc08e0321">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>5b64a7c3-23e7-49bc-83fe-9983c3df8feb</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>av1aoQBEavHHPD6pWGf2X4OW</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Get Active Environment" id="f69759de-f7a9-492e-bae1-666a70e68539">
+    <con:settings/>
+    <con:config>
+      <script>def readyAPIEnvt = testRunner.testCase.testSuite.project.activeEnvironment.name.toUpperCase()
+def requestEnvt 
+
+switch(readyAPIEnvt) {
+	case["QA1", "QA1S2"] :
+		requestEnvt = 'QA1'
+		break
+	case("QA2") :
+		requestEnvt = 'QA2'
+		break
+	case("QA3") :
+		requestEnvt = 'QA3'
+		break
+	case["S1", "S2", "S4", "S5", "S6", "S7", "S8"] :
+		requestEnvt = 'PROD'
+		break
+	case ("PS") :
+		requestEnvt = "PS"
+		break	
+	default: 	
+	     requestEnvt = 'QA1'
+		break
+}</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Get Endpoints" id="2be41dac-8a97-4134-9d28-a884b9cb87a3">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/endpoints" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Get Endpoints" id="90d6d67e-3673-4fe5-ac74-e9ca2a5df1ef" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/endpoints</con:originalUri>
+        <con:assertion type="JsonPath Existence Match" id="726a6754-7f44-442c-bb69-93563179a821" name="Check for existence of [count]">
+          <con:configuration>
+            <path>$.count</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Existence Match" id="f0cab3e9-5ab9-40cb-99b4-9e4b06199cbd" name="Check for existence of [stackKey]">
+          <con:configuration>
+            <path>$.items[0].stackKey</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="8213da98-9d45-4c52-9a68-bf78f3d8dff4" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+          <con:entry key="env" value="${Get Active Environment#result}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>env</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>a2fc9853-e6b3-49c2-bc28-198fc08e0321</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>f69759de-f7a9-492e-bae1-666a70e68539</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

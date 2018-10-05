@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="4d1bc0de-95e8-4717-837e-b8dbf65a1159" discardOkResults="false" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Import" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="4d1bc0de-95e8-4717-837e-b8dbf65a1159fileName">Import</con:setting>
+  </con:settings>
+  <con:testStep type="datagen" name="Dates DataGen" id="7d2dbf96-6e08-4ce1-a720-2b5c9e4abbb4" disabled="true">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>def sdf = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+return sdf.format( new Date())</script>
+        </con:configuration>
+        <con:name>Today's Date/Time</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="File Transfer" id="3296a683-2eab-4e40-9c5d-760b52cb4e98" disabled="true">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="File Transfer" id="139490e2-c2d3-41dc-bbda-d376de5d1c2d">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<SOAP-ENV:Header>
+  <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+   <wsu:Timestamp>
+    <wsu:Created>${Dates DataGen#Today's Date/Time}Z</wsu:Created>
+    <wsu:Expires>2018-04-21T20:58:01Z</wsu:Expires>
+   </wsu:Timestamp>
+   <wsse:UsernameToken>
+    <wsse:Username>sneha_10925743_admin</wsse:Username>
+    <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">Z$r45S?qE^i73wD@!</wsse:Password>
+    <wsse:Nonce/>
+    <wsu:Created>${Dates DataGen#Today's Date/Time}Z</wsu:Created>
+   </wsse:UsernameToken>
+  </wsse:Security>
+ </SOAP-ENV:Header>
+ <SOAP-ENV:Body>
+  <PerformRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+   <Options/>
+   <Action>Start</Action>
+   <Definitions>
+    <ns1:Definition xsi:type="ns1:FileTransferActivity" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+     <ns1:ModifiedDate xsi:nil="true"/>
+     <ns1:ObjectID xsi:nil="true"/>
+     <ns1:CustomerKey>CC2FC176-F5D0-4DBC-AF00-027A33352F8E</ns1:CustomerKey>
+    </ns1:Definition>
+   </Definitions>
+  </PerformRequestMsg>
+ <par:CreateRequest xmlns:par="http://exacttarget.com/wsdl/partnerAPI"/></SOAP-ENV:Body>
+</SOAP-ENV:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="fccd00de-988a-4008-8bda-16aeb5781a10"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="httprequest" name="Import - HTTP Request" id="b82e618d-2f5d-4101-85d3-d7414c450d15">
+    <con:settings/>
+    <con:config method="GET" xsi:type="con:HttpRequest" id="39903961-39cc-49fe-b3fc-fba669393aef" name="Import - HTTP Request" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:settings>
+        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+      </con:settings>
+      <con:endpoint>https://api.exacttarget.com/integrate.aspx</con:endpoint>
+      <con:request/>
+      <con:assertion type="Valid HTTP Status Codes" id="353f660c-b962-4bca-b7ee-d39f3a648e4b" name="Valid HTTP Status Codes">
+        <con:settings/>
+        <con:configuration>
+          <codes>200</codes>
+        </con:configuration>
+      </con:assertion>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>qf</con:name>
+          <con:value>xml</con:value>
+          <con:style>QUERY</con:style>
+          <con:default>xml</con:default>
+          <con:path xsi:nil="true"/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>xml</con:name>
+          <con:value><![CDATA[<?xml version="1.0" ?>    <exacttarget>    <authorization>       <username>sneha_10925743_admin</username>       <password>Z$r45S?qE^i73wD@!</password>    </authorization>    <system>       <system_name>list</system_name>       <action>import</action>       <search_type>listid</search_type>       <search_value>2076185</search_value>       <file_name>testimport.csv</file_name>       <email_address>ssingla@salesforce.com</email_address>       <file_type>csv</file_type>       <column_headings>true</column_headings>       <file_mapping>          <field>Email Address</field>       </file_mapping>       <import_type>1</import_type>       <returnid>true</returnid>       <encrypted>false</encrypted>       <encrypt_format />    </system> </exacttarget>]]></con:value>
+          <con:style>QUERY</con:style>
+          <con:default><![CDATA[<?xml version="1.0" ?>    <exacttarget>    <authorization>       <username>sneha_10925743_admin</username>       <password>Z$r45S?qE^i73wD@!</password>    </authorization>    <system>       <system_name>list</system_name>       <action>import</action>       <search_type>listid</search_type>       <search_value>2076185</search_value>       <file_name>testimport.csv</file_name>       <email_address>ssingla@salesforce.com</email_address>       <file_type>csv</file_type>       <column_headings>true</column_headings>       <file_mapping>          <field>Email Address</field>       </file_mapping>       <import_type>1</import_type>       <returnid>true</returnid>       <encrypted>false</encrypted>       <encrypt_format />    </system> </exacttarget>]]></con:default>
+          <con:path xsi:nil="true"/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:config>
+  </con:testStep>
+  <con:setupScript>'Send Files to FTP Location : Remember to download and place apache FTP client file in /lib/ext location
+
+new FTPClient().with {
+
+def media_ID = context.expand( '${DataSource_Delivery_ID#Media_ID}' )
+
+connect host
+
+log.info replyString
+
+login user, password
+
+log.info replyString
+
+changeWorkingDirectory(remote_path);
+
+files = listFiles(remote_path)
+
+for (myfiles in files) {
+
+if(myfiles.getName() =~ /Sky*/) {
+
+log.info "Renaming : " + myfiles.getName();
+
+rename(myfiles.getName(),media_ID);
+
+log.info "Newfilename:" + media_ID;
+
+}
+
+}
+
+disconnect();
+
+}</con:setupScript>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>30a58be2-61f2-4ba0-8639-099a8dc15c49</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>b82e618d-2f5d-4101-85d3-d7414c450d15</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>70ca0d2b-9791-4f53-a579-39928b3c10d7</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

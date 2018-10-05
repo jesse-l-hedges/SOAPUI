@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="f0bb33d8-c20f-4ba9-87f5-5dc81ead9e5a" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="favorites" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="f0bb33d8-c20f-4ba9-87f5-5dc81ead9e5afileName">favorites</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="11f798d9-45c9-4284-91fc-f1d10e3c924e">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>av1aoQBEavHHPD6pWGf2X4OW</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>10782007</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>10739553</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="createObjectId" id="19eacd88-7d9e-4a2c-bc3d-f608e5a10ede">
+    <con:settings/>
+    <con:config>
+      <script>import static java.util.UUID.randomUUID
+
+            testRunner.testCase.setPropertyValue("objectId", randomUUID() as String)
+            //testRunner.testCase.setPropertyValue("WebhookName", randomUUID() as String)</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="postFavorite - Request 1" id="f7283e1f-5de9-4c8c-8ba1-6b7c72adc4f2">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/favorites" methodName="postFavorite" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="postFavorite - Request 1" id="4e96361a-bcd7-4e0f-afb6-e4857ade7ede" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request>{       
+        "apiObjectTypeId": 19022,
+        "objectId": "${#TestCase#objectId}"
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/favorites</con:originalUri>
+        <con:assertion type="GroovyScriptAssertion" id="337fe128-f326-4b19-ad24-e4460c0a83ff" name="Script Assertion" disabled="true">
+          <con:configuration>
+            <scriptText>import groovy.json.JsonSlurper 
+
+def response = messageExchange.response.responseContent
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+
+log.info json.id
+
+context.testCase.testSteps['getFavorite - Request 1'].setPropertyValue('id', json.id.toString())
+context.testCase.setPropertyValue('id', json.id.toString())
+context.testCase.testSteps['deleteFavorite - Request 1'].setPropertyValue('id', json.id.toString())</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="a558e91e-bd52-4d81-997b-d161a8e702c5" name="Contains - objectId">
+          <con:configuration>
+            <token>"objectId":"${#TestCase#objectId}"</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="adc45a53-b468-4252-a1ce-d7f85b2888e2" name="Contains - apiObjectTypeId">
+          <con:configuration>
+            <token>apiObjectTypeId</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="1f0d11b2-e03a-4f0a-9d0a-da3c957637a5" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>201</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>page</con:entry>
+          <con:entry>pageSize</con:entry>
+          <con:entry>orderBy</con:entry>
+          <con:entry>apiObjectTypeId</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="recordId" id="1445a6d4-67de-4851-afcf-00be8fcd48e2">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>id</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>postFavorite - Request 1</con:sourceStep>
+        <con:sourcePath>//*:id</con:sourcePath>
+        <con:targetType>id</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getFavorites - Request 1" id="cb5d837a-a363-46f3-b291-e8f04d9f2c86">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/favorites/{id}" methodName="getFavorites" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getFavorites - Request 1" id="2340e1fe-b27b-4605-a5b7-eca465e1895d" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/favorites/ZDQyNTY4Y2QtMjc4NC00NzcxLTgzNzctNGY3MDIxNTk4ZGU2OjE5MDIy</con:originalUri>
+        <con:assertion type="Simple Contains" id="b8a40231-da4b-469c-801b-6c557dcd9db8" name="Contains - objectId">
+          <con:configuration>
+            <token>"objectId":"${#TestCase#objectId}"</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="722cea3e-1c48-4558-9412-c2a576881346" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="id" value="${#TestCase#id}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>page</con:entry>
+          <con:entry>pageSize</con:entry>
+          <con:entry>orderBy</con:entry>
+          <con:entry>apiObjectTypeId</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getFavoriteCollection - Request 1" id="ffa7665d-3cb4-481c-9d76-3966e2e0d968">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/favorites" methodName="getFavoriteCollection" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getFavoriteCollection - Request 1" id="5976bb14-e3df-416c-bae9-67a87b9fb3c2" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/favorites</con:originalUri>
+        <con:assertion type="Simple Contains" id="987a0488-f332-4a1e-8572-01a34cbabaf4" name="Contains">
+          <con:configuration>
+            <token>count</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="161ee5ef-c3c3-45d7-944a-3da26e7705fa" name="Contains apiObjectTypeId">
+          <con:configuration>
+            <token>apiObjectTypeId</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="fe78b615-e13b-4438-b772-48a90f0204e9" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>page</con:entry>
+          <con:entry>pageSize</con:entry>
+          <con:entry>orderBy</con:entry>
+          <con:entry>apiObjectTypeId</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="deleteFavorites - Request 1" id="dd3197f5-8e3a-4f0b-adfd-8f1f5f227ae4">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/favorites/{id}" methodName="deleteFavorites" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="deleteFavorites - Request 1" id="1d21c1b7-0393-48f8-b24d-8843c136e31f" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/favorites/ZDQyNTY4Y2QtMjc4NC00NzcxLTgzNzctNGY3MDIxNTk4ZGU2OjE5MDIy</con:originalUri>
+        <con:assertion type="Simple Contains" id="a2a725cd-c184-401c-95d9-2e7947149606" name="Contains">
+          <con:configuration>
+            <token>"message":"Successfully deleted favorite."</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="d1a391da-50db-4b58-99c8-554ce42e6c83" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="id" value="${#TestCase#id}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>page</con:entry>
+          <con:entry>pageSize</con:entry>
+          <con:entry>orderBy</con:entry>
+          <con:entry>apiObjectTypeId</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>objectId</con:name>
+      <con:value>9d5b51bf-0dbb-4a64-8a1b-1620117be51e</con:value>
+    </con:property>
+    <con:property>
+      <con:name>id</con:name>
+      <con:value>OWQ1YjUxYmYtMGRiYi00YTY0LThhMWItMTYyMDExN2JlNTFlOjE5MDIy</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>1445a6d4-67de-4851-afcf-00be8fcd48e2</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>19eacd88-7d9e-4a2c-bc3d-f608e5a10ede</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

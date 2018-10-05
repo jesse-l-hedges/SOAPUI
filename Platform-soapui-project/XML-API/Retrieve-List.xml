@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="b894d5ee-78be-44f3-905a-2718669027af" discardOkResults="false" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Retrieve List" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="b894d5ee-78be-44f3-905a-2718669027affileName">Retrieve-List</con:setting>
+  </con:settings>
+  <con:testStep type="httprequest" name="Retrieve List - HTTP Request" id="0eb4e318-540d-46df-b271-8536958da3b4">
+    <con:settings/>
+    <con:config method="GET" xsi:type="con:HttpRequest" id="18b04f71-0748-4884-b8a6-6100149476df" name="Retrieve List - HTTP Request" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:settings>
+        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+      </con:settings>
+      <con:endpoint>https://api.exacttarget.com/integrate.aspx</con:endpoint>
+      <con:request/>
+      <con:assertion type="Valid HTTP Status Codes" id="a5a3a1a1-170f-4eb5-8de2-f02eef7db002" name="Valid HTTP Status Codes">
+        <con:settings/>
+        <con:configuration>
+          <codes>200</codes>
+        </con:configuration>
+      </con:assertion>
+      <con:assertion type="XPath Match" id="7717f959-0949-48a4-b685-f49c1a9d7331" name="Check for existence of [subscribers]">
+        <con:configuration>
+          <path>exists( //exacttarget/system/list/subscribers)</path>
+          <content>true</content>
+          <allowWildcards>false</allowWildcards>
+          <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+          <ignoreComments>false</ignoreComments>
+        </con:configuration>
+      </con:assertion>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>qf</con:name>
+          <con:value>xml</con:value>
+          <con:style>QUERY</con:style>
+          <con:default>xml</con:default>
+          <con:path xsi:nil="true"/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>xml</con:name>
+          <con:value><![CDATA[<?xml version="1.0" ?>    <exacttarget> <authorization>       <username>sneha_10925743_admin</username>       <password>Z$r45S?qE^i73wD@!</password>    </authorization>  <system>  <system_name>list</system_name>  <action>retrieve_sub</action>  <search_type>listid</search_type>  <search_value>2076185</search_value>  </system>  </exacttarget>]]></con:value>
+          <con:style>QUERY</con:style>
+          <con:default><![CDATA[<?xml version="1.0" ?>    <exacttarget> <authorization>       <username>sneha_10925743_admin</username>       <password>Z$r45S?qE^i73wD@!</password>    </authorization>  <system>  <system_name>list</system_name>  <action>retrieve_sub</action>  <search_type>listid</search_type>  <search_value>2076185</search_value>  </system>  </exacttarget>]]></con:default>
+          <con:path xsi:nil="true"/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

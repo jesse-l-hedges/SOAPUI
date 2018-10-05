@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="ed6eab7c-e88b-48be-adf5-674363c97a6f" discardOkResults="false" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Mass Email Send" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="ed6eab7c-e88b-48be-adf5-674363c97a6ffileName">Mass-Email-Send</con:setting>
+  </con:settings>
+  <con:testStep type="httprequest" name="Mass Email Send - HTTP Request" id="f666e03d-176e-4e8f-97b6-1ffb312e5180">
+    <con:settings/>
+    <con:config method="GET" xsi:type="con:HttpRequest" id="eb455248-b3c3-457a-9e3c-b210c15c3e15" name="Mass Email Send - HTTP Request" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:settings>
+        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+      </con:settings>
+      <con:endpoint>https://api.exacttarget.com/integrate.aspx</con:endpoint>
+      <con:request/>
+      <con:assertion type="Valid HTTP Status Codes" id="259a390f-7213-461c-8c97-61e3b582c33d" name="Valid HTTP Status Codes">
+        <con:settings/>
+        <con:configuration>
+          <codes>200</codes>
+        </con:configuration>
+      </con:assertion>
+      <con:assertion type="XPath Match" id="ab03a7df-131d-4a49-a42c-ff174b651d8e" name="Match content of [job_info]">
+        <con:configuration>
+          <path>//exacttarget[1]/system[1]/job[1]/job_info[1]/text()</path>
+          <content>Job was successfully created.</content>
+          <allowWildcards>false</allowWildcards>
+          <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+          <ignoreComments>false</ignoreComments>
+        </con:configuration>
+      </con:assertion>
+      <con:assertion type="XPath Match" id="f163c866-3b59-40f6-9d39-ffe485be8153" name="Check for existence of [job]">
+        <con:configuration>
+          <path>exists( //exacttarget/system/job)</path>
+          <content>true</content>
+          <allowWildcards>false</allowWildcards>
+          <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+          <ignoreComments>false</ignoreComments>
+        </con:configuration>
+      </con:assertion>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>qf</con:name>
+          <con:value>xml</con:value>
+          <con:style>QUERY</con:style>
+          <con:default>xml</con:default>
+          <con:path xsi:nil="true"/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter>
+          <con:name>xml</con:name>
+          <con:value><![CDATA[<?xml version="1.0" ?>   <exacttarget>    <authorization>       <username>sneha_10925743_admin</username>       <password>Z$r45S?qE^i73wD@!</password>    </authorization>    <system>       <system_name>job</system_name>       <action>send</action>       <search_type>emailid</search_type>       <search_value>3255843</search_value>       <additional />       <multipart_mime>false</multipart_mime>       <track_links>true</track_links>       <send_date>immediate</send_date>       <send_time />       <lists>          <list>2076185</list>       </lists>       <suppress />       <test_send>true</test_send>    </system> </exacttarget>]]></con:value>
+          <con:style>QUERY</con:style>
+          <con:default><![CDATA[<?xml version="1.0" ?>   <exacttarget>    <authorization>       <username>sneha_10925743_admin</username>       <password>Z$r45S?qE^i73wD@!</password>    </authorization>    <system>       <system_name>job</system_name>       <action>send</action>       <search_type>emailid</search_type>       <search_value>3255843</search_value>       <additional />       <multipart_mime>false</multipart_mime>       <track_links>true</track_links>       <send_date>immediate</send_date>       <send_time />       <lists>          <list>2076185</list>       </lists>       <suppress />       <test_send>true</test_send>    </system> </exacttarget>]]></con:default>
+          <con:path xsi:nil="true"/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

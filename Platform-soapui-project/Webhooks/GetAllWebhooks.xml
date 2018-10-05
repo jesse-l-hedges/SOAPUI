@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GetAllWebhooks" searchProperties="true" id="c11fae21-9d0d-4334-929b-668536495aa6" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" disabled="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="c11fae21-9d0d-4334-929b-668536495aa6fileName">GetAllWebhooks</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="e9a3750e-fe61-4798-aeb6-4ffe10c93db0">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>awFo1sQMGulLoJMXIj5UPo7H</con:value>
+          <con:value>aySuQFaF9KIjCokEtIurCOwv</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="SetStartingPage" id="60f72f58-a8d3-47ba-8ff1-91af8f7c0c1c">
+    <con:settings/>
+    <con:config>
+      <script>testRunner.testCase.setPropertyValue("Page", (1) as String)</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="GetWebhookCollection" id="6254bd08-393a-4917-9cde-33fa266ad2c5">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform/v1/accounts/current/webhooks" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="GetWebhookCollection" id="6f8cd777-2fa2-43db-8275-2c304df62610" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform/v1/accounts/current/webhooks</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="56bbdf00-56ba-4d9a-a420-eb61339827a0" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple NotContains" id="735d4e0a-68ac-41a2-9dbc-77d7438804a4" name="NotContainsMailBounce">
+          <con:configuration>
+            <token>MailBounce</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple NotContains" id="d7e90059-ab5e-47d1-b6ee-f12f7a349a5b" name="NotContainsMailSend">
+          <con:configuration>
+            <token>MailSend</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple NotContains" id="3da07a76-cddf-4a0b-ab8c-d725bc06cfe9" name="NotContainsMailClick">
+          <con:configuration>
+            <token>MailOpen</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple NotContains" id="a25c60ae-7402-4c9d-9636-77e176a259fc" name="NotContainsMailOpen">
+          <con:configuration>
+            <token>MailOpen</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="$page" value="${#TestCase#Page}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$page</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="GetPageSettings" id="525aaf89-5d4e-4b91-8b00-94ca2af49f20">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+        <con:name>Page</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>GetWebhookCollection</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/accounts/current/webhooks';
+//ns1:Response[1]/ns1:page[1]</con:sourcePath>
+        <con:targetType>Page</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true">
+        <con:name>PageSize</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>GetWebhookCollection</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/platform/v1/accounts/current/webhooks';
+//ns1:Response[1]/ns1:pageSize[1]</con:sourcePath>
+        <con:targetType>PageSize</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true">
+        <con:name>Count</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>GetWebhookCollection</con:sourceStep>
+        <con:sourcePath>/*:Response/*:count</con:sourcePath>
+        <con:targetType>Count</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="LoopThroughPages" id="00e2b34d-5f30-4817-be05-67b85fc59815">
+    <con:settings/>
+    <con:config>
+      <script>def page = testRunner.testCase.getPropertyValue("Page").toInteger()
+            def pageSize = testRunner.testCase.getPropertyValue("PageSize").toInteger()
+            def count = testRunner.testCase.getPropertyValue("Count").toInteger()
+
+            if((page) * pageSize &lt; count &amp;&amp; page &lt;= 5)
+            {
+            testRunner.testCase.setPropertyValue("Page", (page + 1) as String)
+            testRunner.gotoStepByName("GetWebhooksCollection")
+            }</script>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>Page</con:name>
+      <con:value>1</con:value>
+    </con:property>
+    <con:property>
+      <con:name>PageSize</con:name>
+      <con:value>50</con:value>
+    </con:property>
+    <con:property>
+      <con:name>Count</con:name>
+      <con:value>0</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+</con:testCase>

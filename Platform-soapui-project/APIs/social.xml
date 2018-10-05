@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="social" path="/social" id="0f084899-d8d5-495d-b88d-b9610617d834" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="f5133b96-1bad-4382-ba68-b047f9c16771fileName">interaction</con:setting>
+    <con:setting id="0f084899-d8d5-495d-b88d-b9610617d834fileName">social</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:resource name="v1" path="v1" id="82305b99-a5d7-406a-99f0-a9f3ce5d5712">
+    <con:settings/>
+    <con:parameters/>
+    <con:resource name="rest" path="rest" id="4d872362-cbd7-4410-b601-f827d240e50c">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="social/Discovery" id="ec5a0773-3974-436c-a21b-c6e0fffc3529" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="473c1784-3bd6-47c8-8c4c-f3d26a294ad9" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+  </con:resource>
+</con:resource>

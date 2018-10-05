@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="176c7c33-723a-4c4b-b556-b0c681060112" name="SOAP API Upsert Subscriber" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="176c7c33-723a-4c4b-b556-b0c681060112fileName">SOAP-API-Upsert-Subscriber</con:setting></con:settings><con:savedRecentRuns>1</con:savedRecentRuns><con:runType>SEQUENTIAL</con:runType><con:properties/><con:reportParameters/></con:testSuite>

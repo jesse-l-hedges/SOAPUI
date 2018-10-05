@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:operation id="0c5f9cf9-bf04-4ba9-941e-1d1e9a979b41" isOneWay="false" action="GetSystemStatus" name="GetSystemStatus" bindingOperationName="GetSystemStatus" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="0c5f9cf9-bf04-4ba9-941e-1d1e9a979b41fileName">GetSystemStatus</con:setting></con:settings></con:operation>

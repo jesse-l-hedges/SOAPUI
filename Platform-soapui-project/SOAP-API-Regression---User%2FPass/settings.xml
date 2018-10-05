@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="2482c2b8-861b-444f-8f80-1e8bec0cec86" name="SOAP API Regression - User/Pass" xmlns:con="http://eviware.com/soapui/config"><con:description>Suite authentication relies on username and password set at the SUITE level. 
+
+This is so the suite can be run against VALIDATE_SOAP enabled or disabled MIDs on alternate days.
+
+The entire suite must be run initially for authentication to succeed. 
+
+After the suite is run initially in one stack, individual test cases may be then be run in that same stack. </con:description><con:settings><con:setting id="2482c2b8-861b-444f-8f80-1e8bec0cec86fileName">SOAP-API-Regression---User%2FPass</con:setting><con:setting id="IncludeOverview">true</con:setting><con:setting id="IncludeResults">true</con:setting><con:setting id="FlowLayout">false</con:setting><con:setting id="ErrorDetails">true</con:setting><con:setting id="IncludeCoverage">true</con:setting></con:settings><con:runType>SEQUENTIAL</con:runType><con:properties><con:property><con:name>testSuiteUserID</con:name><con:value>APIFW-Account-QA1S1_admintwo</con:value></con:property><con:property><con:name>testSuitePassword</con:name><con:value>testing1!</con:value></con:property><con:property><con:name>testSuiteMID</con:name><con:value>10739553</con:value></con:property></con:properties><con:setupScript>import org.joda.time.DateTime
+
+day = new DateTime().getDayOfWeek()
+
+if (testSuite.project.activeEnvironment.name in ['qa1', 'qa3']) {
+
+	if (day in [2, 4, 6]) {
+		testSuite.setPropertyValue( "testSuiteUserID", context.expand( '${#Project#user}' ) ) 
+		testSuite.setPropertyValue( "testSuitePassword", context.expand( '${#Project#pass}') )
+		testSuite.setPropertyValue( "testSuiteMID", context.expand( '${#Project#mid}') )
+	}
+
+	else {
+		testSuite.setPropertyValue( "testSuiteUserID", context.expand( '${#Project#userVSdisabled}' ) )
+		testSuite.setPropertyValue( "testSuitePassword", context.expand( '${#Project#passVSdisabled}' ) )
+		testSuite.setPropertyValue( "testSuiteMID", context.expand( '${#Project#midVSdisabled}') )
+	}
+}
+else {
+	testSuite.setPropertyValue( "testSuiteUserID", context.expand( '${#Project#user}' ) ) 
+	testSuite.setPropertyValue( "testSuitePassword", context.expand( '${#Project#pass}') )
+	testSuite.setPropertyValue( "testSuiteMID", context.expand( '${#Project#mid}') )
+}
+
+</con:setupScript><con:reportParameters/></con:testSuite>

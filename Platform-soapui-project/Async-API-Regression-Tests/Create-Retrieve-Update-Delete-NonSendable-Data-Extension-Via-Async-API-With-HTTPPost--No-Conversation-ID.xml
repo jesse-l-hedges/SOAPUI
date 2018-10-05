@@ -1,0 +1,891 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="82f0b56c-e0ce-4ae2-b908-b5ba8d3866c7" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Create Retrieve Update Delete NonSendable Data Extension Via Async API With HTTPPost- No Conversation ID" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config">
+  <con:description>Creates, retrieves, updates, and deletes a nonsendable data extension via Async API.  No ConversationID is involved.
+
+Confirms that each Async request is queued and status = OK. Also confirms HTTP status codes. 
+
+Also confirms:
+
+* Create request is successful (retrieve by CustomerKey yields an object ID)
+* Update request is successful (object is updated as expected)
+* Delete request is successful (get by category ID -- object ID is not present in the result)
+* HTTPPost sent payloads back to the configured Postback URL (here it's FuelBin)
+* HTTPPost payloads contain create/update/delete confirmations and CustomerKey</con:description>
+  <con:settings>
+    <con:setting id="82f0b56c-e0ce-4ae2-b908-b5ba8d3866c7fileName">Create-Retrieve-Update-Delete-NonSendable-Data-Extension-Via-Async-API-With-HTTPPost--No-Conversation-ID</con:setting>
+  </con:settings>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:testStep type="calltestcase" name="Auth" id="bbf888ce-9b5c-427e-90b4-0a787d7654e4" disabled="true">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>5b64a7c3-23e7-49bc-83fe-9983c3df8feb</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accessToken</con:name>
+          <con:value>a8WCTsDfKlnXbmlW1is1GT62</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="RequestAuth - Request 1" id="57044892-beed-4366-8257-a7e02bca2467">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestToken" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="RequestAuth - Request 1" id="cd080263-4158-4399-87d7-e0540300f461" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+   "clientId": "${#Project#clientid}",
+   "clientSecret": "${#Project#clientsecret}"
+}</con:request>
+        <con:originalUri>https://auth-qa3s1.exacttargetapis.com/v1/requestToken</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>legacy</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Property Transfer auth" id="a41ecc69-48fb-4b24-a35f-0ce11a0f40ff">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>transfer token</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>RequestAuth - Request 1</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://auth-qa3s1.exacttargetapis.com/v1/requestToken';
+//ns1:Response[1]/ns1:accessToken[1]</con:sourcePath>
+        <con:targetType>accessToken</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script" id="c3eddbd0-70fb-4c2e-9696-53ba986f087e">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"DE " + generator( (('A'..'Z')+('0'..'9')).join(), 9 ) + "_QETesting"</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Property Transfer" id="25b50f73-12dc-43da-a1e2-963099c0064e">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="true" entitize="false" transferChildNodes="false">
+        <con:name>objectName</con:name>
+        <con:sourceType>result</con:sourceType>
+        <con:sourceStep>Groovy Script</con:sourceStep>
+        <con:targetType>objectName</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Create New FuelBin" id="bd0865dd-91ee-4217-8d45-85dec3347020">
+    <con:settings/>
+    <con:config service="FuelBin" resourcePath="/bin" methodName="Create New FuelBin ID" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Create New FuelBin" id="ecce9464-96a2-45a7-9668-dab62f8c6fc3" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>https://fuelbin.dev.marketingcloudapps.com</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://fuelbin.int.marketingcloudapps.com/bin</con:originalUri>
+        <con:assertion type="JsonPath Existence Match" id="4f06ff23-e27d-4268-99f3-73266e8374c4" name="Check for existence of [id]">
+          <con:configuration>
+            <path>$.id</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" id="87df0edd-c805-498f-be20-c5d417dc80f6" name="Create - Request 1">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create - Request 1" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="11b6e56f-6ffe-453e-9ac8-cceccf7e4653" defaultOutgoingWss="" defaultIncomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soapenv:Header>
+     <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${#TestCase#accessToken}</h:fueloauth>
+  </soapenv:Header>
+  <soapenv:Body>
+    <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+      <Objects xsi:type="DataExtension">
+            <PartnerKey xsi:nil="true"/>
+            <ObjectID xsi:nil="true"/>
+            <Name>${#TestCase#objectName}</Name>
+            <IsSendable>false</IsSendable>
+            <Fields>
+               <Field>
+                  <Name>EmailAddress_type</Name>
+                  <FieldType>EmailAddress</FieldType>
+                  <IsPrimaryKey>true</IsPrimaryKey>
+                  <IsRequired>true</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Text_type</Name>
+                  <FieldType>Text</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Date_type</Name>
+                  <FieldType>Date</FieldType>
+                  <DefaultValue>getdate()</DefaultValue>
+                  <IsRequired>true</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Decimal_type</Name>
+                  <FieldType>Decimal</FieldType>
+                  <IsRequired>true</IsRequired>
+                  <Precision>10</Precision>
+                  <Scale>2</Scale>
+               </Field>
+               <Field>
+                  <Name>Boolean_type</Name>
+                  <FieldType>Boolean</FieldType>
+                  <DefaultValue>true</DefaultValue>
+                  <IsRequired>true</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Number_type</Name>
+                  <FieldType>Number</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Phone_type</Name>
+                  <FieldType>Phone</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Locale_type</Name>
+                  <FieldType>Locale</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+            </Fields>
+                        <Properties>
+               <Property>
+                  <Name>EmailAddress</Name>
+                  <Value>johndoe@example.com</Value>
+               </Property>
+               <Property>
+                  <Name>FirstName</Name>
+                  <Value>John</Value>
+               </Property>
+               <Property>
+                  <Name>LastName</Name>
+                  <Value>Doe</Value>
+               </Property>
+               <Property>
+                  <Name>PrimaryKey</Name>
+                  <Value>PrimaryKey</Value>
+               </Property>
+           </Properties>
+            <CustomerKey>${#TestCase#objectName}</CustomerKey>
+         </Objects>
+         <Options>
+   <SendResponseTo>
+      <ResponseType>HTTPPost</ResponseType>
+      <ResponseAddress>${#Project#fuelbinendpoint}/${Create New FuelBin#Response#$.id}</ResponseAddress>
+      <RespondWhen>Always</RespondWhen>
+      <IncludeResults>true</IncludeResults>
+      <IncludeObjects>true</IncludeObjects>
+   </SendResponseTo>
+   
+   <OrdinalID>0</OrdinalID>
+   <RequestType>Asynchronous</RequestType>
+</Options>
+   </CreateRequest>
+  </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="f6ae2dd4-58cd-4acf-943c-520e4d55e9be" name="SOAP Response"/>
+        <con:assertion type="XPath Match" id="7ed04654-0839-4744-b05b-608bba04a20e" name="Match content of [StatusCode]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]/text()</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="cf55b716-1ee7-4135-b18e-57197d8949aa" name="Match content of [StatusMessage]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]/text()</path>
+            <content>Queued</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="abd95715-cbe1-4e3f-bd65-a20c98c8b7f7" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508" action="Create"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Retrieve DE to Confirm Create" id="6d94c96d-2ac4-478b-b085-6bd4404ac90f">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve DE to Confirm Create" id="d9412851-a03e-493f-b996-c89f86b4d693" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soapenv:Header>
+     <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${#TestCase#accessToken}</h:fueloauth>
+  </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+      <RetrieveRequest>
+         <ObjectType>DataExtension</ObjectType>
+         <Properties>ObjectID</Properties>
+         <Properties>CustomerKey</Properties>
+         <Properties>Name</Properties>
+         <Properties>IsSendable</Properties>
+         <Properties>CategoryID</Properties>
+         <Filter xsi:type="SimpleFilterPart">
+            <Property>CustomerKey</Property>
+            <SimpleOperator>equals</SimpleOperator>
+            <Value>${#TestCase#objectName}</Value>
+         </Filter>
+      </RetrieveRequest>
+   </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="47853253-cfed-4fd7-b9cc-fbf80534a1a8"/>
+        <con:assertion type="XPath Match" id="9ca11bb7-46a9-41a3-9a37-4f103fd4d9c2" name="Check for existence of [ObjectID]" disabled="true">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+exists( //ns1:RetrieveResponseMsg/ns1:Results/ns1:ObjectID)</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Confirm Create" id="bc4d771d-b9d4-4c43-89d9-c809618cb8a5">
+    <con:settings/>
+    <con:config>
+      <script>import groovy.util.XmlSlurper
+
+def response = new XmlSlurper().parseText(context.expand( '${Retrieve DE to Confirm Create#Response#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:RetrieveResponseMsg[1]}' ))
+
+if( context.loopIndex == null )
+context.loopIndex = 0
+def numberOfTimes = context.expand( '${#TestCase#numberOfTimes}' ).toInteger()
+
+
+if ( response.Results.ObjectID.size() == 0 ) {
+  if ( ++context.loopIndex &lt;  numberOfTimes ) {
+    log.info "DE not created yet"
+    sleep(1000)
+    testRunner.gotoStepByName( "Retrieve DE to Confirm Create" )
+  }
+  else {
+    log.info "Timeout, test should fail"
+    testRunner.fail("DE not created after " + numberOfTimes.toString() + " retrieve attempts, timing out")
+  }
+}
+else {
+  log.info "DE created"
+  testRunner.gotoStepByName( "Update" ) 
+}</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update" id="f36859c4-e99a-49e3-81e5-5eaadd706e01">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update" id="611c20da-e917-4e7a-bde1-dad4e1b4a31d" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soapenv:Header>
+     <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${#TestCase#accessToken}</h:fueloauth>
+  </soapenv:Header>
+  <soapenv:Body>
+    <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+      <Objects xsi:type="DataExtension">
+            <PartnerKey xsi:nil="true"/>
+            <ObjectID xsi:nil="true"/>
+            <CustomerKey>${#TestCase#objectName}</CustomerKey>
+            <Fields>
+               <Field>
+                  <Name>Pet_type</Name>
+                  <FieldType>Text</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               </Fields>
+      </Objects>
+      <Options>
+   <SendResponseTo>
+      <ResponseType>HTTPPost</ResponseType>
+      <ResponseAddress>${#Project#fuelbinendpoint}/${Create New FuelBin#Response#$.id}</ResponseAddress>
+      <RespondWhen>Always</RespondWhen>
+      <IncludeResults>true</IncludeResults>
+      <IncludeObjects>true</IncludeObjects>
+   </SendResponseTo>
+   
+   <OrdinalID>0</OrdinalID>
+   <RequestType>Asynchronous</RequestType>
+</Options>
+   </UpdateRequest>
+  </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="171e5fd4-311f-4028-97e6-2c1bfc889120"/>
+        <con:assertion type="Valid HTTP Status Codes" id="daf26ef4-1b79-4dd5-9f9d-0314b5b2bea8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="27806fe5-77dd-4df8-99fd-c85139aa5f0e" name="Match content of [StatusCode]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]/text()</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="dd582ed1-b61a-4c24-85fa-844a5da0cb2a" name="Match content of [StatusMessage]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]/text()</path>
+            <content>Queued</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Retrieve DE to Confirm Update" id="00326f41-9f3b-48d9-ada8-f5865fc4847c">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/customobjects/{id}/fields" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Retrieve DE to Confirm Update" id="ad54c941-16ec-47c7-b3de-3d99ee7835a9" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/internal/v1/customobjects/14254305-1c8e-e511-8d32-ac162db027d0/fields</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${#TestCase#accessToken}"/>
+          <con:entry key="id" value="${Retrieve DE to Confirm Create#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; //ns1:RetrieveResponseMsg[1]/ns1:Results[1]/ns1:ObjectID[1]}"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Confirm Update" id="35cb0c31-0f37-4bfd-a579-4270111b4154">
+    <con:settings/>
+    <con:config>
+      <script>import groovy.json.*
+
+if( context.loopIndex == null )
+context.loopIndex = 0
+def numberOfTimes = context.expand( '${#TestCase#numberOfTimes}' ).toInteger()
+
+
+def fields = new JsonSlurper().parseText(context.expand( '${Retrieve DE to Confirm Update#Response#$.fields}' ))
+
+def DEName = context.expand( '${#TestCase#objectName}' )
+
+def newField = context.expand( '${Update#RawRequest#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:UpdateRequest[1]/ns1:Objects[1]/ns1:Fields[1]/ns1:Field[1]/ns1:Name[1]}' )
+
+if (!fields.find { newField in it.name }) {
+  if ( ++context.loopIndex &lt;  numberOfTimes ) {
+    log.info "DE not updated yet"
+    sleep(1000)
+      testRunner.gotoStepByName( "Retrieve DE to Confirm Update" )
+  }
+  else {
+    log.info "Timeout, this test should fail"
+    testRunner.fail("DE not updated after " + numberOfTimes.toString() + " retrieve attempts, timing out")
+  }
+}
+else {
+  log.info "DE updated"
+    testRunner.gotoStepByName( "Delete" ) 
+}</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete" id="3fac5f62-e001-48b7-b306-cd4aad0a2a03">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Delete</con:operation>
+      <con:request name="Delete" id="16cc19d6-e288-42b1-b9b7-31a2b5be2273" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <SOAP-ENV:Header>
+     <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${#TestCase#accessToken}</h:fueloauth>
+   </SOAP-ENV:Header>
+ <SOAP-ENV:Body>
+  <DeleteRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+      <Options>
+   <SendResponseTo>
+      <ResponseType>HTTPPost</ResponseType>
+      <ResponseAddress>${#Project#fuelbinendpoint}/${Create New FuelBin#Response#$.id}</ResponseAddress>
+      <RespondWhen>Always</RespondWhen>
+      <IncludeResults>true</IncludeResults>
+      <IncludeObjects>true</IncludeObjects>
+   </SendResponseTo>
+   
+   <OrdinalID>0</OrdinalID>
+   <RequestType>Asynchronous</RequestType>
+</Options>
+   <ns1:Objects xsi:type="ns1:DataExtension" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <ns1:CustomerKey>${#TestCase#objectName}</ns1:CustomerKey>          
+   </ns1:Objects>
+  <Options/></DeleteRequest>
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="fc5eafb3-1889-4bd0-8589-b143971b6fe3"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Retrieve DE to Confirm Delete" id="9c5a1497-8791-44a1-9a99-ff8336fb8c86">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve DE to Confirm Delete" id="d9412851-a03e-493f-b996-c89f86b4d693" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soapenv:Header>
+     <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${#TestCase#accessToken}</h:fueloauth>
+  </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+      <RetrieveRequest>
+         <ObjectType>DataExtension</ObjectType>
+         <Properties>ObjectID</Properties>
+         <Properties>CustomerKey</Properties>
+         <Properties>Name</Properties>
+         <Properties>IsSendable</Properties>
+         <Properties>CategoryID</Properties>
+         <Filter xsi:type="SimpleFilterPart">
+            <Property>CustomerKey</Property>
+            <SimpleOperator>equals</SimpleOperator>
+            <Value>${#TestCase#objectName}</Value>
+         </Filter>
+      </RetrieveRequest>
+   </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="47853253-cfed-4fd7-b9cc-fbf80534a1a8"/>
+        <con:assertion type="XPath Match" id="9ca11bb7-46a9-41a3-9a37-4f103fd4d9c2" name="Check for existence of [ObjectID]" disabled="true">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+exists( //ns1:RetrieveResponseMsg/ns1:Results/ns1:ObjectID)</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Confirm Delete" id="0726394e-fb73-403d-bb36-b07a6317ebda">
+    <con:settings/>
+    <con:config>
+      <script>import groovy.util.XmlSlurper
+
+if( context.loopIndex == null )
+context.loopIndex = 0
+def numberOfTimes = context.expand( '${#TestCase#numberOfTimes}' ).toInteger()
+
+def response = new XmlSlurper().parseText(context.expand( '${Retrieve DE to Confirm Delete#Response#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:RetrieveResponseMsg[1]}' ))
+
+
+if (response.Results.ObjectID.size() != 0) {
+  if ( ++context.loopIndex &lt;  numberOfTimes ) {
+    log.info "DE not deleted yet"
+    sleep(1000)
+      testRunner.gotoStepByName( "Retrieve DE to Confirm Delete" )
+  }
+  else {
+    log.info "Timeout, this test should fail"
+    testRunner.fail("DE not deleted after " + numberOfTimes.toString() + " retrieve attempts, timing out")
+  }
+}
+else {
+  log.info "DE deleted"
+  testRunner.gotoStepByName( "Confirm HTTPPost Recorded Create Update Delete" )
+}</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Confirm HTTPPost Recorded Create Update Delete" id="67e6383e-436a-43d1-b98e-288775afa5f1">
+    <con:settings/>
+    <con:config service="FuelBin" methodName="Get FuelBin Entry By ID" resourcePath="/{id}" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Confirm HTTPPost Recorded Create Update Delete" id="82a05212-e077-42c6-b41a-261a7c522303" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>https://fuelbin.dev.marketingcloudapps.com</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://fuelbin.int.marketingcloudapps.com/SSqK3t1</con:originalUri>
+        <con:assertion type="GroovyScriptAssertion" id="09233eef-5349-479b-8276-ceec9044e66a" name="Check for Three Posts in Bin" disabled="true">
+          <con:configuration>
+            <scriptText>import groovy.json.*
+
+def posts = new JsonSlurper().parseText(context.expand( '${Confirm HTTPPost Recorded Create Update Delete#Response#$.posts}' ))
+
+assert posts.size() == 3</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="09233eef-5349-479b-8276-ceec9044e66a" name="Check Payload Contents for Creation Details" disabled="true">
+          <con:configuration>
+            <scriptText>import groovy.json.*
+
+def posts = new JsonSlurper().parseText(context.expand( '${Confirm HTTPPost Recorded Create Update Delete#Response#$.posts}' ))
+
+def payloads = []
+
+posts.each {
+  payloads &lt;&lt; it.payload
+}
+
+assert payloads[2].find("Data Extension created.") != null
+assert payloads[2].find(context.expand( '${#TestCase#objectName}' )) != null</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="09233eef-5349-479b-8276-ceec9044e66a" name="Check Payload Contents for Update Details" disabled="true">
+          <con:configuration>
+            <scriptText>import groovy.json.*
+
+def posts = new JsonSlurper().parseText(context.expand( '${Confirm HTTPPost Recorded Create Update Delete#Response#$.posts}' ))
+
+def payloads = []
+
+posts.each {
+  payloads &lt;&lt; it.payload
+}
+
+assert payloads[1].find("Data Extension updated.") != null
+assert payloads[1].find(context.expand( '${#TestCase#objectName}' )) != null</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="09233eef-5349-479b-8276-ceec9044e66a" name="Check Payload Contents for Delete Details" disabled="true">
+          <con:configuration>
+            <scriptText>import groovy.json.*
+
+def posts = new JsonSlurper().parseText(context.expand( '${Confirm HTTPPost Recorded Create Update Delete#Response#$.posts}' ))
+
+def payloads = []
+
+posts.each {
+  payloads &lt;&lt; it.payload
+}
+
+assert payloads[0].find("Data Extension deleted.") != null
+assert payloads[0].find(context.expand( '${#TestCase#objectName}' )) != null</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="id" value="${Create New FuelBin#Response#$.id}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Verify HTTPPost Entries" id="5c26c9b4-2918-4eca-b246-89dba143f4d9">
+    <con:settings/>
+    <con:config>
+      <script><![CDATA[import groovy.json.*
+
+def posts = new JsonSlurper().parseText(context.expand( '${Confirm HTTPPost Recorded Create Update Delete#Response#$.posts}' ))
+
+if( context.loopIndex == null )
+context.loopIndex = 0
+def numberOfTimes = context.expand( '${#TestCase#numberOfTimes}' ).toInteger()
+
+def payloads = []
+
+def newFieldName = context.expand( '${Update#RawRequest#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:UpdateRequest[1]/ns1:Objects[1]/ns1:Fields[1]/ns1:Field[1]/ns1:Name[1]}' )
+
+
+def expectedPhrases = ["Data Extension created", newFieldName, "Data Extension deleted"]
+def actualPhrases = []
+
+if ( posts.size() != 3 ) {
+  if ( ++context.loopIndex <  numberOfTimes ) {
+    log.info "All HTTPPost entries not made yet"
+    sleep(1000)
+      testRunner.gotoStepByName( "Confirm HTTPPost Recorded Create Update Delete" )
+  }
+  else {
+    log.info "Timeout, this test should fail"
+    testRunner.fail("HTTPPost entries not made after " + numberOfTimes.toString() + " retrieve attempts, timing out")
+    }
+}
+else {
+  log.info "All HTTPPost entries present"
+  posts.each {
+    payloads << it.payload
+    expectedPhrases.each { phrase -> 
+      if ( payloads.find ({it.contains(phrase) }) && !actualPhrases.find ({it.contains(phrase) })) {
+        actualPhrases << phrase
+        log.info actualPhrases
+      }
+    }
+  }
+  assert actualPhrases.sort() == expectedPhrases.sort()
+}]]></script>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>objectName</con:name>
+      <con:value>DE A1AP942BV_QETesting</con:value>
+    </con:property>
+    <con:property>
+      <con:name>numberOfTimes</con:name>
+      <con:value>40</con:value>
+    </con:property>
+    <con:property>
+      <con:name>accessToken</con:name>
+      <con:value>cA5nNJfpUaSY7u6YTD5OqpcP</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>42393c59-20c2-4563-aec4-db7881e7fcbd</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>ed892742-eba2-404c-8e64-fc892fd19d45</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>8f2cdf17-0d51-48ee-bec9-60dfe131ab46</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>d38202aa-7862-4480-8cc6-7224aade0067</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>1f617a35-b874-4806-8981-02eeed6a4166</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>41aa6783-ce82-4dbe-8731-0856b71fba64</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>1651f6c1-e6be-4794-b7c9-324048676095</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>d2ea8b13-56fd-4d8a-8952-11bad2f0311f</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>2805b965-a72b-464a-9d22-5d07dd5ebbc5</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>f434ad7d-1bcf-4bd4-a2b2-c380c10199c7</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>514a7b8d-eae4-4d02-8bf3-897a082607db</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>908b706c-889d-4987-8e5b-99ee8d1ba4ef</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>47268302-6728-48ef-9a25-b3f2c2a18f40</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>00326f41-9f3b-48d9-ada8-f5865fc4847c</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>57044892-beed-4366-8257-a7e02bca2467</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>a41ecc69-48fb-4b24-a35f-0ce11a0f40ff</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

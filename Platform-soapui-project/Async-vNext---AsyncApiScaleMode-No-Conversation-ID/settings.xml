@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="edf8cc9f-e22d-4d33-9427-a5503b39d286" name="Async vNext - AsyncApiScaleMode No Conversation ID" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="5e6f476a-c766-4f9d-866d-9bca59ebc438fileName">Async-vNext</con:setting><con:setting id="edf8cc9f-e22d-4d33-9427-a5503b39d286fileName">Async-vNext---AsyncApiScaleMode-No-Conversation-ID</con:setting></con:settings><con:savedRecentRuns>1</con:savedRecentRuns><con:runType>SEQUENTIAL</con:runType><con:properties/><con:reportParameters/></con:testSuite>

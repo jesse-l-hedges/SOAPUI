@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="logout" path="/logout" id="45e8830d-ea57-45ff-b45b-2fa85f20f4c4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="45e8830d-ea57-45ff-b45b-2fa85f20f4c4fileName">logout</con:setting>
+  </con:settings>
+  <con:parameters>
+    <con:parameter>
+      <con:name>Authorization</con:name>
+      <con:value/>
+      <con:style>HEADER</con:style>
+      <con:default/>
+      <con:description xsi:nil="true"/>
+    </con:parameter>
+  </con:parameters>
+  <con:method name="Method 1" id="cb973871-d273-42a0-a1bb-6910ae7e6dee" method="GET">
+    <con:settings/>
+    <con:parameters/>
+    <con:representation type="RESPONSE">
+      <con:mediaType>text/html; charset=utf-8</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element>html</con:element>
+    </con:representation>
+    <con:representation type="REQUEST">
+      <con:mediaType>application/json</con:mediaType>
+      <con:params/>
+    </con:representation>
+    <con:request name="getLogout" id="de78077b-8b1b-422a-8b5b-ceba987ef34f" mediaType="application/json" postQueryString="false">
+      <con:settings>
+        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+      </con:settings>
+      <con:request/>
+      <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/logout</con:originalUri>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters/>
+      <con:parameterOrder>
+        <con:entry>Authorization</con:entry>
+      </con:parameterOrder>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+</con:resource>

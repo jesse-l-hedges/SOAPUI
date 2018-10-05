@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="Rule" path="adminservice/v1/ErrorLookup/rule" id="a9897771-ccc4-4b37-b79a-28691ef81487" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="a9897771-ccc4-4b37-b79a-28691ef81487fileName">Rule</con:setting>
+  </con:settings>
+  <con:parameters>
+    <con:parameter>
+      <con:name>Authorization</con:name>
+      <con:value xsi:nil="true"/>
+      <con:style>HEADER</con:style>
+      <con:default xsi:nil="true"/>
+    </con:parameter>
+    <con:parameter>
+      <con:name>Content-Type</con:name>
+      <con:value xsi:nil="true"/>
+      <con:style>HEADER</con:style>
+      <con:default xsi:nil="true"/>
+    </con:parameter>
+  </con:parameters>
+  <con:method name="Get" id="3f634cdc-0ea2-4845-8e03-f17953b073bc" method="GET">
+    <con:settings/>
+    <con:parameters/>
+    <con:request name="Request 1" id="e292b0be-6de8-475b-962a-a893be328b2e" mediaType="application/json">
+      <con:settings/>
+      <con:endpoint>http://adminsvc-s1.qa1.qa.local</con:endpoint>
+      <con:request/>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+  <con:method name="Add" id="2caef782-d52d-4667-9e1b-0eb49f9978ce" method="POST">
+    <con:settings/>
+    <con:parameters/>
+    <con:request name="Request 1" id="53e104dc-7fe7-4310-a80a-42aeb0007f20" mediaType="application/json">
+      <con:settings/>
+      <con:endpoint>http://adminsvc-s1.qa1.qa.local</con:endpoint>
+      <con:request/>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+</con:resource>

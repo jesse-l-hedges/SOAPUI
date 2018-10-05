@@ -1,0 +1,772 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="c5d931a4-99f6-431a-99fc-9eee905b3907" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Upsert DE Row by DE ID and Row Key" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="0fe59cf6-fb53-491f-9dc0-2093d3589686fileName">Upsert-DE-Row-by-Row-Key</con:setting>
+    <con:setting id="c5d931a4-99f6-431a-99fc-9eee905b3907fileName">Upsert-DE-Row-by-DE-ID-and-Row-Key</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="571a9f1e-47f8-4797-8817-438b8c1939c7">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>5b64a7c3-23e7-49bc-83fe-9983c3df8feb</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>apyEaLk2bYMXE5flf73hwZlw</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getCategoryId" id="9f67c16b-36d1-46e3-8953-1c81cef65554">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/categories" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getCategoryId" id="14fdd691-6ef9-4352-8fab-0ab67de1b042" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/categories</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="9513e72a-e55b-4221-8589-57ad342bd072" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="catType" value="dataextension"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>catType</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer CategoryId" id="c9604371-7569-4483-a7cd-33cc9723c052">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>categoryId</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>getCategoryId</con:sourceStep>
+        <con:sourcePath>$.items[0].categoryId</con:sourcePath>
+        <con:targetType>categoryId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:type>JSONPATH</con:type>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create Random CustomObjectName-orig" id="40826a0d-a4e6-4edb-9fbd-ea10bc19e18b">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"QE Test "+generator( (('A'..'Z')+('0'..'9')).join(), 15 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create RandomCustomObject Customer Key" id="fbd98531-1140-46be-a6f4-aff4e5e7941d">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')+('0'..'9')).join(), 15 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="createCustomObject" id="36985abb-f5fa-42d1-b75a-2630acbccf63">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/customobjects" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="createCustomObject" id="af985593-8319-42a7-adab-c3589ba969e8" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request>{
+	"name":"${Create Random CustomObjectName-orig#result}",
+	"customerKey":"${Create RandomCustomObject Customer Key#result}",
+	"description":"",
+	"categoryID":${#TestCase#categoryId},
+	"isActive":true,
+	"status":0,
+	"isObjectDeletable":true,
+	"isFieldAdditionAllowed":true,
+	"isFieldModificationAllowed":true,
+	"isTestable":false,
+	"isSendable":false,
+	"fields":
+	[
+		{"name":"SubscriberKey",
+		"ordinal":0,
+		"type":"Text",
+		"length":50,
+		"scale":0,
+		"isPrimaryKey":false,
+		"defaultValue":"",
+		"isNullable":false,
+		"isTemplateField":false,
+		"isHidden":false,
+		"isReadOnly":false,
+		"isOverridable":false,
+		"isInheritable":false,
+		"updatable":true,
+		"retrievable":true,
+		"isActive":true,
+		"mustOverride":false},
+		{"name":"EmailAddress",
+		"ordinal":1,
+		"type":"EmailAddress",
+		"length":254,
+		"scale":0,
+		"isPrimaryKey":true,
+		"defaultValue":"",
+		"isNullable":false,
+		"isTemplateField":false,
+		"isHidden":false,
+		"isReadOnly":false,
+		"isOverridable":false,
+		"isInheritable":false,
+		"updatable":true,
+		"retrievable":true,
+		"isActive":true,
+		"mustOverride":false},
+		{"name":"Birthdate",
+		"ordinal":2,
+		"type":"Date",
+		"scale":0,
+		"isPrimaryKey":false,
+		"defaultValue":"",
+		"isNullable":true,
+		"isTemplateField":false,
+		"isHidden":false,
+		"isReadOnly":false,
+		"isOverridable":false,
+		"isInheritable":false,
+		"updatable":true,
+		"retrievable":true,
+		"isActive":true,
+		"mustOverride":false},
+		{"name":"Age",
+		"ordinal":3,
+		"type":"Number",
+		"scale":0,
+		"isPrimaryKey":false,
+		"defaultValue":"",
+		"isNullable":true,
+		"isTemplateField":false,
+		"isHidden":false,
+		"isReadOnly":false,
+		"isOverridable":false,
+		"isInheritable":false,
+		"updatable":true,
+		"retrievable":true,
+		"isActive":true,
+		"mustOverride":false},
+		{"name":"HTML Email",
+		"ordinal":4,
+		"type":"Boolean",
+		"length":50,
+		"scale":0,
+		"isPrimaryKey":false,
+		"defaultValue":"",
+		"isNullable":true,
+		"isTemplateField":false,
+		"isHidden":false,
+		"isReadOnly":false,
+		"isOverridable":false,
+		"isInheritable":false,
+		"updatable":true,
+		"retrievable":true,
+		"isActive":true,
+		"mustOverride":false},
+		{"name":"Phone Number",
+		"ordinal":5,
+		"type":"Phone",
+		"scale":0,
+		"isPrimaryKey":false,
+		"defaultValue":"",
+		"isNullable":true,
+		"isTemplateField":false,
+		"isHidden":false,
+		"isReadOnly":false,
+		"isOverridable":false,
+		"isInheritable":false,
+		"updatable":true,
+		"retrievable":true,
+		"isActive":true,
+		"mustOverride":false}
+	]
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/internal/v1/customobjects</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="5e5a432d-3896-4a20-bece-56805ee33739" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>201</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer CustomObjectId" id="6a8245ba-db33-4dc5-80e9-cd2c9605791d">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>customObjectId</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>createCustomObject</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/internal/v1/customobjects';
+//ns1:Response[1]/ns1:id[1]</con:sourcePath>
+        <con:targetType>customObjectId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>externalKey</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>createCustomObject</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/internal/v1/customobjects';
+//ns1:Response[1]/ns1:customerKey[1]</con:sourcePath>
+        <con:targetType>externalKey</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Add Rowset" id="483610c6-0c79-4bcc-8f49-775d1a6bc838">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/hub/v1/dataevents/key:{key}/rowset" methodName="Upsert Batch of DE Rows by Key" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Add Rowset" id="925de299-bee8-4cd8-a1a7-f5997803553c" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request>[   
+    {
+        "keys":{
+                "EmailAddress": "abc@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "abc@mailinator.net",
+                "Birthdate": "1989-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "317-524-1212"
+                }
+    },
+    {   
+         "keys":{
+                "EmailAddress": "cde@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "cde@mailinator.net",
+                "Birthdate": "1990-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "317-334-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "fgh@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "fgh@mailinator.net",
+                "Birthdate": "1961-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "317-394-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "ijk@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "ijk@mailinator.net",
+                "Birthdate": "1962-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "367-394-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "lmn@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "lmn@mailinator.net",
+                "Birthdate": "1963-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "387-394-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "opq@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "opq@mailinator.net",
+                "Birthdate": "1964-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "389-394-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "rst@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "rst@mailinator.net",
+                "Birthdate": "1965-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "309-394-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "uvw@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "uvw@mailinator.net",
+                "Birthdate": "1966-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "304-394-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "xyz@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "xyz@mailinator.net",
+                "Birthdate": "1966-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "304-394-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "ramones@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "ramones@mailinator.net",
+                "Birthdate": "1966-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "304-394-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "clash@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "clash@mailinator.net",
+                "Birthdate": "1966-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "304-394-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "siouxsie@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "siouxsie@mailinator.net",
+                "Birthdate": "1966-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "304-394-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "damned@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "damned@mailinator.net",
+                "Birthdate": "1966-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "304-394-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "voidoids@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "voidoids@mailinator.net",
+                "Birthdate": "1966-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "304-394-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "wire@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "wire@mailinator.net",
+                "Birthdate": "1966-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "304-394-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "buzzcocks@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "buzzcocks@mailinator.net",
+                "Birthdate": "1966-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "304-394-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "999@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "999@mailinator.net",
+                "Birthdate": "1966-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "304-394-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "magazine@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "magazine@mailinator.net",
+                "Birthdate": "1966-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "304-394-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "slits@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "slits@mailinator.net",
+                "Birthdate": "1966-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "304-394-1212"
+                }         
+    },
+    {   
+         "keys":{
+                "EmailAddress": "pretenders@mailinator.net"
+                },
+        "values":{
+                "SubscriberKey": "pretenders@mailinator.net",
+                "Birthdate": "1966-04-01",
+                "Age": "15",
+                "HTML Email": "True",
+                "Phone Number": "304-394-1212"
+                }         
+    }
+]</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/hub/v1/dataEvents/key:key/rowset</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="315e0696-c80a-4200-bd8a-5fb8de0a8b39" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="e47dd580-2fcf-484a-9844-77ba9f20ba18" name="Log Time Elapsed">
+          <con:configuration>
+            <scriptText>log.info messageExchange.timeTaken</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+          <con:entry key="key" value="${#TestCase#externalKey}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>key</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Retrieve CustomObject To Confirm Rowset Addition" id="24802861-4805-4447-9adb-2a9324f20200">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/customobjects/{id}" methodName="Get" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Retrieve CustomObject To Confirm Rowset Addition" id="4bbd09de-08f5-4be6-931c-c524c9c3f76f" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/internal/v1/customobjects/beae32eb-e35a-e511-8b2d-ac162dbccdac</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="44f85cd3-5141-42e5-b743-db86f22d7483" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="3ce5bcb8-925d-4da3-9c77-3fd061b3dae7" name="CustomObjectID Match">
+          <con:configuration>
+            <path>$.id</path>
+            <content>${#TestCase#customObjectId}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="1f08ed18-58d2-4063-b599-f9d61a14c282" name="CustomObject Name Match">
+          <con:configuration>
+            <path>$.name</path>
+            <content>${createCustomObject#RawRequest#$.name}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="081fc3f9-5376-417b-b392-9a0637394cac" name="RowCount As Expected">
+          <con:configuration>
+            <path>$.totalRowCount</path>
+            <content>20</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="9fbed347-9fe6-4956-9ea0-d0204186dc67" name="FieldCount = 6">
+          <con:configuration>
+            <path>$.fieldCount</path>
+            <content>6</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+          <con:entry key="id" value="${#TestCase#customObjectId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Upsert DE Row by DE ID and Row Key" id="41f8e9e5-25b9-46cc-a33a-3dc688e61894">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/hub/v1/dataevents/{guid}/rows/{primaryKeys}" methodName="Put (Upsert) DE Row by ID" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Upsert DE Row by DE ID and Row Key" id="2e1aeae2-c8fa-422e-860e-1dc57ebe3303" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"values":{
+                "SubscriberKey": "englishbeat@mailinator.net",
+                "Birthdate": "1956-03-11",
+                "Age": "55",
+                "HTML Email": "True",
+                "Phone Number": "365-394-1212"
+          }
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/hub/v1/dataevents/f567ed0e-eb99-e511-8d32-ac162db027d0/rows/EmailAddress%3Afgh%40mailinator.net</con:originalUri>
+        <con:assertion type="JsonPath Match" id="60ef7a31-ed91-4692-902e-72196a2b96df" name="Match content of [subscriberKey]">
+          <con:configuration>
+            <path>$.values.subscriberKey</path>
+            <content>${Upsert DE Row by DE ID and Row Key#RawRequest#$.values.SubscriberKey}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="a69695eb-22e0-4721-bb8d-7269aeff6eec" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="b7d6dc37-b00d-40ec-ac6d-84e6a44ac60a" name="Match content of [birthdate]">
+          <con:configuration>
+            <path>$.values.birthdate</path>
+            <content>${Upsert DE Row by DE ID and Row Key#RawRequest#$.values.Birthdate}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="primaryKeys" value="EmailAddress:fgh@mailinator.net"/>
+          <con:entry key="guid" value="${Retrieve CustomObject To Confirm Rowset Addition#Response#$.id}"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>guid</con:entry>
+          <con:entry>primaryKeys</con:entry>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Delete Data Extension" id="edeb3345-0628-4296-9789-a3cf3b2ef359">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/customobjects/{id}" methodName="Delete" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Delete Data Extension" id="7d09d70c-6ba9-4f1e-9af4-075569633ed2" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/internal/v1/customobjects/id</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="8eab20c2-86a5-4ce8-91e9-1206374384e5" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>204</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="Host" value="${#Project#apihost}"/>
+          <con:entry key="id" value="${#TestCase#customObjectId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>categoryId</con:name>
+      <con:value>387665</con:value>
+    </con:property>
+    <con:property>
+      <con:name>customObjectId</con:name>
+      <con:value>d1d14e72-72b6-e611-80cf-1402ec6b9529</con:value>
+    </con:property>
+    <con:property>
+      <con:name>externalKey</con:name>
+      <con:value>WRIANER8MW0Y5KS</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>41f8e9e5-25b9-46cc-a33a-3dc688e61894</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

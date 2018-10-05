@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:operation id="ecefe129-c8b6-4ebf-8c4b-2ff8a4f620dc" isOneWay="false" action="Retrieve" name="Retrieve" bindingOperationName="Retrieve" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="ecefe129-c8b6-4ebf-8c4b-2ff8a4f620dcfileName">Retrieve</con:setting></con:settings></con:operation>

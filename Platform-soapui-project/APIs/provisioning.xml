@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="provisioning" path="/provisioning" id="999a859c-f161-40be-810a-311bdd484fb1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="f5133b96-1bad-4382-ba68-b047f9c16771fileName">interaction</con:setting>
+    <con:setting id="999a859c-f161-40be-810a-311bdd484fb1fileName">provisioning</con:setting>
+  </con:settings>
+  <con:parameters/>
+  <con:resource name="v1" path="v1" id="82305b99-a5d7-406a-99f0-a9f3ce5d5712">
+    <con:settings/>
+    <con:parameters/>
+    <con:resource name="rest" path="rest" id="4d872362-cbd7-4410-b601-f827d240e50c">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>Authorization</con:name>
+          <con:value/>
+          <con:style>HEADER</con:style>
+          <con:default/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="provisioning/Discovery" id="ec5a0773-3974-436c-a21b-c6e0fffc3529" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:request name="Request 1" id="473c1784-3bd6-47c8-8c4c-f3d26a294ad9" mediaType="application/json">
+          <con:settings/>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters/>
+          <con:parameterOrder>
+            <con:entry>Authorization</con:entry>
+          </con:parameterOrder>
+          <con:environmentSpec>
+            <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+              <con:authProfile>Inherit From Parent</con:authProfile>
+            </con:entry>
+          </con:environmentSpec>
+        </con:request>
+      </con:method>
+    </con:resource>
+  </con:resource>
+  <con:resource name="applications" path="applications" id="6555e942-49ee-4abf-a68f-25f7ab19c64e">
+    <con:settings/>
+    <con:parameters/>
+    <con:resource name="{id}" path="{id}" id="c75c4009-ba53-4ccb-b220-b7cfd438bed2">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter>
+          <con:name>id</con:name>
+          <con:value>id</con:value>
+          <con:style>TEMPLATE</con:style>
+          <con:default>id</con:default>
+        </con:parameter>
+      </con:parameters>
+      <con:resource name="installRequest" path="installRequest" id="e39e9601-7ff0-40cc-ab24-8d45a1dde428">
+        <con:settings/>
+        <con:parameters/>
+        <con:method name="Method 1" id="7ad83800-d7f2-4317-b2fe-6e56a54f28f2" method="POST">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="installHubExchangeApplicationRequest" id="b65ca30a-f0bc-4807-8139-c20bc48c2312" mediaType="application/json" postQueryString="false">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters/>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+      <con:resource name="uninstall" path="uninstall" id="07c21d51-0a63-4cee-813d-a25f19deebe8">
+        <con:settings/>
+        <con:parameters/>
+        <con:method name="Method 1" id="2e01874d-bbaa-4fd9-8d7d-add6ba5a4643" method="GET">
+          <con:settings/>
+          <con:parameters/>
+          <con:request name="uninstallHubExchangeApplication" id="da5b34b0-650b-4c6a-8ea1-ca9d96fd161b" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:request/>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters/>
+            <con:environmentSpec>
+              <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+                <con:authProfile>Inherit From Parent</con:authProfile>
+              </con:entry>
+            </con:environmentSpec>
+          </con:request>
+        </con:method>
+      </con:resource>
+    </con:resource>
+  </con:resource>
+</con:resource>

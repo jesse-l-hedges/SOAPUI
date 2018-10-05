@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="admin" path="/admin" id="41027cd6-63ad-4fd3-9b0c-cf3e67c1ed72" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="41027cd6-63ad-4fd3-9b0c-cf3e67c1ed72fileName">admin</con:setting>
+  </con:settings>
+  <con:parameters>
+    <con:parameter>
+      <con:name>Authorization</con:name>
+      <con:value/>
+      <con:style>HEADER</con:style>
+      <con:default/>
+    </con:parameter>
+  </con:parameters>
+  <con:resource name="requested" path="requested" id="3ce92745-5f33-4bfb-b949-13b20b16aca8">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>Authorization</con:name>
+        <con:value/>
+        <con:style>HEADER</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:method name="Method 1" id="aaa23ab3-d674-4632-ad1d-01ad7e3fba54" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:representation type="RESPONSE">
+        <con:mediaType>text/html; charset=utf-8</con:mediaType>
+        <con:status>200</con:status>
+        <con:params/>
+        <con:element>html</con:element>
+      </con:representation>
+      <con:request name="getAdmin" id="3a0b2c80-ae79-4e54-9d2a-11077beaa4bd" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="custom" path="custom" id="5841b638-0fc8-4dfc-a076-69070f37fe06">
+    <con:settings/>
+    <con:parameters/>
+    <con:method name="Method 1" id="13ccd6fd-1838-4e2a-8e7a-5298865514bb" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:representation type="RESPONSE">
+        <con:mediaType>text/html; charset=utf-8</con:mediaType>
+        <con:status>200</con:status>
+        <con:params/>
+        <con:element>html</con:element>
+      </con:representation>
+      <con:request name="getCustomApps" id="520f2120-2cdc-4677-987a-f4a4fec645f3" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="settings" path="settings" id="a14d94e2-f1cb-4302-a47a-ec6c466ef4d4">
+    <con:settings/>
+    <con:parameters/>
+    <con:method name="Method 1" id="0d39abf0-d234-4437-bd47-e476b7178eb9" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:representation type="RESPONSE">
+        <con:mediaType>text/html; charset=utf-8</con:mediaType>
+        <con:status>200</con:status>
+        <con:params/>
+        <con:element>html</con:element>
+      </con:representation>
+      <con:request name="getGlobalSettings" id="b56f31f8-955a-4cbb-add8-83aeec64d5c4" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name="verify" path="verify" id="0029ace2-8ace-45f2-80f2-6cac712eff6f">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>$</con:name>
+        <con:value/>
+        <con:style>QUERY</con:style>
+        <con:default/>
+        <con:description xsi:nil="true"/>
+      </con:parameter>
+    </con:parameters>
+    <con:method name="Method 1" id="b98145f6-db3b-414b-a5c8-40c739bd572d" method="GET">
+      <con:settings/>
+      <con:parameters/>
+      <con:representation type="RESPONSE">
+        <con:mediaType>text/html; charset=utf-8</con:mediaType>
+        <con:status>200</con:status>
+        <con:params/>
+        <con:element>html</con:element>
+      </con:representation>
+      <con:request name="getAdminVerification" id="d6aa01e2-8dc6-4b7b-9124-90e0c90bb090" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="$" value="{applicationId}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:resource name=":{applicationId}" path="override/:{applicationId}" id="d68d398c-275b-4e7a-849a-c48251a4932a">
+    <con:settings/>
+    <con:parameters>
+      <con:parameter>
+        <con:name>applicationId</con:name>
+        <con:value>applicationId</con:value>
+        <con:style>TEMPLATE</con:style>
+        <con:default>applicationId</con:default>
+      </con:parameter>
+    </con:parameters>
+    <con:method name="Method 1" id="16e58158-bf8f-48dc-9d12-a1af198b9890" method="POST">
+      <con:settings/>
+      <con:parameters/>
+      <con:request name="Request 1" id="a0244207-24fb-4489-941e-91fb1dc94b29" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:method>
+  </con:resource>
+  <con:method name="Method 1" id="b71600fe-17f4-40de-8029-17c0bcb10e3a" method="GET">
+    <con:settings/>
+    <con:parameters/>
+    <con:representation type="RESPONSE">
+      <con:mediaType>text/html; charset=utf-8</con:mediaType>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element>html</con:element>
+    </con:representation>
+    <con:request name="getAdminOrUser" id="d191dfba-3cf6-4e59-8bbf-39fdf108825d" mediaType="application/json">
+      <con:settings>
+        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+      </con:settings>
+      <con:request/>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters>
+        <entry key="Authorization" value="" xmlns="http://eviware.com/soapui/config"/>
+      </con:parameters>
+      <con:parameterOrder>
+        <con:entry>Authorization</con:entry>
+      </con:parameterOrder>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+</con:resource>

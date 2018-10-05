@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Definitions" searchProperties="true" id="a89ace70-91f4-4b6c-bcad-02b3d388f8f0" xmlns:con="http://eviware.com/soapui/config">
+      <con:settings><con:setting id="a89ace70-91f4-4b6c-bcad-02b3d388f8f0fileName">Definitions</con:setting></con:settings>
+      <con:testStep type="groovy" name="ScriptDefinitions" id="681d26aa-2ee6-486e-a96f-2de7cedb4e31">
+        <con:settings/>
+        <con:config>
+          <script>import groovy.json.JsonSlurper
+
+context.setProperty("jsonComparer", new jsonComparerClass());
+
+class jsonComparerClass{
+  //Check that all the expected object attributes are contained
+  //in the result object (additional result attributes are not a 
+  //problem
+  def boolean EqualPayloads(expected, result){
+    def slurper = new JsonSlurper()
+    def resultObj = slurper.parseText(result)   
+    def expectedObj = slurper.parseText(expected)
+
+    return resultObj == expectedObj;
+  }
+
+  //Check that the result payload includes MINIMUN the properties
+  //and values defined in the expected payload
+  def boolean IncludePayload(expected, result, logger){
+    def slurper = new JsonSlurper()
+    def resultObj = slurper.parseText(result)   
+    def expectedObj = slurper.parseText(expected)
+
+    return IncludeInternal(expectedObj, resultObj, logger);
+  }
+
+  def boolean IncludeInternal(expectedObj, resultObj, logger){
+    //logger.info expectedObj
+    //logger.info resultObj
+    def result = true;
+    
+    for(item in expectedObj)
+    {
+      if(resultObj[item.key] == null){
+        logger.info item.key + ' - property not found '
+        result = false
+        continue
+      }
+
+      def resultValue = resultObj[item.key].value
+      def expectedValue = item.value
+            
+      if(expectedValue.getClass().getName().contains('String')){
+        def String strExpectedValue = item.value.toString()
+        if( strExpectedValue != '%IGNOREVALUE%' ){
+          def String strResultValue = resultObj[item.key].value.toString()
+          if(strExpectedValue != strResultValue){
+            logger.info item.key + ' expected value : [' + strExpectedValue + '] - result value : [' + strResultValue + ']'
+            result = false
+            continue
+          }
+        }
+      }else     
+      if(expectedValue.getClass().getName().contains('ArrayList')){
+        //logger.info 'iterating on array: ' + item.key
+        def ix = 0
+        for( subitem in expectedValue){
+          result = result &amp; this.IncludeInternal(subitem, resultObj[item.key][ix], logger)
+          ix++
+        }
+      }else
+      if(expectedValue.getClass().getName().contains('HashMap')){
+        //logger.info 'comparing child object: ' + item.key
+        result = result &amp; this.IncludeInternal(expectedValue, resultObj[item.key], logger)
+      }else
+      {
+        if(expectedValue != resultValue){
+          logger.info item.key + ' expected value : [' + expectedValue + '] - result value : [' + resultValue + ']'
+          result = false
+        }
+      }
+    }
+
+    return result
+  }
+
+  //Check that the result payload includes MINIMUN the properties
+  //defined in the expected payload. "IT IGNORES THE VALUES"
+  def boolean IncludeProperties(expected, result, logger){
+    def slurper = new JsonSlurper()
+    def resultObj = slurper.parseText(result)   
+    def expectedObj = slurper.parseText(expected)
+
+    return IncludeInternalProperties(expectedObj, resultObj, logger);
+  }
+
+  def boolean IncludeInternalProperties(expectedObj, resultObj, logger){
+    //logger.info expectedObj
+    //logger.info resultObj
+    
+    for(item in expectedObj)
+    {
+      if(resultObj[item.key] == null){
+        logger.info item.key + ' - property not found '
+        return false
+      }
+
+      def expectedValue = item.value
+            
+      if(expectedValue.getClass().getName().contains('ArrayList')){
+        //logger.info 'iterating on array: ' + item.key
+        def ix = 0
+        for( subitem in expectedValue){
+          def result = this.IncludeInternalProperties(subitem, resultObj[item.key][ix], logger)
+          if( ! result ) return false
+          ix++
+        }
+      }else
+      if(expectedValue.getClass().getName().contains('HashMap')){
+        //logger.info 'comparing child object: ' + item.key
+        def result = this.IncludeInternalProperties(expectedValue, resultObj[item.key], logger)
+        if( ! result ) return false
+      }
+    }
+
+    return true
+  }
+}
+</script>
+        </con:config>
+      </con:testStep>
+      <con:properties/>
+    <con:reportParameters/></con:testCase>

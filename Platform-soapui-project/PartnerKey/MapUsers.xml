@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="1fea2484-4ddb-4dc6-b3fb-6ae1d5428589" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="MapUsers" searchProperties="true" maxResults="0" timeout="360000" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="c7b6610a-8d49-4a57-867d-c8e3092f4c0afileName">Enterprise-2.0</con:setting>
+    <con:setting id="82526999-54f5-49e0-b732-1b20b8ae382bfileName">Create-Enterprise-2.0-Account-and-User</con:setting>
+    <con:setting id="7dd8c2d1-bae7-4e84-9c6d-092a4669fff4fileName">Create-Enterprise-2.0-Account-and-User-With-PartnerKey</con:setting>
+    <con:setting id="1fea2484-4ddb-4dc6-b3fb-6ae1d5428589fileName">MapUsers</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="d53291a3-1919-495c-842f-3fc1d6a34120">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>aJg0AWneRw3qjrMLvhZb3ZZT</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>10782007</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>10739553</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create PartnerKey" id="544ee893-4483-422f-a9de-d6c6e0797a93">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"QETest_MapUsers_" + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer PartnerKey" id="2b88352c-46da-4c90-9642-cd3245e1bd9c">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>PartnerKey</con:name>
+        <con:sourceType>result</con:sourceType>
+        <con:sourceStep>Create PartnerKey</con:sourceStep>
+        <con:sourcePath/>
+        <con:targetType>PartnerKey</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Execute MapUser" id="82fc95cc-ae39-4ab9-84af-9593afa32ae9">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Execute</con:operation>
+      <con:request name="Execute MapUser" id="c15df353-228b-4a74-b77e-b6bd39793638">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${Auth#accesstoken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <ExecuteRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Requests>
+            <Name>MapUsers</Name>
+            <ns1:Parameters xsi:type="ns1:UserMap" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+			<ETAccountUser>
+                  <AccountUserID>${Auth#userid}</AccountUserID>
+                  <PartnerKey>${#TestCase#PartnerKey}</PartnerKey>
+               </ETAccountUser>
+            </ns1:Parameters>
+         </Requests>
+      </ExecuteRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="08e5197c-d6bc-46e5-946e-f63ffd0c419b"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Execute MapUser Without AccountUserID" id="9a32d4db-b918-4906-8d57-536992bd6b94">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Execute</con:operation>
+      <con:request name="Execute MapUser Without AccountUserID" id="c15df353-228b-4a74-b77e-b6bd39793638">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${Auth#accesstoken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <ExecuteRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Requests>
+            <Name>MapUsers</Name>
+            <ns1:Parameters xsi:type="ns1:UserMap" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+              <ETAccountUser>
+                  <PartnerKey>${#TestCase#PartnerKey}</PartnerKey>
+               </ETAccountUser>
+            </ns1:Parameters>
+         </Requests>
+      </ExecuteRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="08e5197c-d6bc-46e5-946e-f63ffd0c419b"/>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>PartnerKey</con:name>
+      <con:value>QETest_MapUsers_QSRDGCI8N</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>05b418eb-b223-42f6-a317-69ab70271f36</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>43463b39-bc37-43b7-ba32-9f45b6680e96</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>e3c6b726-f319-4844-8b89-f9f422a1ea4d</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>6f66bd9c-e1ce-42e9-846b-f0da4a153aaf</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>08bab8f0-fd85-4976-b1a8-009635a1f28d</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>e2c2870a-ae0f-44bc-8815-2eb7d542fb4a</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>08398412-a44f-4a65-9030-ead2a2267f61</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="980ccca9-76e4-4cfb-95dd-27bfe4c60168" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Patch Data Extension" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="980ccca9-76e4-4cfb-95dd-27bfe4c60168fileName">Patch-Data-Extension</con:setting>
+  </con:settings>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:testStep type="calltestcase" name="Auth" id="621ba7b5-b805-42f9-8cb5-f32583c512df">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accessToken</con:name>
+          <con:value>bOFWkyAyZm1CgqaajYMOBDRy</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>1100419</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>280148</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script to Create Object Name" id="2acffb14-bdac-4e81-92f3-8fc30aad80f0">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')+('0'..'9')).join(), 9 ) + "_QETesting"</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Property Transfer" id="28248fbc-d153-45bb-82e5-e503a1efd566">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="true" entitize="false" transferChildNodes="false">
+        <con:name>objectName</con:name>
+        <con:sourceType>result</con:sourceType>
+        <con:sourceStep>Groovy Script to Create Object Name</con:sourceStep>
+        <con:targetType>objectName</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" id="646e84be-fefe-4c65-b00f-d72f926fc964" name="Create Sendable Data Extension">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Sendable Data Extension" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="11b6e56f-6ffe-453e-9ac8-cceccf7e4653" defaultOutgoingWss="" defaultIncomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soapenv:Header>
+     <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${Auth#accessToken}</h:fueloauth>
+  </soapenv:Header>
+  <soapenv:Body>
+    <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+   <Options/>
+   <ns1:Objects xsi:type="ns1:DataExtension" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <ns1:PartnerKey xsi:nil="true"/>
+    <ns1:ModifiedDate xsi:nil="true"/>
+    <ns1:ObjectID xsi:nil="true"/>
+    <ns1:CustomerKey>${Groovy Script to Create Object Name#result}</ns1:CustomerKey>
+    <ns1:Name>DE ${Groovy Script to Create Object Name#result}</ns1:Name>
+    <ns1:IsSendable>true</ns1:IsSendable>
+    <ns1:SendableDataExtensionField>
+     <ns1:PartnerKey xsi:nil="true"/>
+     <ns1:ModifiedDate xsi:nil="true"/>
+     <ns1:ObjectID xsi:nil="true"/>
+     <ns1:Name>EmailAddress</ns1:Name>
+    </ns1:SendableDataExtensionField>
+    <ns1:SendableSubscriberField>
+     <ns1:Name>Subscriber Key</ns1:Name>
+     <ns1:Value>EmailAddress</ns1:Value>
+    </ns1:SendableSubscriberField>
+    <ns1:Fields>
+     <ns1:Field>
+      <ns1:PartnerKey xsi:nil="true"/>
+      <ns1:ModifiedDate xsi:nil="true"/>
+      <ns1:ObjectID xsi:nil="true"/>
+      <ns1:Name>EmailAddress</ns1:Name>
+      <ns1:IsRequired>true</ns1:IsRequired>
+      <ns1:FieldType>EmailAddress</ns1:FieldType>
+     </ns1:Field>
+     <ns1:Field>
+      <ns1:PartnerKey xsi:nil="true"/>
+      <ns1:ModifiedDate xsi:nil="true"/>
+      <ns1:ObjectID xsi:nil="true"/>
+      <ns1:Name>Gender</ns1:Name>
+      <ns1:IsRequired>false</ns1:IsRequired>
+      <ns1:FieldType>Text</ns1:FieldType>
+     </ns1:Field>
+     <ns1:Field>
+      <ns1:PartnerKey xsi:nil="true"/>
+      <ns1:ModifiedDate xsi:nil="true"/>
+      <ns1:ObjectID xsi:nil="true"/>
+      <ns1:Name>Region</ns1:Name>
+      <ns1:IsRequired>false</ns1:IsRequired>
+      <ns1:FieldType>Text</ns1:FieldType>
+     </ns1:Field>
+     <ns1:Field>
+      <ns1:PartnerKey xsi:nil="true"/>
+      <ns1:ModifiedDate xsi:nil="true"/>
+      <ns1:ObjectID xsi:nil="true"/>
+      <ns1:Name>Full Name</ns1:Name>
+      <ns1:IsRequired>false</ns1:IsRequired>
+      <ns1:FieldType>Text</ns1:FieldType>
+     </ns1:Field>
+    </ns1:Fields>
+   </ns1:Objects>
+  </CreateRequest>
+
+  </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="f6ae2dd4-58cd-4acf-943c-520e4d55e9be" name="SOAP Response"/>
+        <con:assertion type="XPath Match" id="7ed04654-0839-4744-b05b-608bba04a20e" name="Match content of [StatusCode]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]/text()</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="cf55b716-1ee7-4135-b18e-57197d8949aa" name="Match content of [StatusMessage]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]/text()</path>
+            <content>Data Extension created.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="abd95715-cbe1-4e3f-bd65-a20c98c8b7f7" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508" action="Create"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="3b843353-f6c7-4630-b3c2-22bc6062ac4d">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Patch Data Extension" id="7df67cf3-a352-451a-b2f4-690be8b14b15">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/customobjects/{id}" methodName="Patch" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Patch Data Extension" id="3a91042a-516f-4dc1-950b-7e3a20da3b71" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request>{
+	"description":"Updated description"
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/internal/v1/customobjects/id</con:originalUri>
+        <con:assertion type="JsonPath Match" id="867f6417-8de9-4b61-84bf-b211a334690e" name="Match content of [description]">
+          <con:configuration>
+            <path>$.description</path>
+            <content>${Patch Data Extension#RawRequest#$.description}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="id" value="${Create Sendable Data Extension#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; //ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewObjectID[1]}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>id</con:entry>
+          <con:entry/>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="3b843353-f6c7-4630-b3c2-22bc6062ac4d">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Delete Data Extension" id="07c325fa-261c-456d-b774-02be0b4055e3">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/customobjects/{id}" methodName="Delete" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Delete Data Extension" id="db629e09-f7b3-4d30-873a-0b4f84c25d54" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/internal/v1/customobjects/fc991196-6b3c-e511-882c-0022642d9886</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="32afe3a2-4724-462b-b277-566df1528b21" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>204</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="id" value="${Create Sendable Data Extension#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; //ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewObjectID[1]}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>id</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="3b843353-f6c7-4630-b3c2-22bc6062ac4d">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Retrieve DE To Confirm Deletion" id="1724729f-6b0b-427c-8263-bb06538dd599">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/customobjects/{id}" methodName="Get" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Retrieve DE To Confirm Deletion" id="6592ba84-6573-4fac-9005-3eccc1f519c5" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/internal/v1/customobjects/fc991196-6b3c-e511-882c-0022642d9886</con:originalUri>
+        <con:assertion type="JsonPath Match" id="2289010b-cf0c-4178-b3d5-0ee887ccd2f0" name="Message should reflect invalid objectID">
+          <con:configuration>
+            <path>$.message</path>
+            <content>There was no Custom Object found for ID: ${Create Sendable Data Extension#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; //ns1:CreateResponse[1]/ns1:Results[1]/ns1:Object[1]/ns1:ObjectID[1]}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="id" value="${Create Sendable Data Extension#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; //ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewObjectID[1]}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>id</con:entry>
+          <con:entry/>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="3b843353-f6c7-4630-b3c2-22bc6062ac4d">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>objectName</con:name>
+      <con:value>121VJ4H3O_QETesting</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>621ba7b5-b805-42f9-8cb5-f32583c512df</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>2acffb14-bdac-4e81-92f3-8fc30aad80f0</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>28248fbc-d153-45bb-82e5-e503a1efd566</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>646e84be-fefe-4c65-b00f-d72f926fc964</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>7df67cf3-a352-451a-b2f4-690be8b14b15</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>07c325fa-261c-456d-b774-02be0b4055e3</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>1724729f-6b0b-427c-8263-bb06538dd599</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

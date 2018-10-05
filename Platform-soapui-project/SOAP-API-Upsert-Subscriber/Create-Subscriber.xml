@@ -1,0 +1,2101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="6131012a-f3e4-4960-a39c-209fe3276c70" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Create Subscriber" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="6131012a-f3e4-4960-a39c-209fe3276c70fileName">Create-Subscriber</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="46ab47d5-2a94-485a-bc7a-66ec4afaa6ce">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>5b64a7c3-23e7-49bc-83fe-9983c3df8feb</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accessToken</con:name>
+          <con:value>61nW78lqJuZ1GocNwbgRW9lv</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accessToken</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Generate EmailAddressAndSubKey" id="36fe6f5f-9ea7-46d2-87e0-ecc0573e0877">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+log.info 'this is a test'
+'subkey ' + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+        </con:configuration>
+        <con:name>SubscriberKey</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')).join(), 9 ) + '@bh.exacttarget.com'</script>
+        </con:configuration>
+        <con:name>EmailAddress</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+'subkey2 ' + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+        </con:configuration>
+        <con:name>SubscriberKey2</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+'subkey2 ' + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+        </con:configuration>
+        <con:name>SubscriberKey3</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+'subkey4 ' + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+        </con:configuration>
+        <con:name>SubscriberKey4</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')).join(), 9 ) + '@bh.exacttarget.com'</script>
+        </con:configuration>
+        <con:name>EmailAddress4</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+'subkey5 ' + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+        </con:configuration>
+        <con:name>SubscriberKey5</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+'subkey6 ' + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+        </con:configuration>
+        <con:name>SubscriberKey6</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')).join(), 9 ) + '@bh.exacttarget.com'</script>
+        </con:configuration>
+        <con:name>EmailAddress6</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+'subkey7 ' + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+        </con:configuration>
+        <con:name>SubscriberKey7</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+'subkey7 ' + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+        </con:configuration>
+        <con:name>SubscriberKey8</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')).join(), 9 ) + '@bh.exacttarget.com'</script>
+        </con:configuration>
+        <con:name>EmailAddress8</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create New Subscriber" id="58cd1eba-9260-4038-a2de-990c8a04f79f">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create New Subscriber" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+ <soapenv:Body>
+   <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+   
+   <Objects xsi:type="Subscriber" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <PartnerKey xsi:nil="true"/>
+    <ModifiedDate xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>${Generate EmailAddressAndSubKey#EmailAddress}</EmailAddress>
+    <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey}</SubscriberKey>
+   </Objects>
+  <Options/></CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Created Subscriber.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Property Transfer SubscriberID1" id="1cc6e687-66d0-4c5e-a786-b3ecc980220f">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>SubID</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create New Subscriber</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>SubID1</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Existing Subscriber - No Save Option" id="d674c35a-e8f7-4046-b907-ac319a0bde68">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Existing Subscriber - No Save Option" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+ <soapenv:Body>
+   <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+   
+   <Objects xsi:type="Subscriber" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <PartnerKey xsi:nil="true"/>
+    <ModifiedDate xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>${Generate EmailAddressAndSubKey#EmailAddress}</EmailAddress>
+    <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey}</SubscriberKey>
+   </Objects>
+  </CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>Error</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>The subscriber is already on the list</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="e8e47aa8-8e28-4087-a5d7-f7e09a0385f4" name="XPath Match 3">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:ErrorCode[1]</path>
+            <content>12014</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Existing Subscriber - UpdateOnly SaveOption" id="6f6242b1-e908-40dd-bb62-e298ac264696">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Existing Subscriber - UpdateOnly SaveOption" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+ <soapenv:Body>
+   <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+     <Options>
+    <SaveOptions>
+     <SaveOption>
+      <PropertyName>Subscriber</PropertyName>
+      <SaveAction>UpdateOnly</SaveAction>
+     </SaveOption>
+    </SaveOptions>
+   </Options>
+   <Objects xsi:type="Subscriber" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <PartnerKey xsi:nil="true"/>
+    <ModifiedDate xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>${Generate EmailAddressAndSubKey#EmailAddress}</EmailAddress>
+     <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey}</SubscriberKey>
+   </Objects>
+  </CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Created Subscriber.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Subscriber with existing EmailAddr and new SubKey - No Save Options" id="ac29fc55-2ab3-4f5f-af4c-385715156c22">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Subscriber with existing EmailAddr and new SubKey - No Save Options" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+ <soapenv:Body>
+   <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+   
+   <Objects xsi:type="Subscriber" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <PartnerKey xsi:nil="true"/>
+    <ModifiedDate xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>${Generate EmailAddressAndSubKey#EmailAddress}</EmailAddress>
+     <Attributes>
+      <Name>Text Test</Name>
+      <Value>Test Attribute</Value>
+     </Attributes>
+    <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey2}</SubscriberKey>
+     <EmailTypePreference>HTML</EmailTypePreference>
+   </Objects>
+  </CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Created Subscriber.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Property Transfer SubscriberID2" id="d2e57ec7-39d2-480c-a57a-52574fabc59e">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>SubID</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Subscriber with existing EmailAddr and new SubKey - No Save Options</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>SubID2</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete Subscriber2" id="59efa709-7cff-483b-b402-25dadd5653a7">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Delete</con:operation>
+      <con:request name="Delete Subscriber2" id="42d97f3b-b63e-46bb-8519-1905368e79c0" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+   <soapenv:Body xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <DeleteRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         
+         <Objects xsi:type="Subscriber" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <PartnerKey xsi:nil="true"/>
+    <ModifiedDate xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <ID>${#TestCase#SubID2}</ID>
+   </Objects>
+      </DeleteRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a9c36ce6-1f94-494b-889c-79262a835196"/>
+        <con:assertion type="SOAP Fault Assertion" id="c4d9375a-dc38-42db-9a4d-2a3cd889c37b"/>
+        <con:assertion type="XPath Match" id="991a1234-3a9e-4fb7-96dc-7a7e0a0ca945" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Subscriber deleted</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Subscriber with invalid EmailAddress" id="41fec02b-4907-41e3-b62f-39d80dfdac0c">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Subscriber with invalid EmailAddress" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+ <soapenv:Body>
+   <CreateRequest
+    xmlns="http://exacttarget.com/wsdl/partnerAPI">
+   <Options/>
+   <Objects
+    xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI"
+     xsi:type="Subscriber">
+    <PartnerKey
+     xsi:nil="true"/>
+    <ModifiedDate
+     xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>agowda001@@salesforce.com</EmailAddress>
+    <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey2}</SubscriberKey>
+   </Objects>
+  </CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>Error</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>InvalidEmailAddress</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="ee31e1f0-09bc-4098-8d46-7bdcb78aca29" name="XPath Match 3">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:ErrorCode[1]</path>
+            <content>12000</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Existing Subscriber - AddOnly Save Option" id="d115505d-0a58-4484-9729-cdc5631db37c">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Existing Subscriber - AddOnly Save Option" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+ <soapenv:Body>
+   <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+    <Options>
+    <SaveOptions>
+     <SaveOption>
+      <PropertyName>Subscriber</PropertyName>
+      <SaveAction>AddOnly</SaveAction>
+     </SaveOption>
+    </SaveOptions>
+   </Options>
+   <Objects xsi:type="Subscriber" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <PartnerKey xsi:nil="true"/>
+    <ModifiedDate xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>${Generate EmailAddressAndSubKey#EmailAddress}</EmailAddress>
+    <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey}</SubscriberKey>
+   </Objects>
+  </CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>Error</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>SaveAction: AddOnly violation</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="e8e47aa8-8e28-4087-a5d7-f7e09a0385f4" name="XPath Match 3">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:ErrorCode[1]</path>
+            <content>68001</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Subscriber with existing EmailAddr and new SubKey - AddOnly Save Options" id="ab0c8383-85b6-488f-89ff-567c523ca7e6">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Subscriber with existing EmailAddr and new SubKey - AddOnly Save Options" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+ <soapenv:Body>
+   <CreateRequest
+    xmlns="http://exacttarget.com/wsdl/partnerAPI">
+  <Options>
+    <SaveOptions>
+     <SaveOption>
+      <PropertyName>Subscriber</PropertyName>
+      <SaveAction>AddOnly</SaveAction>
+     </SaveOption>
+    </SaveOptions>
+   </Options>
+   <Objects
+    xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI"
+     xsi:type="Subscriber">
+    <PartnerKey
+     xsi:nil="true"/>
+    <ModifiedDate
+     xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>${Generate EmailAddressAndSubKey#EmailAddress}</EmailAddress>
+     <Attributes>
+      <Name>Text Test</Name>
+      <Value>Test Attribute</Value>
+     </Attributes>
+    <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey3}</SubscriberKey>
+     <EmailTypePreference>HTML</EmailTypePreference>
+   </Objects>
+  </CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Created Subscriber.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Property Transfer SubscriberID3" id="ba5f3100-a2f3-436f-948e-01b32983b0bc">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>SubID3</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Subscriber with existing EmailAddr and new SubKey - AddOnly Save Options</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>SubID3</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete Subscriber3" id="cb3904fe-1068-4b95-bf66-f45fcf82bea1">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Delete</con:operation>
+      <con:request name="Delete Subscriber3" id="42d97f3b-b63e-46bb-8519-1905368e79c0" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body xmlns:xsd="http://www.w3.org/2001/XMLSchema">\r
+      <DeleteRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="Subscriber" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <PartnerKey xsi:nil="true"/>
+    <ModifiedDate xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <ID>${#TestCase#SubID3}</ID>
+   </Objects>
+      </DeleteRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a9c36ce6-1f94-494b-889c-79262a835196"/>
+        <con:assertion type="SOAP Fault Assertion" id="c4d9375a-dc38-42db-9a4d-2a3cd889c37b"/>
+        <con:assertion type="XPath Match" id="991a1234-3a9e-4fb7-96dc-7a7e0a0ca945" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Subscriber deleted</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create New Subscriber - AddOnly Save Option" id="008bf64c-cf8f-40f6-a5d0-603673eb7463">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create New Subscriber - AddOnly Save Option" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+ <soapenv:Body>
+   <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+     <Options>
+    <SaveOptions>
+     <SaveOption>
+      <PropertyName>Subscriber</PropertyName>
+      <SaveAction>AddOnly</SaveAction>
+     </SaveOption>
+    </SaveOptions>
+   </Options>
+   <Objects xsi:type="Subscriber" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <PartnerKey xsi:nil="true"/>
+    <ModifiedDate xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>${Generate EmailAddressAndSubKey#EmailAddress4}</EmailAddress>
+     <Attributes>
+     <Name>Text Test</Name>
+     <Value>Test Attribute</Value>
+    </Attributes>
+    <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey4}</SubscriberKey>
+   </Objects>
+  </CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Created Subscriber.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Property Transfer SubscriberID4" id="da09b312-e550-4299-b85a-9f006260d033">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>SubID4</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create New Subscriber - AddOnly Save Option</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>SubID4</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete Subscriber4" id="bc87544d-a359-4402-bd8c-f8ef46a830e4">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Delete</con:operation>
+      <con:request name="Delete Subscriber4" id="42d97f3b-b63e-46bb-8519-1905368e79c0" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body xmlns:xsd="http://www.w3.org/2001/XMLSchema">\r
+      <DeleteRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="Subscriber" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <PartnerKey xsi:nil="true"/>
+    <ModifiedDate xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <ID>${#TestCase#SubID4}</ID>
+   </Objects>
+      </DeleteRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a9c36ce6-1f94-494b-889c-79262a835196"/>
+        <con:assertion type="SOAP Fault Assertion" id="c4d9375a-dc38-42db-9a4d-2a3cd889c37b"/>
+        <con:assertion type="XPath Match" id="991a1234-3a9e-4fb7-96dc-7a7e0a0ca945" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Subscriber deleted</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Subscriber with invalid EmailAddress - AddOnly Save Option" id="df0313d1-e1aa-4b26-a2b9-506feb7254f0">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Subscriber with invalid EmailAddress - AddOnly Save Option" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+ <soapenv:Body>
+   <CreateRequest
+    xmlns="http://exacttarget.com/wsdl/partnerAPI">
+     <Options>
+    <SaveOptions>
+     <SaveOption>
+      <PropertyName>Subscriber</PropertyName>
+      <SaveAction>AddOnly</SaveAction>
+     </SaveOption>
+    </SaveOptions>
+   </Options>
+   <Objects
+    xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI"
+     xsi:type="Subscriber">
+    <PartnerKey
+     xsi:nil="true"/>
+    <ModifiedDate
+     xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>agowda@@salesforce.com</EmailAddress>
+    <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey2}</SubscriberKey>
+   </Objects>
+  </CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>Error</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>InvalidEmailAddress</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="ee31e1f0-09bc-4098-8d46-7bdcb78aca29" name="XPath Match 3">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:ErrorCode[1]</path>
+            <content>12000</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Existing Subscriber - UpdateAdd SaveOption" id="780d97bc-09b2-40bb-8dc4-410c279738a6">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Existing Subscriber - UpdateAdd SaveOption" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+ <soapenv:Body>
+   <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+     <Options>
+    <SaveOptions>
+     <SaveOption>
+      <PropertyName>Subscriber</PropertyName>
+      <SaveAction>UpdateAdd</SaveAction>
+     </SaveOption>
+    </SaveOptions>
+   </Options>
+   <Objects xsi:type="Subscriber" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <PartnerKey xsi:nil="true"/>
+    <ModifiedDate xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>${Generate EmailAddressAndSubKey#EmailAddress}</EmailAddress>
+     <Attributes>
+     <Name>Text Test</Name>
+     <Value>Test Attribute 20160406110512054</Value>
+    </Attributes>
+    <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey}</SubscriberKey>
+   </Objects>
+  </CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Created Subscriber.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Subscriber with existing EmailAddr and new SubKey - UpdateAdd SaveOptions" id="7b1bc167-5eef-48c1-8c36-5dc9cd8d039a">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Subscriber with existing EmailAddr and new SubKey - UpdateAdd SaveOptions" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+ <soapenv:Body>
+   <CreateRequest
+    xmlns="http://exacttarget.com/wsdl/partnerAPI">
+  <Options>
+    <SaveOptions>
+     <SaveOption>
+      <PropertyName>Subscriber</PropertyName>
+      <SaveAction>UpdateAdd</SaveAction>
+     </SaveOption>
+    </SaveOptions>
+   </Options>
+   <Objects
+    xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI"
+     xsi:type="Subscriber">
+    <PartnerKey
+     xsi:nil="true"/>
+    <ModifiedDate
+     xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>${Generate EmailAddressAndSubKey#EmailAddress}</EmailAddress>
+     <Attributes>
+      <Name>Text Test</Name>
+      <Value>Test Attribute</Value>
+     </Attributes>
+    <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey5}</SubscriberKey>
+     <EmailTypePreference>HTML</EmailTypePreference>
+   </Objects>
+  </CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Created Subscriber.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Property Transfer SubscriberID5" id="4809ea42-b11e-4be9-a006-57b2e10640d6">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>SubID5</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Existing Subscriber - UpdateAdd SaveOption</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>SubID5</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete Subscriber5" id="40279680-038e-4521-a8b2-368bb9991367">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Delete</con:operation>
+      <con:request name="Delete Subscriber5" id="42d97f3b-b63e-46bb-8519-1905368e79c0" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body xmlns:xsd="http://www.w3.org/2001/XMLSchema">\r
+      <DeleteRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="Subscriber" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <PartnerKey xsi:nil="true"/>
+    <ModifiedDate xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <ID>${#TestCase#SubID5}</ID>
+   </Objects>
+      </DeleteRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a9c36ce6-1f94-494b-889c-79262a835196"/>
+        <con:assertion type="SOAP Fault Assertion" id="c4d9375a-dc38-42db-9a4d-2a3cd889c37b"/>
+        <con:assertion type="XPath Match" id="991a1234-3a9e-4fb7-96dc-7a7e0a0ca945" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Subscriber deleted</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create New Subscriber - UpdateAdd Save Option" id="e80b609a-51fa-4c89-bc61-f839580ddde7">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create New Subscriber - UpdateAdd Save Option" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+ <soapenv:Body>
+   <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+     <Options>
+    <SaveOptions>
+     <SaveOption>
+      <PropertyName>Subscriber</PropertyName>
+      <SaveAction>UpdateAdd</SaveAction>
+     </SaveOption>
+    </SaveOptions>
+   </Options>
+   <Objects xsi:type="Subscriber" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <PartnerKey xsi:nil="true"/>
+    <ModifiedDate xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>${Generate EmailAddressAndSubKey#EmailAddress6}</EmailAddress>
+     <Attributes>
+     <Name>Text Test</Name>
+     <Value>Test Attribute</Value>
+    </Attributes>
+    <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey6}</SubscriberKey>
+     <EmailTypePreference>Text</EmailTypePreference>
+   </Objects>
+  </CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Created Subscriber.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Property Transfer SubscriberID6" id="5e7bde2f-7f1b-43d9-927c-5fb1dd9bcb9e">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>SubID6</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create New Subscriber - UpdateAdd Save Option</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>SubID6</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete Subscriber6" id="b18bbc7c-4b79-4307-94e6-589306298b0d">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Delete</con:operation>
+      <con:request name="Delete Subscriber6" id="42d97f3b-b63e-46bb-8519-1905368e79c0" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+   <soapenv:Body xmlns:xsd="http://www.w3.org/2001/XMLSchema">\r
+      <DeleteRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">\r
+         <Options/>\r
+         <Objects xsi:type="Subscriber" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <PartnerKey xsi:nil="true"/>
+    <ModifiedDate xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <ID>${#TestCase#SubID6}</ID>
+   </Objects>
+      </DeleteRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a9c36ce6-1f94-494b-889c-79262a835196"/>
+        <con:assertion type="SOAP Fault Assertion" id="c4d9375a-dc38-42db-9a4d-2a3cd889c37b"/>
+        <con:assertion type="XPath Match" id="991a1234-3a9e-4fb7-96dc-7a7e0a0ca945" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Subscriber deleted</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Subscriber with invalid EmailAddress - UpdateAdd SaveOption" id="eb6668b4-315e-42d4-94b8-219de6580f72">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Subscriber with invalid EmailAddress - UpdateAdd SaveOption" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+ <soapenv:Body>
+   <CreateRequest
+    xmlns="http://exacttarget.com/wsdl/partnerAPI">
+     <Options>
+    <SaveOptions>
+     <SaveOption>
+      <PropertyName>Subscriber</PropertyName>
+      <SaveAction>UpdateAdd</SaveAction>
+     </SaveOption>
+    </SaveOptions>
+   </Options>
+   <Objects
+    xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI"
+     xsi:type="Subscriber">
+    <PartnerKey
+     xsi:nil="true"/>
+    <ModifiedDate
+     xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>agowda@@salesforce.com</EmailAddress>
+    <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey2}</SubscriberKey>
+     <EmailTypePreference>Text</EmailTypePreference>
+   </Objects>
+  </CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>Error</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>InvalidEmailAddress</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="ee31e1f0-09bc-4098-8d46-7bdcb78aca29" name="XPath Match 3">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:ErrorCode[1]</path>
+            <content>12000</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Subscriber with existing EmailAddr and new SubKey - UpdateOnly SaveOptions" id="b8c73456-d51c-426f-9de9-56bca53456d9">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Subscriber with existing EmailAddr and new SubKey - UpdateOnly SaveOptions" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+ <soapenv:Body>
+   <CreateRequest
+    xmlns="http://exacttarget.com/wsdl/partnerAPI">
+  <Options>
+    <SaveOptions>
+     <SaveOption>
+      <PropertyName>Subscriber</PropertyName>
+      <SaveAction>UpdateOnly</SaveAction>
+     </SaveOption>
+    </SaveOptions>
+   </Options>
+   <Objects
+    xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI"
+     xsi:type="Subscriber">
+    <PartnerKey
+     xsi:nil="true"/>
+    <ModifiedDate
+     xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>${Generate EmailAddressAndSubKey#EmailAddress}</EmailAddress>
+     <Attributes>
+      <Name>Text Test</Name>
+      <Value>Test Attribute</Value>
+     </Attributes>
+    <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey7}</SubscriberKey>
+     <EmailTypePreference>HTML</EmailTypePreference>
+   </Objects>
+  </CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>Error</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>SaveAction: UpdateOnly violation</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="e0ab89dc-a275-4416-bf07-919d4c407d1a" name="XPath Match 3">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:ErrorCode[1]</path>
+            <content>68000</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="fa8bd8b9-8c05-455a-836f-bee47215adaa" name="XPath Match 4">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:OverallStatus[1]</path>
+            <content>Error</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create New Subscriber - UpdateOnly SaveOption" id="af02880b-4176-4a07-9f6f-8b1f1ee7faee">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create New Subscriber - UpdateOnly SaveOption" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+ <soapenv:Body>
+   <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+     <Options>
+    <SaveOptions>
+     <SaveOption>
+      <PropertyName>Subscriber</PropertyName>
+      <SaveAction>UpdateOnly</SaveAction>
+     </SaveOption>
+    </SaveOptions>
+   </Options>
+   <Objects xsi:type="Subscriber" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <PartnerKey xsi:nil="true"/>
+    <ModifiedDate xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>${Generate EmailAddressAndSubKey#EmailAddress8}</EmailAddress>
+     <Attributes>
+     <Name>Text Test</Name>
+     <Value>Test Attribute</Value>
+    </Attributes>
+    <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey8}</SubscriberKey>
+     <EmailTypePreference>Text</EmailTypePreference>
+   </Objects>
+  </CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>Error</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>SaveAction: UpdateOnly violation</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="55aa7cc7-6518-4480-b5dc-e6158d347488" name="XPath Match 3">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:ErrorCode[1]</path>
+            <content>68000</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="6b5b6c0d-6443-41d2-8c07-7f192dedbd0d" name="XPath Match 4">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:OverallStatus[1]</path>
+            <content>Error</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Subscriber with invalid EmailAddress - UpdateOnly SaveOption" id="63f0f354-1c8b-4d84-8428-82d135fcaddf">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Subscriber with invalid EmailAddress - UpdateOnly SaveOption" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\r
+   <soapenv:Header>\r
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>\r
+   </soapenv:Header>\r
+ <soapenv:Body>
+   <CreateRequest
+    xmlns="http://exacttarget.com/wsdl/partnerAPI">
+     <Options>
+    <SaveOptions>
+     <SaveOption>
+      <PropertyName>Subscriber</PropertyName>
+      <SaveAction>UpdateOnly</SaveAction>
+     </SaveOption>
+    </SaveOptions>
+   </Options>
+   <Objects
+    xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI"
+     xsi:type="Subscriber">
+    <PartnerKey
+     xsi:nil="true"/>
+    <ModifiedDate
+     xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>agowda@@salesforce.com</EmailAddress>
+    <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey2}</SubscriberKey>
+   </Objects>
+  </CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>Error</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>SaveAction: UpdateOnly violation</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="ee31e1f0-09bc-4098-8d46-7bdcb78aca29" name="XPath Match 3">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:ErrorCode[1]</path>
+            <content>68000</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="52940b58-e55a-4599-a4b8-afcc86df2291" name="XPath Match 4">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:ErrorCode[1]</path>
+            <content>68000</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="e51eb033-b6dd-4d11-9295-bb1d7dd9b093" name="XPath Match 5">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:OverallStatus[1]</path>
+            <content>Error</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create New Subscriber - Bounced status - No SaveOption" id="cd5b6d87-f543-4fc3-916e-d4dbf056f49e">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create New Subscriber - Bounced status - No SaveOption" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+ <soapenv:Body>
+   <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+     <Options/>
+   <Objects xsi:type="Subscriber" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <PartnerKey xsi:nil="true"/>
+    <ModifiedDate xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>${Generate EmailAddressAndSubKey#EmailAddress8}</EmailAddress>
+     <Attributes>
+     <Name>Text Test</Name>
+     <Value>Test Attribute</Value>
+    </Attributes>
+    <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey8}</SubscriberKey>
+     <EmailTypePreference>Text</EmailTypePreference>
+     <Status>Bounced</Status>
+   </Objects>
+  </CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>Error</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Invalid Subscriber status</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="55aa7cc7-6518-4480-b5dc-e6158d347488" name="XPath Match 3">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:ErrorCode[1]</path>
+            <content>12016</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="6b5b6c0d-6443-41d2-8c07-7f192dedbd0d" name="XPath Match 4">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:OverallStatus[1]</path>
+            <content>Error</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create New Subscriber - Deleted status - No SaveOption" id="4bc08ee4-1fb1-44b7-b85c-003ece819095">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create New Subscriber - Deleted status - No SaveOption" id="88e1082d-e221-455b-a24f-2a112e52a418" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+ <soapenv:Body>
+   <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+     <Options/>
+   <Objects xsi:type="Subscriber" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    <PartnerKey xsi:nil="true"/>
+    <ModifiedDate xsi:nil="true"/>
+    <ObjectID xsi:nil="true"/>
+    <EmailAddress>${Generate EmailAddressAndSubKey#EmailAddress8}</EmailAddress>
+     <Attributes>
+     <Name>Text Test</Name>
+     <Value>Test Attribute</Value>
+    </Attributes>
+    <SubscriberKey>${Generate EmailAddressAndSubKey#SubscriberKey8}</SubscriberKey>
+     <EmailTypePreference>Text</EmailTypePreference>
+     <Status>Deleted</Status>
+   </Objects>
+  </CreateRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="a047413e-c01f-4dd7-a6a7-14ca13b76631"/>
+        <con:assertion type="SOAP Fault Assertion" id="bfde6ab1-52f2-4e73-b0fc-89805adc53e6"/>
+        <con:assertion type="XPath Match" id="4950f054-2469-46ef-af57-710b14df2871" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]</path>
+            <content>Error</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="275c230a-318e-4519-a7ac-5f78b18c07eb" name="XPath Match 2">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Invalid Subscriber status</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="55aa7cc7-6518-4480-b5dc-e6158d347488" name="XPath Match 3">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:ErrorCode[1]</path>
+            <content>12016</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="6b5b6c0d-6443-41d2-8c07-7f192dedbd0d" name="XPath Match 4">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:OverallStatus[1]</path>
+            <content>Error</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>SubID1</con:name>
+      <con:value>184231970</con:value>
+    </con:property>
+    <con:property>
+      <con:name>SubID2</con:name>
+      <con:value>184231971</con:value>
+    </con:property>
+    <con:property>
+      <con:name>SubID3</con:name>
+      <con:value>184231972</con:value>
+    </con:property>
+    <con:property>
+      <con:name>SubID4</con:name>
+      <con:value>184231973</con:value>
+    </con:property>
+    <con:property>
+      <con:name>SubID5</con:name>
+      <con:value>184231970</con:value>
+    </con:property>
+    <con:property>
+      <con:name>SubID6</con:name>
+      <con:value>184231975</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>36fe6f5f-9ea7-46d2-87e0-ecc0573e0877</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>1cc6e687-66d0-4c5e-a786-b3ecc980220f</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>d2e57ec7-39d2-480c-a57a-52574fabc59e</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>4809ea42-b11e-4be9-a006-57b2e10640d6</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>40279680-038e-4521-a8b2-368bb9991367</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>6f6242b1-e908-40dd-bb62-e298ac264696</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

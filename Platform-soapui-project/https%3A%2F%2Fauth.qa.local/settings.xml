@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:interface xsi:type="con:RestService" id="832b48ba-7b35-4396-a7f5-444be24a4781" wadlVersion="http://wadl.dev.java.net/2009/02" name="https://auth.qa.local" type="rest" definitionUrl="D:\Workspace\Auth.wadl" basePath="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="832b48ba-7b35-4396-a7f5-444be24a4781fileName">https%3A%2F%2Fauth.qa.local</con:setting></con:settings><con:definitionCache type="TEXT" rootPart="file:/D:/Workspace/Auth.wadl"><con:part><con:url>file:/D:/Workspace/Auth.wadl</con:url><con:content><![CDATA[<application xmlns="http://wadl.dev.java.net/2009/02">
+  <doc xml:lang="en" title="https://auth.qa.local"/>
+  <resources base="https://auth.qa.local">
+    <resource path="adfs/oauth2/authorize" id="Authorize">
+      <doc xml:lang="en" title="Authorize"/>
+      <param name="Cookie" type="xs:string" required="false" style="header" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+      <param name="code" type="xs:string" required="false" style="query" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+      <method name="GET" id="Authorize GET">
+        <doc xml:lang="en" title="Authorize GET"/>
+        <request>
+          <param name="Cookie" type="xs:string" required="false" style="header" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+          <param name="code" type="xs:string" required="false" style="query" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+          <param name="response_type" type="xs:string" required="false" style="query" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+          <param name="client_id" type="xs:string" required="false" style="query" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+          <param name="resource" type="xs:string" required="false" style="query" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+          <param name="redirect_uri" type="xs:string" required="false" style="query" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+        </request>
+        <response status="200">
+          <representation mediaType="text/html; charset=utf-8"/>
+        </response>
+      </method>
+      <method name="POST" id="Authorize POST">
+        <doc xml:lang="en" title="Authorize POST"/>
+        <request>
+          <param name="Cookie" type="xs:string" required="false" style="header" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+          <param name="code" type="xs:string" required="false" style="query" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+          <param name="response_type" type="xs:string" required="false" style="query" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+          <param name="client_id" type="xs:string" required="false" style="query" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+          <param name="resource" type="xs:string" required="false" style="query" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+          <param name="redirect_uri" type="xs:string" required="false" style="query" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+          <representation mediaType="application/x-www-form-urlencoded"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/x-www-form-urlencoded"/>
+          <representation mediaType="application/x-www-form-urlencoded"/>
+        </response>
+        <response status="404">
+          <representation mediaType="text/html; charset=utf-8"/>
+        </response>
+        <response status="200">
+          <representation mediaType="text/html; charset=utf-8"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="adfs/oauth2/token" id="token">
+      <doc xml:lang="en" title="token"/>
+      <param name="code" type="xs:string" required="false" style="query" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+      <method name="POST" id="Method 1">
+        <doc xml:lang="en" title="Method 1"/>
+        <request>
+          <param name="code" type="xs:string" required="false" style="query" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+          <param name="Content-Type" type="xs:string" required="false" style="header" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+          <representation mediaType="application/json"/>
+          <representation mediaType="application/x-www-form-urlencoded"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+          <representation mediaType="application/x-www-form-urlencoded"/>
+          <representation mediaType="application/json"/>
+          <representation mediaType="application/x-www-form-urlencoded"/>
+        </response>
+        <response status="200">
+          <representation mediaType="text/html; charset=utf-8"/>
+          <representation mediaType="application/json;charset=UTF-8"/>
+        </response>
+        <response status="400">
+          <representation mediaType="application/json;charset=UTF-8"/>
+        </response>
+      </method>
+    </resource>
+  </resources>
+</application>]]></con:content><con:type>http://wadl.dev.java.net/2009/02</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>https://auth.qa.local</con:endpoint></con:endpoints></con:interface>

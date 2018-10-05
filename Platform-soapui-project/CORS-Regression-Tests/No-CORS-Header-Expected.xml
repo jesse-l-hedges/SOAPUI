@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="27e658e0-1710-4fab-a62e-4b91e8b656d2" failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="No CORS Header Expected" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="27e658e0-1710-4fab-a62e-4b91e8b656d2fileName">No-CORS-Header-Expected</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="daa93757-bce6-4d0f-a8d9-3519282e7d1f">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>5b64a7c3-23e7-49bc-83fe-9983c3df8feb</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>cyZU1KujwasWm06ypGdhNEOE</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value xsi:nil="true"/>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Asset Discovery With Empty CORS Request Header" id="4fd8824b-51c3-482d-83c8-a32d60485ed0">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/asset/v1/rest" methodName="asset/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Asset Discovery With Empty CORS Request Header" id="748baca9-e6d7-46ff-8a20-b559659372e5" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="origin" value="" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/asset/v1/rest</con:originalUri>
+        <con:assertion type="GroovyScriptAssertion" id="6263675d-0df1-454a-8214-3b741c3fae93" name="Access-Control-Allow-Origin Header Absent">
+          <con:configuration>
+            <scriptText>def env = messageExchange.modelItem.testCase.testSuite.project.activeEnvironment.name
+
+if (env != 'ps') {
+	assert messageExchange.responseHeaders["Access-Control-Allow-Origin"] == null
+}
+else {
+	assert messageExchange.responseHeaders["Access-Control-Allow-Origin"][0] == '*'
+}</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="fb71c502-f006-4f95-81c9-a2c9c7ac977e" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="Host" value="${apihost}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Asset Discovery With Invalid Origin Value" id="100b23c3-afa7-44d1-9813-2e01558319a1">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/asset/v1/rest" methodName="asset/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Asset Discovery With Invalid Origin Value" id="748baca9-e6d7-46ff-8a20-b559659372e5" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="origin" value="https://mops-qe-boards.herokuapp.co" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/asset/v1/rest</con:originalUri>
+        <con:assertion type="GroovyScriptAssertion" id="6263675d-0df1-454a-8214-3b741c3fae93" name="Access-Control-Allow-Origin Header Absent">
+          <con:configuration>
+            <scriptText>def env = messageExchange.modelItem.testCase.testSuite.project.activeEnvironment.name
+
+if (env != 'ps') {
+	assert messageExchange.responseHeaders["Access-Control-Allow-Origin"] == null
+}
+else {
+	assert messageExchange.responseHeaders["Access-Control-Allow-Origin"][0] == '*'
+}</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="f4dadf93-9f99-4665-a9c8-0fced1ee4d03" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="Host" value="${apihost}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Asset Discovery With No Origin Header" id="5e3ba970-afa7-4ed5-8c6a-a65fa1d9d5e2">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/asset/v1/rest" methodName="asset/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Asset Discovery With No Origin Header" id="748baca9-e6d7-46ff-8a20-b559659372e5" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/asset/v1/rest</con:originalUri>
+        <con:assertion type="GroovyScriptAssertion" id="6263675d-0df1-454a-8214-3b741c3fae93" name="Access-Control-Allow-Origin Header Absent">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Access-Control-Allow-Origin"] == null</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="b84436fb-c996-448e-b7fd-c584c83a6b51" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="Host" value="${apihost}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Asset Discovery With &quot;NULL&quot; Origin Value" id="7c434228-486d-45eb-aa6c-4bd9327c2014">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/asset/v1/rest" methodName="asset/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Asset Discovery With &quot;NULL&quot; Origin Value" id="748baca9-e6d7-46ff-8a20-b559659372e5" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="origin" value="NULL" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/asset/v1/rest</con:originalUri>
+        <con:assertion type="GroovyScriptAssertion" id="6263675d-0df1-454a-8214-3b741c3fae93" name="Access-Control-Allow-Origin Header Absent">
+          <con:configuration>
+            <scriptText>def env = messageExchange.modelItem.testCase.testSuite.project.activeEnvironment.name
+
+if (env != 'ps') {
+	assert messageExchange.responseHeaders["Access-Control-Allow-Origin"] == null
+}
+else {
+	assert messageExchange.responseHeaders["Access-Control-Allow-Origin"][0] == '*'
+}</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="f4dadf93-9f99-4665-a9c8-0fced1ee4d03" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="Host" value="${apihost}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Asset Discovery With &quot;TRUE&quot; Origin Value" id="a3e580b4-5c94-4d40-a038-54d4a010a448">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/asset/v1/rest" methodName="asset/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Asset Discovery With &quot;TRUE&quot; Origin Value" id="748baca9-e6d7-46ff-8a20-b559659372e5" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="origin" value="TRUE" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/asset/v1/rest</con:originalUri>
+        <con:assertion type="GroovyScriptAssertion" id="6263675d-0df1-454a-8214-3b741c3fae93" name="Access-Control-Allow-Origin Header Absent">
+          <con:configuration>
+            <scriptText>def env = messageExchange.modelItem.testCase.testSuite.project.activeEnvironment.name
+
+if (env != 'ps') {
+	assert messageExchange.responseHeaders["Access-Control-Allow-Origin"] == null
+}
+else {
+	assert messageExchange.responseHeaders["Access-Control-Allow-Origin"][0] == '*'
+}</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="f4dadf93-9f99-4665-a9c8-0fced1ee4d03" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="Host" value="${apihost}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Asset Discovery With &quot;Undefined&quot; Origin Value" id="8a71cacd-b659-4b45-a069-1e579308c763">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/asset/v1/rest" methodName="asset/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Asset Discovery With &quot;Undefined&quot; Origin Value" id="748baca9-e6d7-46ff-8a20-b559659372e5" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="origin" value="Undefined" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/asset/v1/rest</con:originalUri>
+        <con:assertion type="GroovyScriptAssertion" id="6263675d-0df1-454a-8214-3b741c3fae93" name="Access-Control-Allow-Origin Header Absent">
+          <con:configuration>
+            <scriptText>def env = messageExchange.modelItem.testCase.testSuite.project.activeEnvironment.name
+
+if (env != 'ps') {
+	assert messageExchange.responseHeaders["Access-Control-Allow-Origin"] == null
+}
+else {
+	assert messageExchange.responseHeaders["Access-Control-Allow-Origin"][0] == '*'
+}</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="f4dadf93-9f99-4665-a9c8-0fced1ee4d03" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="Host" value="${apihost}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

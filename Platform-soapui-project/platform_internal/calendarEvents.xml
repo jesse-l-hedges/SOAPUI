@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="e674af03-1b12-4ffa-bf84-98cbf696e3dd" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="calendarEvents" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="e674af03-1b12-4ffa-bf84-98cbf696e3ddfileName">calendarEvents</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="2c2d29ce-6358-42f8-b06b-99f25f6f51ea">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>av1aoQBEavHHPD6pWGf2X4OW</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>10782007</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>10739553</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getCalendarEvents" id="2cd49758-d184-485c-8431-368645cbace0">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/calendar/events" methodName="getCalendarEvents" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getCalendarEvents" id="43e9ccac-2c86-4f4f-a766-24937532a609" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/calendar/events</con:originalUri>
+        <con:assertion type="Simple Contains" id="7fadc5cc-cd02-4100-9c5d-3e5c22b2e176" name="Contains">
+          <con:configuration>
+            <token>/v1/calendar/events</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="c788bfed-d813-48cf-99f0-06c57f7e6ef4" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="showexternalreference" value="false"/>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="endtime" value="08-19-2050"/>
+          <con:entry key="starttime" value="08-19-2000"/>
+          <con:entry key="$page" value="1"/>
+          <con:entry key="$pageSize" value="50"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>showexternalreference</con:entry>
+          <con:entry>mids</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>starttime</con:entry>
+          <con:entry>endtime</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="initialEventCount" id="b8de6f22-b10a-4e97-a3cf-c5f736d7d2fd">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>initialEventCount</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>getCalendarEvents</con:sourceStep>
+        <con:sourcePath>//*:count</con:sourcePath>
+        <con:targetType>initialEventCount</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="postCalendarEvents" id="ad37efb2-3b37-4fe1-b743-252371c86218">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/calendar/events" methodName="postCalendarEvents" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="postCalendarEvents" id="f4d1e981-ccdd-44ed-845f-acc9717fd2f8" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request>{
+"description": "${=(Math.random() * 1000000).toInteger()}_QE_Testing",
+   "id": "0",
+   "isActive": "true",
+   "isAllDay": "true",
+   "localEndTime": "2015-08-19T23:59:59",
+   "localStartTime": "2015-08-19T00:00:00",
+   "ownerId": ${userId},
+   "title": "eventapi",
+   "type": "CUSTOM"
+
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/calendar/events</con:originalUri>
+        <con:assertion type="Simple Contains" id="cd982b58-9781-41a7-886c-e3cd6b7a52e0" name="Contains">
+          <con:configuration>
+            <token>"ownerId":"${userId}"</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="40a6f901-73a8-4db0-b23a-2583f164c2b6" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>201</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>showexternalreference</con:entry>
+          <con:entry>mids</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>starttime</con:entry>
+          <con:entry>endtime</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="eventId" id="cfb39e81-acf9-4636-a199-5894091366f3">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>eventId</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>postCalendarEvents</con:sourceStep>
+        <con:sourcePath>//*:id</con:sourcePath>
+        <con:targetType>eventId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getCalendarEventsAfterPost" id="a0bd8116-a2ed-4fb0-9eac-b0251d4cad6b">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/calendar/events" methodName="getCalendarEvents" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getCalendarEventsAfterPost" id="43e9ccac-2c86-4f4f-a766-24937532a609" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/calendar/events</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="986b816c-9034-44da-8790-028bcc0c7edb" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="showexternalreference" value="false"/>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="endtime" value="12-30-2050"/>
+          <con:entry key="starttime" value="01-01-2000"/>
+          <con:entry key="$page" value="1"/>
+          <con:entry key="$pageSize" value="50"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>showexternalreference</con:entry>
+          <con:entry>mids</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>starttime</con:entry>
+          <con:entry>endtime</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="eventCountAfterPost" id="5377b892-b1ca-4ec4-b1f3-5b21c2f9c589">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>eventCountAfterPost</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>getCalendarEventsAfterPost</con:sourceStep>
+        <con:sourcePath>//*:count</con:sourcePath>
+        <con:targetType>eventCountAfterPost</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Verify eventCountIncreaseByOne" id="5bc6163c-1f78-45d9-a5f7-50812729228e">
+    <con:settings/>
+    <con:config>
+      <script>initialEventCount = testRunner.testCase.getPropertyValue("initialEventCount") as Integer
+
+log.info (initialEventCount)
+eventCountAfterPost =testRunner.testCase.getPropertyValue("eventCountAfterPost") as Integer
+
+log.info (eventCountAfterPost)
+assert (eventCountAfterPost) == (initialEventCount+1)</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="patchCalendarEvents" id="9c4cb884-5500-4497-b75a-4056a2be25a7">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/calendar/events/{id}" methodName="patchCalendarEvents" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="patchCalendarEvents" id="072e0858-5a23-4e93-a6a8-e872efff9c00" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request>{
+   
+   "description": "Patched description_QE_Testing",
+   "id": ${#TestCase#eventId},
+   "localStartTime": "2015-08-19T00:00:00",
+   "localEndTime": "2015-08-20T23:59:59",
+   "title": "eventapi",
+   "type": "CUSTOM"
+
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/calendar/events/id</con:originalUri>
+        <con:assertion type="Simple Contains" id="539449f5-7e01-4827-9431-952492022b62" name="Contains">
+          <con:configuration>
+            <token>"description":"Patched description_QE_Testing"</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="e9c623d7-475a-44fb-8ea9-dc2fcda1216d" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="id" value="${#TestCase#eventId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>showexternalreference</con:entry>
+          <con:entry>mids</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>starttime</con:entry>
+          <con:entry>endtime</con:entry>
+          <con:entry>id</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="patchedEventID" id="3b9590e1-33f8-46d3-930c-f56b7bbaa665">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>patchedEventID</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>patchCalendarEvents</con:sourceStep>
+        <con:sourcePath>//*:id</con:sourcePath>
+        <con:targetType>patchedeventid</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script" id="ad1389db-ccba-4126-ba1c-3cfccf3deb57">
+    <con:settings/>
+    <con:config>
+      <script>eventId=testRunner.testCase.getPropertyValue("eventId") as Integer
+pathcedeventId=testRunner.testCase.getPropertyValue("patchedeventId") as Integer
+
+log.info (eventId)
+log.info (pathcedeventId)
+assert (eventId== pathcedeventId)</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="deleteCalendarEvents" id="340d8c74-f8b1-4ace-8cb6-7e38304ea361">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/calendar/events/{id}" methodName="deleteCalendarEvents" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="deleteCalendarEvents" id="964e136f-ca92-4907-b6bf-b94ece9ec205" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/calendar/events/112262</con:originalUri>
+        <con:assertion type="GroovyScriptAssertion" id="6290e86d-5c5e-4caa-b6a8-a5931c967a15" name="Verify patchId = postId (patched to the correct event)">
+          <con:configuration>
+            <scriptText>eventId=messageExchange.modelItem.testCase.getPropertyValue("eventId")
+pathcedeventId=messageExchange.modelItem.testCase.getPropertyValue("patchedeventId")
+assert (eventId== pathcedeventId)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="1ed690bf-440a-46c4-b77c-a6d5a100b5b1" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="id" value="${#TestCase#eventId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>showexternalreference</con:entry>
+          <con:entry>mids</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>starttime</con:entry>
+          <con:entry>endtime</con:entry>
+          <con:entry>id</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getCalendarEventsAfterDelete" id="4c688be1-4d59-4c78-8192-05c8a0d29bac">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/calendar/events" methodName="getCalendarEvents" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getCalendarEventsAfterDelete" id="43e9ccac-2c86-4f4f-a766-24937532a609" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="Authorization" value="Bearer ${accessToken}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/calendar/events</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="bf57d9bd-1986-4bfe-b636-39aa2c0636c1" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="showexternalreference" value="false"/>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="endtime" value="12-31-2050"/>
+          <con:entry key="starttime" value="01-01-2000"/>
+          <con:entry key="$page" value="1"/>
+          <con:entry key="$pageSize" value="50"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$filter</con:entry>
+          <con:entry>showexternalreference</con:entry>
+          <con:entry>mids</con:entry>
+          <con:entry>Host</con:entry>
+          <con:entry>$page</con:entry>
+          <con:entry>$pageSize</con:entry>
+          <con:entry>starttime</con:entry>
+          <con:entry>endtime</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="eventCountAfterDelete" id="096192d1-ce26-4dcd-9c3b-af3f08eeb335">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>eventCountAfterDelete</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>getCalendarEventsAfterDelete</con:sourceStep>
+        <con:sourcePath>//*:count</con:sourcePath>
+        <con:targetType>eventCountAfterDelete</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Verify eventCountDecreaseByOne" id="13eeb018-387e-4620-ba3a-58b7831d3600">
+    <con:settings/>
+    <con:config>
+      <script>eventCountAfterPost=testRunner.testCase.getPropertyValue("eventCountAfterPost") as Integer
+eventCountAfterDelete=testRunner.testCase.getPropertyValue("eventCountAfterDelete") as Integer
+assert (eventCountAfterPost)== (eventCountAfterDelete+1)</script>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>initialEventCount</con:name>
+      <con:value>1208</con:value>
+    </con:property>
+    <con:property>
+      <con:name>eventCountAfterPost</con:name>
+      <con:value>1209</con:value>
+    </con:property>
+    <con:property>
+      <con:name>eventCountAfterDelete</con:name>
+      <con:value>1208</con:value>
+    </con:property>
+    <con:property>
+      <con:name>incorrectUserId</con:name>
+      <con:value/>
+    </con:property>
+    <con:property>
+      <con:name>patchedeventid</con:name>
+      <con:value>1679721</con:value>
+    </con:property>
+    <con:property>
+      <con:name>eventId</con:name>
+      <con:value>1679721</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>b8de6f22-b10a-4e97-a3cf-c5f736d7d2fd</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>cfb39e81-acf9-4636-a199-5894091366f3</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>5377b892-b1ca-4ec4-b1f3-5b21c2f9c589</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>3b9590e1-33f8-46d3-930c-f56b7bbaa665</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>096192d1-ce26-4dcd-9c3b-af3f08eeb335</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>13eeb018-387e-4620-ba3a-58b7831d3600</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

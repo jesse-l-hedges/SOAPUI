@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:operation isOneWay="false" action="VersionInfo" name="VersionInfo" bindingOperationName="VersionInfo" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional" id="85e982d4-0d19-43e3-9836-b5fbbaa19876" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="85e982d4-0d19-43e3-9836-b5fbbaa19876fileName">VersionInfo</con:setting>
+  </con:settings>
+  <con:call name="Request 1" defaultOutgoingWss="" id="71cdbe84-d3be-4020-a080-240c03fc29f1" defaultIncomingWss="">
+    <con:settings/>
+    <con:encoding>UTF-8</con:encoding>
+    <con:endpoint>${soapapiendpoint}</con:endpoint>
+    <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:par="http://exacttarget.com/wsdl/partnerAPI">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <par:VersionInfoRequestMsg>\r
+         <par:IncludeVersionHistory>?</par:IncludeVersionHistory>\r
+      </par:VersionInfoRequestMsg>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+    <con:credentials>
+      <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+      <con:authType>No Authorization</con:authType>
+    </con:credentials>
+    <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+    <con:wsaConfig mustUnderstand="NONE" version="200508" action="VersionInfo"/>
+    <con:environmentSpec>
+      <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+        <con:authProfile>Inherit From Parent</con:authProfile>
+      </con:entry>
+    </con:environmentSpec>
+  </con:call>
+</con:operation>

@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GetHubexchange-Failed" searchProperties="true" id="de3b5e7e-cd6c-4149-9345-58cacbba3028" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="de3b5e7e-cd6c-4149-9345-58cacbba3028fileName">GetHubexchange-Failed</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="203f9244-1986-481b-b11f-961fee265d6e">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>aA4MoltzxBbg3KfyrPuzyeam</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>10782007</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>10739553</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="RecordClientIDandMID" id="ae384145-7dd6-4819-9dfd-606e020bb4ea">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+        <con:name>userid</con:name>
+        <con:sourceType>userid</con:sourceType>
+        <con:sourceStep>Auth</con:sourceStep>
+        <con:targetType>userid</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" entitize="false" transferToAll="false" transferChildNodes="false" useXQuery="false" ignoreEmpty="false">
+        <con:name>mid</con:name>
+        <con:sourceType>mid</con:sourceType>
+        <con:sourceStep>Auth</con:sourceStep>
+        <con:targetType>mid</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="GetListingByNoparam" id="794ab258-3c14-4775-bbe7-c0ebb9d12c1a">
+    <con:settings/>
+    <con:config service="APIs" methodName="GetListings" resourcePath="/internal/v1/hubexchange/listings" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="GetListingByNoparam" mediaType="application/json" id="6edd7c65-e849-477a-93ee-bfb2123681a1">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/internal/v1/hubexchange/listings</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="a201db05-1151-44dd-bb79-012bcff413e6">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="RecordListingAppId" id="a259b9a9-9f61-46e2-a0f3-7695635445ac">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+        <con:name>listingid</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>GetListingByNoparam</con:sourceStep>
+        <con:sourcePath>//*:listingId</con:sourcePath>
+        <con:targetType>listingid</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" useXQuery="false" transferChildNodes="false" transferToAll="false">
+        <con:name>appid</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>GetListingByNoparam</con:sourceStep>
+        <con:sourcePath>//*:id</con:sourcePath>
+        <con:targetType>appid</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="GetListingByListingId" id="0b346e35-c919-4eb4-8db5-a0d5b56a985e">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/hubexchange/listings/{ListingID}" methodName="GetListingbyListingId" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="GetListingByListingId" mediaType="application/json" id="f6983b4a-9432-466d-8ff3-df31bcba6d15">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/internal/v1/hubexchange/listings/4A35083F-4373-4F15-8066-102A751F02F8</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="634e63a4-3a7a-4d27-b08e-639a366e126f">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="ListingID" value="${#TestCase#listingid}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry/>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="RecordGroupDefinitionID" id="7cf51310-4829-4379-a1c6-23040bb68426">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" useXQuery="false" entitize="false" transferChildNodes="false">
+        <con:name>groupdefinitionid</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>GetListingByListingId</con:sourceStep>
+        <con:sourcePath>//*:groupDefinitionID</con:sourcePath>
+        <con:targetType>groupdefinitionid</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="GetGroupItemWithGroupDefinitionKey-MissingGroupDefinitionKey" id="57905e9d-1f22-4632-b1f5-e97c44a20675">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/hubexchange/groupitems" methodName="GetGroupItem" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="GetGroupItemWithGroupDefinitionKey-MissingGroupDefinitionKey" mediaType="application/json" id="03c17042-1862-4315-b5e7-5fa3a9229400">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/internal/v1/hubexchange/groupitems</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="cc8f77cd-e961-40f9-acc4-38412430f648">
+          <con:settings/>
+          <con:configuration>
+            <codes>400</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Invalid HTTP Status Codes" name="Invalid HTTP Status Codes" id="ec3b7dc8-fe49-44f2-8125-a83ce1a9573f">
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="493ae533-e355-464e-b096-40a6f6e5e89f" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://localhost/internal/v1/hubexchange/groupitems';
+//ns1:Fault[1]/ns1:message[1]</path>
+            <content>Expected query string parameter GroupDefinitionKey.</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:domain/>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>groupDefinitionKey</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Generate Random GUID" id="f7a3bf8f-1037-4e94-b576-cf3e8090e870">
+    <con:settings/>
+    <con:config>
+      <script>def guidVal = "${java.util.UUID.randomUUID()}"
+return guidVal</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="GetDataAccessByApplicationId-InvalidApplicationID" id="c399861e-7c06-45a3-bd23-8404f531b17c">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/hubexchange/account/applications/{applicationid}/dataaccess" methodName="GetDataAccessByApplicationId" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="GetDataAccessByApplicationId-InvalidApplicationID" mediaType="application/json" id="6d2875b4-3ffe-4c1f-9132-2da8e8fc6aef">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/internal/v1/hubexchange/account/applications/0C6CD60B-3F97-49E1-ABC0-352287EDDB99/dataaccess</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="e6bfd9a2-d48f-419a-b5b9-d18a8a309c0e" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="293ea122-f740-4b4a-a9ac-0bb71c2e4661" name="Count = 0">
+          <con:configuration>
+            <path>$.count</path>
+            <content>0</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="applicationid" value="${Generate Random GUID#result}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>applicationid</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="GetLicensedUsersByApplicationId-InvalidApplicationId" id="f155603e-3d3d-4f16-a571-042ae95cf15a">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/hubexchange/account/applications/{applicationid}/licensedusers" methodName="GetLicensedUsersByApplicationId" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="GetLicensedUsersByApplicationId-InvalidApplicationId" mediaType="application/json" id="0f73e9c3-85ef-439a-82cb-340f1c52e26c">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/internal/v1/hubexchange/account/applications/0C6CD60B-3F97-49E1-ABC0-352287EDDB99/licensedusers</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="bf3b85c8-1ad2-4be0-b73b-73ce99bf65f4" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="0e60cad3-003f-4417-b404-075d7ee30820" name="Count = 0">
+          <con:configuration>
+            <path>$.count</path>
+            <content>0</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="applicationid" value="${Generate Random GUID#result}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>applicationid</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="GetUnLicensedUsersByApplicationId-InvalidApplicationId" id="ab545e90-380c-4bd6-ab70-61e8d424b301" disabled="true">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/hubexchange/account/applications/{applicationid}/unlicensedusers" methodName="GetUnLicensedUsersByApplicationId" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="GetUnLicensedUsersByApplicationId-InvalidApplicationId" mediaType="application/json" id="9df1d704-9cf2-4737-a93f-8e9c608a4a2c">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/internal/v1/hubexchange/account/applications/0C6CD60B-3F97-49E1-ABC0-352287EDDB99/unlicensedusers</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="67324e0e-85b0-4e93-bb02-13b9ab6b83a8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="38224288-30eb-4155-abd7-24b0a22c6b19" name="Count !=0">
+          <con:configuration>
+            <scriptText>//imports
+import groovy.json.JsonSlurper
+ 
+//grab the response
+def ResponseMessage = messageExchange.response.responseContent
+//define a JsonSlurper
+def jsonSlurper = new JsonSlurper().parseText(ResponseMessage)
+ 
+//verify the slurper isn't empty
+assert !(jsonSlurper.isEmpty())
+
+//verify count &lt;>0
+assert jsonSlurper.count != 0</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="applicationid" value="${Generate Random GUID#result}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>applicationid</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="GetUsersWithLicenseRequestByApplicationIdNoParam-InvalidApplicationId" id="effd285f-317f-4a8d-ac9c-3b982b6c91b8" disabled="true">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/hubexchange/account/applications/{applicationid}/unlicensedusers" methodName="GetUnLicensedUsersByApplicationId" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="GetUsersWithLicenseRequestByApplicationIdNoParam-InvalidApplicationId" mediaType="application/json" id="1c25a978-e839-47ee-9a12-a6f7cad11bb3">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/internal/v1/hubexchange/account/applications/0C6CD60B-3F97-49E1-ABC0-352287EDDB99/userswithlicenserequest</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="e5a251f2-3cd3-4b02-ab57-7609796ea2e1" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="39400a5c-507b-4c26-ad2b-f4798f7632b9" name="Count = 0">
+          <con:configuration>
+            <path>$.count</path>
+            <content>0</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="applicationid" value="${Generate Random GUID#result}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>applicationid</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="GetLicensedBusinessUnitsByApplicationId-InvalidApplicationId" id="14ddb5b1-d598-4bca-8eeb-6fe469891d6c">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/hubexchange/account/applications/{applicationid}/licensedbusinessunits" methodName="GetLicensedBusinessUnitsByApplicationId" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="GetLicensedBusinessUnitsByApplicationId-InvalidApplicationId" mediaType="application/json" id="c1bedb6a-7767-4cc7-84e7-1ef78aedf898">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/internal/v1/hubexchange/account/applications/0C6CD60B-3F97-49E1-ABC0-352287EDDB99/licensedbusinessunits</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes" id="cb9768b9-0579-447c-95ad-b1b5f9bb9099">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="4cd2d77d-f80f-4c33-b6c1-430995f4f31c" name="Count = 0">
+          <con:configuration>
+            <path>$.count</path>
+            <content>0</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="applicationid" value="${Generate Random GUID#result}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>applicationid</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="GetBusinessUnitUsersByMemberIdNoParam-InvalidMemberId" id="bf32e819-a69c-41ea-9970-58c3d3f4e6be">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/hubexchange/account/businessunits/{memberid}/users" methodName="GetBusinessUnitUsersByMemberId" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="GetBusinessUnitUsersByMemberIdNoParam-InvalidMemberId" mediaType="application/json" id="1ce988f5-68cd-4d57-ac19-2b29a929d346">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/internal/v1/hubexchange/account/businessunits/20720/users</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="73825cb4-292e-459d-bedc-022ce8ab7b9c" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="679653fb-341f-43e6-b1af-7a2341488fe4" name="Count = 0">
+          <con:configuration>
+            <path>declare namespace ns1='http://localhost/internal/v1/hubexchange/account/businessunits/20720/users';
+//ns1:Response[1]/ns1:count[1]</path>
+            <content>0</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="memberid" value="111111"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>memberid</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="GetByLicensedBusinessUnitUsersByMemberIdAndApplicationIdNoParam-InvalidMemberId" id="632f7845-3306-486b-b0df-ef9ca8a14f89">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/hubexchange/account/businessunits/{memberid}/applications/{applicationid}/licensedusers" methodName="ByLicensedBusinessUnitUsersByMemberIdAndApplicationId" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="GetByLicensedBusinessUnitUsersByMemberIdAndApplicationIdNoParam-InvalidMemberId" mediaType="application/json" id="83b703d2-9353-46dd-8a60-856b4f96e984">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/internal/v1/hubexchange/account/businessunits/20720/applications/0C6CD60B-3F97-49E1-ABC0-352287EDDB99/licensedusers</con:originalUri>
+        <con:assertion type="Invalid HTTP Status Codes" name="Invalid HTTP Status Codes" id="de2f9d6c-ce17-4421-90c3-010053da23cc">
+          <con:configuration>
+            <codes>500</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="576ff8a5-f327-44a9-ac65-645eecd2a215" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="0ea6188e-b694-45a8-b1a8-d09c45a6ec7a" name="HREF Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://localhost/internal/v1/hubexchange/account/businessunits/20720/applications/0C6CD60B-3F97-49E1-ABC0-352287EDDB99/licensedusers';
+//ns1:Response[1]/ns1:links[1]/ns1:self[1]/ns1:href[1]</path>
+            <content>/V1/hubexchange/account/applications</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="applicationid" value="${#TestCase#appid}"/>
+          <con:entry key="memberid" value="${#Project#mid}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>memberid</con:entry>
+          <con:entry>applicationid</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="GetByLicensedBusinessUnitUsersByMemberIdAndApplicationIdNoParam-InvalidApplicationId" id="4cfa6025-838e-4b94-89f4-70a51c96b68c">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/hubexchange/account/businessunits/{memberid}/applications/{applicationid}/licensedusers" methodName="ByLicensedBusinessUnitUsersByMemberIdAndApplicationId" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="GetByLicensedBusinessUnitUsersByMemberIdAndApplicationIdNoParam-InvalidApplicationId" mediaType="application/json" id="83b703d2-9353-46dd-8a60-856b4f96e984">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/internal/v1/hubexchange/account/businessunits/20720/applications/0C6CD60B-3F97-49E1-ABC0-352287EDDB99/licensedusers</con:originalUri>
+        <con:assertion type="Invalid HTTP Status Codes" name="Invalid HTTP Status Codes" id="bc43dda9-d895-497d-88b2-6e9d503d1b57">
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="6e8591cd-4ef8-46a9-baaf-9e24520508be" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="applicationid" value=""/>
+          <con:entry key="memberid" value="${#TestCase#mid}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>memberid</con:entry>
+          <con:entry>applicationid</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="GetAccountUsersByUserIDNoParam-InvalidUserId" id="bb2bf2a6-c9a6-4da9-a39c-6c38b348c371">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/hubexchange/account/users/{userid}" methodName="GetAccountUsersByUserID" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="GetAccountUsersByUserIDNoParam-InvalidUserId" mediaType="application/json" id="00e84b23-f4ea-435b-ad4d-bcd9fefc1c62">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/internal/v1/hubexchange/account/users/userid</con:originalUri>
+        <con:assertion type="Invalid HTTP Status Codes" name="Invalid HTTP Status Codes" id="3b29b85b-b33a-47d6-839b-c8177fc973e6">
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="876e2eb7-31d9-4fd8-beba-35d5707fbdf9" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>404</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="userid" value=""/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>userid</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>listingid</con:name>
+      <con:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">a928c5a0-6f0c-4ec7-8f86-77547a157395</con:value>
+    </con:property>
+    <con:property>
+      <con:name>appid</con:name>
+      <con:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">624fc9e5-71e1-4e07-83ff-127cb701ae07</con:value>
+    </con:property>
+    <con:property>
+      <con:name>groupdefinitionid</con:name>
+      <con:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">89</con:value>
+    </con:property>
+    <con:property>
+      <con:name>mid</con:name>
+      <con:value>10739553</con:value>
+    </con:property>
+    <con:property>
+      <con:name>userid</con:name>
+      <con:value>10782007</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+</con:testCase>

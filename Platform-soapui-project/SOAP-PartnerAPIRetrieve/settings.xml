@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="a94f8230-750f-4f04-903a-da0606fbae5b" name="SOAP PartnerAPIRetrieve" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="a94f8230-750f-4f04-903a-da0606fbae5bfileName">SOAP-PartnerAPIRetrieve</con:setting></con:settings><con:savedRecentRuns>1</con:savedRecentRuns><con:runType>SEQUENTIAL</con:runType><con:properties/><con:reportParameters/></con:testSuite>

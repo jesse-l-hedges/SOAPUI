@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="425a3536-148a-4fad-afe1-eb96123c3104" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Get Creds" searchProperties="true" disabled="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="425a3536-148a-4fad-afe1-eb96123c3104fileName">Get-Creds</con:setting>
+  </con:settings>
+  <con:testStep type="transfer" name="Local Creds" id="e00a9c11-02b4-4544-90ff-dcf2fb6829bc" disabled="true">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>clientid</con:name>
+        <con:sourceType>clientid</con:sourceType>
+        <con:sourceStep>#Project#</con:sourceStep>
+        <con:sourcePath/>
+        <con:targetType>clientid</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>clientsecret</con:name>
+        <con:sourceType>clientsecret</con:sourceType>
+        <con:sourceStep>#Project#</con:sourceStep>
+        <con:targetType>clientsecret</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Check for GithubToken &amp; Enviro" id="716d5eeb-bc16-4ca3-a504-2bebb6a92bd5">
+    <con:settings/>
+    <con:config>
+      <script>def githubToken = context.expand( '${#Env#GITHUB_TOKEN}' )
+log.info (githubToken)	
+
+if (githubToken) {
+	environment = testRunner.testCase.testSuite.project.getActiveEnvironmentName()
+	//log.info (environment)	
+}
+else {
+	def alert = com.eviware.soapui.support.UISupport;
+	alert.showInfoMessage("Missing Github Personal Token.","Warning")
+	//testRunner.fail( "Missing Github Personal Token" )	
+	testRunner.cancel( "Missing Github Personal Token" )
+}</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Send github Token" id="2ed0e573-da64-4fe8-bbad-98c61f017904">
+    <con:settings/>
+    <con:config service="Vault" resourcePath="/v1/auth/Platform/login" methodName="Login" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Send github Token" id="65d50a2e-5a29-4a03-9041-045e52b8a483" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+   "token": "${#Env#GITHUB_TOKEN}"
+}</con:request>
+        <con:originalUri>https://etinbyaroch01.ET.LOCAL/v1/auth/platform/login</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="4ef868d1-fcfb-4612-a53b-2e19c78bfb8e" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:parameterOrder/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Get Vault Creds" id="7fe2f0c2-9f30-424b-851e-91b934cbee4d">
+    <con:settings/>
+    <con:config service="Vault" resourcePath="/v1/secret/platform/{environment}" methodName="GET Creds" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Get Vault Creds" id="51f21a57-1b0d-4827-8c3a-8ea51cd68099" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://etinbyaroch01.ET.LOCAL/v1/secret/platform/</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="07394a82-bb0c-41b9-8a54-32e26b9a744c" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="environment" value="${Check for GithubToken &amp; Enviro#result}"/>
+          <con:entry key="X-Vault-Token" value="${Send github Token#Response#$.auth.client_token}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>environment</con:entry>
+          <con:entry>X-Vault-Token</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Vault Creds" id="5a3edb6a-d5be-42b3-8f1c-9aac856e1625">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>clientid</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Get Vault Creds</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://etinbyaroch01.ET.LOCAL/v1/secret/platform/';
+//ns1:Response[1]/ns1:data[1]/ns1:clientid[1]</con:sourcePath>
+        <con:targetType>clientid</con:targetType>
+        <con:targetStep>#Project#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>clientsecret</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Get Vault Creds</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://etinbyaroch01.ET.LOCAL/v1/secret/platform/';
+//ns1:Response[1]/ns1:data[1]/ns1:clientsecret[1]</con:sourcePath>
+        <con:targetType>clientsecret</con:targetType>
+        <con:targetStep>#Project#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>user</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Get Vault Creds</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://etinbyaroch01.ET.LOCAL/v1/secret/platform/';
+//ns1:Response[1]/ns1:data[1]/ns1:user[1]</con:sourcePath>
+        <con:targetType>user</con:targetType>
+        <con:targetStep>#Project#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>pass</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Get Vault Creds</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://etinbyaroch01.ET.LOCAL/v1/secret/platform/';
+//ns1:Response[1]/ns1:data[1]/ns1:pass[1]</con:sourcePath>
+        <con:targetType>pass</con:targetType>
+        <con:targetStep>#Project#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>bu1user1clientid</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Get Vault Creds</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://etinbyaroch01.ET.LOCAL/v1/secret/platform/';
+//ns1:Response[1]/ns1:data[1]/ns1:bu1user1clientid[1]</con:sourcePath>
+        <con:targetType>bu1user1clientID</con:targetType>
+        <con:targetStep>#Project#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>bu1user1clientsecret</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Get Vault Creds</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://etinbyaroch01.ET.LOCAL/v1/secret/platform/';
+//ns1:Response[1]/ns1:data[1]/ns1:bu1user1clientsecret[1]</con:sourcePath>
+        <con:targetType>bu1user1clientSecret</con:targetType>
+        <con:targetStep>#Project#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>bu1user2clientid</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Get Vault Creds</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://etinbyaroch01.ET.LOCAL/v1/secret/platform/';
+//ns1:Response[1]/ns1:data[1]/ns1:bu1user2clientid[1]</con:sourcePath>
+        <con:targetType>bu1user2clientID</con:targetType>
+        <con:targetStep>#Project#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>bu1user2clientsecret</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Get Vault Creds</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://etinbyaroch01.ET.LOCAL/v1/secret/platform/';
+//ns1:Response[1]/ns1:data[1]/ns1:bu1user2clientsecret[1]</con:sourcePath>
+        <con:targetType>bu1user2clientSecret</con:targetType>
+        <con:targetStep>#Project#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>bu2user1clientid</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Get Vault Creds</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://etinbyaroch01.ET.LOCAL/v1/secret/platform/';
+//ns1:Response[1]/ns1:data[1]/ns1:bu2user1clientid[1]</con:sourcePath>
+        <con:targetType>bu2user1clientID</con:targetType>
+        <con:targetStep>#Project#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>bu2user1clientsecret</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Get Vault Creds</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://etinbyaroch01.ET.LOCAL/v1/secret/platform/';
+//ns1:Response[1]/ns1:data[1]/ns1:bu2user1clientsecret[1]</con:sourcePath>
+        <con:targetType>bu2user1clientSecret</con:targetType>
+        <con:targetStep>#Project#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>casclientid</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Get Vault Creds</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://etinbyaroch01.ET.LOCAL/v1/secret/platform/';
+//ns1:Response[1]/ns1:data[1]/ns1:casclientid[1]</con:sourcePath>
+        <con:targetType>casclientid</con:targetType>
+        <con:targetStep>#Project#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>casclientsecret</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Get Vault Creds</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://etinbyaroch01.ET.LOCAL/v1/secret/platform/';
+//ns1:Response[1]/ns1:data[1]/ns1:casclientsecret[1]</con:sourcePath>
+        <con:targetType>casclientsecret</con:targetType>
+        <con:targetStep>#Project#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>crossmidcasclientid</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Get Vault Creds</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://etinbyaroch01.ET.LOCAL/v1/secret/platform/';
+//ns1:Response[1]/ns1:data[1]/ns1:crossmidcasclientid[1]</con:sourcePath>
+        <con:targetType>crossmidcasclientid</con:targetType>
+        <con:targetStep>#Project#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>crossmidcasclientsecret</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Get Vault Creds</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://etinbyaroch01.ET.LOCAL/v1/secret/platform/';
+//ns1:Response[1]/ns1:data[1]/ns1:crossmidcasclientsecret[1]</con:sourcePath>
+        <con:targetType>crossmidcasclientsecret</con:targetType>
+        <con:targetStep>#Project#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>userVSdisabled</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Get Vault Creds</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://etinbyaroch01.ET.LOCAL/v1/secret/platform/';
+//ns1:Response[1]/ns1:data[1]/ns1:userVSdisabled[1]</con:sourcePath>
+        <con:targetType>userVSdisabled</con:targetType>
+        <con:targetStep>#Project#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>passVSdisabled</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Get Vault Creds</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://etinbyaroch01.ET.LOCAL/v1/secret/platform/';
+//ns1:Response[1]/ns1:data[1]/ns1:passVSdisabled[1]</con:sourcePath>
+        <con:targetType>passVSdisabled</con:targetType>
+        <con:targetStep>#Project#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>clientid</con:name>
+      <con:value>s0gtyn6mwqua07eot0x6rwqi</con:value>
+    </con:property>
+    <con:property>
+      <con:name>clientsecret</con:name>
+      <con:value>VAtOrR55iS3ob6VsEPPdCkWZ</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>933d8862-a5f5-4cbc-b1a3-d4554f035914</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>4549ca97-cbcc-481a-a16e-3e2c8da25d81</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

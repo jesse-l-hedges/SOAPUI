@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="7dd8c2d1-bae7-4e84-9c6d-092a4669fff4" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Create Enterprise 2.0 Account and User With PartnerKey" searchProperties="true" maxResults="0" timeout="360000" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" disabled="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="c7b6610a-8d49-4a57-867d-c8e3092f4c0afileName">Enterprise-2.0</con:setting>
+    <con:setting id="82526999-54f5-49e0-b732-1b20b8ae382bfileName">Create-Enterprise-2.0-Account-and-User</con:setting>
+    <con:setting id="7dd8c2d1-bae7-4e84-9c6d-092a4669fff4fileName">Create-Enterprise-2.0-Account-and-User-With-PartnerKey</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="2698d019-f60a-4e29-8273-f0d08c1c2e98">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>aTegQqIPmMA4vRnrcAOysePW</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>10782007</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>10739553</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create PartnerKey" id="3536c4c0-558e-408e-8e41-0a6a9b3df276">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"QETest_" + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer PartnerKey" id="08398412-a44f-4a65-9030-ead2a2267f61">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>PartnerKey</con:name>
+        <con:sourceType>result</con:sourceType>
+        <con:sourceStep>Create PartnerKey</con:sourceStep>
+        <con:sourcePath/>
+        <con:targetType>PartnerKey</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create CustomerKey" id="c83d8e61-3956-49d8-bc93-e6a333753482">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"QETest_" + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create UserID" id="ed673341-b004-44ef-b403-1d44a26b75c9">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"QETest_" + generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer UserID" id="6f66bd9c-e1ce-42e9-846b-f0da4a153aaf">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>UserID</con:name>
+        <con:sourceType>result</con:sourceType>
+        <con:sourceStep>Create UserID</con:sourceStep>
+        <con:sourcePath/>
+        <con:targetType>UserID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Create Password" id="e3c6b726-f319-4844-8b89-f9f422a1ea4d">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+'K@1'+generator( (('A'..'Z')+('0'..'9')).join(), 12 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer Password" id="08bab8f0-fd85-4976-b1a8-009635a1f28d">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>Password</con:name>
+        <con:sourceType>result</con:sourceType>
+        <con:sourceStep>Create Password</con:sourceStep>
+        <con:targetType>Password</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Get Today's Date" id="ad0d9cf6-4286-4141-ad36-6eb920cafe53">
+    <con:settings/>
+    <con:config>
+      <script>import java.text.SimpleDateFormat
+ 
+def date = new Date()
+sdf = new SimpleDateFormat("yyyy-MM-dd")
+return sdf.format(date)</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Ent 2.0 Account" id="1aa8bb36-7cd1-4824-b121-1a1da95fd718">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Ent 2.0 Account" id="108abc10-8aeb-409d-9a18-6e9ab7819ab6" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>https://webservice.s1.qa1.exacttarget.com/Service.asmx</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options>
+            <SaveOptions>
+               <SaveOption>
+                  <PropertyName>*</PropertyName>
+                  <SaveAction>UpdateAdd</SaveAction>
+               </SaveOption>
+            </SaveOptions>
+         </Options>
+         <ns1:Objects xsi:type="ns1:Account" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+            <ns1:PartnerKey>${Create PartnerKey#result}</ns1:PartnerKey>
+            <ns1:ModifiedDate xsi:nil="true"/>
+            <ns1:ObjectID xsi:nil="true"/>
+            <ns1:AccountType>ENTERPRISE_2</ns1:AccountType>
+            <ns1:Name>ET QA ${#Project#dbid} ${Get Today's Date#result}</ns1:Name>
+            <ns1:Email>jhedges@exacttarget.com</ns1:Email>
+            <ns1:FromName>Jesse Hedges</ns1:FromName>
+            <ns1:BusinessName>Platform Test Team</ns1:BusinessName>
+            <ns1:Address>20 N Meridian Street</ns1:Address>
+            <ns1:City>Indianapolis</ns1:City>
+            <ns1:State>IN</ns1:State>
+            <ns1:Zip>46204</ns1:Zip>
+            <ns1:IsActive>1</ns1:IsActive>
+            <ns1:DBID>${#Project#dbid}</ns1:DBID>
+            <EditionID>10</EditionID>
+            <ns1:Children xsi:nil="true"/>
+            <ns1:Subscription>
+               <ns1:SubscriptionID xsi:nil="true"/>
+               <ns1:EmailsPurchased>0</ns1:EmailsPurchased>
+               <ns1:AccountsPurchased>0</ns1:AccountsPurchased>
+               <ns1:AdvAccountsPurchased>0</ns1:AdvAccountsPurchased>
+               <ns1:LPAccountsPurchased>0</ns1:LPAccountsPurchased>
+               <ns1:DOTOAccountsPurchased>0</ns1:DOTOAccountsPurchased>
+               <ns1:BUAccountsPurchased>10</ns1:BUAccountsPurchased>
+               <ns1:BeginDate>${Get Today's Date#result}T00:00:00.000Z</ns1:BeginDate>
+               <ns1:EndDate>${Get Today's Date#result}T23:59:59.000Z</ns1:EndDate>
+               <ns1:Notes xsi:nil="true"/>
+               <ns1:Period/>
+               <ns1:NotificationTitle xsi:nil="true"/>
+               <ns1:NotificationMessage xsi:nil="true"/>
+               <ns1:NotificationFlag xsi:nil="true"/>
+               <ns1:NotificationExpDate xsi:nil="true"/>
+               <ns1:ForAccounting xsi:nil="true"/>
+               <ns1:HasPurchasedEmails>true</ns1:HasPurchasedEmails>
+               <ns1:NumberofEmails>0</ns1:NumberofEmails>
+            </ns1:Subscription>
+         </ns1:Objects>
+      </CreateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="7bb5e400-e7a8-46df-9536-afe87ad37819"/>
+        <con:assertion type="SOAP Fault Assertion" id="89790693-a0ce-4612-aeea-a56eef2971da"/>
+        <con:assertion type="XPath Match" id="b43232ab-e25e-4b6e-b1eb-ea45c36711ae" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Account Updated / Created</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer EID" id="2fae06c7-a28a-4252-9f3c-2268127729b4">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>EID</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Ent 2.0 Account</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:NewID[1]</con:sourcePath>
+        <con:targetType>EID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Create Account User" id="24b78724-5ccb-407f-b520-f67f7d798707">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create Account User" id="b1459dff-6e18-4c99-a1c9-47c11e69876f" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options>
+            <SaveOptions>
+               <SaveOption>
+                  <PropertyName>*</PropertyName>
+                  <SaveAction>UpdateAdd</SaveAction>
+               </SaveOption>
+            </SaveOptions>
+         </Options>
+         <ns1:Objects xsi:type="ns1:AccountUser" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+            <ns1:Client>
+               <ns1:ClientID>${#TestCase#EID}</ns1:ClientID>
+            </ns1:Client>
+            <ns1:PartnerKey>${Create PartnerKey#result}</ns1:PartnerKey>
+            <ns1:ModifiedDate xsi:nil="true"/>
+            <ns1:ObjectID xsi:nil="true"/>
+            <ns1:AccountUserID xsi:nil="true"/>
+            <ns1:UserID>${Create UserID#result}</ns1:UserID>
+            <ns1:Password>${Create Password#result}</ns1:Password>
+            <ns1:Name>QETesting Ent2 API User</ns1:Name>
+            <ns1:Email>mc-fuelframeworkdev@salesforce.com</ns1:Email>
+            <ns1:MustChangePassword>false</ns1:MustChangePassword>
+            <ns1:ChallengePhrase>q</ns1:ChallengePhrase>
+            <ns1:ChallengeAnswer>a</ns1:ChallengeAnswer>
+            <ns1:Delete>0</ns1:Delete>
+            <ns1:IsAPIUser>true</ns1:IsAPIUser>
+            <ns1:NotificationEmailAddress>mc-fuelframeworkdev@salesforce.com</ns1:NotificationEmailAddress>
+            <ns1:DefaultBusinessUnit>${#TestCase#EID}</ns1:DefaultBusinessUnit>
+         </ns1:Objects>
+      </CreateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="9ebeb90f-2f8c-4991-b4d4-f8d288753053"/>
+        <con:assertion type="SOAP Fault Assertion" id="20cdc784-941d-4ccb-b5fb-4bae3f238fbe"/>
+        <con:assertion type="XPath Match" id="18241436-db11-4c64-a2ed-c8a5c5c6d013" name="Account User Created">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]</path>
+            <content>Account User Updated / Created</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer MID" id="e2c2870a-ae0f-44bc-8815-2eb7d542fb4a">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>MID</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>Create Account User</con:sourceStep>
+        <con:sourcePath>${Create Account User#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; //ns1:CreateResponse[1]/ns1:Results[1]/ns1:Object[1]/ns1:AccountUserID[1]}</con:sourcePath>
+        <con:targetType>MID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update Permission for Account User" id="96d5d0a4-8206-44f5-bfeb-5e1824ff825f">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update Permission for Account User" id="6f9cb94f-4edb-4a14-b914-a3ab5c3540ea">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <fueloauth xmlns="http://exacttarget.com">${Auth#accesstoken}</fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <Options/>
+         <Objects xsi:type="AccountUser">
+            <Client>
+               <ID>${#TestCase#EID}</ID>
+            </Client>
+            <ID>${#TestCase#MID}</ID>
+            <UserPermissions>
+               <ID>31</ID>
+            </UserPermissions>
+         </Objects>
+      </UpdateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="8a14ae40-848c-4acd-9d44-db945bbeaea5"/>
+        <con:assertion type="Valid HTTP Status Codes" id="d62400b8-e1bb-456a-8a16-1bf25fca75f3" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>EID</con:name>
+      <con:value>10753213</con:value>
+    </con:property>
+    <con:property>
+      <con:name>UserID</con:name>
+      <con:value>QETest_VUGQT7QL9</con:value>
+    </con:property>
+    <con:property>
+      <con:name>Password</con:name>
+      <con:value>K@1WY5HFM0T8N0H</con:value>
+    </con:property>
+    <con:property>
+      <con:name>MID</con:name>
+      <con:value>10817619</con:value>
+    </con:property>
+    <con:property>
+      <con:name>PartnerKey</con:name>
+      <con:value>QETest_9MS64MYCE</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>05b418eb-b223-42f6-a317-69ab70271f36</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>43463b39-bc37-43b7-ba32-9f45b6680e96</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>e3c6b726-f319-4844-8b89-f9f422a1ea4d</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>6f66bd9c-e1ce-42e9-846b-f0da4a153aaf</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>08bab8f0-fd85-4976-b1a8-009635a1f28d</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>e2c2870a-ae0f-44bc-8815-2eb7d542fb4a</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>08398412-a44f-4a65-9030-ead2a2267f61</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

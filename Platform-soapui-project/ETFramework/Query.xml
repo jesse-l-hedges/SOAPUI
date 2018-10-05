@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:operation isOneWay="false" action="Query" name="Query" bindingOperationName="Query" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional" id="c7513998-6fc4-47e1-84a6-d613be7a0f7d" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="c7513998-6fc4-47e1-84a6-d613be7a0f7dfileName">Query</con:setting>
+  </con:settings>
+  <con:call name="Request 1" defaultOutgoingWss="" id="b84a33ff-4103-4af4-9179-bc48a8f89d7f" defaultIncomingWss="">
+    <con:settings/>
+    <con:encoding>UTF-8</con:encoding>
+    <con:endpoint>${soapapiendpoint}</con:endpoint>
+    <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:par="http://exacttarget.com/wsdl/partnerAPI">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <par:QueryRequestMsg>\r
+         <par:QueryRequest>\r
+            <!--Zero or more repetitions:-->\r
+            <par:ClientIDs>\r
+               <!--Optional:-->\r
+               <par:ClientID>?</par:ClientID>\r
+               <!--Optional:-->\r
+               <par:ID>?</par:ID>\r
+               <!--Optional:-->\r
+               <par:PartnerClientKey>?</par:PartnerClientKey>\r
+               <!--Optional:-->\r
+               <par:UserID>?</par:UserID>\r
+               <!--Optional:-->\r
+               <par:PartnerUserKey>?</par:PartnerUserKey>\r
+               <!--Optional:-->\r
+               <par:CreatedBy>?</par:CreatedBy>\r
+               <!--Optional:-->\r
+               <par:ModifiedBy>?</par:ModifiedBy>\r
+               <!--Optional:-->\r
+               <par:EnterpriseID>?</par:EnterpriseID>\r
+               <!--Optional:-->\r
+               <par:CustomerKey>?</par:CustomerKey>\r
+            </par:ClientIDs>\r
+            <par:Query>\r
+               <par:Object>\r
+                  <par:ObjectType>?</par:ObjectType>\r
+                  <!--1 or more repetitions:-->\r
+                  <par:Properties>?</par:Properties>\r
+                  <!--Zero or more repetitions:-->\r
+                  <par:Objects/>\r
+               </par:Object>\r
+               <!--Optional:-->\r
+               <par:Filter/>\r
+            </par:Query>\r
+            <!--Zero or more repetitions:-->\r
+            <par:RespondTo>\r
+               <par:ResponseType>?</par:ResponseType>\r
+               <par:ResponseAddress>?</par:ResponseAddress>\r
+               <!--Optional:-->\r
+               <par:RespondWhen>?</par:RespondWhen>\r
+               <!--Optional:-->\r
+               <par:IncludeResults>?</par:IncludeResults>\r
+               <!--Optional:-->\r
+               <par:IncludeObjects>?</par:IncludeObjects>\r
+               <!--Optional:-->\r
+               <par:OnlyIncludeBase>?</par:OnlyIncludeBase>\r
+            </par:RespondTo>\r
+            <!--Zero or more repetitions:-->\r
+            <par:PartnerProperties>\r
+               <par:Name>?</par:Name>\r
+               <par:Value>?</par:Value>\r
+            </par:PartnerProperties>\r
+            <!--Optional:-->\r
+            <par:ContinueRequest>?</par:ContinueRequest>\r
+            <!--Optional:-->\r
+            <par:QueryAllAccounts>?</par:QueryAllAccounts>\r
+            <!--Optional:-->\r
+            <par:RetrieveAllSinceLastBatch>?</par:RetrieveAllSinceLastBatch>\r
+         </par:QueryRequest>\r
+      </par:QueryRequestMsg>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request>
+    <con:credentials>
+      <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+      <con:authType>No Authorization</con:authType>
+    </con:credentials>
+    <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+    <con:wsaConfig mustUnderstand="NONE" version="200508" action="Query"/>
+    <con:environmentSpec>
+      <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+        <con:authProfile>Inherit From Parent</con:authProfile>
+      </con:entry>
+    </con:environmentSpec>
+  </con:call>
+</con:operation>

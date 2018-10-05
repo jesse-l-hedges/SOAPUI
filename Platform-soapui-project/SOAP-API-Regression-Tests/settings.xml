@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="4cf66c7c-7c05-4e0c-a719-69aed775f7c7" name="SOAP API Regression Tests" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="4cf66c7c-7c05-4e0c-a719-69aed775f7c7fileName">SOAP-API-Regression-Tests</con:setting></con:settings><con:runType>SEQUENTIAL</con:runType><con:properties/><con:reportParameters/></con:testSuite>

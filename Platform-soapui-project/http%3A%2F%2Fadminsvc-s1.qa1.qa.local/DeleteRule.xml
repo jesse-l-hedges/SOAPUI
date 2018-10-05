@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="DeleteRule" path="adminservice/v1/ErrorLookup/rule/{RuleID}" id="b8fa1e44-0991-449a-a706-4951e74363ab" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="b8fa1e44-0991-449a-a706-4951e74363abfileName">DeleteRule</con:setting>
+  </con:settings>
+  <con:parameters>
+    <con:parameter>
+      <con:name>Authorization</con:name>
+      <con:value xsi:nil="true"/>
+      <con:style>HEADER</con:style>
+      <con:default xsi:nil="true"/>
+    </con:parameter>
+    <con:parameter>
+      <con:name>Content-Type</con:name>
+      <con:value xsi:nil="true"/>
+      <con:style>HEADER</con:style>
+      <con:default xsi:nil="true"/>
+    </con:parameter>
+    <con:parameter>
+      <con:name>RuleID</con:name>
+      <con:value xsi:nil="true"/>
+      <con:style>TEMPLATE</con:style>
+      <con:default xsi:nil="true"/>
+    </con:parameter>
+  </con:parameters>
+  <con:method name="DeleteRule" id="b83dac31-5cb7-4383-b3fc-48bb4179ac9f" method="DELETE">
+    <con:settings/>
+    <con:parameters/>
+    <con:representation type="REQUEST" id="">
+      <con:mediaType>application/json</con:mediaType>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status/>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType>application/json</con:mediaType>
+      <con:status/>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="FAULT" id="">
+      <con:mediaType>application/json; charset=UTF-8</con:mediaType>
+      <con:status>403 404</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType/>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType/>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType/>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType/>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType/>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType/>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType/>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType/>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType/>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType/>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:representation type="RESPONSE" id="">
+      <con:mediaType/>
+      <con:status>200</con:status>
+      <con:params/>
+      <con:element xsi:nil="true"/>
+      <con:description xsi:nil="true"/>
+    </con:representation>
+    <con:request name="Request 1" id="2b26afc0-2e98-4f57-9b4c-abd263839952" mediaType="application/json">
+      <con:settings/>
+      <con:endpoint>http://adminsvc-s1.qa1.qa.local</con:endpoint>
+      <con:request/>
+      <con:credentials>
+        <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+        <con:authType>No Authorization</con:authType>
+      </con:credentials>
+      <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+      <con:parameters/>
+      <con:environmentSpec>
+        <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+          <con:authProfile>Inherit From Parent</con:authProfile>
+        </con:entry>
+      </con:environmentSpec>
+    </con:request>
+  </con:method>
+</con:resource>

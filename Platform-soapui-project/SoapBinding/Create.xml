@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:operation id="32ceab38-9944-41cf-bb73-03ab8d528eea" isOneWay="false" action="Create" name="Create" bindingOperationName="Create" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="32ceab38-9944-41cf-bb73-03ab8d528eeafileName">Create</con:setting></con:settings></con:operation>

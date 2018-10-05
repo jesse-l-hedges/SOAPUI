@@ -1,0 +1,895 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="c0471a63-60b3-4fbb-8e67-2a813ac42a7c" discardOkResults="true" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="List-REST" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="c0471a63-60b3-4fbb-8e67-2a813ac42a7cfileName">List-REST</con:setting>
+  </con:settings>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:testStep type="calltestcase" name="List Cleanup" id="94e5c107-8a52-4856-90a3-5e728825dadc">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>52bcaedf-2302-4560-9c76-bad14df8a8e4</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>categoryId</con:name>
+        </con:property>
+        <con:property>
+          <con:name>count</con:name>
+        </con:property>
+        <con:property>
+          <con:name>listId</con:name>
+        </con:property>
+      </con:properties>
+      <con:returnProperties/>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="calltestcase" name="Auth" id="c8a8e882-f0f3-4555-9f68-5b1719628417">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>ahpvRsVRYvtI3d6gfRHSVko9</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>10782007</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>10739553</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="get List CategoryID" id="14f4f6cf-affa-49b1-a7bb-4d82d2ea4ee1">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/categories" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="get List CategoryID" id="5eb3a26c-a37c-446e-ac2f-b91f1f054198" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/categories</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="7d8fa471-f602-4987-8723-8a2fdd5bd3fd" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="46f197a2-6ad5-49a4-ad53-d46f92988e5c" name="catType = list">
+          <con:configuration>
+            <path>declare namespace ns1='https://www.exacttargetapis.com/email/v1/categories';
+//ns1:Response[1]/ns1:items[1]/ns1:e[1]/ns1:catType[1]</path>
+            <content>list</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="catType" value="list"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>catType</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer list CategoryId" id="db8e74c7-4110-46ea-b175-ab88d7e1d9cf">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>categoryId</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>get List CategoryID</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/email/v1/categories';
+//ns1:Response[1]/ns1:items[1]/ns1:e[1]/ns1:categoryId[1]</con:sourcePath>
+        <con:targetType>listCategoryId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Create Random List Name" id="66c8c76b-8f8a-4cea-a132-e9c7087b893f">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')+('0'..'9')).join(), 15 )</script>
+        </con:configuration>
+        <con:name>List Name</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Create Random Key" id="3d488ee7-2bbb-412e-82a6-31965438ba36">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>import static java.util.UUID.randomUUID 
+ 
+uuid = randomUUID() as String
+uuid = uuid.toUpperCase()
+return uuid</script>
+        </con:configuration>
+        <con:name>customerKey</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Create List - Invalid Name" id="1372042a-5643-4df1-a16f-e4934dd151be">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/lists" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Create List - Invalid Name" id="fa70d5ed-9f0d-4fa5-b49f-faed30a5e210" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+"key": "${Create Random Key#customerKey}",
+"name": "&amp;lt;script>alert(1)&amp;lt;/script>",
+"description": "",
+"categoryId": ${#TestCase#listCategoryId},
+  "isPublic": "false" 
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/lists</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="4d49b2d7-6330-4f72-9c9d-945741fd8897" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>201</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer ListId 1" id="c90f5dfd-dc23-4279-b91b-c782edafed0e">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>listId</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Create List - Invalid Name</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/email/v1/lists';
+//ns1:Response[1]/ns1:listId[1]</con:sourcePath>
+        <con:targetType>listId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Delete List 1" id="99383c77-4858-43ba-a88e-b85b1a6a5019">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/lists/{id}" methodName="Method 3" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Delete List 1" id="0704932c-7d76-4a94-8650-7665368ea1e6" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/lists/</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="158f4390-00dd-4373-8186-90a99223a615" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>204</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="DeleteSubscribers" value=""/>
+          <con:entry key="id" value="${#TestCase#listId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>DeleteSubscribers</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Create Random List Name 2" id="98212deb-1a3b-4b16-85f5-242a7b1b4a79">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')+('0'..'9')).join(), 15 )</script>
+        </con:configuration>
+        <con:name>List Name</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Create Random Key 2" id="3e37191d-bedb-4032-924a-2f407c6db07f">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>import static java.util.UUID.randomUUID 
+ 
+uuid = randomUUID() as String
+uuid = uuid.toUpperCase()
+return uuid</script>
+        </con:configuration>
+        <con:name>customerKey</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Create List - Invalid Description" id="4b21d85c-b6b4-4ed8-9d69-f7b142f5eaf2">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/lists" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Create List - Invalid Description" id="fa70d5ed-9f0d-4fa5-b49f-faed30a5e210" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+"key": "${Create Random Key 2#customerKey}",
+"name": "${Create Random List Name 2#List Name}",
+"description": "&lt;script>alert(1)&lt;/script>",
+"categoryId": ${#TestCase#listCategoryId},
+  "isPublic": "false" 
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/lists</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="4a005354-6f4c-4074-8135-4b04b84f9d69" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>201</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="c5bdcd4b-ca76-434d-9130-0152a105fb10" name="Match content of [description]">
+          <con:configuration>
+            <path>$.description</path>
+            <content>&lt;script>alert(1)&lt;/script></content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer ListId 2" id="3577c9fc-be3d-4847-bfb3-6678b1d1c964">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>listId</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Create List - Invalid Description</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/email/v1/lists';
+//ns1:Response[1]/ns1:listId[1]</con:sourcePath>
+        <con:targetType>listId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Delete List 2" id="d2b2696d-af19-4295-a6af-11ec4cdd10d1">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/lists/{id}" methodName="Method 3" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Delete List 2" id="0704932c-7d76-4a94-8650-7665368ea1e6" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/lists/</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="c2cd8f90-ae02-4388-a556-6bdb840bfb63" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>204</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="DeleteSubscribers" value=""/>
+          <con:entry key="id" value="${#TestCase#listId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>DeleteSubscribers</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Create Random List Name 3" id="55757194-92bf-49c1-b585-233ad26b97e4">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')+('0'..'9')).join(), 15 )</script>
+        </con:configuration>
+        <con:name>List Name</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Create List - Invalid Key" id="be10de67-aa6e-4627-99d9-d7f13fbc2e00">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/lists" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Create List - Invalid Key" id="fa70d5ed-9f0d-4fa5-b49f-faed30a5e210" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+"key": "&lt;script>alert(1)&lt;/script>",
+"name": "${Create Random List Name 3#List Name}",
+"description": "description",
+"categoryId": ${#TestCase#listCategoryId},
+  "isPublic": "false" 
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/lists</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="6000cc5b-ade7-46f5-937d-479d9037abc3" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>201</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="0cb46b72-1c11-48d4-bd09-b5c87f4e097f" name="Match content of [name]">
+          <con:configuration>
+            <path>$.name</path>
+            <content>${Create Random List Name 3#List Name}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="b5efa54b-2c00-4609-802f-47ea7fbfd5bf" name="Match content of [customerKey]">
+          <con:configuration>
+            <path>$.customerKey</path>
+            <content>${Create Random List Name 3#List Name} - ${#TestCase#listCategoryId}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="7164e5e1-5e6a-40fb-a7d9-ca6db5094b7d" name="Match content of [categoryId]">
+          <con:configuration>
+            <path>$.categoryId</path>
+            <content>${#TestCase#listCategoryId}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer ListId 3" id="2c2463b0-4371-4b66-b6fd-c63b0131fc89">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>listId</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Create List - Invalid Key</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/email/v1/lists';
+//ns1:Response[1]/ns1:listId[1]</con:sourcePath>
+        <con:targetType>listId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Delete List 3" id="d48b9b20-053b-4de2-8095-dd57cd089909">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/lists/{id}" methodName="Method 3" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Delete List 3" id="0704932c-7d76-4a94-8650-7665368ea1e6" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/lists/</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="70f14ba2-ca88-49a5-bc5d-b933ecc80455" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>204</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="DeleteSubscribers" value=""/>
+          <con:entry key="id" value="${#TestCase#listId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>DeleteSubscribers</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Create Random List Name 4" id="651df995-fe6c-40a1-ab5f-6d4e118cd8e1">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')+('0'..'9')).join(), 15 )</script>
+        </con:configuration>
+        <con:name>List Name</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datagen" name="Create Random Key 4" id="79e63335-6836-4599-92c7-07b2f7f715ad">
+    <con:settings/>
+    <con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:property type="Script">
+        <con:configuration>
+          <script>import static java.util.UUID.randomUUID 
+ 
+uuid = randomUUID() as String
+uuid = uuid.toUpperCase()
+return uuid</script>
+        </con:configuration>
+        <con:name>customerKey</con:name>
+        <con:mode>STEP</con:mode>
+        <con:shared>false</con:shared>
+      </con:property>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Create List - Valid" id="abf76c54-2d11-402a-8490-cff41565fb22">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/lists" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Create List - Valid" id="fa70d5ed-9f0d-4fa5-b49f-faed30a5e210" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+"key": "${Create Random Key 4#customerKey}",
+"name": "${Create Random List Name 4#List Name}",
+"description": "description",
+"categoryId": ${#TestCase#listCategoryId},
+  "isPublic": "false" 
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/lists</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="134818d2-88f8-4949-ba27-1342eaad98ae" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>201</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="17d8cbac-99d0-4a95-a970-a215c12b667a" name="Match content of [customerKey]">
+          <con:configuration>
+            <path>$.customerKey</path>
+            <content>${Create Random List Name 4#List Name} - ${#TestCase#listCategoryId}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="31a90b72-a121-4056-86cf-ae4830f23545" name="Match content of [name]">
+          <con:configuration>
+            <path>$.name</path>
+            <content>${Create Random List Name 4#List Name}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="dcb3e517-a60b-4027-b540-c963730b436c" name="Match content of [categoryId]">
+          <con:configuration>
+            <path>$.categoryId</path>
+            <content>${#TestCase#listCategoryId}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Transfer ListId 4" id="d1e8b4c9-6b87-4962-8a0e-aafb4c6b9976">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>listId</con:name>
+        <con:sourceType>ResponseAsXml</con:sourceType>
+        <con:sourceStep>Create List - Valid</con:sourceStep>
+        <con:sourcePath>declare namespace ns1='https://www.exacttargetapis.com/email/v1/lists';
+//ns1:Response[1]/ns1:listId[1]</con:sourcePath>
+        <con:targetType>listId</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Update List - Invalid Name" id="84efc2d9-5f0a-43ae-bc3b-846bae9a0648">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/lists/{id}" methodName="Method 2" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Update List - Invalid Name" id="5bf57ea7-6761-4064-867e-5a18fd1799de" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"name" : "&lt;script>alert(1)&lt;/script>"
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/lists/id</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="52a96f17-3e5c-4e3e-b70b-a0fac0c2ef2a" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="bffd9be1-68b1-4226-8923-4539f25d6052" name="Match content of [name]">
+          <con:configuration>
+            <path>$.name</path>
+            <content>&lt;script>alert(1)&lt;/script></content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="DeleteSubscribers" value=""/>
+          <con:entry key="id" value="${#TestCase#listId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>DeleteSubscribers</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Update List - Invalid Description" id="12aa2c10-1a30-41c1-9014-5d533f337d1e">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/lists/{id}" methodName="Method 2" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Update List - Invalid Description" id="5bf57ea7-6761-4064-867e-5a18fd1799de" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"description" : "&lt;script>alert(1)&lt;/script>"
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/lists/id</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="e69f05f5-6947-4b94-8a38-eea64809f684" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath Match" id="c9937a4b-f5f2-4b76-904a-3571b60dec0a" name="Match content of [description]">
+          <con:configuration>
+            <path>$.description</path>
+            <content>&lt;script>alert(1)&lt;/script></content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="DeleteSubscribers" value=""/>
+          <con:entry key="id" value="${#TestCase#listId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>DeleteSubscribers</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Update List - Invalid Key" id="b8bbfb02-5574-4af0-b50c-3faaa607c0fc">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/lists/{id}" methodName="Method 2" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Update List - Invalid Key" id="5bf57ea7-6761-4064-867e-5a18fd1799de" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"key" : "&lt;script>alert(1)&lt;/script>"
+}</con:request>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/lists/id</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="8171b004-c862-40a9-b038-b31d3d99c130" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="DeleteSubscribers" value=""/>
+          <con:entry key="id" value="${#TestCase#listId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>DeleteSubscribers</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Delete List" id="32db4dea-b441-447a-b4ac-c0892956a715">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/email/v1/lists/{id}" methodName="Method 3" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Delete List" id="0704932c-7d76-4a94-8650-7665368ea1e6" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/email/v1/lists/</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="153d06f5-93c7-4939-9427-3a5f214332cb" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>204</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="DeleteSubscribers" value=""/>
+          <con:entry key="id" value="${#TestCase#listId}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>id</con:entry>
+          <con:entry>DeleteSubscribers</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>listCategoryId</con:name>
+      <con:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">387643</con:value>
+    </con:property>
+    <con:property>
+      <con:name>listId</con:name>
+      <con:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">207280</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>7a8f7ca2-571f-4ced-acef-99a2bddbc3f1</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>887e893f-a286-4efc-89fd-230779774fe5</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>99383c77-4858-43ba-a88e-b85b1a6a5019</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>3e37191d-bedb-4032-924a-2f407c6db07f</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>98212deb-1a3b-4b16-85f5-242a7b1b4a79</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>d2b2696d-af19-4295-a6af-11ec4cdd10d1</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>55757194-92bf-49c1-b585-233ad26b97e4</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>d48b9b20-053b-4de2-8095-dd57cd089909</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>651df995-fe6c-40a1-ab5f-6d4e118cd8e1</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>79e63335-6836-4599-92c7-07b2f7f715ad</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>3577c9fc-be3d-4847-bfb3-6678b1d1c964</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>2c2463b0-4371-4b66-b6fd-c63b0131fc89</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>d1e8b4c9-6b87-4962-8a0e-aafb4c6b9976</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:operation id="e4ea84d5-9450-49a7-9a45-5df02b784449" isOneWay="false" action="VersionInfo" name="VersionInfo" bindingOperationName="VersionInfo" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="e4ea84d5-9450-49a7-9a45-5df02b784449fileName">VersionInfo</con:setting></con:settings></con:operation>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Request Context Happy Path" searchProperties="true" id="bcab8e2d-464a-4fdc-946e-919390f8a6b6" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="bcab8e2d-464a-4fdc-946e-919390f8a6b6fileName">Request-Context-Happy-Path</con:setting>
+  </con:settings>
+  <con:testStep type="restrequest" name="PostRequestContext - RequestContextByClientIdAndSecret" id="cf15ef2f-68ee-4ae2-8cb2-cf0c0d745c84">
+    <con:settings/>
+    <con:config service="Auth" resourcePath="/v1/requestContext" methodName="RequestAuth" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="PostRequestContext - RequestContextByClientIdAndSecret" mediaType="application/json" postQueryString="false" id="7984bf5f-2c92-43d9-8f67-dff670e6d9d2">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${authendpoint}</con:endpoint>
+        <con:request>{
+    "clientId": "${#Project#clientid}",
+    "clientSecret": "${#Project#clientsecret}"
+}</con:request>
+        <con:originalUri>${authendpoint}/v1/requestContext</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status Codes - 200" id="6d536d7c-c58a-41a7-9d1c-eafe78385907">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="delay" name="Delay" id="8e896f6a-3709-401e-ad22-60569e9ea6f9" disabled="true">
+    <con:settings/>
+    <con:config>
+      <delay>60000</delay>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>5831d79d-2b6e-41a7-88e0-b6b1a6270ad9</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

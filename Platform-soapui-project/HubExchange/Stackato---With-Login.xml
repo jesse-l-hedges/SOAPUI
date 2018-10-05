@@ -1,0 +1,1433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="f6aeaa39-ad40-42bb-bd6d-29ad8cdc82a1" discardOkResults="true" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="Stackato - With Login" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="f6aeaa39-ad40-42bb-bd6d-29ad8cdc82a1fileName">Stackato---With-Login</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="9e513121-af89-4be2-af42-6738346a4386">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>av1aoQBEavHHPD6pWGf2X4OW</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>10782007</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>10739553</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getHXCategories" id="706b3fac-0874-4dcc-94ce-d7cf4d3b6cb6">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/categories" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getHXCategories" id="959e6243-9a6a-49f6-bfac-14589ae4ccd1" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/categories</con:originalUri>
+        <con:assertion type="Invalid HTTP Status Codes" id="76d61e0d-1ff1-4033-915f-17e4eb07c6c9" name="Invalid HTTP Status Codes">
+          <con:configuration>
+            <codes>400, 404, 500, 503</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="1d3bef6e-ff53-4be0-8104-03b946095219" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="1a2425c0-ef6e-4655-94c5-3e05c65aa6e2" name="Contains &quot;HubExchange - App Categories&quot;">
+          <con:configuration>
+            <token>HubExchange - App Categories</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getHXSearch" id="aa541c54-27b7-47a9-af35-4ea2b906b15b">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/search" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getHXSearch" id="cf2e68ee-bc03-4be8-9710-489d8dfb8e9e" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/search</con:originalUri>
+        <con:assertion type="Invalid HTTP Status Codes" id="28c6e74d-74c1-4624-b449-84c723bee392" name="Invalid HTTP Status Codes">
+          <con:configuration>
+            <codes>400, 404, 500, 503</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="fd6b8445-e8ac-4e23-8102-8ddbfa722154" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="856a8d74-5a12-490d-b780-a5b42c69061c" name="Contains &quot;HubExchange - Search results&quot;">
+          <con:configuration>
+            <token>HubExchange - Search results</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getSitemap" id="8878d612-19be-4803-ac3f-290337e4bdb0">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/sitemap.xml" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getSitemap" id="804f3a2f-a520-4c07-89b2-c2c4bc6577fd" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/sitemap.xml</con:originalUri>
+        <con:assertion type="Invalid HTTP Status Codes" id="1cbf4a41-eaa6-413a-8479-8fbbd25a2fd7" name="Invalid HTTP Status Codes">
+          <con:configuration>
+            <codes>400, 404, 500, 503</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="c030ac66-1e9c-44c6-9d32-fb27db14dae0" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="9857c6bc-a1bd-41d0-97ed-463ac32d1ee6" name="URL Matches hubexchange.exacttarget.com">
+          <con:configuration>
+            <path>declare namespace ns1='http://www.sitemaps.org/schemas/sitemap/0.9';
+//ns1:urlset[1]/ns1:url[1]/ns1:loc[1]</path>
+            <content>https://hubexchange.exacttarget.com</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getAdminOrUser" id="8d95fe56-8d45-4dfb-8b74-0cf74b98fa27">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/admin" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getAdminOrUser" id="d191dfba-3cf6-4e59-8bbf-39fdf108825d" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/</con:originalUri>
+        <con:assertion type="Invalid HTTP Status Codes" id="1105f6aa-c286-4a28-b8ed-3df742d94c89" name="Invalid HTTP Status Codes">
+          <con:configuration>
+            <codes>404, 404, 500, 503</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="a8230628-0be3-4761-b25d-eed0f2566fed" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="69dd9dc6-f08f-4261-b5cc-c95b249517bc" name="Contains &quot;hubexchange&quot;">
+          <con:configuration>
+            <token>hubexchange</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getAdmin" id="0574239e-aa3b-4648-a98b-002a7d3e04f9">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/admin/requested" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getAdmin" id="3a0b2c80-ae79-4e54-9d2a-11077beaa4bd" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/</con:originalUri>
+        <con:assertion type="Invalid HTTP Status Codes" id="00428887-fce6-4049-abaa-30702d3d65fd" name="Invalid HTTP Status Codes">
+          <con:configuration>
+            <codes>400, 404, 500, 503</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="8b6a5aee-afbb-48b6-b4f3-d1f7cf06dc0f" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="8166a1bb-325d-4fbd-b477-2d37815de599" name="Contains">
+          <con:configuration>
+            <token>HubExchange</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getCustomApps" id="bf502fcc-7f9b-4f10-8b33-826e7925a43d">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/admin/custom" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getCustomApps" id="520f2120-2cdc-4677-987a-f4a4fec645f3" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/</con:originalUri>
+        <con:assertion type="Invalid HTTP Status Codes" id="10f87d6a-c35c-439c-99f2-0a7382b26ee2" name="Invalid HTTP Status Codes">
+          <con:configuration>
+            <codes>400, 404, 500, 503</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="6ec6ca5a-542f-42cc-a093-b1d0e926eafe" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="21fb28bb-d55c-4a71-a44f-96c32328a1a2" name="Title contains HubExchange">
+          <con:configuration>
+            <token>&lt;title>HubExchange</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getGlobalSettings" id="6056e472-b75a-4286-bb90-0de001c4a6a5">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/admin/settings" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getGlobalSettings" id="b56f31f8-955a-4cbb-add8-83aeec64d5c4" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/</con:originalUri>
+        <con:assertion type="Invalid HTTP Status Codes" id="43ec5cc9-bd76-4e99-a43b-543331e656e8" name="Invalid HTTP Status Codes">
+          <con:configuration>
+            <codes>400, 404, 500, 503</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="9d8a146f-f143-4569-86ed-95fb42fdbd77" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="65616e05-f7c1-4864-a815-59031c825a87" name="Contains">
+          <con:configuration>
+            <token>&lt;title>HubExchange</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getAdminVerification" id="72c32785-61bf-4665-8bfd-5376458a10e0">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/admin/verify" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getAdminVerification" id="d6aa01e2-8dc6-4b7b-9124-90e0c90bb090" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/</con:originalUri>
+        <con:assertion type="Invalid HTTP Status Codes" id="2a68a391-5a1f-4db7-8e18-cca3c51f99df" name="Invalid HTTP Status Codes">
+          <con:configuration>
+            <codes>400, 404, 500, 503</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="b32eaddc-e37e-4764-9841-84390628283b" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="62300f39-5ebb-4da6-a407-61d6a68f2547" name="Contains">
+          <con:configuration>
+            <token>&lt;title>HubExchange</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="$" value="d3c6aa33-c03b-4361-82fd-f15b524526fa"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>$</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getAppInfographic" id="4310beb7-c8d5-48f1-8fa5-1e87b9d5dcb8">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/infographics/apps-make-it-easy/" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getAppInfographic" id="dccab638-93f1-4530-9986-77b1b78310a0" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/infographics/apps-make-it-easy/</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="189cca08-5222-4007-b462-5bd41e225117" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="0683e0d4-5010-4248-adb0-44a339ddf1c6" name="Apps For Marketers" disabled="true">
+          <con:configuration>
+            <path>//html[1]/head[1]/title[1]</path>
+            <content>HubExchange - Apps for marketers, by marketers</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="88f7e81e-2f6b-42c8-bb23-fb3238dddc58" name="Contains Apps For Marketers">
+          <con:configuration>
+            <token>HubExchange - Apps for marketers, by marketers</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}]" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getEnterpriseInfographic" id="a4824f23-f053-4ea4-80ec-fa878fd89f7a">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/infographics/enterprise-flexibility-and-control/" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getEnterpriseInfographic" id="4ff803eb-02ad-423a-9d88-05668bda7790" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/infographics/enterprise-flexibility-and-control/</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="77b22633-77bc-4707-8829-72f74525bb30" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="fc8b7d58-489b-4a6e-baab-fe25f7d20f2b" name="Meet Your Entrerpise Needs" disabled="true">
+          <con:configuration>
+            <path>//html[1]/head[1]/title[1]</path>
+            <content>HubExchange - Meet your organizations's unique needs with enterprise features</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="4f361899-8fb2-4319-8c47-a53d125e99cd" name="Meet your organization's needs">
+          <con:configuration>
+            <token>HubExchange - Meet your organizations&amp;#x27;s unique needs with enterprise features</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getMarketingInfographic" id="398c8f8c-6521-4186-9b7d-6fbc5ae2549c">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/infographics/for-marketers-by-marketers/" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getMarketingInfographic" id="e5c52bfd-b1e8-4b8d-9bfb-eb009efd62fe" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.s1.marketingcloudapps.com/public/categoryApplications/marketing-analysis</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="c9dcdcd1-8a6a-4bad-8c88-ce9db04cf26a" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="3498143a-2ddf-4d9d-aab2-ec9a34277e13" name="For Marketers By Marketers" disabled="true">
+          <con:configuration>
+            <path>//html[1]/head[1]/title[1]</path>
+            <content>HubExchange - Marketplace for marketers by marketers</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="c6be4651-42ce-4a79-9721-b3a090677d16" name="Contains For Marketers By Marketers">
+          <con:configuration>
+            <token>HubExchange - Marketplace for marketers by marketers</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getPartnerInfographic" id="0d73280c-1776-4090-9781-e7abc03023e6">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/infographics/partner-program/" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getPartnerInfographic" id="2fced3ea-ed11-4674-9f86-acffdb150b30" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/infographics/partner-program/</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="a96f4105-2c0a-4e1d-90cb-892c31a9739e" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="f11eb496-8e03-4305-9420-9c3a97bc7651" name="XPath Match" disabled="true">
+          <con:configuration>
+            <path>//html[1]/head[1]/title[1]</path>
+            <content>HubExchange - Join the HubExchange partner program</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="fa48e7cf-bd0f-4263-976c-34460cd6c8b3" name="Contains Join the Partner Program">
+          <con:configuration>
+            <token>HubExchange - Join the HubExchange partner program</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}\" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="postEmailVerification" id="72a35bbf-a14d-42f2-9dbf-03dc5ac91d49" disabled="true">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/email/verification" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="postEmailVerification" id="8c382eff-ccc1-454b-8e6f-fbd4271f05bc" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"applicationName": "HX Read All",
+	"partnerName": "HubExchange",
+	"displayKey": "hubexchange/read-all",
+	"id": "0c219d7e-1ed8-47c2-b766-6eb1b65932b2",
+	"name": "QE Test",
+	"company-name": "MyCompany",
+	"email": "mc-fuelframeworkdev@salesforce.com",
+	"message": "Confirm configuration message",
+	"listing": {
+		"listingId": "5d1a5f35-9fd8-4a76-9d3b-2ab3c7261111",
+		"id": "0c219d7e-1ed8-47c2-b766-6eb1b65932b2",
+		"applicationName": "HX Read All",
+		"displayKey": "hubexchange/read-all",
+		"partnerName": "HubExchange",
+		"iconURL": "hubexchange/beta-apps/v1",
+		"logoURL": "",
+		"longDescription": "",
+		"shortDescription": "",
+		"priceHTML": "",
+		"displayOrder": 9999,
+		"isExactTarget": false
+	},
+	"validation": []
+}</con:request>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/email/verification</con:originalUri>
+        <con:assertion type="Invalid HTTP Status Codes" id="75728d0c-cc5e-43d8-8592-2436685ec42c" name="Invalid HTTP Status Codes">
+          <con:configuration>
+            <codes>400, 404, 500, 503</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="7eca641c-7cd8-4e5b-a25f-9278bbc8b9bc" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="postEmailOptIn" id="89b0515f-e198-4c1a-8231-54f74a341b0a" disabled="true">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/email/opt-in" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="postEmailOptIn" id="baf9fdd8-931e-4955-a94e-969f5d0ccf75" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"applicationName":"HX Send Email",
+	"partnerName":"ExactTarget",
+	"displayKey":"hubexchange/write-subs",
+	"id":"d3c6aa33-c03b-4361-82fd-f15b524526fa",
+	"name":"James Leclair",
+	"company-name":"MyCompany",
+	"email":"james.leclair@salesforce.com",
+	"number":"5555555555",
+	"website":"mycompanywebsite.com",
+	"message":"this is the message"
+}</con:request>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/email/opt-in</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="postEmailValidation" id="0f17b928-4abe-4270-ae25-ebcc4148bfa0" disabled="true">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/email/validation" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="postEmailValidation" id="4aa3818a-ed2a-40c9-b2a8-25f2178a8beb" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request>{
+	"listing":{
+		"listingId":"5d1a5f35-9fd8-4a76-9d3b-2ab3c7261111",
+		"id":"0c219d7e-1ed8-47c2-b766-6eb1b65932b2",
+		"applicationName":"HX Read All",
+		"displayKey":"hubexchange/read-all",
+		"partnerName":"HubExchange",
+		"iconURL":"hubexchange/beta-apps/v1",
+		"logoURL":"",
+		"longDescription":"",
+		"shortDescription":"",
+		"priceHTML":"",
+		"displayOrder":9999,
+		"isExactTarget":false
+	},
+	"validation":[],
+	"id":"0c219d7e-1ed8-47c2-b766-6eb1b65932b2"
+}</con:request>
+        <con:originalUri>https://hubexchange.s1.marketingcloudapps.com/email/validation</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="27983d39-a5ef-42e2-a0ca-0a59b317dcc0" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getFeaturedApplications" id="6172e27c-7a84-40e6-a9fa-5364b0cc1960">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/public/featuredApplications" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getFeaturedApplications" id="05f67f40-10ce-4f43-8dbd-4f25300ca6b8" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/public/featuredApplications</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="2814ba28-c9e0-4dfa-9164-d2c59824af9f" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getFreeApplications" id="eef69e4b-39c3-4568-aec1-7da447c39f2a">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/public/categoryApplications/free" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getFreeApplications" id="489c8653-4f1b-424a-aa5c-f2836d0ce4cf" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.s1.marketingcloudapps.com/public/categoryApplications/free</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="2d6850e2-72c8-474a-a011-4e411052614c" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getPrimaryFeaturedApplications" id="5fc58a17-4357-457e-8650-040f68480de2">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/public/primaryFeaturedApplications" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getPrimaryFeaturedApplications" id="8a666bc1-558a-4c6e-b303-3dc74dc2a8f1" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.s1.marketingcloudapps.com/public/primaryFeaturedApplications</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="b9a4864b-537c-478f-87b1-f9cf459460ce" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getCampaignManagementApps" id="1e02de86-c8f6-46b0-8b83-c37050f42565" disabled="true">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/category/campaign-management" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getCampaignManagementApps" id="400a2a0e-f042-40db-8490-ee2b57feda63" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/category/campaign-management</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="593e9003-f6ab-4a86-9e7f-4a28e7250681" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="434b13d5-447b-4d7f-8656-8cbb1d558fde" name="Contains HubExchange - Campaign Management ">
+          <con:configuration>
+            <token>HubExchange - Campaign Management</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getContentApps" id="82dbf7ed-508b-4d6a-8a8e-c13a59e374b4">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/category/content" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getContentApps" id="2136f109-4aae-400d-895f-59e02c2f68fa" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/category/content</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="09c94877-353d-48ef-b01b-4f4e05de1f97" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="ec76fa56-b4f3-4335-8b6d-b57b595a072d" name="Contains HubExchange - Content">
+          <con:configuration>
+            <token>HubExchange - Content</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getDataIntegrationApps" id="e529a57d-00ff-413d-8f3d-78c3501ed800" disabled="true">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/category/data-integration" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getDataIntegrationApps" id="f75b2fe3-50a5-4bf5-9d6d-6a85b5e9773f" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/category/data-integration</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="c4434d1b-1eeb-47ab-8ac7-0150f4543ef9" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="76b29c6a-fc5e-4c66-871e-7b967c2719bf" name="Contains HubExchange - Data Integration">
+          <con:configuration>
+            <token>HubExchange - Data Integration</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getDeveloperApps" id="5bf9bce6-67f5-4924-bae9-bbb8dcd16956" disabled="true">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/category/developer-tools" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getDeveloperApps" id="afe47f15-448c-4b76-bdfa-94461d6def9b" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/category/developer-tools</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="e13651f0-b3a8-47bd-9661-c2447b9c132a" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="26f623fa-cc1d-4efc-b906-dfd609fd7341" name="Contains HubExchange - Developer Tools">
+          <con:configuration>
+            <token>HubExchange - Developer Tools</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getDisplayAdApps" id="492f77d9-02a0-4939-b1ac-1dbae82d8fd6" disabled="true">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/category/display-ads" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getDisplayAdApps" id="6c252689-53b4-47fd-8918-966e41cf9e3e" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/category/display-ads</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="2aa5cd6d-90ca-4474-a8ff-6420e25df98e" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="68a60ff4-9fd4-4552-93f4-73d0b9445c37" name="Contains HubExchange - Display Ads">
+          <con:configuration>
+            <token>HubExchange - Display Ads</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getEmailApps" id="caf88852-3b2a-42d6-ac6b-75726b7dc2c8">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/category/email" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getEmailApps" id="d80fb664-2b87-4427-ae8e-8ee16df65163" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.s1.marketingcloudapps.com/category/email</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="4b388d68-2194-4e61-85dc-2fdf2a0a2b95" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="28f29733-31e6-47ec-96c2-a93dca8acb88" name="Contains">
+          <con:configuration>
+            <token>HubExchange - Email</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getExacttargetApps" id="c8da920d-c601-46ae-8dc6-2d0ccd2e0f87" disabled="true">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/category/exacttarget" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getExacttargetApps" id="513bee29-c26b-4622-aa01-e34beeacc0cb" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/category/exacttarget</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="ffe7e943-8bcf-4f8b-adbb-f04d56375f56" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="f666e1dd-3bf4-4dce-b5c8-e28e34957083" name="Contains">
+          <con:configuration>
+            <token>HubExchange - ExactTarget</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getETLabsApps" id="f10034ca-155c-46b9-94e0-96dd14a3e87c" disabled="true">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/category/exacttarget-labs" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getETLabsApps" id="e23d0614-348a-494e-b292-be08efbd7b21" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/category/exacttarget-labs</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="1da9e4d3-2171-4d29-bd57-730a2670d263" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="1f9fc871-6142-45b5-96c4-dd84b1912fc2" name="Contains HubExchange - exacttarget labs">
+          <con:configuration>
+            <token>HubExchange - exacttarget labs</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getFreeApps" id="7a2436d4-1156-47db-8e6b-b26afb775b66" disabled="true">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/category/free" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getFreeApps" id="b9343c38-4918-4b84-8433-b10d1021a2f1" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/category/free</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="f54d2b0d-356f-4499-8cf8-0868e1f2e3d7" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="e019f576-cd45-46e5-baca-ebcc441183df" name="Contains">
+          <con:configuration>
+            <token>HubExchange - Free</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getFreeTrialApps" id="8a8c9ba6-33f6-40b2-a5a2-9fddc77e7bd4" disabled="true">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/category/free-trial" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getFreeTrialApps" id="eed0fac3-299c-40b6-8fa1-2c4d2eb55b1c" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/category/free-trial</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="7b6ab4ac-76a6-483f-bd28-295a2352975b" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="343c09ed-b5ea-4f1b-a40c-66d7afc0c002" name="Contains">
+          <con:configuration>
+            <token>HubExchange - Free Trial</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getMarketingAnalysisApps" id="de74c1d2-d147-4102-b375-39480b92029a" disabled="true">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/category/marketing-analysis" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getMarketingAnalysisApps" id="bb15c49b-e5f0-4549-9385-f2b154dcefc5" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/category/marketing-analysis</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="755dff03-0d94-465a-8863-8645b0e23891" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="e6746a62-300e-4a8b-bf2c-20ff55d40be1" name="Contains HubExchange - Marketing Analysis">
+          <con:configuration>
+            <token>HubExchange - Marketing Analysis</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getMobileApps" id="6c16279d-38c4-4297-a194-30122e15e402">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/category/mobile" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getMobileApps" id="6f3fe46c-9bb6-499f-909a-0a3e59126e77" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/category/mobile</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="3996d250-b3f5-4bb8-aba8-babb9b8fed35" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="f843ffc4-2d37-49a9-9a63-601a79749a3d" name="Contains HubExchange - Mobile">
+          <con:configuration>
+            <token>HubExchange - Mobile</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getOtherApps" id="c2961923-0258-4449-9864-31f4fab9f009" disabled="true">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/category/other-channels" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getOtherApps" id="eff0321c-c461-43d1-87c2-b8306b1c4c25" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/category/other-channels</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="f59754b5-304f-4f8a-9703-79f16e4da72c" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="f09ccbbd-e97f-4565-8038-b0feeb6c7253" name="Contains HubExchange - Other Channels">
+          <con:configuration>
+            <token>HubExchange - Other Channels</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getSocialApps" id="a5ed8f9c-54f4-4be3-8754-b5b413eda04f">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/category/social" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getSocialApps" id="451a9568-b4a7-4759-abcd-f88940ca98d3" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/category/social</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="d6eb29ae-5270-4dee-b333-60bb28efd170" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="884d8a76-ed19-4983-b62d-bc99682cee5d" name="Contains HubExchange - Social">
+          <con:configuration>
+            <token>HubExchange - Social</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getVideoApps" id="ffc55b0b-8419-47d7-9d8f-c1b2657e3e06" disabled="true">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/category/video" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getVideoApps" id="688dc4aa-b958-4a1c-929a-025f634677fe" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/category/video</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="07a6e397-5ac3-436d-973e-3535aa114222" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="2c47c9fa-f849-45a1-a4eb-117896690f74" name="Contains HubExchange - Video">
+          <con:configuration>
+            <token>HubExchange - Video</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="getWebApps" id="b39b9f1c-3edd-408f-91ec-27c86cedfe51">
+    <con:settings/>
+    <con:config service="HX" resourcePath="/category/web" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="getWebApps" id="6962eeb5-65e6-4150-8671-7f1d99ee95f0" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:request/>
+        <con:originalUri>https://hubexchange.qa1s1.marketingcloudapps.com/category/web</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="87311b02-31d7-45d8-984c-26bda09ba6d8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Simple Contains" id="28e4b54c-ad1a-4efa-b8e5-362f5ccf35a5" name="Contains HubExchange - Web">
+          <con:configuration>
+            <token>HubExchange - Web</token>
+            <ignoreCase>false</ignoreCase>
+            <useRegEx>false</useRegEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

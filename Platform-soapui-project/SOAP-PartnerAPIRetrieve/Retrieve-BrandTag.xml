@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Retrieve BrandTag" searchProperties="true" id="7d28f9fb-fa99-409e-a981-af5ba0be26e1" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="21f9853e-eba1-4804-a226-9e5afacda15dfileName">Send-Object</con:setting>
+    <con:setting id="e8dc1dbf-2a18-4227-853a-4998537beca8fileName">AsyncActivityStatus</con:setting>
+    <con:setting id="dca3115a-3a9d-41e1-a98b-9e760e52d220fileName">Retrieve-Account</con:setting>
+    <con:setting id="1ebbdbe5-016d-4784-973d-a375c0c4e34efileName">Retrieve-AccountUser</con:setting>
+    <con:setting id="422ab2ba-05aa-40b2-bbc7-a471ceb5cf8ffileName">Retrieve-AccountUserAccount</con:setting>
+    <con:setting id="7d28f9fb-fa99-409e-a981-af5ba0be26e1fileName">Retrieve-BrandTag</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="d38b36c7-27e2-4b64-99dd-1ed69ffd2912">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>01ab17fb-6ad8-4905-8453-0713fdf89d0e</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+          <con:value>aJg0AWneRw3qjrMLvhZb3ZZT</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+          <con:value>10782007</con:value>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+          <con:value>10739553</con:value>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Retrieve Brandtag" id="8b9b53e2-a6ab-4f88-a91b-331838e1ba3b">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve Brandtag" id="464fcb5f-7138-4a4e-af07-f023bda26cb0" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <h:fueloauth xmlns="http://exacttarget.com" xmlns:h="http://exacttarget.com">${Auth#accesstoken}</h:fueloauth>
+   </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+         <RetrieveRequest>
+            <ObjectType>BrandTag</ObjectType>
+            <Properties>ID</Properties>
+         </RetrieveRequest>
+      </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="0cd2fcad-dbd5-4f3b-a3d1-96e841e2bf6e"/>
+        <con:assertion type="XPath Match" id="db83acfb-4962-4ab4-b9e5-f699574cb855" name="XPath Match">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+exists( //ns1:RetrieveResponseMsg/ns1:Results/ns1:ObjectID)</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>RequestID</con:name>
+      <con:value>4088c3ba-7ac6-487a-bf45-ab4d06349ce3</con:value>
+    </con:property>
+    <con:property>
+      <con:name>objectName</con:name>
+      <con:value>UGNQ0P3BB</con:value>
+    </con:property>
+    <con:property>
+      <con:name>emailId</con:name>
+      <con:value>38250</con:value>
+    </con:property>
+    <con:property>
+      <con:name>AccountName</con:name>
+      <con:value>6MTB7XKL1I1MFAE</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>5af73743-553f-44dc-b888-4faa1f908bdb</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>43186c52-b1b8-43c5-b651-54f98681bd39</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>42bf12db-ebc2-4c04-8b7c-e31c49a9c06c</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>cba67c3d-ba7c-46b3-9c10-5e4d0f6064d9</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>51d6ad82-5764-4c41-ada4-dde8bf99a3c7</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>1f3f3b55-cce1-4c83-ae1c-f5edb0c8b73a</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>4bcf9d07-4c52-446c-a91c-3814c62c9b08</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

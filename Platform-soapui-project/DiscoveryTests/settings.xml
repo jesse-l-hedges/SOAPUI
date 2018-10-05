@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite name="DiscoveryTests" id="63a27d4e-4399-4c3d-89b0-8a430d1b2947" xmlns:con="http://eviware.com/soapui/config">
+    <con:settings><con:setting id="df2e9b8b-ef41-484a-acec-aa777cbde21dfileName">DiscoveryTests</con:setting><con:setting id="63a27d4e-4399-4c3d-89b0-8a430d1b2947fileName">DiscoveryTests</con:setting></con:settings>
+    <con:savedRecentRuns>1</con:savedRecentRuns><con:runType>SEQUENTIAL</con:runType>
+    
+    <con:properties/>
+  <con:setupScript/><con:reportParameters/></con:testSuite>

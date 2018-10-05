@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="db533497-c5a9-41cb-9964-a881f12c9bcd" name="XML API" disabled="true" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="db533497-c5a9-41cb-9964-a881f12c9bcdfileName">XML-API</con:setting></con:settings><con:runType>SEQUENTIAL</con:runType><con:properties/><con:reportParameters/></con:testSuite>

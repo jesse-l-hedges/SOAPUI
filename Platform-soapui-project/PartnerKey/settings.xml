@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="fa1a4797-20cf-489f-aea4-fc130c780823" name="PartnerKey" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="fa1a4797-20cf-489f-aea4-fc130c780823fileName">PartnerKey</con:setting></con:settings><con:savedRecentRuns>1</con:savedRecentRuns><con:runType>SEQUENTIAL</con:runType><con:properties/><con:reportParameters/></con:testSuite>

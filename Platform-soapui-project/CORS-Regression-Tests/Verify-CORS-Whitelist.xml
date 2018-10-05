@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="3d78f968-5ba2-4b35-b9d8-a62283bfaab2" failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Verify CORS Whitelist" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" disabled="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings>
+    <con:setting id="3d78f968-5ba2-4b35-b9d8-a62283bfaab2fileName">Verify-CORS-Whitelist</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="9b67ca3f-0cad-4d37-b144-8178cffa30d6" disabled="true">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>5b64a7c3-23e7-49bc-83fe-9983c3df8feb</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accesstoken</con:name>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accesstoken</con:entry>
+        <con:entry>userid</con:entry>
+        <con:entry>mid</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Get CORS Whitelist From S1" id="164b04f0-5a41-402b-beb8-ef8b73bd755c" disabled="true">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/platform-internal/v1/CrossDomainOrigins" methodName="getCrossDomainOrigins" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Get CORS Whitelist From S1" id="80d3c22e-15a9-4092-b1dd-700e0fcd6b35" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/platform-internal/v1/CrossDomainOrigins</con:originalUri>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <entry key="Authorization" value="Bearer ${Auth#accesstoken}" xmlns="http://eviware.com/soapui/config"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datasource" name="S1 Whitelist" id="003a097a-7d15-49c8-baab-3b1aa9617f3c">
+    <con:settings/>
+    <con:config xsi:type="con:DataSourceStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:dataSource type="Grid">
+        <con:configuration>
+          <check>&lt;con:entry xmlns:con="http://eviware.com/soapui/config">true&lt;/con:entry></check>
+          <row>&lt;xml-fragment>&lt;con:entry xmlns:con="http://eviware.com/soapui/config">www.test.com&lt;/con:entry>&lt;con:entry xmlns:con="http://eviware.com/soapui/config"/>&lt;/xml-fragment></row>
+          <recognizeAsPlainText>true</recognizeAsPlainText>
+        </con:configuration>
+      </con:dataSource>
+      <con:property>domain</con:property>
+      <con:startRow/>
+      <con:endRow/>
+      <con:trimValues>false</con:trimValues>
+      <con:entitizeValues>false</con:entitizeValues>
+      <con:restartOnRun>true</con:restartOnRun>
+      <con:expandProperties>false</con:expandProperties>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Asset Discovery With Valid CORS Request Header" id="f0852b8e-d0d0-45ed-876c-675e835dd14e">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/event-internal/v1/rest" methodName="event-internal/Discovery" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Asset Discovery With Valid CORS Request Header" id="748baca9-e6d7-46ff-8a20-b559659372e5" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="origin" value="${S1 Whitelist#domain}" xmlns="http://eviware.com/soapui/config"/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/asset/v1/rest</con:originalUri>
+        <con:assertion type="GroovyScriptAssertion" id="6263675d-0df1-454a-8214-3b741c3fae93" name="Access-Control-Allow-Origin Header Present">
+          <con:configuration>
+            <scriptText>assert messageExchange.responseHeaders["Access-Control-Allow-Origin"] != null</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="GroovyScriptAssertion" id="6263675d-0df1-454a-8214-3b741c3fae93" name="Access-Control-Allow-Origin Header Value Same As Origin">
+          <con:configuration>
+            <scriptText>try {
+	assert messageExchange.responseHeaders["Access-Control-Allow-Origin"] == messageExchange.requestHeaders["origin"]
+}
+catch (Throwable e) {
+	log.info messageExchange.requestHeaders["origin"] + " not found in whitelist."
+}</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accesstoken}"/>
+          <con:entry key="Host" value="${apihost}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>Authorization</con:entry>
+          <con:entry>Host</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="datasourceloop" name="DataSource Loop" id="9d42f410-3c6f-4ea9-b82f-4d3aade685fe">
+    <con:settings/>
+    <con:config>
+      <dataSourceStep>S1 Whitelist</dataSourceStep>
+      <targetStep>Asset Discovery With Valid CORS Request Header</targetStep>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script" id="6dce2246-2b38-453c-b575-4f3f23a2dc2d" disabled="true">
+    <con:settings/>
+    <con:config>
+      <script>def domain = context.expand( '${S1 Whitelist#domain}' )</script>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>de981fef-8ccb-471d-b7f4-cb12879045fd</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>

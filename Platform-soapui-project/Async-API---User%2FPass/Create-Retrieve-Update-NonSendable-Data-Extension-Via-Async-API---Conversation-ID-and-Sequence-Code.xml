@@ -1,0 +1,794 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="d57911a6-507f-4323-a6f3-2843c8359c3f" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Create Retrieve Update NonSendable Data Extension Via Async API - Conversation ID and Sequence Code" searchProperties="true" xmlns:con="http://eviware.com/soapui/config">
+  <con:description>Creates, retrieves, and updates a nonsendable data extension via Async API.
+
+Updates are sent before the create request, but the ConversationID and SequenceCode values in each request ensure that the create request SHOULD be done first.
+
+Confirms that each Async request is queued and status = OK. Also confirms HTTP status codes. 
+
+Also confirms:
+
+* Create request is successful (retrieve by CustomerKey yields an object ID)
+* Update requests are successful (object is updated as expected)</con:description>
+  <con:settings>
+    <con:setting id="7beaadd8-6b91-4db0-9e64-747695427db5fileName">Create-Retrieve-Update-NonSendable-Data-Extension-Via-Async-API---Conversation-ID-and-Sequence-Code</con:setting>
+    <con:setting id="d57911a6-507f-4323-a6f3-2843c8359c3ffileName">Create-Retrieve-Update-NonSendable-Data-Extension-Via-Async-API---Conversation-ID-and-Sequence-Code</con:setting>
+  </con:settings>
+  <con:testStep type="calltestcase" name="Auth" id="76b66d53-5e8a-4758-90ae-9e404eef0c9d">
+    <con:settings/>
+    <con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:targetTestCase>5b64a7c3-23e7-49bc-83fe-9983c3df8feb</con:targetTestCase>
+      <con:properties>
+        <con:property>
+          <con:name>accessToken</con:name>
+          <con:value>aUEy0YrzGwEABbLcN6AfoPWu</con:value>
+        </con:property>
+        <con:property>
+          <con:name>userid</con:name>
+        </con:property>
+        <con:property>
+          <con:name>mid</con:name>
+        </con:property>
+      </con:properties>
+      <con:returnProperties>
+        <con:entry>accessToken</con:entry>
+      </con:returnProperties>
+      <con:runMode>PARALLELL</con:runMode>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script for DE Name" id="cc973e33-77f2-483f-acd3-4debd638f9c8">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+"DE " + generator( (('A'..'Z')+('0'..'9')).join(), 9 ) + "_QETesting"</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Groovy Script for ConversationID" id="ebf6d5cb-516b-4f0e-b982-863aed5b106a">
+    <con:settings/>
+    <con:config>
+      <script>def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
+generator( (('A'..'Z')+('0'..'9')).join(), 9 )</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="Property Transfer" id="666c4b73-163e-40be-a660-238561c36503">
+    <con:settings/>
+    <con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="true" entitize="false" transferChildNodes="false">
+        <con:name>objectName</con:name>
+        <con:sourceType>result</con:sourceType>
+        <con:sourceStep>Groovy Script for DE Name</con:sourceStep>
+        <con:targetType>objectName</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" entitize="false" transferChildNodes="false">
+        <con:name>conversationID</con:name>
+        <con:sourceType>result</con:sourceType>
+        <con:sourceStep>Groovy Script for ConversationID</con:sourceStep>
+        <con:targetType>conversationID</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update 1" id="cecbc926-a9e6-42d7-89da-ff7990538849">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update 1" id="611c20da-e917-4e7a-bde1-dad4e1b4a31d" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#TestSuite#testSuiteUserId}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#TestSuite#testSuitePassword}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>
+    <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+      <Objects xsi:type="DataExtension">
+            <PartnerKey xsi:nil="true"/>
+            <ObjectID xsi:nil="true"/>
+            <CustomerKey>${#TestCase#objectName}</CustomerKey>
+            <Fields>
+               <Field>
+                  <Name>Pet_type</Name>
+                  <FieldType>Text</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               </Fields>
+      </Objects>
+      <Options>
+   <SendResponseTo>
+      <ResponseType>email</ResponseType>
+      <ResponseAddress>amy.brown@salesforce.com</ResponseAddress>
+      <RespondWhen>Always</RespondWhen>
+      <IncludeResults>true</IncludeResults>
+      <IncludeObjects>true</IncludeObjects>
+   </SendResponseTo>
+   
+   <OrdinalID>0</OrdinalID>
+   <RequestType>Asynchronous</RequestType>
+   <ConversationID>${#TestCase#conversationID}</ConversationID>
+   <SequenceCode>2</SequenceCode>
+   <CallsInConversation>3</CallsInConversation>
+</Options>
+   </UpdateRequest>
+  </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="171e5fd4-311f-4028-97e6-2c1bfc889120"/>
+        <con:assertion type="Valid HTTP Status Codes" id="daf26ef4-1b79-4dd5-9f9d-0314b5b2bea8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="27806fe5-77dd-4df8-99fd-c85139aa5f0e" name="Match content of [StatusCode]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]/text()</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="dd582ed1-b61a-4c24-85fa-844a5da0cb2a" name="Match content of [StatusMessage]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]/text()</path>
+            <content>Queued</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Update 2" id="f5e3042b-6b95-4cc0-bb53-73c96c0ea01a">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Update</con:operation>
+      <con:request name="Update 2" id="611c20da-e917-4e7a-bde1-dad4e1b4a31d" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#TestSuite#testSuiteUserId}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#TestSuite#testSuitePassword}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>
+    <UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+      <Objects xsi:type="DataExtension">
+            <PartnerKey xsi:nil="true"/>
+            <ObjectID xsi:nil="true"/>
+            <CustomerKey>${#TestCase#objectName}</CustomerKey>
+            <Fields>
+               <Field>
+                  <Name>Car_type</Name>
+                  <FieldType>Text</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               </Fields>
+      </Objects>
+      <Options>
+   <SendResponseTo>
+      <ResponseType>email</ResponseType>
+      <ResponseAddress>amy.brown@salesforce.com</ResponseAddress>
+      <RespondWhen>Always</RespondWhen>
+      <IncludeResults>true</IncludeResults>
+      <IncludeObjects>true</IncludeObjects>
+   </SendResponseTo>
+   
+   <OrdinalID>0</OrdinalID>
+   <RequestType>Asynchronous</RequestType>
+   <ConversationID>${#TestCase#conversationID}</ConversationID>
+   <SequenceCode>3</SequenceCode>
+   <CallsInConversation>3</CallsInConversation>
+</Options>
+   </UpdateRequest>
+  </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="171e5fd4-311f-4028-97e6-2c1bfc889120"/>
+        <con:assertion type="Valid HTTP Status Codes" id="daf26ef4-1b79-4dd5-9f9d-0314b5b2bea8" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="27806fe5-77dd-4df8-99fd-c85139aa5f0e" name="Match content of [StatusCode]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]/text()</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="dd582ed1-b61a-4c24-85fa-844a5da0cb2a" name="Match content of [StatusMessage]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:UpdateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]/text()</path>
+            <content>Queued</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" id="16ff5a44-2d77-48d3-8b7c-ba1e2a45fa0e" name="Create - Request 1">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Create</con:operation>
+      <con:request name="Create - Request 1" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="11b6e56f-6ffe-453e-9ac8-cceccf7e4653" defaultOutgoingWss="" defaultIncomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#TestSuite#testSuiteUserId}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#TestSuite#testSuitePassword}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>
+    <CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+      <Objects xsi:type="DataExtension">
+            <PartnerKey xsi:nil="true"/>
+            <ObjectID xsi:nil="true"/>
+            <Name>Data Extension ${#TestCase#objectName}</Name>
+            <IsSendable>false</IsSendable>
+            <Fields>
+               <Field>
+                  <Name>EmailAddress_type</Name>
+                  <FieldType>EmailAddress</FieldType>
+                  <IsPrimaryKey>true</IsPrimaryKey>
+                  <IsRequired>true</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Text_type</Name>
+                  <FieldType>Text</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Date_type</Name>
+                  <FieldType>Date</FieldType>
+                  <DefaultValue>getdate()</DefaultValue>
+                  <IsRequired>true</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Decimal_type</Name>
+                  <FieldType>Decimal</FieldType>
+                  <IsRequired>true</IsRequired>
+                  <Precision>10</Precision>
+                  <Scale>2</Scale>
+               </Field>
+               <Field>
+                  <Name>Boolean_type</Name>
+                  <FieldType>Boolean</FieldType>
+                  <DefaultValue>true</DefaultValue>
+                  <IsRequired>true</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Number_type</Name>
+                  <FieldType>Number</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Phone_type</Name>
+                  <FieldType>Phone</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+               <Field>
+                  <Name>Locale_type</Name>
+                  <FieldType>Locale</FieldType>
+                  <IsRequired>false</IsRequired>
+               </Field>
+            </Fields>
+                        <Properties>
+               <Property>
+                  <Name>EmailAddress</Name>
+                  <Value>johndoe@example.com</Value>
+               </Property>
+               <Property>
+                  <Name>FirstName</Name>
+                  <Value>John</Value>
+               </Property>
+               <Property>
+                  <Name>LastName</Name>
+                  <Value>Doe</Value>
+               </Property>
+               <Property>
+                  <Name>PrimaryKey</Name>
+                  <Value>PrimaryKey</Value>
+               </Property>
+           </Properties>
+            <CustomerKey>${#TestCase#objectName}</CustomerKey>
+         </Objects>
+         <Options>
+   <SendResponseTo>
+      <ResponseType>email</ResponseType>
+      <ResponseAddress>amy.brown@salesforce.com</ResponseAddress>
+      <RespondWhen>Always</RespondWhen>
+      <IncludeResults>true</IncludeResults>
+      <IncludeObjects>true</IncludeObjects>
+   </SendResponseTo>
+   
+   <OrdinalID>0</OrdinalID>
+   <RequestType>Asynchronous</RequestType>
+   <ConversationID>${#TestCase#conversationID}</ConversationID>
+   <SequenceCode>1</SequenceCode>
+   <CallsInConversation>3</CallsInConversation>
+</Options>
+   </CreateRequest>
+  </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="f6ae2dd4-58cd-4acf-943c-520e4d55e9be" name="SOAP Response"/>
+        <con:assertion type="XPath Match" id="7ed04654-0839-4744-b05b-608bba04a20e" name="Match content of [StatusCode]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusCode[1]/text()</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="cf55b716-1ee7-4135-b18e-57197d8949aa" name="Match content of [StatusMessage]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:CreateResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]/text()</path>
+            <content>Queued</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Valid HTTP Status Codes" id="abd95715-cbe1-4e3f-bd65-a20c98c8b7f7" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508" action="Create"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Retrieve DE to Confirm Create" id="2108d1b9-cc8b-4724-938d-820a804a88a1">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Retrieve</con:operation>
+      <con:request name="Retrieve DE to Confirm Create" id="d9412851-a03e-493f-b996-c89f86b4d693" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#TestSuite#testSuiteUserId}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#TestSuite#testSuitePassword}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>
+      <RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">
+      <RetrieveRequest>
+         <ObjectType>DataExtension</ObjectType>
+         <Properties>ObjectID</Properties>
+         <Properties>CustomerKey</Properties>
+         <Properties>Name</Properties>
+         <Properties>IsSendable</Properties>
+         <Properties>CategoryID</Properties>
+         <Filter xsi:type="SimpleFilterPart">
+            <Property>CustomerKey</Property>
+            <SimpleOperator>equals</SimpleOperator>
+            <Value>${#TestCase#objectName}</Value>
+         </Filter>
+      </RetrieveRequest>
+   </RetrieveRequestMsg>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="47853253-cfed-4fd7-b9cc-fbf80534a1a8"/>
+        <con:assertion type="XPath Match" id="9ca11bb7-46a9-41a3-9a37-4f103fd4d9c2" name="Check for existence of [ObjectID]" disabled="true">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+exists( //ns1:RetrieveResponseMsg/ns1:Results/ns1:ObjectID)</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Confirm Create" id="f3b92769-7012-4ccf-bf42-63edd8a8325c">
+    <con:settings/>
+    <con:config>
+      <script>import groovy.util.XmlSlurper
+
+def response = new XmlSlurper().parseText(context.expand( '${Retrieve DE to Confirm Create#Response#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:RetrieveResponseMsg[1]}' ))
+
+if( context.loopIndex == null )
+context.loopIndex = 0
+def numberOfTimes = context.expand( '${#TestCase#numberOfTimes}' ).toInteger()
+
+
+if ( response.Results.ObjectID.size() == 0 ) {
+  if ( ++context.loopIndex &lt;  numberOfTimes ) {
+    log.info "DE not created yet"
+    sleep(1000)
+    testRunner.gotoStepByName( "Retrieve DE to Confirm Create" )
+  }
+  else {
+    log.info "Timeout, test should fail"
+    testRunner.fail("DE not created after " + numberOfTimes.toString() + " retrieve attempts, timing out")
+  }
+}
+else {
+  log.info "DE created"
+  testRunner.gotoStepByName( "Retrieve DE to Confirm Updates" ) 
+}</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="restrequest" name="Retrieve DE to Confirm Updates" id="f2f715e9-c569-4c90-ab05-bd91979b897f">
+    <con:settings/>
+    <con:config service="APIs" resourcePath="/internal/v1/customobjects/{id}/fields" methodName="Method 1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:restRequest name="Retrieve DE to Confirm Updates" id="e65086ee-c9d1-4d6f-a7d3-91213918bbd3" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>${apiendpoint}</con:endpoint>
+        <con:request/>
+        <con:originalUri>https://www.exacttargetapis.com/internal/v1/customobjects/3f424263-72f2-e411-a3cc-0022642d9886/fields</con:originalUri>
+        <con:assertion type="GroovyScriptAssertion" id="6939dc16-90b2-4396-acea-57183e9355fe" name="Script Assertion" disabled="true">
+          <con:configuration>
+            <scriptText>import groovy.json.*
+
+def fields = new JsonSlurper().parseText(context.expand( '${Retrieve to Confirm DE Create and Update#Response#$.fields}' ))
+
+def fieldName1 = context.expand( '${Update 1#RawRequest#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:UpdateRequest[1]/ns1:Objects[1]/ns1:Fields[1]/ns1:Field[1]/ns1:Name[1]}' )
+
+def fieldName2 = context.expand( '${Update 2#RawRequest#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:UpdateRequest[1]/ns1:Objects[1]/ns1:Fields[1]/ns1:Field[1]/ns1:Name[1]}' )
+
+assert fieldName1 == fields.find{ fieldName1 in it.name }.name
+
+assert fieldName2 == fields.find{ fieldName2 in it.name }.name</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters>
+          <con:entry key="Authorization" value="Bearer ${Auth#accessToken}"/>
+          <con:entry key="id" value="${Retrieve DE to Confirm Create#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; //ns1:RetrieveResponseMsg[1]/ns1:Results[1]/ns1:ObjectID[1]}"/>
+        </con:parameters>
+        <con:parameterOrder>
+          <con:entry>id</con:entry>
+          <con:entry>Authorization</con:entry>
+        </con:parameterOrder>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Confirm Updates" id="485d25bc-7889-4f09-bf33-92899520dd7c">
+    <con:settings/>
+    <con:config>
+      <script>import groovy.json.*
+
+if( context.loopIndex == null )
+context.loopIndex = 0
+def numberOfTimes = context.expand( '${#TestCase#numberOfTimes}' ).toInteger()
+
+def fields = new JsonSlurper().parseText(context.expand( '${Retrieve DE to Confirm Updates#Response#$.fields}' ))
+def newField1 = context.expand( '${Update 1#RawRequest#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:UpdateRequest[1]/ns1:Objects[1]/ns1:Fields[1]/ns1:Field[1]/ns1:Name[1]}' )
+def newField2 = context.expand( '${Update 2#RawRequest#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:UpdateRequest[1]/ns1:Objects[1]/ns1:Fields[1]/ns1:Field[1]/ns1:Name[1]}' )
+
+
+if ( !fields.find {newField1 in it.name } || !fields.find {newField2 in it.name }) {
+  if ( ++context.loopIndex &lt;  numberOfTimes ) {
+    log.info "DE not updated yet"
+    sleep(1000)
+      testRunner.gotoStepByName( "Retrieve DE to Confirm Updates" )
+  }
+  else {
+    log.info "Timeout, this test should fail"
+    testRunner.fail("DE not updated after " + numberOfTimes.toString() + " retrieve attempts, timing out")    
+  }
+}
+else {
+  log.info "DE updated"
+    testRunner.gotoStepByName( "Confirm Filter Update" ) 
+}</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="groovy" name="Confirm Filter Update" id="34b82379-11ac-4676-a2f1-db7f0006c926">
+    <con:settings/>
+    <con:config>
+      <script>import groovy.json.*
+
+if( context.loopIndex == null )
+context.loopIndex = 0
+def numberOfTimes = context.expand( '${#TestCase#numberOfTimes}' ).toInteger()
+
+def fields = new JsonSlurper().parseText(context.expand( '${Retrieve DE to Confirm Updates#Response#$.fields}' ))
+def newField1 = context.expand( '${Update 1#RawRequest#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:UpdateRequest[1]/ns1:Objects[1]/ns1:Fields[1]/ns1:Field[1]/ns1:Name[1]}' )
+def newField2 = context.expand( '${Update 2#RawRequest#declare namespace ns1=\'http://exacttarget.com/wsdl/partnerAPI\'; //ns1:UpdateRequest[1]/ns1:Objects[1]/ns1:Fields[1]/ns1:Field[1]/ns1:Name[1]}' )
+
+
+if ( !fields.find {newField1 in it.name } || !fields.find {newField2 in it.name }) {
+  if ( ++context.loopIndex &lt;  numberOfTimes ) {
+    log.info "DE not updated yet"
+    sleep(1000)
+      testRunner.gotoStepByName( "Retrieve DE to Confirm Updates" )
+  }
+  else {
+    log.info "Timeout, this test should fail"
+    testRunner.fail("DE not updated after " + numberOfTimes.toString() + " retrieve attempts, timing out")    
+  }
+}
+else {
+  log.info "DE updated"
+    testRunner.gotoStepByName( "Delete" ) 
+}</script>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="request" name="Delete" id="37c9821a-dc22-41a3-8438-804e430fb96b">
+    <con:settings/>
+    <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <con:interface>ETFramework</con:interface>
+      <con:operation>Delete</con:operation>
+      <con:request name="Delete" id="7bf289f2-9a9e-45fa-8bca-66dc6efc4661" defaultOutgoingWss="" defaultIncomingWss="" outgoingWss="" incomingWss="">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>${soapapiendpoint}</con:endpoint>
+        <con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-340466">
+            <wsse:Username>${#TestSuite#testSuiteUserId}</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">${#TestSuite#testSuitePassword}</wsse:Password>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>
+  <DeleteRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">
+   <ns1:Objects xsi:type="ns1:DataExtension" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">
+    
+    <ns1:ModifiedDate xsi:nil="true"/>
+    <ns1:ObjectID>${Retrieve DE to Confirm Updates#Response#$.id}</ns1:ObjectID>
+   </ns1:Objects>
+  <Options/>
+</DeleteRequest>
+ </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+        <con:assertion type="SOAP Response" id="076d4771-7559-4c05-9430-a70f41a0bd00"/>
+        <con:assertion type="Valid HTTP Status Codes" id="d76b221c-a2ae-4601-8687-ac32fc6f0055" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="1b104902-e905-45ce-937a-c386b623b5c3" name="Match content of [StatusCode]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusCode[1]/text()</path>
+            <content>OK</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="XPath Match" id="c60d0a29-7e7d-4bd8-bbea-28f6c2e2a934" name="Match content of [StatusMessage]">
+          <con:configuration>
+            <path>declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI';
+//ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]/text()</path>
+            <content>${Delete#Response#declare namespace ns1='http://exacttarget.com/wsdl/partnerAPI'; //ns1:DeleteResponse[1]/ns1:Results[1]/ns1:StatusMessage[1]}</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:jmsPropertyConfig/>
+        <con:wsaConfig mustUnderstand="NONE" version="200508"/>
+        <con:wsrmConfig version="1.2"/>
+        <con:environmentSpec>
+          <con:entry environmentId="8c0ecb7e-0f97-4c23-8ef5-5ae7ad8d15f8">
+            <con:authProfile>Inherit From Parent</con:authProfile>
+          </con:entry>
+        </con:environmentSpec>
+      </con:request>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>objectName</con:name>
+      <con:value>DE DNFAONELP_QETesting</con:value>
+    </con:property>
+    <con:property>
+      <con:name>conversationID</con:name>
+      <con:value>TTGDGAL2J</con:value>
+    </con:property>
+    <con:property>
+      <con:name>numberOfTimes</con:name>
+      <con:value>40</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>42393c59-20c2-4563-aec4-db7881e7fcbd</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>ed892742-eba2-404c-8e64-fc892fd19d45</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>8f2cdf17-0d51-48ee-bec9-60dfe131ab46</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>d38202aa-7862-4480-8cc6-7224aade0067</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>1f617a35-b874-4806-8981-02eeed6a4166</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>41aa6783-ce82-4dbe-8731-0856b71fba64</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>afa3685b-78d7-42aa-a201-fa4b39bfd3bb</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>b1e8c030-27a3-4e96-a2a2-e2de1d611f4c</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>b842e78f-ddd7-4fd1-bb9a-a71294e176ab</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>32201e50-19ad-45be-989e-09e810400163</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>40a89b43-ebbf-4d54-a125-9bd06ab19c3e</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>18863a27-add8-46a6-838a-9c5f857604f7</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>62d476e8-7ab9-43be-982c-e5cae341dc40</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>1055edbc-bf1f-41e3-bfaf-ea93b4af5ad8</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>a56dedc4-3ea8-480d-8ece-d97f8a9fd1bc</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>
